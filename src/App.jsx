@@ -1003,31 +1003,33 @@ export default function HousePickFlyer() {
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[1, 2, 3].map((item) => (
-              <div key={item} className="bg-stone-100 rounded-2xl overflow-hidden card-hover">
+            {[
+              { id: 1, before: '/images/before-1.jpg.jpg', after: '/images/after-1.jpg.jpg', title: '화장실 전체 시공', location: '서울 · 30평대' },
+              { id: 2, before: '/images/before-2.jpg.jpg', after: '/images/after-2.jpg.jpg', title: '화장실 전체 시공', location: '서울 · 30평대' },
+              { id: 3, before: '/images/before-3.jpg.jpg', after: '/images/after-3.jpg.jpg', title: '화장실 전체 시공', location: '서울 · 30평대' }
+            ].map((item) => (
+              <div key={item.id} className="bg-stone-100 rounded-2xl overflow-hidden card-hover">
                 <div className="relative">
                   {/* Before */}
-                  <div className="aspect-[4/3] bg-stone-300 flex items-center justify-center">
-                    <div className="text-center text-stone-500">
-                      <div className="text-4xl mb-2">🖼️</div>
-                      <p className="text-sm">Before 이미지</p>
-                    </div>
-                  </div>
+                  <img
+                    src={item.before}
+                    alt={`${item.title} 시공 전`}
+                    className="aspect-[4/3] w-full object-cover"
+                  />
                   <div className="absolute top-3 left-3 bg-stone-800 text-white text-xs font-bold px-3 py-1 rounded-full">BEFORE</div>
                 </div>
                 <div className="relative">
                   {/* After */}
-                  <div className="aspect-[4/3] bg-amber-100 flex items-center justify-center">
-                    <div className="text-center text-amber-600">
-                      <div className="text-4xl mb-2">✨</div>
-                      <p className="text-sm">After 이미지</p>
-                    </div>
-                  </div>
+                  <img
+                    src={item.after}
+                    alt={`${item.title} 시공 후`}
+                    className="aspect-[4/3] w-full object-cover"
+                  />
                   <div className="absolute top-3 left-3 bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded-full">AFTER</div>
                 </div>
                 <div className="p-4 bg-white">
-                  <p className="font-medium text-stone-800">화장실 전체 시공</p>
-                  <p className="text-sm text-stone-500">서울 강남구 · 30평대</p>
+                  <p className="font-medium text-stone-800">{item.title}</p>
+                  <p className="text-sm text-stone-500">{item.location}</p>
                 </div>
               </div>
             ))}

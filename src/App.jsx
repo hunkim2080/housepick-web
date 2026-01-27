@@ -1,5 +1,64 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import * as ChannelService from '@channel.io/channel-web-sdk-loader';
+
+// 카운트업 애니메이션 컴포넌트
+function CountUp({ end, suffix = '', decimal = 0, duration = 2000 }) {
+  const [count, setCount] = useState(0);
+  const [hasStarted, setHasStarted] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasStarted) {
+          setHasStarted(true);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => observer.disconnect();
+  }, [hasStarted]);
+
+  useEffect(() => {
+    if (!hasStarted) return;
+
+    let startTime;
+    const animate = (currentTime) => {
+      if (!startTime) startTime = currentTime;
+      const progress = Math.min((currentTime - startTime) / duration, 1);
+
+      // easeOutQuart 효과
+      const easeOut = 1 - Math.pow(1 - progress, 4);
+      const currentCount = easeOut * end;
+
+      setCount(currentCount);
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
+    };
+
+    requestAnimationFrame(animate);
+  }, [hasStarted, end, duration]);
+
+  const formatNumber = (num) => {
+    if (decimal > 0) {
+      return num.toFixed(decimal);
+    }
+    return Math.floor(num).toLocaleString();
+  };
+
+  return (
+    <span ref={ref}>
+      {formatNumber(count)}{suffix}
+    </span>
+  );
+}
 
 // 가격표 모달 컴포넌트
 function PriceModal({ onClose }) {
@@ -1089,14 +1148,16 @@ export default function HousePickFlyer() {
         <div className="max-w-5xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {[
-              { number: '1,200+', label: '누적 시공 건수', icon: '🏠' },
-              { number: '98.7%', label: '고객 만족도', icon: '😊' },
-              { number: '0.3%', label: '재시공 요청률', icon: '🔧' },
-              { number: '5년', label: '무상 A/S 보장', icon: '🛡️' }
+              { end: 1200, suffix: '+', decimal: 0, label: '누적 시공 건수', icon: '🏠' },
+              { end: 98.7, suffix: '%', decimal: 1, label: '고객 만족도', icon: '😊' },
+              { end: 0.3, suffix: '%', decimal: 1, label: '재시공 요청률', icon: '🔧' },
+              { end: 5, suffix: '년', decimal: 0, label: '무상 A/S 보장', icon: '🛡️' }
             ].map((stat, i) => (
               <div key={i}>
                 <div className="text-3xl mb-2">{stat.icon}</div>
-                <div className="text-3xl lg:text-4xl font-black text-amber-400 mb-1">{stat.number}</div>
+                <div className="text-3xl lg:text-4xl font-black text-amber-400 mb-1">
+                  <CountUp end={stat.end} suffix={stat.suffix} decimal={stat.decimal} />
+                </div>
                 <div className="text-stone-400 text-sm">{stat.label}</div>
               </div>
             ))}

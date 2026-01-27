@@ -222,12 +222,12 @@ function PriceModal({ onClose }) {
 
           {/* CTA */}
           <div className="mt-6 flex gap-3">
-            <a
-              href="tel:010-6461-0131"
+            <button
+              onClick={() => { onClose(); ChannelService.showMessenger(); }}
               className="flex-1 bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 rounded-xl text-center transition-colors flex items-center justify-center gap-2"
             >
-              <span>📞</span> 전화 상담
-            </a>
+              <span>💬</span> 채팅 상담
+            </button>
             <button
               onClick={onClose}
               className="flex-1 bg-stone-100 hover:bg-stone-200 text-stone-700 font-bold py-4 rounded-xl transition-colors"

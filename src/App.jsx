@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import * as ChannelService from '@channel.io/channel-web-sdk-loader';
 
 // 가격표 모달 컴포넌트
 function PriceModal({ onClose }) {
@@ -8,7 +9,7 @@ function PriceModal({ onClose }) {
     bathroom: {
       icon: '🚿',
       title: '화장실',
-      note: '단위: 만원',
+      note: '단위: 만원 | 자재: 케라폭시',
       headers: ['구분', '바닥', '샤워부스/욕조 3면', '바닥+벽 전체'],
       subHeaders: ['', '(300각 기준)', '(300×600각 기준)', ''],
       rows: [
@@ -154,9 +155,9 @@ function PriceModal({ onClose }) {
               <strong>💡 안내사항</strong>
             </p>
             <ul className="text-sm text-amber-700 mt-2 space-y-1">
-              <li>• 위 가격은 기본 시공 기준이며, 현장 상태에 따라 달라질 수 있습니다.</li>
+              <li>• 위 가격은 기본 시공 기준이며, 구축은 오염도에 따라 달라질 수 있습니다.</li>
               <li>• 정확한 견적은 무료 상담을 통해 안내받으세요.</li>
-              <li>• 신축: 첫 입주 / 구축: 기존 거주 중인 주택</li>
+              <li>• 신축: 첫 입주는 위 견적과 동일 / 구축: 기존 거주 중인 주택인경우 +5만원</li>
             </ul>
           </div>
 
@@ -339,7 +340,7 @@ function QuoteForm({ onClose }) {
         {/* Header */}
         <div className="sticky top-0 bg-white p-6 border-b rounded-t-3xl">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-bold text-stone-800">줄눈 시공 ℹ️</h2>
+            <h2 className="text-xl font-bold text-stone-800">줄눈시공 ℹ️</h2>
             <button onClick={onClose} className="text-stone-400 hover:text-stone-600 text-2xl">×</button>
           </div>
           {/* Progress Bar */}
@@ -360,7 +361,7 @@ function QuoteForm({ onClose }) {
           <div className="bg-violet-50 rounded-2xl p-4 mb-6">
             <p className="text-stone-600 text-sm">몇 가지 정보만 알려주시면</p>
             <p className="text-stone-800 font-bold">
-              <span className="text-violet-600">평균 4개 이상</span>의 견적을 받을 수 있어요.
+              <span className="text-violet-600">신속하게</span>의 견적을 받을 수 있어요.
             </p>
           </div>
 
@@ -605,6 +606,13 @@ export default function HousePickFlyer() {
   
   useEffect(() => {
     setIsVisible(true);
+
+    // 채널톡 초기화
+    ChannelService.loadScript();
+    ChannelService.boot({
+      pluginKey: "b59d5b7c-82c0-4e3a-a984-7ec0e37ee354",
+      hideChannelButtonOnBoot: true
+    });
   }, []);
 
   const fadeIn = (delay) => ({
@@ -753,15 +761,13 @@ export default function HousePickFlyer() {
         >
           💰
         </button>
-        <a
-          href="https://pf.kakao.com/_xjKHxj"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="w-14 h-14 bg-yellow-400 hover:bg-yellow-300 rounded-full shadow-lg flex items-center justify-center text-2xl transition-all hover:scale-110"
-          title="카카오톡 상담"
+        <button
+          onClick={() => ChannelService.showMessenger()}
+          className="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-400 hover:to-blue-500 rounded-full shadow-lg flex items-center justify-center text-2xl transition-all hover:scale-110"
+          title="채널톡 상담"
         >
           💬
-        </a>
+        </button>
         <a
           href="tel:010-6461-0131"
           className="w-14 h-14 bg-amber-500 hover:bg-amber-600 rounded-full shadow-lg flex items-center justify-center text-2xl transition-all hover:scale-110 animate-bounce"

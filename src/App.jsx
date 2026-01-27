@@ -1148,7 +1148,7 @@ export default function HousePickFlyer() {
         <div className="max-w-5xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {[
-              { end: 1200, suffix: '+', decimal: 0, label: '누적 시공 건수', icon: '🏠' },
+              { end: 1821, suffix: '+', decimal: 0, label: '누적 시공 건수', icon: '🏠' },
               { end: 98.7, suffix: '%', decimal: 1, label: '고객 만족도', icon: '😊' },
               { end: 0.3, suffix: '%', decimal: 1, label: '재시공 요청률', icon: '🔧' },
               { end: 5, suffix: '년', decimal: 0, label: '무상 A/S 보장', icon: '🛡️' }

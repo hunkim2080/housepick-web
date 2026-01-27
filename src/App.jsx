@@ -1298,7 +1298,7 @@ export default function HousePickFlyer() {
                 <p><span className="font-medium text-stone-800">평일</span> 09:00 - 18:00</p>
                 <p><span className="font-medium text-stone-800">토요일</span> 09:00 - 15:00</p>
                 <p><span className="font-medium text-stone-800">일/공휴일</span> 휴무</p>
-                <p className="text-amber-600 font-medium mt-2">💬 카카오톡 상담은 24시간</p>
+                <p className="text-amber-600 font-medium mt-2">💬 채팅 문의는 24시간 가능</p>
               </div>
             </div>
           </div>

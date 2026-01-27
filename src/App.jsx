@@ -299,8 +299,8 @@ function QuoteForm({ onClose }) {
     if (step > 1) setStep(step - 1);
   };
 
-  const handleSubmit = async () => {
-    // 슬랙으로 견적 요청 알림 전송
+  const handleSubmit = () => {
+    // 슬랙으로 견적 요청 알림 전송 (비동기, 기다리지 않음)
     const webhookUrl = import.meta.env.VITE_SLACK_WEBHOOK_URL;
 
     if (webhookUrl) {
@@ -308,16 +308,12 @@ function QuoteForm({ onClose }) {
         text: `🔔 새로운 견적 요청\n\n시공 공간: ${getSelectedSummary().join(', ')}\n신축 여부: ${formData.isNewBuilding}\n실평수: ${formData.area}\n시공 환경: ${formData.environment}\n희망일: ${formData.preferredDate}${formData.customDate ? ` (${formData.customDate})` : ''}\n지역: ${formData.region}\n연락처: ${formData.phone}`
       };
 
-      try {
-        await fetch(webhookUrl, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(message)
-        });
-      } catch (error) {
-        console.error('슬랙 알림 전송 실패:', error);
-      }
+      fetch(webhookUrl, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(message)
+      }).catch(error => console.error('슬랙 알림 전송 실패:', error));
     }
 
     setIsSubmitted(true);

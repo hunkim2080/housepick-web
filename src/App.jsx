@@ -64,6 +64,14 @@ function CountUp({ end, suffix = '', decimal = 0, duration = 2000 }) {
 function PriceModal({ onClose }) {
   const [activeTab, setActiveTab] = useState('bathroom');
 
+  // 모달 열릴 때 배경 스크롤 방지
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
+
   const priceData = {
     bathroom: {
       icon: '🚿',
@@ -257,6 +265,14 @@ function QuoteForm({ onClose }) {
     phone: ''
   });
 
+  // 모달 열릴 때 배경 스크롤 방지
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
+
   const totalSteps = 7;
   const progress = (step / totalSteps) * 100;
 
@@ -436,7 +452,7 @@ function QuoteForm({ onClose }) {
           <div className="bg-violet-50 rounded-2xl p-4 mb-6">
             <p className="text-stone-600 text-sm">몇 가지 정보만 알려주시면</p>
             <p className="text-stone-800 font-bold">
-              <span className="text-violet-600">신속하게</span> 견적을 받을 수 있어요.
+              <span className="text-violet-600">신속하게</span> 일정을 잡을 수 있어요.
             </p>
           </div>
 

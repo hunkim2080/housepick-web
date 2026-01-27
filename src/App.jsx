@@ -299,7 +299,27 @@ function QuoteForm({ onClose }) {
     if (step > 1) setStep(step - 1);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    // 슬랙으로 견적 요청 알림 전송
+    const webhookUrl = import.meta.env.VITE_SLACK_WEBHOOK_URL;
+
+    if (webhookUrl) {
+      const message = {
+        text: `🔔 새로운 견적 요청\n\n시공 공간: ${getSelectedSummary().join(', ')}\n신축 여부: ${formData.isNewBuilding}\n실평수: ${formData.area}\n시공 환경: ${formData.environment}\n희망일: ${formData.preferredDate}${formData.customDate ? ` (${formData.customDate})` : ''}\n지역: ${formData.region}\n연락처: ${formData.phone}`
+      };
+
+      try {
+        await fetch(webhookUrl, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(message)
+        });
+      } catch (error) {
+        console.error('슬랙 알림 전송 실패:', error);
+      }
+    }
+
     setIsSubmitted(true);
   };
 
@@ -420,7 +440,7 @@ function QuoteForm({ onClose }) {
           <div className="bg-violet-50 rounded-2xl p-4 mb-6">
             <p className="text-stone-600 text-sm">몇 가지 정보만 알려주시면</p>
             <p className="text-stone-800 font-bold">
-              <span className="text-violet-600">신속하게</span>의 견적을 받을 수 있어요.
+              <span className="text-violet-600">신속하게</span> 견적을 받을 수 있어요.
             </p>
           </div>
 

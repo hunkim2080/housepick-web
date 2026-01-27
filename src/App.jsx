@@ -1258,10 +1258,6 @@ export default function HousePickFlyer() {
               {
                 q: '기존 줄눈 위에 덧칠하는 건가요?',
                 a: '아닙니다. 기계로 기존 백시멘트를 완전히 파낸 후 새로 시공합니다. 이것이 5년 보장의 비결입니다.'
-              },
-              {
-                q: '반려동물이 있어도 안전한가요?',
-                a: '네, 중금속이 없는 친환경 안료만 사용합니다. 완전 경화 후에는 완전히 안전합니다.'
               }
             ].map((faq, i) => (
               <div key={i} className="bg-white rounded-2xl p-6 shadow-sm">

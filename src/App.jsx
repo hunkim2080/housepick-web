@@ -896,7 +896,7 @@ export default function HousePickFlyer() {
                 onClick={() => setShowQuoteForm(true)}
                 className="btn-primary text-white font-bold text-lg px-10 py-4 rounded-full shadow-lg"
               >
-                무료 견적 신청 →
+                지금 바로 문의하기 →
               </button>
               <button 
                 onClick={() => setShowPriceModal(true)}
@@ -1343,7 +1343,7 @@ export default function HousePickFlyer() {
               className="btn-primary text-white font-bold text-lg px-8 py-4 rounded-full inline-flex items-center justify-center gap-3"
             >
               <span className="text-2xl">📝</span>
-              <span>무료 견적 신청</span>
+              <span>지금 바로 문의하기</span>
             </button>
             <a href="tel:010-6461-0131" className="bg-white/10 backdrop-blur-sm border border-white/20 text-white font-bold text-lg px-8 py-4 rounded-full inline-flex items-center justify-center gap-3 hover:bg-white/20 transition-all">
               <span className="text-2xl">📞</span>

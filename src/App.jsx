@@ -1289,61 +1289,63 @@ export default function HousePickFlyer() {
         </div>
       </section>
 
-      {/* 6. 사업자 정보 & 인증 (아코디언) */}
-      <section className="py-8 px-6 bg-white border-t border-stone-200">
+      {/* 6. 사업자 정보 & 인증 */}
+      <section className="py-12 px-6 bg-white border-t border-stone-200">
         <div className="max-w-5xl mx-auto">
-          <button
-            onClick={() => setShowBusinessInfo(!showBusinessInfo)}
-            className="w-full flex items-center justify-between py-4 text-left hover:bg-stone-50 rounded-lg px-4 transition-colors"
-          >
-            <span className="font-bold text-stone-800 flex items-center gap-2">
-              <span className="text-amber-500">📋</span> 사업자 정보
-            </span>
-            <span className={`text-stone-400 transition-transform duration-300 ${showBusinessInfo ? 'rotate-180' : ''}`}>
-              ▼
-            </span>
-          </button>
+          {/* 인증&보험, 상담시간 - 항상 표시 */}
+          <div className="grid md:grid-cols-2 gap-8 mb-8">
+            {/* 인증 & 보험 */}
+            <div>
+              <h4 className="font-bold text-stone-800 mb-4 flex items-center gap-2">
+                <span className="text-amber-500">🛡️</span> 인증 & 보험
+              </h4>
+              <div className="flex flex-wrap gap-2">
+                <span className="bg-green-100 text-green-700 text-xs font-medium px-3 py-2 rounded-lg">✓ 영업배상책임보험</span>
+                <span className="bg-blue-100 text-blue-700 text-xs font-medium px-3 py-2 rounded-lg">✓ 친환경 자재 인증</span>
+                <span className="bg-amber-100 text-amber-700 text-xs font-medium px-3 py-2 rounded-lg">✓ 정식 사업자 등록</span>
+              </div>
+            </div>
 
-          <div
-            className={`overflow-hidden transition-all duration-300 ease-in-out ${showBusinessInfo ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}
-          >
-            <div className="grid md:grid-cols-3 gap-8 pt-4 pb-8 px-4">
-              {/* 사업자 정보 */}
-              <div>
-                <h4 className="font-bold text-stone-800 mb-4 flex items-center gap-2">
-                  <span className="text-amber-500">📋</span> 사업자 정보
-                </h4>
+            {/* 상담 시간 */}
+            <div>
+              <h4 className="font-bold text-stone-800 mb-4 flex items-center gap-2">
+                <span className="text-amber-500">⏰</span> 상담 시간
+              </h4>
+              <div className="space-y-2 text-sm text-stone-600">
+                <p><span className="font-medium text-stone-800">평일</span> 09:00 - 18:00</p>
+                <p><span className="font-medium text-stone-800">토요일</span> 09:00 - 15:00</p>
+                <p><span className="font-medium text-stone-800">일/공휴일</span> 휴무</p>
+                <p className="text-amber-600 font-medium mt-2">💬 채팅 문의는 24시간 가능</p>
+              </div>
+            </div>
+          </div>
+
+          {/* 사업자 정보 아코디언 */}
+          <div className="border-t border-stone-200 pt-4">
+            <button
+              onClick={() => setShowBusinessInfo(!showBusinessInfo)}
+              className="w-full flex items-center justify-between py-3 text-left hover:bg-stone-50 rounded-lg px-4 transition-colors"
+            >
+              <span className="font-bold text-stone-800 flex items-center gap-2">
+                <span className="text-amber-500">📋</span> 사업자 정보
+              </span>
+              <span className={`text-stone-400 transition-transform duration-300 ${showBusinessInfo ? 'rotate-180' : ''}`}>
+                ▼
+              </span>
+            </button>
+
+            <div
+              className={`overflow-hidden transition-all duration-300 ease-in-out ${showBusinessInfo ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}
+            >
+              <div className="pt-4 pb-4 px-4">
+                {/* 사업자 정보 상세 - 주석 처리 (나중에 사용할지 결정)
                 <div className="space-y-2 text-sm text-stone-600">
                   <p><span className="text-stone-400">상호명:</span> 디테일라인</p>
                   <p><span className="text-stone-400">대표자:</span> 김상훈</p>
                   <p><span className="text-stone-400">사업자번호:</span> 609-33-19473</p>
                   <p><span className="text-stone-400">주소:</span> 서울시 서초구 본마을 4길 11, 104호</p>
                 </div>
-              </div>
-
-              {/* 인증 & 보험 */}
-              <div>
-                <h4 className="font-bold text-stone-800 mb-4 flex items-center gap-2">
-                  <span className="text-amber-500">🛡️</span> 인증 & 보험
-                </h4>
-                <div className="flex flex-wrap gap-2">
-                  <span className="bg-green-100 text-green-700 text-xs font-medium px-3 py-2 rounded-lg">✓ 영업배상책임보험</span>
-                  <span className="bg-blue-100 text-blue-700 text-xs font-medium px-3 py-2 rounded-lg">✓ 친환경 자재 인증</span>
-                  <span className="bg-amber-100 text-amber-700 text-xs font-medium px-3 py-2 rounded-lg">✓ 정식 사업자 등록</span>
-                </div>
-              </div>
-
-              {/* 상담 시간 */}
-              <div>
-                <h4 className="font-bold text-stone-800 mb-4 flex items-center gap-2">
-                  <span className="text-amber-500">⏰</span> 상담 시간
-                </h4>
-                <div className="space-y-2 text-sm text-stone-600">
-                  <p><span className="font-medium text-stone-800">평일</span> 09:00 - 18:00</p>
-                  <p><span className="font-medium text-stone-800">토요일</span> 09:00 - 15:00</p>
-                  <p><span className="font-medium text-stone-800">일/공휴일</span> 휴무</p>
-                  <p className="text-amber-600 font-medium mt-2">💬 채팅 문의는 24시간 가능</p>
-                </div>
+                */}
               </div>
             </div>
           </div>

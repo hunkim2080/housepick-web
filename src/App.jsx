@@ -67,7 +67,7 @@ function PriceModal({ onClose }) {
   const priceData = {
     bathroom: {
       icon: '🚿',
-      title: '화장실',
+      title: '화장실 1곳',
       note: '단위: 만원 | 자재: 케라폭시',
       headers: ['구분', '바닥', '샤워부스/욕조 3면', '바닥+벽 전체'],
       subHeaders: ['', '(300각 기준)', '(300×600각 기준)', ''],
@@ -1117,15 +1117,15 @@ export default function HousePickFlyer() {
           
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              { name: '김**', location: '서울 송파구', space: '화장실 2개', date: '2024.01' },
-              { name: '이**', location: '경기 성남시', space: '현관 + 베란다', date: '2024.01' },
-              { name: '박**', location: '서울 강서구', space: '욕실 전체', date: '2023.12' }
+              { name: '김**', location: '서울 송파구', space: '화장실 2개', date: '2024.01', review: '시간 약속도 잘 지켜주시고 일 처리도 꼼꼼히 잘 해주셔서 최종 결과물이 아주 만족스러웠습니다. 지인 소개 적극 추천 예정입니다!' },
+              { name: '이**', location: '경기 성남시', space: '현관 + 베란다', date: '2024.01', review: '견적 받았을 때 타업체보다 저렴해서 반신반의였는데, 줄눈하고 나니 새집이 더 새집같아졌습니다! 주변에 추천해주려구요 ㅎㅎ' },
+              { name: '박**', location: '서울 강서구', space: '욕실 전체', date: '2023.12', review: '견적제시 업체 중 가장 정확하게 견적을 제시했어요. 색상 제안도 예쁘고 작업도 꼼꼼하고 완벽해서 가족들에게 추천하고 싶어요!' }
             ].map((review, i) => (
               <div key={i} className="bg-white rounded-2xl p-6 shadow-sm card-hover">
                 <div className="flex text-amber-400 text-sm mb-3">★★★★★</div>
-                <div className="bg-stone-100 rounded-xl p-4 mb-4 min-h-[120px] flex items-center justify-center">
-                  <p className="text-stone-400 text-sm text-center">
-                    "고객 후기 내용이 들어갑니다.<br/>실제 카톡/문자 캡처 또는 텍스트"
+                <div className="bg-stone-100 rounded-xl p-4 mb-4 min-h-[120px] flex items-center">
+                  <p className="text-stone-700 text-sm leading-relaxed">
+                    "{review.review}"
                   </p>
                 </div>
                 <div className="flex items-center gap-3">

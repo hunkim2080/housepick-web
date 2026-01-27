@@ -1273,7 +1273,7 @@ export default function HousePickFlyer() {
                 <p><span className="text-stone-400">상호명:</span> 디테일라인</p>
                 <p><span className="text-stone-400">대표자:</span> 김상훈</p>
                 <p><span className="text-stone-400">사업자번호:</span> 609-33-19473</p>
-                <p><span className="text-stone-400">주소:</span> 서울시 OO구 OO동</p>
+                <p><span className="text-stone-400">주소:</span> 서울시 서초구 본마을 4길 11, 104호</p>
               </div>
             </div>
             

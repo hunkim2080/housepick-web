@@ -242,3 +242,39 @@ export function autoLinkText(text, region, allRegions) {
 
   return result;
 }
+
+/**
+ * 이미지 alt 태그 자동 생성
+ * 규칙: [지역명] [세부지역] [자재] 줄눈시공 [공간] 시공 전/후 사진 - 하우스Pick
+ *
+ * @param {Object} region - 지역 데이터 (slug, name, subAreas 등)
+ * @param {Object} project - 프로젝트 데이터 (id, location, scope 등)
+ * @param {string} type - 'before' 또는 'after'
+ * @returns {string} SEO 최적화된 alt 텍스트
+ */
+export function generateImageAlt(region, project, type = 'after') {
+  const seed = `${region.slug}-${project.id}`;
+
+  // 시드 기반 키워드 선택 (동일 프로젝트는 항상 동일한 결과)
+  const selectedMaterial = selectItems(seed + '-alt-mat', coreMaterials, 1)[0];
+  const selectedSpace = selectItems(seed + '-alt-space', groutSpaces, 1)[0];
+
+  // 세부 지역: project.location에서 첫 번째 단어 또는 subAreas 첫 번째
+  const subArea = project.location?.split(' ')[0]
+    || (region.subAreas && region.subAreas.length > 0 ? region.subAreas[0] : '');
+
+  // 시공 전/후 텍스트
+  const typeText = type === 'before' ? '시공 전' : '시공 후';
+
+  // alt 텍스트 조합
+  return `${region.name} ${subArea} ${selectedMaterial} 줄눈시공 ${selectedSpace} ${typeText} 사진 - 하우스Pick`.trim().replace(/\s+/g, ' ');
+}
+
+/**
+ * 폴백 이미지용 alt 텍스트 생성
+ * @param {Object} region - 지역 데이터
+ * @returns {string} 폴백 alt 텍스트
+ */
+export function generateFallbackAlt(region) {
+  return `${region.name} 줄눈시공 준비 중 - 하우스Pick`;
+}

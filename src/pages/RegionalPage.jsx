@@ -1,6 +1,36 @@
+/**
+ * ============================================
+ * 📸 이미지 파일명 명명 규칙 (SEO 최적화)
+ * ============================================
+ *
+ * 형식: {지역slug}-{번호}-{before|after}.jpg
+ *
+ * 권장 예시:
+ *   ✅ suwon-001-before.jpg
+ *   ✅ gangnam-bathroom-after.jpg
+ *   ✅ yongin-suji-kitchen-001.jpg
+ *
+ * 피해야 할 예시:
+ *   ❌ IMG_1234.jpg (의미 없는 이름)
+ *   ❌ 사진1.jpg (한글 파일명)
+ *   ❌ photo (1).jpg (공백, 괄호)
+ *
+ * 상세 가이드:
+ *   1. 영문 소문자 + 하이픈(-) 사용
+ *   2. 지역명 포함 필수 (suwon, gangnam 등)
+ *   3. 공간명 포함 권장 (bathroom, kitchen, entrance)
+ *   4. before/after 구분 필수
+ *   5. 확장자: .jpg 또는 .webp (webp 권장)
+ *
+ * 이미지 저장 경로:
+ *   /public/images/projects/{지역slug}/
+ *   예: /public/images/projects/suwon/suwon-001-after.jpg
+ * ============================================
+ */
+
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import * as ChannelService from '@channel.io/channel-web-sdk-loader';
-import { generateSEOContent, generateHashtags } from '../utils/contentGenerator';
+import { generateSEOContent, generateHashtags, generateImageAlt, generateFallbackAlt } from '../utils/contentGenerator';
 
 // 카운트업 애니메이션 컴포넌트
 function CountUp({ end, suffix = '', decimal = 0, duration = 2000 }) {
@@ -359,37 +389,31 @@ export default function RegionalPage({ region }) {
             <div className="grid md:grid-cols-2 gap-8">
               {region.projects.map((project) => (
                 <div key={project.id} className="bg-stone-50 rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all">
-                  {/* Before/After 이미지 */}
+                  {/* Before/After 이미지 - SEO 최적화 alt 태그 자동 생성 */}
                   <div className="relative">
                     <div className="grid grid-cols-2 gap-1">
                       <div className="relative">
                         <img
                           src={project.images.before}
-                          alt={`${project.title} 시공 전`}
+                          alt={generateImageAlt(region, project, 'before')}
                           className="w-full h-48 object-cover bg-stone-200"
                           onError={(e) => {
-                            e.target.style.display = 'none';
-                            e.target.nextSibling.style.display = 'flex';
+                            e.target.src = '/images/placeholder-before.svg';
+                            e.target.alt = generateFallbackAlt(region);
                           }}
                         />
-                        <div className="hidden w-full h-48 bg-stone-200 items-center justify-center text-stone-400 text-sm">
-                          이미지 준비중
-                        </div>
                         <span className="absolute top-2 left-2 bg-stone-800/80 text-white text-xs px-2 py-1 rounded">BEFORE</span>
                       </div>
                       <div className="relative">
                         <img
                           src={project.images.after}
-                          alt={`${project.title} 시공 후`}
+                          alt={generateImageAlt(region, project, 'after')}
                           className="w-full h-48 object-cover bg-stone-200"
                           onError={(e) => {
-                            e.target.style.display = 'none';
-                            e.target.nextSibling.style.display = 'flex';
+                            e.target.src = '/images/placeholder-after.svg';
+                            e.target.alt = generateFallbackAlt(region);
                           }}
                         />
-                        <div className="hidden w-full h-48 bg-stone-200 items-center justify-center text-stone-400 text-sm">
-                          이미지 준비중
-                        </div>
                         <span className="absolute top-2 left-2 bg-amber-500 text-white text-xs px-2 py-1 rounded">AFTER</span>
                       </div>
                     </div>

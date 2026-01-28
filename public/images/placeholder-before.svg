@@ -1,0 +1,30 @@
+<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fafaf9;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f5f5f4;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect fill="url(#bgGradient)" width="400" height="300"/>
+
+  <!-- Decorative border -->
+  <rect x="10" y="10" width="380" height="280" fill="none" stroke="#e7e5e4" stroke-width="2" stroke-dasharray="8,4" rx="8"/>
+
+  <!-- Camera icon -->
+  <g transform="translate(175, 100)">
+    <rect x="5" y="12" width="40" height="28" rx="4" fill="#d6d3d1" stroke="#a8a29e" stroke-width="2"/>
+    <circle cx="25" cy="26" r="8" fill="#a8a29e"/>
+    <circle cx="25" cy="26" r="4" fill="#78716c"/>
+    <rect x="15" y="8" width="20" height="8" rx="2" fill="#d6d3d1" stroke="#a8a29e" stroke-width="2"/>
+  </g>
+
+  <!-- Text -->
+  <text x="200" y="175" text-anchor="middle" fill="#78716c" font-family="'Noto Sans KR', sans-serif" font-size="16" font-weight="500">시공 전 사진</text>
+  <text x="200" y="198" text-anchor="middle" fill="#a8a29e" font-family="'Noto Sans KR', sans-serif" font-size="13">준비 중입니다</text>
+
+  <!-- Brand -->
+  <text x="200" y="265" text-anchor="middle" fill="#f59e0b" font-family="'Noto Sans KR', sans-serif" font-size="14" font-weight="700">HousePick</text>
+  <text x="200" y="282" text-anchor="middle" fill="#d6d3d1" font-family="'Noto Sans KR', sans-serif" font-size="10">정찰제 줄눈시공</text>
+</svg>

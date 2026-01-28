@@ -1,0 +1,28 @@
+<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fffbeb;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#fef3c7;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect fill="url(#bgGradient)" width="400" height="300"/>
+
+  <!-- Decorative border -->
+  <rect x="10" y="10" width="380" height="280" fill="none" stroke="#fcd34d" stroke-width="2" stroke-dasharray="8,4" rx="8"/>
+
+  <!-- Sparkle/Star icon -->
+  <g transform="translate(175, 95)">
+    <path d="M25 0 L30 18 L50 18 L34 30 L40 50 L25 38 L10 50 L16 30 L0 18 L20 18 Z" fill="#f59e0b" opacity="0.8"/>
+    <circle cx="25" cy="25" r="10" fill="#fbbf24"/>
+  </g>
+
+  <!-- Text -->
+  <text x="200" y="175" text-anchor="middle" fill="#92400e" font-family="'Noto Sans KR', sans-serif" font-size="16" font-weight="500">시공 후 사진</text>
+  <text x="200" y="198" text-anchor="middle" fill="#b45309" font-family="'Noto Sans KR', sans-serif" font-size="13">곧 업데이트 예정</text>
+
+  <!-- Brand -->
+  <text x="200" y="265" text-anchor="middle" fill="#f59e0b" font-family="'Noto Sans KR', sans-serif" font-size="14" font-weight="700">HousePick</text>
+  <text x="200" y="282" text-anchor="middle" fill="#d97706" font-family="'Noto Sans KR', sans-serif" font-size="10">정찰제 줄눈시공</text>
+</svg>

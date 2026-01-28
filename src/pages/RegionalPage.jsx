@@ -290,23 +290,77 @@ export default function RegionalPage({ region }) {
         </div>
       </section>
 
-      {/* 시공 사진 플레이스홀더 */}
+      {/* 시공 사례 갤러리 */}
       <section className="py-20 px-6 bg-white">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-14">
             <span className="text-amber-600 font-semibold text-sm tracking-widest uppercase">PORTFOLIO</span>
             <h2 className="text-3xl lg:text-4xl font-bold text-stone-800 mt-2">{region.name} 시공 사례</h2>
+            <p className="text-stone-600 mt-4">{region.fullName} 지역 실제 시공 사례입니다.</p>
           </div>
 
-          {/* 이미지 플레이스홀더 */}
-          <div className="bg-stone-100 border border-dashed border-stone-300 rounded-2xl p-12 text-center">
-            <p className="text-stone-500 mb-4">
-              [여기에 {region.name} 지역 시공 전후 사진 10장 이상을 배치하세요]
-            </p>
-            <p className="text-sm text-stone-400">
-              이미지 alt 태그 예시: alt="{region.name} 줄눈시공 화장실 타일 시공 전"
-            </p>
-          </div>
+          {region.projects && region.projects.length > 0 ? (
+            <div className="grid md:grid-cols-2 gap-8">
+              {region.projects.map((project) => (
+                <div key={project.id} className="bg-stone-50 rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all">
+                  {/* Before/After 이미지 */}
+                  <div className="relative">
+                    <div className="grid grid-cols-2 gap-1">
+                      <div className="relative">
+                        <img
+                          src={project.images.before}
+                          alt={`${project.title} 시공 전`}
+                          className="w-full h-48 object-cover bg-stone-200"
+                          onError={(e) => {
+                            e.target.style.display = 'none';
+                            e.target.nextSibling.style.display = 'flex';
+                          }}
+                        />
+                        <div className="hidden w-full h-48 bg-stone-200 items-center justify-center text-stone-400 text-sm">
+                          이미지 준비중
+                        </div>
+                        <span className="absolute top-2 left-2 bg-stone-800/80 text-white text-xs px-2 py-1 rounded">BEFORE</span>
+                      </div>
+                      <div className="relative">
+                        <img
+                          src={project.images.after}
+                          alt={`${project.title} 시공 후`}
+                          className="w-full h-48 object-cover bg-stone-200"
+                          onError={(e) => {
+                            e.target.style.display = 'none';
+                            e.target.nextSibling.style.display = 'flex';
+                          }}
+                        />
+                        <div className="hidden w-full h-48 bg-stone-200 items-center justify-center text-stone-400 text-sm">
+                          이미지 준비중
+                        </div>
+                        <span className="absolute top-2 left-2 bg-amber-500 text-white text-xs px-2 py-1 rounded">AFTER</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 프로젝트 정보 */}
+                  <div className="p-6">
+                    <h3 className="font-bold text-lg text-stone-800 mb-2">{project.title}</h3>
+                    <div className="flex flex-wrap gap-2 mb-3">
+                      <span className="text-xs bg-amber-100 text-amber-700 px-2 py-1 rounded">{project.date}</span>
+                      <span className="text-xs bg-stone-200 text-stone-600 px-2 py-1 rounded">{project.scope}</span>
+                    </div>
+                    <p className="text-stone-600 text-sm">{project.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="bg-stone-100 border border-dashed border-stone-300 rounded-2xl p-12 text-center">
+              <p className="text-stone-500 mb-4">
+                {region.name} 지역 시공 사례가 곧 업데이트됩니다.
+              </p>
+              <p className="text-sm text-stone-400">
+                더 많은 시공 사례는 채팅 상담을 통해 확인하실 수 있습니다.
+              </p>
+            </div>
+          )}
         </div>
       </section>
 

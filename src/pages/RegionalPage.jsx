@@ -460,6 +460,30 @@ export default function RegionalPage({ region }) {
         </section>
       )}
 
+      {/* 세부 서비스 지역 - subAreas가 있는 경우만 표시 */}
+      {region.subAreas && region.subAreas.length > 0 && (
+        <section className="py-12 px-6 bg-white border-t border-stone-200">
+          <div className="max-w-5xl mx-auto">
+            <h3 className="text-lg font-bold text-stone-800 mb-4">
+              📍 {region.name} 내 세부 서비스 지역
+            </h3>
+            <div className="flex flex-wrap gap-2">
+              {region.subAreas.map((area, idx) => (
+                <span
+                  key={idx}
+                  className="text-stone-600 hover:text-amber-600 text-sm transition-colors cursor-default"
+                >
+                  {area} 줄눈시공{idx < region.subAreas.length - 1 ? ',' : ''}
+                </span>
+              ))}
+            </div>
+            <p className="text-sm text-stone-500 mt-4">
+              {region.fullName} 전 지역 출장 시공 가능합니다.
+            </p>
+          </div>
+        </section>
+      )}
+
       {/* Footer */}
       <footer className="bg-stone-900 text-stone-400 py-12 px-6">
         <div className="max-w-5xl mx-auto">

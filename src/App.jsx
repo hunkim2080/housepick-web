@@ -899,7 +899,20 @@ export default function HousePickFlyer() {
       </div>
 
       {/* Hero Section */}
-      <section className="hero-bg text-white pt-28 pb-24 px-6 lg:pt-36 lg:pb-32">
+      <section className="relative text-white pt-28 pb-24 px-6 lg:pt-36 lg:pb-32 overflow-hidden">
+        {/* 배경 동영상 */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute top-0 left-0 w-full h-full object-cover z-0"
+        >
+          <source src="/videos/hero-bg.mp4" type="video/mp4" />
+        </video>
+        {/* 어두운 오버레이 */}
+        <div className="absolute top-0 left-0 w-full h-full bg-black/60 z-0"></div>
+
         <div className="max-w-5xl mx-auto text-center relative z-10">
           <div style={fadeIn(0)}>
             <div className="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/30 rounded-full px-5 py-2 mb-10 badge-shine">

@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build && node scripts/generate-regional-pages.js",
     "preview": "vite preview",
-    "generate-regions": "node scripts/generate-regional-pages.js"
+    "generate-regions": "node scripts/generate-regional-pages.js",
+    "copy-images": "node scripts/copy-sample-images.js"
   },
   "dependencies": {
     "@channel.io/channel-web-sdk-loader": "^2.0.2",

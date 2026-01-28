@@ -131,6 +131,20 @@ if (!fs.existsSync(distPath)) {
   process.exit(1)
 }
 
+// dist/regional.html에서 빌드된 JS/CSS 경로 추출 (지역 페이지용 엔트리 포인트)
+const regionalHtmlPath = path.join(distPath, 'regional.html')
+const regionalHtml = fs.readFileSync(regionalHtmlPath, 'utf-8')
+
+// Vite 빌드 파일 경로 추출 (해시 포함된 파일명)
+// regional.html에서 regional-xxx.js와 index-xxx.css를 추출
+const jsMatch = regionalHtml.match(/src="(\/assets\/regional-[^"]+\.js)"/)
+const cssMatch = regionalHtml.match(/href="(\/assets\/index-[^"]+\.css)"/)
+
+const viteJs = jsMatch ? jsMatch[1] : '/assets/regional.js'
+const viteCss = cssMatch ? cssMatch[1] : '/assets/index.css'
+
+console.log(`Vite 빌드 파일 감지: JS=${viteJs}, CSS=${viteCss}`)
+
 // 각 지역별 HTML 생성
 console.log(`${regions.length}개 지역 페이지 생성 시작...`)
 
@@ -160,6 +174,8 @@ regions.forEach(region => {
     .replace(/\{\{REGION_SUB_AREAS_DESC\}\}/g, subAreasForDesc)
     .replace(/\{\{DYNAMIC_TITLE\}\}/g, dynamicTitle)
     .replace(/\{\{DYNAMIC_DESCRIPTION\}\}/g, dynamicDescription)
+    .replace(/\{\{VITE_JS\}\}/g, viteJs)
+    .replace(/\{\{VITE_CSS\}\}/g, viteCss)
 
   const regionDir = path.join(distPath, region.slug)
   if (!fs.existsSync(regionDir)) {

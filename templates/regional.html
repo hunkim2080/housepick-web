@@ -45,7 +45,7 @@
         }
       },
       "serviceType": ["줄눈시공", "타일줄눈", "화장실줄눈", "거실줄눈"],
-      "priceRange": "₩₩",
+      "priceRange": "$$",
       "aggregateRating": {
         "@type": "AggregateRating",
         "ratingValue": "4.9",
@@ -81,9 +81,119 @@
       ]
     }
     </script>
+
+    <!-- Vite 빌드된 CSS -->
+    <link rel="stylesheet" crossorigin href="{{VITE_CSS}}">
+
+    <!-- 프리렌더링 콘텐츠용 인라인 스타일 (CSS 로드 전 깜빡임 방지) -->
+    <style>
+      .prerender-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        z-index: 50;
+      }
+      .prerender-header-inner {
+        max-width: 72rem;
+        margin: 0 auto;
+        padding: 0.75rem 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .prerender-logo {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #f59e0b;
+      }
+      .prerender-cta-btn {
+        background: #f59e0b;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 9999px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+      }
+      .prerender-hero {
+        padding-top: 5rem;
+        padding-bottom: 4rem;
+        background: linear-gradient(to bottom, #fffbeb, white);
+        text-align: center;
+      }
+      .prerender-hero-inner {
+        max-width: 72rem;
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
+      .prerender-h1 {
+        font-size: 1.875rem;
+        font-weight: 700;
+        color: #292524;
+        margin-bottom: 1rem;
+      }
+      .prerender-subtitle {
+        font-size: 1.125rem;
+        color: #57534e;
+        margin-bottom: 1.5rem;
+      }
+      .prerender-main-cta {
+        display: inline-block;
+        background: #f59e0b;
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 9999px;
+        font-size: 1.125rem;
+        font-weight: 700;
+        text-decoration: none;
+      }
+      .prerender-loading {
+        text-align: center;
+        padding: 2rem;
+        color: #a8a29e;
+      }
+      @media (min-width: 768px) {
+        .prerender-h1 { font-size: 2.25rem; }
+      }
+    </style>
   </head>
   <body>
-    <div id="root" data-region="{{REGION_SLUG}}"></div>
-    <script type="module" src="/src/regional-entry.jsx"></script>
+    <!-- 프리렌더링된 핵심 콘텐츠 (React 로드 전에 즉시 표시) -->
+    <div id="root" data-region="{{REGION_SLUG}}">
+      <!-- 헤더 -->
+      <header class="prerender-header">
+        <div class="prerender-header-inner">
+          <a href="/" class="prerender-logo">HousePick</a>
+          <a href="tel:010-6461-0131" class="prerender-cta-btn">
+            전화 상담
+          </a>
+        </div>
+      </header>
+
+      <!-- 히어로 섹션 -->
+      <section class="prerender-hero">
+        <div class="prerender-hero-inner">
+          <h1 class="prerender-h1">{{REGION_FULL_NAME}} 줄눈시공</h1>
+          <p class="prerender-subtitle">업계 최초 정찰제 · 5년 무상보장</p>
+          <a href="tel:010-6461-0131" class="prerender-main-cta">
+            지금 바로 문의하기
+          </a>
+        </div>
+      </section>
+
+      <!-- 로딩 표시 -->
+      <div class="prerender-loading">
+        상세 내용을 불러오는 중...
+      </div>
+    </div>
+
+    <!-- Vite 빌드된 JS -->
+    <script type="module" crossorigin src="{{VITE_JS}}"></script>
   </body>
 </html>

@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactDOM from 'react-dom/client'
+import { hydrateRoot, createRoot } from 'react-dom/client'
 import RegionalPage from './pages/RegionalPage'
 import { getRegionBySlug } from './data/regions'
 import './index.css'
@@ -12,11 +12,22 @@ const regionSlug = rootElement?.dataset?.region
 const region = getRegionBySlug(regionSlug)
 
 if (region) {
-  ReactDOM.createRoot(rootElement).render(
+  // 프리렌더링된 콘텐츠가 있는지 확인 (자식 요소 존재 여부)
+  const hasPrerenderedContent = rootElement.children.length > 0
+
+  const app = (
     <React.StrictMode>
       <RegionalPage region={region} />
     </React.StrictMode>
   )
+
+  if (hasPrerenderedContent) {
+    // 프리렌더링된 콘텐츠가 있으면 hydrate (기존 DOM 재활용)
+    hydrateRoot(rootElement, app)
+  } else {
+    // 프리렌더링된 콘텐츠가 없으면 일반 render
+    createRoot(rootElement).render(app)
+  }
 } else {
   console.error(`지역을 찾을 수 없습니다: ${regionSlug}`)
 }

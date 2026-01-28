@@ -356,9 +356,15 @@ export default function RegionalPage({ region }) {
               <p className="text-stone-500 mb-4">
                 {region.name} 지역 시공 사례가 곧 업데이트됩니다.
               </p>
-              <p className="text-sm text-stone-400">
+              <p className="text-sm text-stone-400 mb-6">
                 더 많은 시공 사례는 채팅 상담을 통해 확인하실 수 있습니다.
               </p>
+              <button
+                onClick={() => ChannelService.showMessenger()}
+                className="btn-primary text-white font-bold px-6 py-3 rounded-full inline-flex items-center gap-2"
+              >
+                <span>💬</span> 실시간 견적 문의하기
+              </button>
             </div>
           )}
         </div>

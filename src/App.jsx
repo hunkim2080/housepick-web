@@ -695,6 +695,7 @@ export default function HousePickFlyer() {
   const [showQuoteForm, setShowQuoteForm] = useState(false);
   const [showPriceModal, setShowPriceModal] = useState(false);
   const [showBusinessInfo, setShowBusinessInfo] = useState(false);
+  const [showChatBubble, setShowChatBubble] = useState(true);
   
   useEffect(() => {
     setIsVisible(true);
@@ -845,28 +846,46 @@ export default function HousePickFlyer() {
       </header>
 
       {/* 플로팅 CTA 버튼 */}
-      <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-3">
-        <button
-          onClick={() => setShowPriceModal(true)}
-          className="w-14 h-14 bg-stone-700 hover:bg-stone-600 rounded-full shadow-lg flex items-center justify-center text-2xl transition-all hover:scale-110"
-          title="가격표 보기"
-        >
-          💰
-        </button>
-        <button
-          onClick={() => ChannelService.showMessenger()}
-          className="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-400 hover:to-blue-500 rounded-full shadow-lg flex items-center justify-center text-2xl transition-all hover:scale-110"
-          title="채널톡 상담"
-        >
-          💬
-        </button>
-        <a
-          href="tel:010-6461-0131"
-          className="w-14 h-14 bg-amber-500 hover:bg-amber-600 rounded-full shadow-lg flex items-center justify-center text-2xl transition-all hover:scale-110 animate-bounce"
-          title="전화 상담"
-        >
-          📞
-        </a>
+      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
+        {/* 채팅 유도 말풍선 */}
+        {showChatBubble && (
+          <div className="flex items-center gap-2 bg-white rounded-2xl shadow-lg px-4 py-3 mb-1 animate-fade-in">
+            <div className="flex -space-x-2 mr-2">
+              <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-sm">👤</div>
+              <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-sm">👤</div>
+            </div>
+            <div className="flex-1">
+              <p className="text-sm font-medium text-stone-800">궁금한 건 채팅으로 문의하세요</p>
+              <p className="text-xs text-green-600 flex items-center gap-1">
+                <span className="w-1.5 h-1.5 bg-green-500 rounded-full"></span>
+                몇 분 내 답변 받으실 수 있어요
+              </p>
+            </div>
+            <button
+              onClick={() => setShowChatBubble(false)}
+              className="text-stone-400 hover:text-stone-600 ml-2"
+            >
+              ✕
+            </button>
+          </div>
+        )}
+
+        <div className="flex flex-col gap-3">
+          <button
+            onClick={() => setShowPriceModal(true)}
+            className="w-14 h-14 bg-stone-700 hover:bg-stone-600 rounded-full shadow-lg flex items-center justify-center text-2xl transition-all hover:scale-110"
+            title="가격표 보기"
+          >
+            💰
+          </button>
+          <button
+            onClick={() => ChannelService.showMessenger()}
+            className="w-14 h-14 bg-gradient-to-br from-green-500 to-green-600 hover:from-green-400 hover:to-green-500 rounded-full shadow-lg flex items-center justify-center text-2xl transition-all hover:scale-110"
+            title="채널톡 상담"
+          >
+            💬
+          </button>
+        </div>
       </div>
 
       {/* Hero Section */}

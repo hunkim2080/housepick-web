@@ -1320,7 +1320,7 @@ export default function HousePickFlyer() {
             </div>
           </div>
 
-          {/* 사업자 정보 아코디언 */}
+          {/* 사업자 정보 아코디언 - 전체 주석 처리
           <div className="border-t border-stone-200 pt-4">
             <button
               onClick={() => setShowBusinessInfo(!showBusinessInfo)}
@@ -1338,17 +1338,16 @@ export default function HousePickFlyer() {
               className={`overflow-hidden transition-all duration-300 ease-in-out ${showBusinessInfo ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}
             >
               <div className="pt-4 pb-4 px-4">
-                {/* 사업자 정보 상세 - 주석 처리 (나중에 사용할지 결정)
                 <div className="space-y-2 text-sm text-stone-600">
                   <p><span className="text-stone-400">상호명:</span> 디테일라인</p>
                   <p><span className="text-stone-400">대표자:</span> 김상훈</p>
                   <p><span className="text-stone-400">사업자번호:</span> 609-33-19473</p>
                   <p><span className="text-stone-400">주소:</span> 서울시 서초구 본마을 4길 11, 104호</p>
                 </div>
-                */}
               </div>
             </div>
           </div>
+          */}
         </div>
       </section>
 

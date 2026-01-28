@@ -22,8 +22,8 @@ export const regions = [
         location: '역삼동 래미안 아파트',
         scope: '화장실 2개소',
         images: {
-          before: '/images/projects/gangnam/gangnam-001-before.jpg',
-          after: '/images/projects/gangnam/gangnam-001-after.jpg'
+          before: '/images/projects/gangnam/gangnam-001-before.webp',
+          after: '/images/projects/gangnam/gangnam-001-after.webp'
         },
         description: '20년 된 아파트 화장실 줄눈 리뉴얼. 곰팡이 제거 및 케라폭시 줄눈재 시공으로 깔끔한 마감.'
       },
@@ -34,8 +34,8 @@ export const regions = [
         location: '대치동 아이파크',
         scope: '현관 + 복도',
         images: {
-          before: '/images/projects/gangnam/gangnam-002-before.jpg',
-          after: '/images/projects/gangnam/gangnam-002-after.jpg'
+          before: '/images/projects/gangnam/gangnam-002-before.webp',
+          after: '/images/projects/gangnam/gangnam-002-after.webp'
         },
         description: '대리석 타일 현관 줄눈 교체. 밝은 색상으로 고급스러운 마감 완성.'
       }
@@ -229,8 +229,8 @@ export const regions = [
         location: '반포동 자이 아파트',
         scope: '거실 + 베란다',
         images: {
-          before: '/images/projects/seocho/seocho-001-before.jpg',
-          after: '/images/projects/seocho/seocho-001-after.jpg'
+          before: '/images/projects/seocho/seocho-001-before.webp',
+          after: '/images/projects/seocho/seocho-001-after.webp'
         },
         description: '넓은 거실 전체 줄눈 리뉴얼. 밝은 아이보리 색상으로 공간이 더 넓어 보이는 효과.'
       },
@@ -241,8 +241,8 @@ export const regions = [
         location: '방배동 삼성 아파트',
         scope: '화장실 3개소',
         images: {
-          before: '/images/projects/seocho/seocho-002-before.jpg',
-          after: '/images/projects/seocho/seocho-002-after.jpg'
+          before: '/images/projects/seocho/seocho-002-before.webp',
+          after: '/images/projects/seocho/seocho-002-after.webp'
         },
         description: '안방, 거실, 손님용 화장실 전체 줄눈 교체. 항균 줄눈재로 위생적인 마감.'
       }
@@ -293,8 +293,8 @@ export const regions = [
         location: '잠실동 엘스 아파트',
         scope: '화장실 2개소',
         images: {
-          before: '/images/projects/songpa/songpa-001-before.jpg',
-          after: '/images/projects/songpa/songpa-001-after.jpg'
+          before: '/images/projects/songpa/songpa-001-before.webp',
+          after: '/images/projects/songpa/songpa-001-after.webp'
         },
         description: '15년 된 아파트 화장실 줄눈 전면 교체. 곰팡이 완벽 제거 후 항균 줄눈재 시공.'
       },
@@ -305,8 +305,8 @@ export const regions = [
         location: '문정동 파크리오',
         scope: '현관 + 신발장 앞',
         images: {
-          before: '/images/projects/songpa/songpa-002-before.jpg',
-          after: '/images/projects/songpa/songpa-002-after.jpg'
+          before: '/images/projects/songpa/songpa-002-before.webp',
+          after: '/images/projects/songpa/songpa-002-after.webp'
         },
         description: '현관 바닥 줄눈 변색 해결. 그레이 톤으로 모던한 느낌 연출.'
       }
@@ -437,8 +437,8 @@ export const regions = [
         location: '정자동 아이파크',
         scope: '화장실 2개소',
         images: {
-          before: '/images/projects/seongnam/seongnam-001-before.jpg',
-          after: '/images/projects/seongnam/seongnam-001-after.jpg'
+          before: '/images/projects/seongnam/seongnam-001-before.webp',
+          after: '/images/projects/seongnam/seongnam-001-after.webp'
         },
         description: '분당 정자동 20년 된 아파트 화장실 줄눈 전면 교체. 밝은 화이트 톤으로 깔끔한 마감.'
       },
@@ -449,8 +449,8 @@ export const regions = [
         location: '판교 알파리움',
         scope: '거실 전체',
         images: {
-          before: '/images/projects/seongnam/seongnam-002-before.jpg',
-          after: '/images/projects/seongnam/seongnam-002-after.jpg'
+          before: '/images/projects/seongnam/seongnam-002-before.webp',
+          after: '/images/projects/seongnam/seongnam-002-after.webp'
         },
         description: '판교 신도시 아파트 거실 줄눈 변색 해결. 대형 타일에 맞는 프리미엄 줄눈재 사용.'
       }
@@ -475,8 +475,8 @@ export const regions = [
         location: '수지구 래미안 아파트',
         scope: '화장실 + 현관',
         images: {
-          before: '/images/projects/yongin/yongin-001-before.jpg',
-          after: '/images/projects/yongin/yongin-001-after.jpg'
+          before: '/images/projects/yongin/yongin-001-before.webp',
+          after: '/images/projects/yongin/yongin-001-after.webp'
         },
         description: '18년 된 수지 래미안 아파트 화장실과 현관 줄눈 동시 시공. 통일감 있는 마감.'
       },
@@ -487,8 +487,8 @@ export const regions = [
         location: '기흥구 롯데캐슬',
         scope: '거실 + 주방',
         images: {
-          before: '/images/projects/yongin/yongin-002-before.jpg',
-          after: '/images/projects/yongin/yongin-002-after.jpg'
+          before: '/images/projects/yongin/yongin-002-before.webp',
+          after: '/images/projects/yongin/yongin-002-after.webp'
         },
         description: '넓은 거실과 주방 연결부 줄눈 리뉴얼. 케라폭시 줄눈재로 내구성 강화.'
       }

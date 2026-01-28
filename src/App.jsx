@@ -695,8 +695,9 @@ export default function HousePickFlyer() {
   const [showQuoteForm, setShowQuoteForm] = useState(false);
   const [showPriceModal, setShowPriceModal] = useState(false);
   const [showBusinessInfo, setShowBusinessInfo] = useState(false);
-  const [showChatBubble, setShowChatBubble] = useState(true);
-  
+  const [showChatBubble, setShowChatBubble] = useState(false);
+  const [chatBubbleClosed, setChatBubbleClosed] = useState(false);
+
   useEffect(() => {
     setIsVisible(true);
 
@@ -706,6 +707,15 @@ export default function HousePickFlyer() {
       pluginKey: "b59d5b7c-82c0-4e3a-a984-7ec0e37ee354",
       hideChannelButtonOnBoot: true
     });
+
+    // 스크롤 시 채팅 팝업 표시
+    const handleScroll = () => {
+      if (window.scrollY > 400) {
+        setShowChatBubble(true);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const fadeIn = (delay) => ({
@@ -848,7 +858,7 @@ export default function HousePickFlyer() {
       {/* 플로팅 CTA 버튼 */}
       <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
         {/* 채팅 유도 말풍선 */}
-        {showChatBubble && (
+        {showChatBubble && !chatBubbleClosed && (
           <div className="flex items-center gap-2 bg-white rounded-2xl shadow-lg px-4 py-3 mb-1 animate-fade-in">
             <div className="flex -space-x-2 mr-2">
               <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-sm">👤</div>
@@ -862,7 +872,7 @@ export default function HousePickFlyer() {
               </p>
             </div>
             <button
-              onClick={() => setShowChatBubble(false)}
+              onClick={() => setChatBubbleClosed(true)}
               className="text-stone-400 hover:text-stone-600 ml-2"
             >
               ✕
@@ -889,31 +899,31 @@ export default function HousePickFlyer() {
       </div>
 
       {/* Hero Section */}
-      <section className="hero-bg text-white pt-28 pb-20 px-6 lg:pt-36 lg:pb-28">
+      <section className="hero-bg text-white pt-28 pb-24 px-6 lg:pt-36 lg:pb-32">
         <div className="max-w-5xl mx-auto text-center relative z-10">
           <div style={fadeIn(0)}>
-            <div className="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/30 rounded-full px-5 py-2 mb-8 badge-shine">
+            <div className="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/30 rounded-full px-5 py-2 mb-10 badge-shine">
               <span className="w-2 h-2 bg-amber-400 rounded-full animate-pulse"></span>
               <span className="text-amber-300 text-sm font-medium tracking-wide">업계 최초 정찰제 줄눈 브랜드</span>
             </div>
           </div>
-          
-          <h1 style={fadeIn(0.1)} className="text-3xl lg:text-5xl font-bold leading-tight mb-4">
+
+          <h1 style={fadeIn(0.1)} className="text-3xl lg:text-5xl font-bold leading-tight mb-6">
             줄눈 가격, <span className="text-amber-400">이제 검색하지 마세요</span>
           </h1>
-          
-          <h2 style={fadeIn(0.2)} className="text-xl lg:text-2xl font-medium text-stone-300 mb-10">
+
+          <h2 style={fadeIn(0.2)} className="text-xl lg:text-2xl font-medium text-stone-300 mb-12">
             가격도 <span className="text-white font-bold">정찰제</span>, 품질도 <span className="text-amber-400 font-bold">5년 무상보장</span>
           </h2>
-          
-          <div style={fadeIn(0.3)} className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
-            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl px-6 py-4">
-              <div className="text-amber-400 font-bold text-lg">✓ 홈페이지 가격 = 실제 가격</div>
-              <div className="text-stone-300 text-sm">추가 비용 없는 정찰제</div>
+
+          <div style={fadeIn(0.3)} className="flex flex-col sm:flex-row gap-5 justify-center mb-12">
+            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl px-6 py-5">
+              <div className="text-amber-400 font-bold text-lg">💰 홈페이지 가격 = 실제 가격</div>
+              <div className="text-stone-300 text-sm mt-1">추가 비용 없는 정찰제</div>
             </div>
-            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl px-6 py-4">
-              <div className="text-amber-400 font-bold text-lg">✓ 5년 무상 A/S</div>
-              <div className="text-stone-300 text-sm">자신 있으니까 보장합니다</div>
+            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl px-6 py-5">
+              <div className="text-amber-400 font-bold text-lg">🛡️ 5년 무상 A/S 보장</div>
+              <div className="text-stone-300 text-sm mt-1">자신 있으니까 보장합니다</div>
             </div>
           </div>
           

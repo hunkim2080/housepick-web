@@ -126,11 +126,58 @@ Allow: /
 # Sitemap
 Sitemap: ${BASE_URL}/sitemap.xml
 
+# RSS Feed
+# ${BASE_URL}/rss.xml
+
 # Disallow
 Disallow: /api/
 Disallow: /_vercel/
 Disallow: /*.json$
 `
+}
+
+// RSS 피드 생성 함수
+function generateRSS() {
+  const today = new Date().toUTCString()
+
+  let rss = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>하우스Pick - 정찰제 줄눈시공</title>
+    <link>${BASE_URL}</link>
+    <description>줄눈 가격, 이제 검색하지 마세요. 업계 최초 정찰제, 5년 무상보장</description>
+    <language>ko</language>
+    <lastBuildDate>${today}</lastBuildDate>
+    <atom:link href="${BASE_URL}/rss.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>하우스Pick | 정찰제 줄눈시공</title>
+      <link>${BASE_URL}/</link>
+      <description>하우스Pick - 줄눈 가격, 이제 검색하지 마세요. 업계 최초 정찰제, 5년 무상보장</description>
+      <pubDate>${today}</pubDate>
+      <guid>${BASE_URL}/</guid>
+    </item>
+`
+
+  // 52개 지역 페이지
+  regions.forEach(region => {
+    const regionLabel = getRegionLabel(region)
+    const title = `${regionLabel} 줄눈시공 1위, 하우스Pick`
+    const description = `${region.fullName} 줄눈시공 전문업체. 정찰제 가격, 5년 무상보장.`
+
+    rss += `    <item>
+      <title>${title}</title>
+      <link>${BASE_URL}/${region.slug}</link>
+      <description>${description}</description>
+      <pubDate>${today}</pubDate>
+      <guid>${BASE_URL}/${region.slug}</guid>
+    </item>
+`
+  })
+
+  rss += `  </channel>
+</rss>`
+
+  return rss
 }
 
 // 템플릿 읽기
@@ -213,4 +260,9 @@ const robotsContent = generateRobotsTxt()
 fs.writeFileSync(path.join(distPath, 'robots.txt'), robotsContent)
 console.log(`  ✓ /robots.txt 생성`)
 
-console.log(`\n완료! ${regions.length}개 지역 페이지 + sitemap.xml + robots.txt 생성되었습니다.`)
+// RSS 피드 생성
+const rssContent = generateRSS()
+fs.writeFileSync(path.join(distPath, 'rss.xml'), rssContent)
+console.log(`  ✓ /rss.xml 생성 (${regions.length + 1}개 항목)`)
+
+console.log(`\n완료! ${regions.length}개 지역 페이지 + sitemap.xml + robots.txt + rss.xml 생성되었습니다.`)

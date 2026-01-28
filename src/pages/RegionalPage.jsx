@@ -202,7 +202,7 @@ export default function RegionalPage({ region }) {
         </div>
       </section>
 
-      {/* 지역 소개 섹션 */}
+      {/* 지역 소개 섹션 - 고유 콘텐츠 */}
       <section className="py-20 px-6 bg-white">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
@@ -211,20 +211,56 @@ export default function RegionalPage({ region }) {
           </div>
 
           <div className="bg-amber-50 border border-amber-200 rounded-2xl p-8">
+            {/* 지역 설명 */}
             <p className="text-stone-700 text-lg leading-relaxed mb-6">
               <strong className="text-amber-600">{region.fullName}</strong> 지역 줄눈시공을 전문으로 하는 하우스Pick입니다.
-              업계 최초 정찰제를 도입하여 투명한 가격으로 서비스를 제공하고 있으며,
-              5년 무상 A/S를 통해 고객님의 만족을 책임집니다.
+              {region.description && ` ${region.description}`}
             </p>
 
-            {/* 콘텐츠 플레이스홀더 */}
-            <div className="bg-white/50 border border-dashed border-amber-300 rounded-xl p-6 text-center text-stone-500">
-              <p className="text-sm">
-                [여기에 {region.fullName}의 특징을 담은 1000자 이상의 스토리텔링 글을 작성하세요]
-              </p>
-              <p className="text-xs mt-2 text-stone-400">
-                예: "{region.name} 지역 아파트 단지명", "주요 랜드마크", "지역 특성" 등을 언급하여 차별화된 콘텐츠 작성
-              </p>
+            {/* 주요 랜드마크 */}
+            {region.landmarks && region.landmarks.length > 0 && (
+              <div className="mb-6">
+                <h3 className="text-lg font-bold text-stone-800 mb-3">📍 {region.name} 주요 지역</h3>
+                <p className="text-stone-600 leading-relaxed">
+                  {region.name} 지역에는 <span className="text-amber-600 font-medium">{region.landmarks.join(', ')}</span> 등
+                  다양한 시설이 위치해 있습니다. 하우스Pick은 이러한 {region.fullName} 전 지역에서 줄눈시공 서비스를 제공합니다.
+                </p>
+              </div>
+            )}
+
+            {/* 주요 아파트 단지 */}
+            {region.apartments && region.apartments.length > 0 && (
+              <div className="mb-6">
+                <h3 className="text-lg font-bold text-stone-800 mb-3">🏢 {region.name} 주요 아파트 시공 지역</h3>
+                <p className="text-stone-600 leading-relaxed">
+                  {region.fullName}의 대표적인 아파트 단지로는 <span className="text-amber-600 font-medium">{region.apartments.join(', ')}</span> 등이 있습니다.
+                  이 지역 아파트들은 대부분 10~25년 정도 된 건물들이 많아 줄눈 리뉴얼 수요가 높습니다.
+                  하우스Pick은 각 아파트 단지의 타일 특성에 맞는 최적의 줄눈시공을 제공합니다.
+                </p>
+              </div>
+            )}
+
+            {/* 서비스 특징 */}
+            <div className="bg-white rounded-xl p-6 mt-6">
+              <h3 className="text-lg font-bold text-stone-800 mb-3">✨ {region.name}에서 하우스Pick을 선택해야 하는 이유</h3>
+              <ul className="space-y-2 text-stone-600">
+                <li className="flex items-start gap-2">
+                  <span className="text-amber-500 mt-1">✓</span>
+                  <span><strong>업계 최초 정찰제</strong> - {region.fullName} 어디서나 동일한 투명한 가격</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-amber-500 mt-1">✓</span>
+                  <span><strong>5년 무상 A/S 보장</strong> - 시공 후에도 책임지는 서비스</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-amber-500 mt-1">✓</span>
+                  <span><strong>당일 시공 가능</strong> - {region.name} 지역 빠른 방문 상담 및 시공</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-amber-500 mt-1">✓</span>
+                  <span><strong>프리미엄 재료 사용</strong> - 케라폭시 줄눈재로 방수 성능 UP</span>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
@@ -323,6 +359,47 @@ export default function RegionalPage({ region }) {
         </div>
       </section>
 
+      {/* 인접 지역 링크 섹션 - SEO 내부 링크 빌딩 */}
+      {region.nearbyAreas && region.nearbyAreas.length > 0 && (
+        <section className="py-16 px-6 bg-stone-100">
+          <div className="max-w-5xl mx-auto">
+            <h3 className="text-xl font-bold text-stone-800 mb-6">
+              📍 {region.name} 인근 지역 줄눈시공
+            </h3>
+            <div className="flex flex-wrap gap-3">
+              {region.nearbyAreas.map((area, idx) => {
+                // 지역명을 slug로 변환 (간단한 매핑)
+                const areaSlugMap = {
+                  '서초': 'seocho', '송파': 'songpa', '강동': 'gangdong', '강남': 'gangnam',
+                  '성남': 'seongnam', '용인': 'yongin', '수원': 'suwon', '화성': 'hwaseong',
+                  '안양': 'anyang', '부천': 'bucheon', '인천': 'incheon', '하남': 'hanam',
+                  '도봉': 'dobong', '노원': 'nowon', '성북': 'seongbuk', '양천': 'yangcheon',
+                  '영등포': 'yeongdeungpo', '마포': 'mapo', '구로': 'guro', '금천': 'geumcheon',
+                  '관악': 'gwanak', '동작': 'dongjak', '성동': 'seongdong', '광진': 'gwangjin',
+                  '중랑': 'jungnang', '동대문': 'dongdaemun', '은평': 'eunpyeong', '서대문': 'seodaemun',
+                  '종로': 'jongno', '중구': 'junggu-seoul', '용산': 'yongsan', '강서': 'gangseo',
+                  '강북': 'gangbuk', '고양': 'goyang', '파주': 'paju', '김포': 'gimpo',
+                  '광명': 'gwangmyeong', '시흥': 'siheung', '안산': 'ansan', '군포': 'gunpo',
+                  '의왕': 'uiwang', '과천': 'gwacheon', '광주': 'gwangju-gg', '남양주': 'namyangju',
+                  '구리': 'guri', '양주': 'yangju', '의정부': 'uijeongbu', '포천': 'pocheon',
+                  '평택': 'pyeongtaek', '오산': 'osan', '이천': 'icheon', '안성': 'anseong'
+                };
+                const slug = areaSlugMap[area.replace('서울 ', '')] || area.toLowerCase();
+                return (
+                  <a
+                    key={idx}
+                    href={`/${slug}`}
+                    className="bg-white border border-stone-200 hover:border-amber-400 hover:bg-amber-50 rounded-xl px-5 py-3 transition-all text-stone-700 hover:text-amber-600 font-medium"
+                  >
+                    {area} 줄눈시공 →
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Footer */}
       <footer className="bg-stone-900 text-stone-400 py-12 px-6">
         <div className="max-w-5xl mx-auto">
@@ -341,11 +418,18 @@ export default function RegionalPage({ region }) {
           <div className="mt-8 pt-8 border-t border-stone-800">
             <p className="text-sm text-stone-500 mb-4">서비스 가능 지역</p>
             <div className="flex flex-wrap gap-2 text-xs">
-              {['강남', '송파', '서초', '강동', '성남', '용인', '수원', '화성', '안양', '부천'].map((area, idx) => (
-                <a key={idx} href={`/${area}`} className="text-stone-500 hover:text-amber-400 transition-colors">
-                  {area}
-                </a>
-              ))}
+              {['gangnam', 'songpa', 'seocho', 'gangdong', 'seongnam', 'yongin', 'suwon', 'hwaseong', 'anyang', 'bucheon'].map((slug, idx) => {
+                const nameMap = {
+                  gangnam: '강남', songpa: '송파', seocho: '서초', gangdong: '강동',
+                  seongnam: '성남', yongin: '용인', suwon: '수원', hwaseong: '화성',
+                  anyang: '안양', bucheon: '부천'
+                };
+                return (
+                  <a key={idx} href={`/${slug}`} className="text-stone-500 hover:text-amber-400 transition-colors">
+                    {nameMap[slug]}
+                  </a>
+                );
+              })}
               <a href="/" className="text-amber-400 hover:text-amber-300">전체 지역 보기 →</a>
             </div>
           </div>

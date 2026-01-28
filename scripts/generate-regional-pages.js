@@ -1,14 +1,18 @@
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import { regions as regionsData } from '../src/data/regions.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 const BASE_URL = 'https://housepick-web.vercel.app'
 
-// 지역 데이터 (landmarks, apartments, description 포함)
-const regions = [
+// regions.js에서 가져온 데이터 사용
+const regions = regionsData
+
+// 기존 regions 데이터 (백업용, 이제 사용하지 않음)
+const regionsBackup = [
   // 서울
   { slug: 'gangnam', name: '강남', fullName: '강남구', province: '서울특별시', keywords: ['강남 줄눈', '강남구 줄눈시공', '강남 화장실 줄눈'], landmarks: ['코엑스', '삼성역', '강남역', '봉은사', '선릉'], apartments: ['래미안 퍼스티지', '대치 아이파크', '도곡렉슬', '타워팰리스'], description: '강남구는 서울의 대표 주거·상업 중심지입니다. 역삼동, 삼성동, 대치동, 도곡동 등 고급 아파트가 밀집해 있으며, 특히 15~25년 된 아파트의 줄눈 리뉴얼 수요가 높습니다.' },
   { slug: 'gangdong', name: '강동', fullName: '강동구', province: '서울특별시', keywords: ['강동 줄눈', '강동구 줄눈시공', '강동 화장실 줄눈'], landmarks: ['천호역', '암사역사유적지', '길동생태공원'], apartments: ['고덕 래미안', '고덕 그라시움', '힐스테이트 천호역'], description: '강동구는 고덕동, 천호동, 암사동 등 대단지 아파트가 많은 주거지역입니다. 최근 재건축과 리모델링이 활발하여 줄눈시공 수요가 꾸준히 증가하고 있습니다.' },
@@ -126,12 +130,24 @@ if (!fs.existsSync(distPath)) {
 console.log(`${regions.length}개 지역 페이지 생성 시작...`)
 
 regions.forEach(region => {
+  // subAreas가 있으면 Title용 텍스트 생성 (최대 3개)
+  const subAreasForTitle = region.subAreas?.length > 0
+    ? `(${region.subAreas.slice(0, 3).join(', ')})`
+    : ''
+
+  // subAreas가 있으면 Description용 텍스트 생성 (최대 5개)
+  const subAreasForDesc = region.subAreas?.length > 0
+    ? ` ${region.subAreas.slice(0, 5).join(', ')} 등`
+    : ''
+
   const html = template
     .replace(/\{\{REGION_SLUG\}\}/g, region.slug)
     .replace(/\{\{REGION_NAME\}\}/g, region.name)
     .replace(/\{\{REGION_FULL_NAME\}\}/g, region.fullName)
     .replace(/\{\{REGION_PROVINCE\}\}/g, region.province)
     .replace(/\{\{REGION_KEYWORDS\}\}/g, region.keywords.join(', '))
+    .replace(/\{\{REGION_SUB_AREAS\}\}/g, subAreasForTitle)
+    .replace(/\{\{REGION_SUB_AREAS_DESC\}\}/g, subAreasForDesc)
 
   const regionDir = path.join(distPath, region.slug)
   if (!fs.existsSync(regionDir)) {

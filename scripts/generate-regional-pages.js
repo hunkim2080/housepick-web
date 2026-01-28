@@ -16,6 +16,19 @@ const BASE_URL = 'https://housepick-web.vercel.app'
 // regions.js에서 가져온 데이터 사용
 const regions = regionsData
 
+// 지역 레이블 생성 함수 (OG 이미지와 동일한 형식)
+function getRegionLabel(region) {
+  const provinceShort = {
+    '서울특별시': '서울',
+    '경기도': '경기',
+    '인천광역시': '인천'
+  }
+  const short = provinceShort[region.province] || region.province
+  // 인천은 "인천광역시 인천광역시"가 되므로 "인천"만 반환
+  if (region.slug === 'incheon') return '인천'
+  return `${short} ${region.fullName}`
+}
+
 // 기존 regions 데이터 (백업용, 이제 사용하지 않음)
 const regionsBackup = [
   // 서울
@@ -164,11 +177,15 @@ regions.forEach(region => {
     ? ` ${region.subAreas.slice(0, 5).join(', ')} 등`
     : ''
 
+  // 지역 레이블 생성 (OG 이미지와 동일한 형식: "서울 강남구", "경기 수원시")
+  const regionLabel = getRegionLabel(region)
+
   const html = template
     .replace(/\{\{REGION_SLUG\}\}/g, region.slug)
     .replace(/\{\{REGION_NAME\}\}/g, region.name)
     .replace(/\{\{REGION_FULL_NAME\}\}/g, region.fullName)
     .replace(/\{\{REGION_PROVINCE\}\}/g, region.province)
+    .replace(/\{\{REGION_LABEL\}\}/g, regionLabel)
     .replace(/\{\{REGION_KEYWORDS\}\}/g, dynamicKeywords)
     .replace(/\{\{REGION_SUB_AREAS\}\}/g, subAreasForTitle)
     .replace(/\{\{REGION_SUB_AREAS_DESC\}\}/g, subAreasForDesc)

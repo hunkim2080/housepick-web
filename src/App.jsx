@@ -708,10 +708,12 @@ export default function HousePickFlyer() {
       hideChannelButtonOnBoot: true
     });
 
-    // 스크롤 시 채팅 팝업 표시
+    // 스크롤 시 채팅 팝업 표시/숨김 (Hero 섹션에서는 숨김)
     const handleScroll = () => {
       if (window.scrollY > 400) {
         setShowChatBubble(true);
+      } else {
+        setShowChatBubble(false);
       }
     };
     window.addEventListener('scroll', handleScroll);

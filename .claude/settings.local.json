@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nfeat: 채널톡 연동\n\n- 카카오톡 버튼을 채널톡으로 교체\n- @channel.io/channel-web-sdk-loader 패키지 추가\n- 채널톡 초기화 및 커스텀 버튼 연동\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git push:*)",
+      "Bash(npm run build:*)",
+      "Bash(git reset:*)",
+      "Bash(curl:*)",
+      "Bash(git commit:*)",
+      "Bash(git pull:*)",
+      "Bash(npm run generate-regions:*)"
+    ]
+  }
+}

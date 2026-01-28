@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Microsoft Clarity -->
+    <script type="text/javascript">
+      (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "v8a4rmukl6");
+    </script>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- SEO Meta Tags -->
+    <title>{{REGION_NAME}} 줄눈시공 전문업체 | 하우스Pick - 정찰제, 5년 무상보장</title>
+    <meta name="description" content="{{REGION_FULL_NAME}} 줄눈시공 전문. 업계 최초 정찰제, 5년 무상보장. {{REGION_NAME}} 지역 무료 방문 상담. 화장실, 거실, 현관 줄눈시공 전문." />
+    <meta name="keywords" content="{{REGION_KEYWORDS}}" />
+    <link rel="canonical" href="https://housepick-web.vercel.app/{{REGION_SLUG}}" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="{{REGION_NAME}} 줄눈시공 | 하우스Pick - 정찰제, 5년 무상보장" />
+    <meta property="og:description" content="{{REGION_FULL_NAME}} 줄눈시공 전문. 업계 최초 정찰제, 5년 무상보장." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://housepick-web.vercel.app/{{REGION_SLUG}}" />
+
+    <!-- JSON-LD LocalBusiness Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "@id": "https://housepick-web.vercel.app/{{REGION_SLUG}}",
+      "name": "하우스Pick {{REGION_NAME}}",
+      "description": "{{REGION_FULL_NAME}} 줄눈시공 전문업체. 업계 최초 정찰제, 5년 무상보장.",
+      "url": "https://housepick-web.vercel.app/{{REGION_SLUG}}",
+      "telephone": "010-6461-0131",
+      "areaServed": {
+        "@type": "City",
+        "name": "{{REGION_FULL_NAME}}",
+        "containedIn": {
+          "@type": "AdministrativeArea",
+          "name": "{{REGION_PROVINCE}}"
+        }
+      },
+      "serviceType": ["줄눈시공", "타일줄눈", "화장실줄눈", "거실줄눈"],
+      "priceRange": "₩₩",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "127"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "{{REGION_FULL_NAME}}",
+        "addressRegion": "{{REGION_PROVINCE}}",
+        "addressCountry": "KR"
+      }
+    }
+    </script>
+  </head>
+  <body>
+    <div id="root" data-region="{{REGION_SLUG}}"></div>
+    <script type="module" src="/src/regional-entry.jsx"></script>
+  </body>
+</html>

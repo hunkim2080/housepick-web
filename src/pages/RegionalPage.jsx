@@ -1,0 +1,356 @@
+import React, { useState, useEffect, useRef } from 'react';
+import * as ChannelService from '@channel.io/channel-web-sdk-loader';
+
+// 카운트업 애니메이션 컴포넌트
+function CountUp({ end, suffix = '', decimal = 0, duration = 2000 }) {
+  const [count, setCount] = useState(0);
+  const [hasStarted, setHasStarted] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasStarted) {
+          setHasStarted(true);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => observer.disconnect();
+  }, [hasStarted]);
+
+  useEffect(() => {
+    if (!hasStarted) return;
+
+    let startTime;
+    const animate = (currentTime) => {
+      if (!startTime) startTime = currentTime;
+      const progress = Math.min((currentTime - startTime) / duration, 1);
+      const easeOut = 1 - Math.pow(1 - progress, 4);
+      const currentCount = easeOut * end;
+      setCount(currentCount);
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
+    };
+
+    requestAnimationFrame(animate);
+  }, [hasStarted, end, duration]);
+
+  const formatNumber = (num) => {
+    if (decimal > 0) {
+      return num.toFixed(decimal);
+    }
+    return Math.floor(num).toLocaleString();
+  };
+
+  return (
+    <span ref={ref}>
+      {formatNumber(count)}{suffix}
+    </span>
+  );
+}
+
+// 지역 페이지 메인 컴포넌트
+export default function RegionalPage({ region }) {
+  const [isVisible, setIsVisible] = useState(false);
+  const [showQuoteForm, setShowQuoteForm] = useState(false);
+  const [showChatBubble, setShowChatBubble] = useState(false);
+  const [chatBubbleClosed, setChatBubbleClosed] = useState(false);
+
+  useEffect(() => {
+    setIsVisible(true);
+
+    // 채널톡 초기화
+    ChannelService.loadScript();
+    ChannelService.boot({
+      pluginKey: "b59d5b7c-82c0-4e3a-a984-7ec0e37ee354",
+      hideChannelButtonOnBoot: true
+    });
+
+    // 스크롤 시 채팅 팝업 표시/숨김
+    const handleScroll = () => {
+      if (window.scrollY > 400) {
+        setShowChatBubble(true);
+      } else {
+        setShowChatBubble(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const fadeIn = (delay) => ({
+    opacity: isVisible ? 1 : 0,
+    transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
+    transition: `all 0.8s cubic-bezier(0.16, 1, 0.3, 1) ${delay}s`
+  });
+
+  return (
+    <div className="min-h-screen bg-stone-50 font-sans">
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
+        * { font-family: 'Noto Sans KR', sans-serif; }
+        .btn-primary {
+          background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+          transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 10px 40px rgba(245, 158, 11, 0.4);
+        }
+      `}</style>
+
+      {/* 상단 고정 헤더 */}
+      <header className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm shadow-sm z-40">
+        <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+          <a href="/" className="font-black text-xl text-amber-600">HousePick</a>
+          <a
+            href="tel:010-6461-0131"
+            className="flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white font-bold px-4 py-2 rounded-full transition-all"
+          >
+            <span className="animate-pulse">📞</span>
+            <span className="hidden sm:inline">010-6461-0131</span>
+            <span className="sm:hidden">전화상담</span>
+          </a>
+        </div>
+      </header>
+
+      {/* 플로팅 CTA 버튼 */}
+      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
+        {showChatBubble && !chatBubbleClosed && (
+          <div className="flex items-center gap-2 bg-white rounded-2xl shadow-lg px-4 py-3 mb-1 animate-fade-in">
+            <div className="flex -space-x-2 mr-2">
+              <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-sm">👤</div>
+              <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-sm">👤</div>
+            </div>
+            <div className="flex-1">
+              <p className="text-sm font-medium text-stone-800">궁금한 건 채팅으로 문의하세요</p>
+              <p className="text-xs text-green-600 flex items-center gap-1">
+                <span className="w-1.5 h-1.5 bg-green-500 rounded-full"></span>
+                몇 분 내 답변 받으실 수 있어요
+              </p>
+            </div>
+            <button
+              onClick={() => setChatBubbleClosed(true)}
+              className="text-stone-400 hover:text-stone-600 ml-2"
+            >
+              ✕
+            </button>
+          </div>
+        )}
+        <button
+          onClick={() => ChannelService.showMessenger()}
+          className="w-14 h-14 bg-gradient-to-br from-green-500 to-green-600 hover:from-green-400 hover:to-green-500 rounded-full shadow-lg flex items-center justify-center text-2xl transition-all hover:scale-110"
+          title="채널톡 상담"
+        >
+          💬
+        </button>
+      </div>
+
+      {/* Hero Section - 지역명 포함 */}
+      <section className="relative text-white pt-28 pb-24 px-6 lg:pt-36 lg:pb-32 overflow-hidden bg-gradient-to-br from-stone-900 via-stone-800 to-stone-900">
+        <div className="max-w-5xl mx-auto text-center relative z-10">
+          <div style={fadeIn(0)}>
+            <div className="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/30 rounded-full px-5 py-2 mb-10">
+              <span className="w-2 h-2 bg-amber-400 rounded-full animate-pulse"></span>
+              <span className="text-amber-300 text-sm font-medium tracking-wide">{region.fullName} 줄눈시공 전문</span>
+            </div>
+          </div>
+
+          {/* SEO 최적화: h1 태그에 지역명 + 핵심 키워드 */}
+          <h1 style={fadeIn(0.1)} className="text-3xl lg:text-5xl font-bold leading-tight mb-6">
+            <span className="text-amber-400">{region.name}</span> 줄눈시공 전문업체
+          </h1>
+
+          <h2 style={fadeIn(0.2)} className="text-xl lg:text-2xl font-medium text-stone-300 mb-12">
+            가격도 <span className="text-white font-bold">정찰제</span>, 품질도 <span className="text-amber-400 font-bold">5년 무상보장</span>
+          </h2>
+
+          <div style={fadeIn(0.3)} className="flex flex-col sm:flex-row gap-5 justify-center mb-12">
+            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl px-6 py-5">
+              <div className="text-amber-400 font-bold text-lg">💰 홈페이지 가격 = 실제 가격</div>
+              <div className="text-stone-300 text-sm mt-1">추가 비용 없는 정찰제</div>
+            </div>
+            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl px-6 py-5">
+              <div className="text-amber-400 font-bold text-lg">🛡️ 5년 무상 A/S 보장</div>
+              <div className="text-stone-300 text-sm mt-1">자신 있으니까 보장합니다</div>
+            </div>
+          </div>
+
+          <div style={fadeIn(0.4)} className="space-y-4">
+            <a href="tel:010-6461-0131" className="inline-block">
+              <div className="bg-white/10 backdrop-blur-sm border-2 border-amber-400 rounded-2xl px-8 py-4 mb-4 hover:bg-white/20 transition-all">
+                <p className="text-amber-300 text-sm mb-1">지금 바로 전화하세요</p>
+                <p className="text-3xl lg:text-4xl font-black text-white tracking-wide">010-6461-0131</p>
+              </div>
+            </a>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <button
+                onClick={() => ChannelService.showMessenger()}
+                className="btn-primary text-white font-bold text-lg px-10 py-4 rounded-full shadow-lg"
+              >
+                📅 {region.name} 시공 상담받기 →
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 지역 소개 섹션 */}
+      <section className="py-20 px-6 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <span className="text-amber-600 font-semibold text-sm tracking-widest uppercase">SERVICE AREA</span>
+            <h2 className="text-3xl lg:text-4xl font-bold text-stone-800 mt-2">{region.fullName} 줄눈시공</h2>
+          </div>
+
+          <div className="bg-amber-50 border border-amber-200 rounded-2xl p-8">
+            <p className="text-stone-700 text-lg leading-relaxed mb-6">
+              <strong className="text-amber-600">{region.fullName}</strong> 지역 줄눈시공을 전문으로 하는 하우스Pick입니다.
+              업계 최초 정찰제를 도입하여 투명한 가격으로 서비스를 제공하고 있으며,
+              5년 무상 A/S를 통해 고객님의 만족을 책임집니다.
+            </p>
+
+            {/* 콘텐츠 플레이스홀더 */}
+            <div className="bg-white/50 border border-dashed border-amber-300 rounded-xl p-6 text-center text-stone-500">
+              <p className="text-sm">
+                [여기에 {region.fullName}의 특징을 담은 1000자 이상의 스토리텔링 글을 작성하세요]
+              </p>
+              <p className="text-xs mt-2 text-stone-400">
+                예: "{region.name} 지역 아파트 단지명", "주요 랜드마크", "지역 특성" 등을 언급하여 차별화된 콘텐츠 작성
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 서비스 범위 */}
+      <section className="py-20 px-6 bg-stone-100">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-14">
+            <span className="text-amber-600 font-semibold text-sm tracking-widest uppercase">OUR SERVICES</span>
+            <h2 className="text-3xl lg:text-4xl font-bold text-stone-800 mt-2">{region.name} 시공 서비스</h2>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              { icon: '🚿', title: '화장실 줄눈', desc: `${region.name} 지역 화장실 줄눈시공` },
+              { icon: '🛋️', title: '거실 줄눈', desc: `${region.name} 지역 거실 줄눈시공` },
+              { icon: '🚪', title: '현관 줄눈', desc: `${region.name} 지역 현관 줄눈시공` },
+            ].map((service, idx) => (
+              <div key={idx} className="bg-white rounded-2xl p-8 text-center shadow-sm hover:shadow-lg transition-all">
+                <div className="text-5xl mb-4">{service.icon}</div>
+                <h3 className="text-xl font-bold text-stone-800 mb-2">{service.title}</h3>
+                <p className="text-stone-600">{service.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 시공 사진 플레이스홀더 */}
+      <section className="py-20 px-6 bg-white">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-14">
+            <span className="text-amber-600 font-semibold text-sm tracking-widest uppercase">PORTFOLIO</span>
+            <h2 className="text-3xl lg:text-4xl font-bold text-stone-800 mt-2">{region.name} 시공 사례</h2>
+          </div>
+
+          {/* 이미지 플레이스홀더 */}
+          <div className="bg-stone-100 border border-dashed border-stone-300 rounded-2xl p-12 text-center">
+            <p className="text-stone-500 mb-4">
+              [여기에 {region.name} 지역 시공 전후 사진 10장 이상을 배치하세요]
+            </p>
+            <p className="text-sm text-stone-400">
+              이미지 alt 태그 예시: alt="{region.name} 줄눈시공 화장실 타일 시공 전"
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* 실적 통계 */}
+      <section className="py-20 px-6 bg-gradient-to-br from-stone-900 via-stone-800 to-stone-900 text-white">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-14">
+            <span className="text-amber-400 font-semibold text-sm tracking-widest uppercase">OUR RECORD</span>
+            <h2 className="text-3xl lg:text-4xl font-bold mt-2">하우스Pick 누적 실적</h2>
+          </div>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { value: 1821, suffix: '+', label: '누적 시공건수' },
+              { value: 98.7, suffix: '%', decimal: 1, label: '고객만족도' },
+              { value: 0.3, suffix: '%', decimal: 1, label: '재시공 요청률' },
+              { value: 5, suffix: '년', label: '무상 A/S' },
+            ].map((stat, idx) => (
+              <div key={idx} className="text-center">
+                <div className="text-4xl lg:text-5xl font-black text-amber-400 mb-2">
+                  <CountUp end={stat.value} suffix={stat.suffix} decimal={stat.decimal || 0} />
+                </div>
+                <p className="text-stone-400">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA 섹션 */}
+      <section className="py-20 px-6 bg-gradient-to-r from-amber-500 to-orange-500 text-white">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl lg:text-4xl font-bold mb-4">{region.name} 줄눈시공, 지금 상담받으세요</h2>
+          <p className="text-white/80 text-lg mb-8">가격도 정찰제, 품질도 5년 보장</p>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href="tel:010-6461-0131"
+              className="bg-white text-amber-600 font-bold text-lg px-8 py-4 rounded-full inline-flex items-center justify-center gap-2 hover:bg-stone-100 transition-all"
+            >
+              <span>📞</span> 010-6461-0131
+            </a>
+            <button
+              onClick={() => ChannelService.showMessenger()}
+              className="bg-white/20 backdrop-blur-sm border-2 border-white text-white font-bold text-lg px-8 py-4 rounded-full inline-flex items-center justify-center gap-2 hover:bg-white/30 transition-all"
+            >
+              <span>💬</span> 채팅 상담
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-stone-900 text-stone-400 py-12 px-6">
+        <div className="max-w-5xl mx-auto">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+            <div>
+              <a href="/" className="font-black text-2xl text-amber-500">HousePick</a>
+              <p className="mt-2">업계 최초 정찰제 줄눈 브랜드</p>
+            </div>
+            <div className="text-center md:text-right">
+              <p>대표전화: <a href="tel:010-6461-0131" className="text-white hover:text-amber-400">010-6461-0131</a></p>
+              <p className="mt-1">© 2024 HousePick. All rights reserved.</p>
+            </div>
+          </div>
+
+          {/* 서비스 지역 링크 (내부 링크 빌딩) */}
+          <div className="mt-8 pt-8 border-t border-stone-800">
+            <p className="text-sm text-stone-500 mb-4">서비스 가능 지역</p>
+            <div className="flex flex-wrap gap-2 text-xs">
+              {['강남', '송파', '서초', '강동', '성남', '용인', '수원', '화성', '안양', '부천'].map((area, idx) => (
+                <a key={idx} href={`/${area}`} className="text-stone-500 hover:text-amber-400 transition-colors">
+                  {area}
+                </a>
+              ))}
+              <a href="/" className="text-amber-400 hover:text-amber-300">전체 지역 보기 →</a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}

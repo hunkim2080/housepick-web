@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "generate-regions": "node scripts/generate-regional-pages.js"
   },
   "dependencies": {
     "@channel.io/channel-web-sdk-loader": "^2.0.2",

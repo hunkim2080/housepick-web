@@ -2,6 +2,11 @@ import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { regions as regionsData } from '../src/data/regions.js'
+import {
+  generateDynamicTitle,
+  generateDynamicDescription,
+  generateMetaKeywords
+} from '../src/utils/contentGenerator.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -130,7 +135,12 @@ if (!fs.existsSync(distPath)) {
 console.log(`${regions.length}개 지역 페이지 생성 시작...`)
 
 regions.forEach(region => {
-  // subAreas가 있으면 Title용 텍스트 생성 (최대 3개)
+  // 동적 SEO 콘텐츠 생성 (시드 기반 - 항상 동일한 결과)
+  const dynamicTitle = generateDynamicTitle(region)
+  const dynamicDescription = generateDynamicDescription(region)
+  const dynamicKeywords = generateMetaKeywords(region)
+
+  // subAreas가 있으면 Title용 텍스트 생성 (최대 3개) - 기존 호환성 유지
   const subAreasForTitle = region.subAreas?.length > 0
     ? `(${region.subAreas.slice(0, 3).join(', ')})`
     : ''
@@ -145,9 +155,11 @@ regions.forEach(region => {
     .replace(/\{\{REGION_NAME\}\}/g, region.name)
     .replace(/\{\{REGION_FULL_NAME\}\}/g, region.fullName)
     .replace(/\{\{REGION_PROVINCE\}\}/g, region.province)
-    .replace(/\{\{REGION_KEYWORDS\}\}/g, region.keywords.join(', '))
+    .replace(/\{\{REGION_KEYWORDS\}\}/g, dynamicKeywords)
     .replace(/\{\{REGION_SUB_AREAS\}\}/g, subAreasForTitle)
     .replace(/\{\{REGION_SUB_AREAS_DESC\}\}/g, subAreasForDesc)
+    .replace(/\{\{DYNAMIC_TITLE\}\}/g, dynamicTitle)
+    .replace(/\{\{DYNAMIC_DESCRIPTION\}\}/g, dynamicDescription)
 
   const regionDir = path.join(distPath, region.slug)
   if (!fs.existsSync(regionDir)) {

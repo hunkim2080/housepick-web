@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import * as ChannelService from '@channel.io/channel-web-sdk-loader';
+import { generateSEOContent, generateHashtags } from '../utils/contentGenerator';
 
 // 카운트업 애니메이션 컴포넌트
 function CountUp({ end, suffix = '', decimal = 0, duration = 2000 }) {
@@ -62,6 +63,10 @@ export default function RegionalPage({ region }) {
   const [showQuoteForm, setShowQuoteForm] = useState(false);
   const [showChatBubble, setShowChatBubble] = useState(false);
   const [chatBubbleClosed, setChatBubbleClosed] = useState(false);
+
+  // SEO 콘텐츠 생성 (시드 기반 - 항상 동일한 콘텐츠)
+  const seoContent = useMemo(() => generateSEOContent(region), [region]);
+  const hashtags = useMemo(() => generateHashtags(region), [region]);
 
   useEffect(() => {
     setIsVisible(true);
@@ -266,6 +271,57 @@ export default function RegionalPage({ region }) {
         </div>
       </section>
 
+      {/* SEO 스토리텔링 콘텐츠 섹션 */}
+      <section className="py-20 px-6 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <span className="text-amber-600 font-semibold text-sm tracking-widest uppercase">
+              {region.name} GROUT SERVICE
+            </span>
+            <h2 className="text-3xl lg:text-4xl font-bold text-stone-800 mt-2">
+              {region.fullName} 줄눈시공 전문 안내
+            </h2>
+          </div>
+
+          <article className="prose prose-lg prose-stone max-w-none">
+            {/* 서론 */}
+            <p className="text-lg text-stone-700 leading-relaxed mb-8">
+              {seoContent.intro}
+            </p>
+
+            {/* 본론 (순서 랜덤화) */}
+            {seoContent.bodyParts.map((part, idx) => (
+              <div key={idx} className="mb-8">
+                <h3 className="text-xl font-bold text-stone-800 mb-3 flex items-center gap-2">
+                  <span className="text-amber-500">
+                    {part.type === 'problem' ? '💡' : part.type === 'solution' ? '🛠️' : '🏠'}
+                  </span>
+                  {part.title}
+                </h3>
+                <p className="text-stone-600 leading-relaxed">
+                  {part.content}
+                </p>
+              </div>
+            ))}
+
+            {/* 결론 */}
+            <div className="bg-amber-50 border-l-4 border-amber-500 p-6 rounded-r-xl mt-8">
+              <p className="text-stone-700 font-medium">
+                {seoContent.conclusion}
+              </p>
+            </div>
+
+            {/* 선택된 키워드 표시 (SEO용) */}
+            <div className="mt-8 pt-6 border-t border-stone-200">
+              <p className="text-sm text-stone-500">
+                <strong>{region.name} 줄눈시공 관련:</strong>{' '}
+                {seoContent.keywords.service.join(', ')}, {seoContent.keywords.spaces.join(', ')}
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
       {/* 서비스 범위 */}
       <section className="py-20 px-6 bg-stone-100">
         <div className="max-w-5xl mx-auto">
@@ -415,6 +471,25 @@ export default function RegionalPage({ region }) {
             >
               <span>💬</span> 채팅 상담
             </button>
+          </div>
+        </div>
+      </section>
+
+      {/* 해시태그 클라우드 섹션 - SEO 키워드 시각화 */}
+      <section className="py-12 px-6 bg-stone-100 border-t border-stone-200">
+        <div className="max-w-5xl mx-auto">
+          <h3 className="text-lg font-bold text-stone-800 mb-4">
+            # {region.name} 줄눈시공 관련 태그
+          </h3>
+          <div className="flex flex-wrap gap-2">
+            {hashtags.map((tag, idx) => (
+              <span
+                key={idx}
+                className="bg-white border border-stone-200 hover:border-amber-400 hover:bg-amber-50 rounded-full px-4 py-2 text-sm text-stone-600 hover:text-amber-600 transition-all cursor-default"
+              >
+                #{tag}
+              </span>
+            ))}
           </div>
         </div>
       </section>

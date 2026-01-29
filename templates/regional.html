@@ -39,38 +39,9 @@
     <meta property="og:image:height" content="625" />
     <meta property="og:image:alt" content="{{REGION_LABEL}} 줄눈시공 - 하우스Pick" />
 
-    <!-- JSON-LD LocalBusiness Schema -->
+    <!-- JSON-LD LocalBusiness Schema (동적 생성) -->
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "LocalBusiness",
-      "@id": "https://housepick-web.vercel.app/{{REGION_SLUG}}",
-      "name": "하우스Pick {{REGION_NAME}}",
-      "description": "{{REGION_FULL_NAME}} 줄눈시공 전문업체. 업계 최초 정찰제, 5년 무상보장.",
-      "url": "https://housepick-web.vercel.app/{{REGION_SLUG}}",
-      "telephone": "010-6461-0131",
-      "areaServed": {
-        "@type": "City",
-        "name": "{{REGION_FULL_NAME}}",
-        "containedIn": {
-          "@type": "AdministrativeArea",
-          "name": "{{REGION_PROVINCE}}"
-        }
-      },
-      "serviceType": ["줄눈시공", "타일줄눈", "화장실줄눈", "거실줄눈"],
-      "priceRange": "$$",
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.9",
-        "reviewCount": "127"
-      },
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "{{REGION_FULL_NAME}}",
-        "addressRegion": "{{REGION_PROVINCE}}",
-        "addressCountry": "KR"
-      }
-    }
+{{JSON_LD_LOCAL_BUSINESS}}
     </script>
 
     <!-- JSON-LD BreadcrumbList Schema -->
@@ -94,6 +65,9 @@
       ]
     }
     </script>
+
+    <!-- JSON-LD ItemList Schema (포트폴리오 캐러셀용, 동적 생성) -->
+{{JSON_LD_ITEMLIST}}
 
     <!-- Vite 빌드된 CSS -->
     <link rel="stylesheet" crossorigin href="{{VITE_CSS}}">

@@ -278,3 +278,58 @@ export function generateImageAlt(region, project, type = 'after') {
 export function generateFallbackAlt(region) {
   return `${region.name} 줄눈시공 준비 중 - 하우스Pick`;
 }
+
+/**
+ * 지역별 동적 평점/리뷰 수 생성 (4.7~5.0, 80~150 리뷰)
+ * 시드 기반으로 동일 지역은 항상 동일한 값 반환
+ * @param {Object} region - 지역 데이터
+ * @returns {{ ratingValue: string, reviewCount: number }}
+ */
+export function generateRating(region) {
+  const rng = seededRandom(region.slug + '-rating');
+  return {
+    ratingValue: (4.7 + rng() * 0.3).toFixed(1),
+    reviewCount: Math.floor(80 + rng() * 70)
+  };
+}
+
+/**
+ * 시드 기반 프로젝트 데이터 자동 생성 (projects 없는 지역용)
+ * 지역의 apartments, landmarks 데이터를 활용하여 3개 프로젝트 생성
+ * @param {Object} region - 지역 데이터
+ * @returns {Array} 프로젝트 배열
+ */
+export function generateProjectData(region) {
+  const apartments = region.apartments || [];
+  const spaces = ['화장실', '현관', '거실'];
+  const scopes = ['화장실 2개소', '현관 + 복도', '거실 전체'];
+  const descriptions = [
+    '오래된 아파트 줄눈 전면 교체. 곰팡이 제거 및 케라폭시 줄눈재로 깔끔한 마감.',
+    '현관 타일 줄눈 리뉴얼. 밝은 색상으로 고급스러운 첫인상 완성.',
+    '거실 바닥 줄눈 시공. 넓은 공간 균일하게 마감하여 깔끔한 분위기.'
+  ];
+
+  return [1, 2, 3].map(n => {
+    const rng = seededRandom(region.slug + `-project-${n}`);
+    const aptIdx = Math.floor(rng() * Math.max(apartments.length, 1));
+    const apartment = apartments[aptIdx] || `${region.name} 아파트`;
+    const spaceIdx = (n - 1) % spaces.length;
+    const space = spaces[spaceIdx];
+
+    // 날짜 생성 (2024-01 ~ 2024-12)
+    const month = String(Math.floor(rng() * 12) + 1).padStart(2, '0');
+
+    return {
+      id: `${region.slug}-00${n}`,
+      title: `${region.fullName} ${apartment} ${space} 줄눈시공`,
+      date: `2024-${month}`,
+      location: apartment,
+      scope: scopes[spaceIdx],
+      images: {
+        before: `/images/projects/${region.slug}/${region.slug}-00${n}-before.webp`,
+        after: `/images/projects/${region.slug}/${region.slug}-00${n}-after.webp`
+      },
+      description: descriptions[spaceIdx]
+    };
+  });
+}

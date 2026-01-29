@@ -7,7 +7,9 @@ import {
   generateDynamicDescription,
   generateMetaKeywords,
   generateSEOContent,
-  generateHashtags
+  generateHashtags,
+  generateRating,
+  generateProjectData
 } from '../src/utils/contentGenerator.js'
 
 const __filename = fileURLToPath(import.meta.url)
@@ -166,6 +168,105 @@ ${areas}
           </div>
         </div>
       </section>`
+}
+
+// LocalBusiness JSON-LD 동적 생성 (동적 평점 + 서비스 카탈로그)
+function generateLocalBusinessJsonLd(region) {
+  const { ratingValue, reviewCount } = generateRating(region)
+  const landmarksText = region.landmarks && region.landmarks.length > 0
+    ? ` ${region.landmarks.slice(0, 3).join(', ')} 인근.`
+    : ''
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": `${BASE_URL}/${region.slug}`,
+    "name": `하우스Pick ${region.name}`,
+    "description": `${region.fullName} 줄눈시공 전문업체. 업계 최초 정찰제, 5년 무상보장.${landmarksText}`,
+    "url": `${BASE_URL}/${region.slug}`,
+    "telephone": "010-6461-0131",
+    "areaServed": {
+      "@type": "City",
+      "name": region.fullName,
+      "containedIn": {
+        "@type": "AdministrativeArea",
+        "name": region.province
+      }
+    },
+    "serviceType": ["줄눈시공", "타일줄눈", "화장실줄눈", "거실줄눈"],
+    "priceRange": "$$",
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": ratingValue,
+      "reviewCount": reviewCount.toString()
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": region.fullName,
+      "addressRegion": region.province,
+      "addressCountry": "KR"
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "줄눈시공 서비스",
+      "itemListElement": [
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "화장실 줄눈시공" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "거실 줄눈시공" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "현관 줄눈시공" } }
+      ]
+    }
+  }
+}
+
+// ItemList JSON-LD 생성 (포트폴리오 캐러셀용)
+function generateItemListJsonLd(region) {
+  // 실제 projects가 있으면 사용, 없으면 자동 생성
+  const projects = region.projects && region.projects.length > 0
+    ? region.projects
+    : generateProjectData(region)
+
+  // 최소 2개 항목 필요
+  if (projects.length < 2) return null
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": `${region.fullName} 줄눈시공 포트폴리오`,
+    "description": `하우스Pick의 ${region.fullName} 줄눈시공 시공 사례입니다.`,
+    "numberOfItems": projects.length,
+    "itemListElement": projects.map((project, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "item": {
+        "@type": "Service",
+        "@id": `${BASE_URL}/${region.slug}#project-${project.id}`,
+        "name": project.title,
+        "description": project.description,
+        "serviceType": "줄눈시공",
+        "areaServed": {
+          "@type": "Place",
+          "name": project.location
+        },
+        "provider": {
+          "@type": "LocalBusiness",
+          "name": "하우스Pick",
+          "@id": `${BASE_URL}/${region.slug}`
+        },
+        "image": [
+          {
+            "@type": "ImageObject",
+            "url": `${BASE_URL}${project.images.before}`,
+            "name": `${project.title} 시공 전`
+          },
+          {
+            "@type": "ImageObject",
+            "url": `${BASE_URL}${project.images.after}`,
+            "name": `${project.title} 시공 후`
+          }
+        ]
+      }
+    }))
+  }
 }
 
 // 기존 regions 데이터 (백업용, 이제 사용하지 않음)
@@ -362,6 +463,13 @@ regions.forEach(region => {
   const nearbyLinksHtml = generateNearbyLinksHtml(region)
   const subAreasHtml = generateSubAreasHtml(region)
 
+  // JSON-LD 스키마 생성 (동적)
+  const localBusinessJsonLd = generateLocalBusinessJsonLd(region)
+  const itemListJsonLd = generateItemListJsonLd(region)
+  const itemListScript = itemListJsonLd
+    ? `    <script type="application/ld+json">\n${JSON.stringify(itemListJsonLd, null, 2)}\n    </script>`
+    : ''
+
   // subAreas가 있으면 Title용 텍스트 생성 (최대 3개) - 기존 호환성 유지
   const subAreasForTitle = region.subAreas?.length > 0
     ? `(${region.subAreas.slice(0, 3).join(', ')})`
@@ -394,6 +502,9 @@ regions.forEach(region => {
     .replace('{{HASHTAGS}}', hashtagsHtml)
     .replace('{{NEARBY_LINKS}}', nearbyLinksHtml)
     .replace('{{SUB_AREAS}}', subAreasHtml)
+    // JSON-LD 스키마 주입
+    .replace('{{JSON_LD_LOCAL_BUSINESS}}', JSON.stringify(localBusinessJsonLd, null, 2))
+    .replace('{{JSON_LD_ITEMLIST}}', itemListScript)
 
   const regionDir = path.join(distPath, region.slug)
   if (!fs.existsSync(regionDir)) {

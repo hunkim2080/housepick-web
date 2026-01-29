@@ -176,17 +176,33 @@ export function generateDynamicTitle(region) {
 
 /**
  * 동적 SEO Description 생성
+ * 지역별 랜드마크/아파트 정보를 포함하여 네이버 검색 최적화
  */
 export function generateDynamicDescription(region) {
   const seed = region.slug;
   const selectedKeywords = selectItems(seed + '-desc', groutServiceKeywords, 2);
   const selectedSpace = selectItems(seed + '-desc-space', groutSpaces, 1)[0];
 
-  const subAreasText = region.subAreas && region.subAreas.length > 0
-    ? ` ${region.subAreas.slice(0, 3).join(', ')} 등`
+  // 지역 고유 정보 (랜드마크 또는 아파트)
+  const landmark = region.landmarks && region.landmarks.length > 0
+    ? region.landmarks[0]
+    : '';
+  const apartment = region.apartments && region.apartments.length > 0
+    ? region.apartments[0]
     : '';
 
-  return `${region.fullName}${subAreasText} ${selectedKeywords[0]}, ${selectedKeywords[1]} 전문. ${selectedSpace} 업계 최초 정찰제, 5년 무상보장. 케라폭시 프리미엄 줄눈재 사용.`;
+  // 지역 특성 문구 생성
+  const localInfo = landmark && apartment
+    ? `${landmark}, ${apartment} 인근`
+    : landmark || apartment
+      ? `${landmark || apartment} 인근`
+      : '';
+
+  const subAreasText = region.subAreas && region.subAreas.length > 0
+    ? ` ${region.subAreas.slice(0, 2).join(', ')} 등`
+    : '';
+
+  return `${region.fullName}${subAreasText} ${selectedKeywords[0]}, ${selectedKeywords[1]} 전문.${localInfo ? ` ${localInfo}` : ''} ${selectedSpace} 업계 최초 정찰제, 5년 무상보장.`;
 }
 
 /**

@@ -7,3 +7,51 @@
 body {
   font-family: 'Noto Sans KR', sans-serif;
 }
+
+/* Before/After 컴포넌트 스타일 */
+.before-after-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.before, .after {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.ba-label {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: white;
+  z-index: 10;
+}
+
+.before .ba-label {
+  background: #ef4444;
+}
+
+.after .ba-label {
+  background: #22c55e;
+}
+
+.before-after-container img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+@media (max-width: 640px) {
+  .before-after-container {
+    grid-template-columns: 1fr;
+  }
+}

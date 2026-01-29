@@ -1,5 +1,5 @@
 import React from 'react'
-import { hydrateRoot, createRoot } from 'react-dom/client'
+import { createRoot } from 'react-dom/client'
 import ServicePage from './pages/ServicePage'
 import { getServiceBySlug } from './data/services'
 import './index.css'
@@ -12,22 +12,16 @@ const pageSlug = rootElement?.dataset?.page
 const service = getServiceBySlug(pageSlug)
 
 if (service) {
-  // 프리렌더링된 콘텐츠가 있는지 확인 (자식 요소 존재 여부)
-  const hasPrerenderedContent = rootElement.children.length > 0
-
   const app = (
     <React.StrictMode>
       <ServicePage service={service} />
     </React.StrictMode>
   )
 
-  if (hasPrerenderedContent) {
-    // 프리렌더링된 콘텐츠가 있으면 hydrate (기존 DOM 재활용)
-    hydrateRoot(rootElement, app)
-  } else {
-    // 프리렌더링된 콘텐츠가 없으면 일반 render
-    createRoot(rootElement).render(app)
-  }
+  // SSG HTML과 React HTML 구조가 다르므로 항상 createRoot 사용
+  // (hydrateRoot는 동일 구조 필요 → 불일치 시 에러 발생)
+  rootElement.classList.add('js-loaded')
+  createRoot(rootElement).render(app)
 } else {
   console.error(`서비스 페이지를 찾을 수 없습니다: ${pageSlug}`)
 }

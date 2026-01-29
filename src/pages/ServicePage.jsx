@@ -4,7 +4,18 @@
  */
 import React, { useState, useEffect } from 'react'
 import * as ChannelService from '@channel.io/channel-web-sdk-loader'
-import { faqData, reviewsData, getAllServices } from '../data/services'
+import { faqData, reviewsData, getAllServices, serviceImages } from '../data/services'
+import BeforeAfter from '../components/BeforeAfter'
+import OptimizedImage from '../components/OptimizedImage'
+
+// 컴포넌트 외부에서 SSG 콘텐츠 즉시 읽기 (hydration 이전)
+const getInitialSsgHtml = () => {
+  if (typeof document !== 'undefined') {
+    const template = document.getElementById('ssg-content-template')
+    return template ? template.innerHTML : ''
+  }
+  return ''
+}
 
 // FAQ 아코디언 컴포넌트
 function FAQAccordion({ items }) {
@@ -36,10 +47,20 @@ function FAQAccordion({ items }) {
   )
 }
 
-// 리뷰 카드 컴포넌트
-function ReviewCard({ review }) {
+// 리뷰 카드 컴포넌트 (이미지 포함)
+function ReviewCard({ review, beforeImage, afterImage }) {
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-stone-200 p-6">
+      {/* Before/After 이미지 */}
+      {beforeImage && afterImage && (
+        <BeforeAfter
+          beforeSrc={beforeImage}
+          afterSrc={afterImage}
+          beforeAlt={`${review.location} ${review.author} 시공 전`}
+          afterAlt={`${review.location} ${review.author} 시공 후`}
+          className="mb-4"
+        />
+      )}
       <div className="flex items-center gap-2 mb-3">
         <span className="text-amber-500">{'★'.repeat(review.rating)}</span>
         <span className="text-stone-400 text-sm">{review.date}</span>
@@ -57,9 +78,11 @@ function ReviewCard({ review }) {
 
 // 서비스 페이지 메인 컴포넌트
 export default function ServicePage({ service }) {
-  const [isVisible, setIsVisible] = useState(false)
+  const [isVisible, setIsVisible] = useState(true)
   const [showChatBubble, setShowChatBubble] = useState(false)
   const [chatBubbleClosed, setChatBubbleClosed] = useState(false)
+  // SSG 콘텐츠를 즉시 초기값으로 설정 (useEffect 대기 없이)
+  const [ssgHtml] = useState(getInitialSsgHtml)
 
   useEffect(() => {
     setIsVisible(true)
@@ -89,11 +112,49 @@ export default function ServicePage({ service }) {
     transition: `all 0.8s cubic-bezier(0.16, 1, 0.3, 1) ${delay}s`
   })
 
+  // 리뷰 이미지 매핑
+  const reviewImageMap = [
+    { before: serviceImages.review.review1Before, after: serviceImages.review.review1After },
+    { before: serviceImages.review.review2Before, after: serviceImages.review.review2After },
+    { before: serviceImages.review.review3Before, after: serviceImages.review.review3After },
+  ]
+
   // 서비스 타입별 내용 렌더링
   const renderContent = () => {
+    // SSG 콘텐츠가 있으면 우선 표시
+    if (ssgHtml) {
+      return (
+        <div
+          className="ssg-content-wrapper"
+          dangerouslySetInnerHTML={{ __html: ssgHtml }}
+        />
+      )
+    }
+
+    // SSG 콘텐츠가 없는 경우 fallback (CSR 모드)
     switch (service.slug) {
       case 'faq':
         return <FAQAccordion items={faqData} />
+      case 'bathroom':
+        return (
+          <div className="space-y-8">
+            {/* Before/After 사진 */}
+            <div>
+              <h2 className="text-2xl font-bold text-stone-800 mb-4">화장실 줄눈시공 Before & After</h2>
+              <BeforeAfter
+                beforeSrc={serviceImages.bathroom.before1}
+                afterSrc={serviceImages.bathroom.after1}
+                beforeAlt="화장실 줄눈시공 전 - 변색된 백시멘트 상태"
+                afterAlt="화장실 줄눈시공 후 - 케라폭시 깔끔한 마감"
+              />
+            </div>
+            <div className="prose prose-lg prose-stone max-w-none">
+              <p className="text-lg text-stone-600 leading-relaxed">
+                자세한 내용은 상담 버튼을 통해 문의해주세요.
+              </p>
+            </div>
+          </div>
+        )
       case 'review':
         return (
           <div className="space-y-6">
@@ -103,11 +164,79 @@ export default function ServicePage({ service }) {
               <div className="text-amber-600 text-lg mb-1">{'★'.repeat(5)}</div>
               <p className="text-stone-600">총 127건의 리뷰</p>
             </div>
-            {/* 리뷰 목록 */}
-            <div className="grid md:grid-cols-2 gap-6">
+            {/* 리뷰 목록 (이미지 포함) */}
+            <div className="grid md:grid-cols-1 gap-6">
               {reviewsData.map((review, idx) => (
-                <ReviewCard key={idx} review={review} />
+                <ReviewCard
+                  key={idx}
+                  review={review}
+                  beforeImage={reviewImageMap[idx]?.before}
+                  afterImage={reviewImageMap[idx]?.after}
+                />
               ))}
+            </div>
+          </div>
+        )
+      case 'self-diy':
+        return (
+          <div className="space-y-8">
+            {/* 비교 이미지 */}
+            <div>
+              <h2 className="text-2xl font-bold text-stone-800 mb-4">셀프 vs 전문업체 결과 비교</h2>
+              <BeforeAfter
+                beforeSrc={serviceImages.selfDiy.selfResult}
+                afterSrc={serviceImages.selfDiy.proResult}
+                beforeAlt="셀프 줄눈시공 결과 - 일반인 DIY"
+                afterAlt="전문업체 줄눈시공 결과 - 하우스Pick"
+              />
+            </div>
+            <div className="prose prose-lg prose-stone max-w-none">
+              <p className="text-lg text-stone-600 leading-relaxed">
+                자세한 내용은 상담 버튼을 통해 문의해주세요.
+              </p>
+            </div>
+          </div>
+        )
+      case 'types':
+        return (
+          <div className="space-y-8">
+            {/* 줄눈 종류 대표 이미지 */}
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              <div className="bg-white rounded-xl border border-stone-200 p-4">
+                <OptimizedImage
+                  src={serviceImages.types.kerapoxy}
+                  alt="케라폭시 줄눈시공 완료 - 화장실 바닥 광택 마감"
+                  width={300}
+                  height={200}
+                  className="w-full h-40 object-cover rounded-lg mb-2"
+                />
+                <p className="text-center font-semibold text-stone-700">케라폭시</p>
+              </div>
+              <div className="bg-white rounded-xl border border-stone-200 p-4">
+                <OptimizedImage
+                  src={serviceImages.types.polyurea}
+                  alt="폴리우레아 줄눈시공 완료 - 현관 바닥"
+                  width={300}
+                  height={200}
+                  className="w-full h-40 object-cover rounded-lg mb-2"
+                />
+                <p className="text-center font-semibold text-stone-700">폴리우레아</p>
+              </div>
+              <div className="bg-white rounded-xl border border-stone-200 p-4">
+                <OptimizedImage
+                  src={serviceImages.types.ardex}
+                  alt="아덱스 줄눈시공 완료 - 욕실 타일"
+                  width={300}
+                  height={200}
+                  className="w-full h-40 object-cover rounded-lg mb-2"
+                />
+                <p className="text-center font-semibold text-stone-700">아덱스</p>
+              </div>
+            </div>
+            <div className="prose prose-lg prose-stone max-w-none">
+              <p className="text-lg text-stone-600 leading-relaxed">
+                자세한 내용은 상담 버튼을 통해 문의해주세요.
+              </p>
             </div>
           </div>
         )

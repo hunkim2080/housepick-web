@@ -34,9 +34,10 @@
     <meta property="og:description" content="{{PAGE_DESCRIPTION}}" />
     <meta property="og:type" content="article" />
     <meta property="og:url" content="https://housepick-web.vercel.app/{{PAGE_SLUG}}" />
-    <meta property="og:image" content="https://housepick-web.vercel.app/images/og/og-template.png" />
+    <meta property="og:image" content="{{OG_IMAGE}}" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="{{OG_IMAGE_ALT}}" />
     <meta property="og:site_name" content="하우스Pick" />
 
     <!-- JSON-LD Main Schema -->
@@ -172,6 +173,12 @@
         max-width: 48rem;
         margin: 0 auto;
       }
+      /* React 로드 후 SSG 프리렌더 영역 숨기기 */
+      .js-loaded .prerender-header,
+      .js-loaded .prerender-hero,
+      .js-loaded .prerender-content {
+        display: none;
+      }
       .prerender-faq-item {
         background: white;
         border: 1px solid #e7e5e4;
@@ -201,6 +208,11 @@
     </style>
   </head>
   <body>
+    <!-- SSG 콘텐츠 백업 (React에서 사용) -->
+    <template id="ssg-content-template">
+{{SSG_CONTENT}}
+    </template>
+
     <!-- 프리렌더링된 핵심 콘텐츠 (React 로드 전에 즉시 표시) -->
     <div id="root" data-page="{{PAGE_SLUG}}">
       <!-- 헤더 -->

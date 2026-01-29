@@ -3,6 +3,68 @@
  * 각 페이지의 메타 정보, JSON-LD 스키마, 콘텐츠 데이터
  */
 
+// 이미지 경로 상수
+const BASE_URL = 'https://housepick-web.vercel.app'
+const IMG_PATH = '/images/services'
+
+// 페이지별 이미지 데이터
+export const serviceImages = {
+  types: {
+    kerapoxy: `${IMG_PATH}/types/kerapoxy.webp`,
+    polyurea: `${IMG_PATH}/types/polyurea.webp`,
+    ardex: `${IMG_PATH}/types/ardex.webp`,
+    biglion: `${IMG_PATH}/types/biglion.webp`,
+    aspakton: `${IMG_PATH}/types/aspakton.webp`,
+    starlike: `${IMG_PATH}/types/starlike-evo.webp`,
+  },
+  bathroom: {
+    before1: `${IMG_PATH}/bathroom/bathroom-before-1.webp`,
+    after1: `${IMG_PATH}/bathroom/bathroom-after-1.webp`,
+    before2: `${IMG_PATH}/bathroom/bathroom-before-2.webp`,
+    after2: `${IMG_PATH}/bathroom/bathroom-after-2.webp`,
+    step1: `${IMG_PATH}/bathroom/process-step1.webp`,
+    step2: `${IMG_PATH}/bathroom/process-step2.webp`,
+    step3: `${IMG_PATH}/bathroom/process-step3.webp`,
+    step4: `${IMG_PATH}/bathroom/process-step4.webp`,
+  },
+  price: {
+    bathroomFloor: `${IMG_PATH}/price/bathroom-floor.webp`,
+    bathroomFull: `${IMG_PATH}/price/bathroom-full.webp`,
+    livingRoom: `${IMG_PATH}/price/living-room.webp`,
+    entrance: `${IMG_PATH}/price/entrance.webp`,
+    veranda: `${IMG_PATH}/price/veranda.webp`,
+  },
+  selfDiy: {
+    selfResult: `${IMG_PATH}/self-diy/self-result.webp`,
+    proResult: `${IMG_PATH}/self-diy/pro-result.webp`,
+    comparison: `${IMG_PATH}/self-diy/comparison.webp`,
+  },
+  review: {
+    review1Before: `${IMG_PATH}/review/review-1-before.webp`,
+    review1After: `${IMG_PATH}/review/review-1-after.webp`,
+    review2Before: `${IMG_PATH}/review/review-2-before.webp`,
+    review2After: `${IMG_PATH}/review/review-2-after.webp`,
+    review3Before: `${IMG_PATH}/review/review-3-before.webp`,
+    review3After: `${IMG_PATH}/review/review-3-after.webp`,
+  },
+  find: {
+    machineWork: `${IMG_PATH}/find/machine-work.webp`,
+    qualityFinish: `${IMG_PATH}/find/quality-finish.webp`,
+    teamPhoto: `${IMG_PATH}/find/team-photo.webp`,
+  },
+}
+
+// OG 이미지 매핑
+export const ogImages = {
+  faq: `${BASE_URL}/images/og/og-faq.png`,
+  types: `${BASE_URL}/images/og/og-types.png`,
+  bathroom: `${BASE_URL}/images/og/og-bathroom.png`,
+  price: `${BASE_URL}/images/og/og-price.png`,
+  review: `${BASE_URL}/images/og/og-review.png`,
+  'self-diy': `${BASE_URL}/images/og/og-self-diy.png`,
+  find: `${BASE_URL}/images/og/og-find.png`,
+}
+
 // FAQ 페이지 Q&A 데이터 (10개)
 export const faqData = [
   {
@@ -186,11 +248,19 @@ export function generateFAQSchema() {
 }
 
 export function generateArticleSchema(service) {
+  // 페이지별 대표 이미지 매핑
+  const articleImages = {
+    types: `${BASE_URL}${serviceImages.types.kerapoxy}`,
+    'self-diy': `${BASE_URL}${serviceImages.selfDiy.comparison}`,
+    find: `${BASE_URL}${serviceImages.find.qualityFinish}`,
+  };
+
   return {
     "@context": "https://schema.org",
     "@type": "Article",
     "headline": service.h1,
     "description": service.description,
+    "image": articleImages[service.slug] || `${BASE_URL}/images/og/og-template.png`,
     "author": {
       "@type": "Organization",
       "name": "하우스Pick"
@@ -214,6 +284,7 @@ export function generateHowToSchema() {
     "@type": "HowTo",
     "name": "화장실 줄눈시공 방법",
     "description": "화장실 줄눈시공의 전체 과정을 단계별로 안내합니다.",
+    "image": `${BASE_URL}${serviceImages.bathroom.after1}`,
     "totalTime": "PT4H",
     "estimatedCost": {
       "@type": "MonetaryAmount",
@@ -223,32 +294,37 @@ export function generateHowToSchema() {
     "step": [
       {
         "@type": "HowToStep",
-        "name": "현장 확인",
-        "text": "타일 상태와 기존 줄눈 상태를 확인합니다.",
+        "name": "현장 확인 및 준비",
+        "text": "타일 상태와 기존 줄눈 상태를 확인하고 시공 준비를 합니다.",
+        "image": `${BASE_URL}${serviceImages.bathroom.before1}`,
         "position": 1
       },
       {
         "@type": "HowToStep",
         "name": "기존 줄눈 제거",
         "text": "전용 기계로 기존 백시멘트 또는 오염된 줄눈을 제거합니다.",
+        "image": `${BASE_URL}${serviceImages.bathroom.step1}`,
         "position": 2
       },
       {
         "@type": "HowToStep",
         "name": "청소 및 건조",
         "text": "먼지와 이물질을 제거하고 완전히 건조시킵니다.",
+        "image": `${BASE_URL}${serviceImages.bathroom.step2}`,
         "position": 3
       },
       {
         "@type": "HowToStep",
         "name": "케라폭시 시공",
         "text": "에폭시 줄눈재를 배합하여 틈새에 채워넣습니다.",
+        "image": `${BASE_URL}${serviceImages.bathroom.step3}`,
         "position": 4
       },
       {
         "@type": "HowToStep",
         "name": "마무리 및 경화",
         "text": "표면을 정리하고 24시간 경화 시간을 둡니다.",
+        "image": `${BASE_URL}${serviceImages.bathroom.step4}`,
         "position": 5
       }
     ]
@@ -276,11 +352,18 @@ export function generateProductSchema() {
 }
 
 export function generateReviewSchema() {
+  const reviewImages = [
+    `${BASE_URL}${serviceImages.review.review1After}`,
+    `${BASE_URL}${serviceImages.review.review2After}`,
+    `${BASE_URL}${serviceImages.review.review3After}`
+  ];
+
   return {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": "하우스Pick",
     "description": "정찰제 줄눈시공 전문업체",
+    "image": `${BASE_URL}${serviceImages.review.review1After}`,
     "aggregateRating": {
       "@type": "AggregateRating",
       "ratingValue": "4.9",
@@ -288,7 +371,7 @@ export function generateReviewSchema() {
       "bestRating": "5",
       "worstRating": "1"
     },
-    "review": reviewsData.slice(0, 3).map(review => ({
+    "review": reviewsData.slice(0, 3).map((review, index) => ({
       "@type": "Review",
       "author": {
         "@type": "Person",
@@ -296,6 +379,7 @@ export function generateReviewSchema() {
       },
       "datePublished": review.date,
       "reviewBody": review.text,
+      "image": reviewImages[index],
       "reviewRating": {
         "@type": "Rating",
         "ratingValue": review.rating.toString()

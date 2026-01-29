@@ -170,6 +170,54 @@ ${areas}
       </section>`
 }
 
+// 포트폴리오 이미지 HTML 생성 (SSG용 - 검색엔진 크롤링 가능한 img 태그 포함)
+function generatePortfolioImagesHtml(region) {
+  // 실제 projects가 있으면 사용, 없으면 자동 생성
+  const projects = region.projects && region.projects.length > 0
+    ? region.projects
+    : generateProjectData(region)
+
+  if (projects.length === 0) return ''
+
+  const imagesHtml = projects.slice(0, 3).map(project => {
+    // Alt 텍스트: {지역명} 줄눈 시공 사례 - {프로젝트명}
+    const altBefore = `${region.fullName} ${project.location} 줄눈시공 시공 전 - ${project.title}`
+    const altAfter = `${region.fullName} ${project.location} 줄눈시공 시공 후 - ${project.title}`
+
+    return `        <div class="portfolio-item" id="project-${project.id}">
+          <h4 class="text-sm font-semibold text-stone-700 mb-2">${project.title}</h4>
+          <div class="grid grid-cols-2 gap-2">
+            <img
+              src="${project.images.before}"
+              alt="${altBefore}"
+              width="300" height="200"
+              loading="lazy"
+              class="rounded-lg object-cover w-full"
+            />
+            <img
+              src="${project.images.after}"
+              alt="${altAfter}"
+              width="300" height="200"
+              loading="lazy"
+              class="rounded-lg object-cover w-full"
+            />
+          </div>
+          <p class="text-xs text-stone-500 mt-1">${project.date} · ${project.scope}</p>
+        </div>`
+  }).join('\n')
+
+  return `
+      <!-- 포트폴리오 이미지 (SSG - 검색엔진 크롤링 가능) -->
+      <section class="py-12 px-6 bg-white border-t border-stone-100">
+        <div class="max-w-5xl mx-auto">
+          <h3 class="text-lg font-semibold text-stone-800 mb-6">${region.name} 줄눈시공 사례</h3>
+          <div class="grid md:grid-cols-3 gap-6">
+${imagesHtml}
+          </div>
+        </div>
+      </section>`
+}
+
 // LocalBusiness JSON-LD 동적 생성 (동적 평점 + 서비스 카탈로그)
 function generateLocalBusinessJsonLd(region) {
   const { ratingValue, reviewCount } = generateRating(region)
@@ -328,6 +376,17 @@ const regionsBackup = [
   { slug: 'incheon', name: '인천', fullName: '인천광역시', province: '인천광역시', keywords: ['인천 줄눈', '인천 줄눈시공', '인천 화장실 줄눈'], landmarks: ['송도센트럴파크', '인천공항', '청라호수공원', '부평역'], apartments: ['송도 자이', '청라 래미안', '부평 푸르지오', '구월 롯데캐슬'], description: '인천광역시는 송도국제도시, 청라국제도시 등 신도시와 부평, 구월 등 기존 주거지역이 공존합니다. 줄눈시공 수요가 매우 다양합니다.' },
 ]
 
+// 7개 서비스 페이지 정의
+const servicePages = [
+  { slug: 'faq', title: '줄눈시공 FAQ', priority: 0.9 },
+  { slug: 'types', title: '줄눈 종류 비교', priority: 0.8 },
+  { slug: 'bathroom', title: '화장실 줄눈 가이드', priority: 0.8 },
+  { slug: 'price', title: '줄눈시공 가격표', priority: 0.9 },
+  { slug: 'review', title: '줄눈시공 후기', priority: 0.8 },
+  { slug: 'self-diy', title: '셀프 vs 업체 비교', priority: 0.7 },
+  { slug: 'find', title: '줄눈업체 선택 가이드', priority: 0.7 }
+]
+
 // sitemap.xml 생성 함수
 function generateSitemap(regions) {
   const today = new Date().toISOString().split('T')[0]
@@ -340,7 +399,14 @@ function generateSitemap(regions) {
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>`,
-    // 지역 페이지들
+    // 서비스 페이지들 (7개)
+    ...servicePages.map(s => `  <url>
+    <loc>${BASE_URL}/${s.slug}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>${s.priority}</priority>
+  </url>`),
+    // 지역 페이지들 (52개)
     ...regions.map(r => `  <url>
     <loc>${BASE_URL}/${r.slug}</loc>
     <lastmod>${today}</lastmod>
@@ -397,6 +463,18 @@ function generateRSS() {
       <guid>${BASE_URL}/</guid>
     </item>
 `
+
+  // 7개 서비스 페이지
+  servicePages.forEach(service => {
+    rss += `    <item>
+      <title>${service.title} | 하우스Pick</title>
+      <link>${BASE_URL}/${service.slug}</link>
+      <description>하우스Pick ${service.title}. 정찰제 가격, 5년 무상보장.</description>
+      <pubDate>${today}</pubDate>
+      <guid>${BASE_URL}/${service.slug}</guid>
+    </item>
+`
+  })
 
   // 52개 지역 페이지
   regions.forEach(region => {
@@ -462,6 +540,7 @@ regions.forEach(region => {
   const hashtagsHtml = generateHashtagsHtml(hashtags, region.name)
   const nearbyLinksHtml = generateNearbyLinksHtml(region)
   const subAreasHtml = generateSubAreasHtml(region)
+  const portfolioImagesHtml = generatePortfolioImagesHtml(region)
 
   // JSON-LD 스키마 생성 (동적)
   const localBusinessJsonLd = generateLocalBusinessJsonLd(region)
@@ -502,6 +581,7 @@ regions.forEach(region => {
     .replace('{{HASHTAGS}}', hashtagsHtml)
     .replace('{{NEARBY_LINKS}}', nearbyLinksHtml)
     .replace('{{SUB_AREAS}}', subAreasHtml)
+    .replace('{{PORTFOLIO_IMAGES}}', portfolioImagesHtml)
     // JSON-LD 스키마 주입
     .replace('{{JSON_LD_LOCAL_BUSINESS}}', JSON.stringify(localBusinessJsonLd, null, 2))
     .replace('{{JSON_LD_ITEMLIST}}', itemListScript)

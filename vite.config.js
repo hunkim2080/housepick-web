@@ -9,6 +9,7 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         regional: resolve(__dirname, 'regional.html'),
+        service: resolve(__dirname, 'service.html'),
       },
     },
   },

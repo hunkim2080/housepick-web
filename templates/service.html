@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-552DZEE4ZE"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-552DZEE4ZE');
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="naver-site-verification" content="e7ac6357e6f055ffe8364abb7df96323f89293f6" />
+    <!-- Microsoft Clarity -->
+    <script type="text/javascript">
+      (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "v8a4rmukl6");
+    </script>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate" type="application/rss+xml" title="하우스Pick RSS" href="/rss.xml" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- SEO Meta Tags -->
+    <title>{{PAGE_TITLE}}</title>
+    <meta name="description" content="{{PAGE_DESCRIPTION}}" />
+    <meta name="keywords" content="{{PAGE_KEYWORDS}}" />
+    <link rel="canonical" href="https://housepick-web.vercel.app/{{PAGE_SLUG}}" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="{{PAGE_TITLE}}" />
+    <meta property="og:description" content="{{PAGE_DESCRIPTION}}" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://housepick-web.vercel.app/{{PAGE_SLUG}}" />
+    <meta property="og:image" content="https://housepick-web.vercel.app/images/og/og-template.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="하우스Pick" />
+
+    <!-- JSON-LD Main Schema -->
+    <script type="application/ld+json">
+{{JSON_LD_SCHEMA}}
+    </script>
+
+    <!-- JSON-LD BreadcrumbList Schema -->
+    <script type="application/ld+json">
+{{BREADCRUMB_JSON_LD}}
+    </script>
+
+    <!-- Vite 빌드된 CSS -->
+    <link rel="stylesheet" crossorigin href="{{VITE_CSS}}">
+
+    <!-- 프리렌더링 콘텐츠용 인라인 스타일 (CSS 로드 전 깜빡임 방지) -->
+    <style>
+      .prerender-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        z-index: 50;
+      }
+      .prerender-header-inner {
+        max-width: 72rem;
+        margin: 0 auto;
+        padding: 0.75rem 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .prerender-logo {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #f59e0b;
+      }
+      .prerender-cta-btn {
+        background: #f59e0b;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 9999px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+      }
+      .prerender-hero {
+        padding-top: 7rem;
+        padding-bottom: 4rem;
+        background: linear-gradient(to bottom right, #1c1917, #292524, #1c1917);
+        color: white;
+        text-align: center;
+      }
+      .prerender-hero-inner {
+        max-width: 48rem;
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
+      .prerender-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(245, 158, 11, 0.2);
+        border: 1px solid rgba(245, 158, 11, 0.3);
+        border-radius: 9999px;
+        padding: 0.5rem 1.25rem;
+        margin-bottom: 2rem;
+      }
+      .prerender-badge-dot {
+        width: 0.5rem;
+        height: 0.5rem;
+        background: #fbbf24;
+        border-radius: 50%;
+      }
+      .prerender-badge-text {
+        color: #fcd34d;
+        font-size: 0.875rem;
+        font-weight: 500;
+      }
+      .prerender-h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 1rem;
+        line-height: 1.3;
+      }
+      .prerender-subtitle {
+        font-size: 1.125rem;
+        color: #d6d3d1;
+        margin-bottom: 2rem;
+      }
+      .prerender-cta-row {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        justify-content: center;
+        align-items: center;
+      }
+      .prerender-main-cta {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 9999px;
+        font-size: 1.125rem;
+        font-weight: 700;
+        text-decoration: none;
+      }
+      .prerender-secondary-cta {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        background: rgba(255,255,255,0.1);
+        border: 2px solid rgba(255,255,255,0.3);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 9999px;
+        font-size: 1.125rem;
+        font-weight: 700;
+        text-decoration: none;
+      }
+      .prerender-content {
+        padding: 3rem 1.5rem;
+        max-width: 48rem;
+        margin: 0 auto;
+      }
+      .prerender-faq-item {
+        background: white;
+        border: 1px solid #e7e5e4;
+        border-radius: 1rem;
+        margin-bottom: 1rem;
+        overflow: hidden;
+      }
+      .prerender-faq-question {
+        padding: 1.25rem 1.5rem;
+        font-weight: 700;
+        color: #1c1917;
+        font-size: 1.125rem;
+      }
+      .prerender-faq-answer {
+        padding: 0 1.5rem 1.25rem;
+        color: #57534e;
+        border-top: 1px solid #f5f5f4;
+        padding-top: 1rem;
+      }
+      @media (min-width: 640px) {
+        .prerender-h1 { font-size: 2.5rem; }
+        .prerender-cta-row { flex-direction: row; }
+      }
+      @media (min-width: 768px) {
+        .prerender-h1 { font-size: 3rem; }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 프리렌더링된 핵심 콘텐츠 (React 로드 전에 즉시 표시) -->
+    <div id="root" data-page="{{PAGE_SLUG}}">
+      <!-- 헤더 -->
+      <header class="prerender-header">
+        <div class="prerender-header-inner">
+          <a href="/" class="prerender-logo">HousePick</a>
+          <a href="tel:010-6461-0131" class="prerender-cta-btn">
+            전화 상담
+          </a>
+        </div>
+      </header>
+
+      <!-- 히어로 섹션 -->
+      <section class="prerender-hero">
+        <div class="prerender-hero-inner">
+          <div class="prerender-badge">
+            <span class="prerender-badge-dot"></span>
+            <span class="prerender-badge-text">하우스Pick 줄눈시공</span>
+          </div>
+          <h1 class="prerender-h1">{{PAGE_H1}}</h1>
+          <p class="prerender-subtitle">{{PAGE_SUBTITLE}}</p>
+          <div class="prerender-cta-row">
+            <a href="tel:010-6461-0131" class="prerender-main-cta">
+              📞 전화 상담
+            </a>
+            <a href="#content" class="prerender-secondary-cta">
+              💬 채팅 상담
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- SSG 프리렌더링 콘텐츠 -->
+      <div id="content" class="prerender-content">
+{{SSG_CONTENT}}
+      </div>
+    </div>
+
+    <!-- Vite 빌드된 JS -->
+    <script type="module" crossorigin src="{{VITE_JS}}"></script>
+  </body>
+</html>

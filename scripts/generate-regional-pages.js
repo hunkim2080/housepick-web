@@ -5,7 +5,9 @@ import { regions as regionsData } from '../src/data/regions.js'
 import {
   generateDynamicTitle,
   generateDynamicDescription,
-  generateMetaKeywords
+  generateMetaKeywords,
+  generateSEOContent,
+  generateHashtags
 } from '../src/utils/contentGenerator.js'
 
 const __filename = fileURLToPath(import.meta.url)
@@ -27,6 +29,143 @@ function getRegionLabel(region) {
   // 인천은 "인천광역시 인천광역시"가 되므로 "인천"만 반환
   if (region.slug === 'incheon') return '인천'
   return `${short} ${region.fullName}`
+}
+
+// 52개 지역 slug 매핑
+const areaSlugMap = {
+  // 서울 (25개)
+  '강남': 'gangnam', '강동': 'gangdong', '강북': 'gangbuk', '강서': 'gangseo',
+  '관악': 'gwanak', '광진': 'gwangjin', '구로': 'guro', '금천': 'geumcheon',
+  '노원': 'nowon', '도봉': 'dobong', '동대문': 'dongdaemun', '동작': 'dongjak',
+  '마포': 'mapo', '서대문': 'seodaemun', '서초': 'seocho', '성동': 'seongdong',
+  '성북': 'seongbuk', '송파': 'songpa', '양천': 'yangcheon', '영등포': 'yeongdeungpo',
+  '용산': 'yongsan', '은평': 'eunpyeong', '종로': 'jongno', '중구': 'junggu-seoul',
+  '중랑': 'jungnang',
+  // 경기 (26개)
+  '수원': 'suwon', '성남': 'seongnam', '용인': 'yongin', '부천': 'bucheon',
+  '안산': 'ansan', '안양': 'anyang', '남양주': 'namyangju', '화성': 'hwaseong',
+  '평택': 'pyeongtaek', '시흥': 'siheung', '김포': 'gimpo', '광명': 'gwangmyeong',
+  '광주': 'gwangju-gg', '군포': 'gunpo', '하남': 'hanam', '오산': 'osan',
+  '이천': 'icheon', '안성': 'anseong', '의왕': 'uiwang', '구리': 'guri',
+  '의정부': 'uijeongbu', '고양': 'goyang', '파주': 'paju', '양주': 'yangju',
+  '포천': 'pocheon', '과천': 'gwacheon',
+  // 인천 (1개)
+  '인천': 'incheon'
+}
+
+// 인근 지역 링크 HTML 생성
+function generateNearbyLinksHtml(region) {
+  if (!region.nearbyAreas || region.nearbyAreas.length === 0) return ''
+
+  const links = region.nearbyAreas.map(area => {
+    const slug = areaSlugMap[area] || area.toLowerCase()
+    return `        <a href="/${slug}" class="inline-flex items-center gap-1 px-4 py-2 bg-white border border-stone-200 rounded-full text-stone-600 hover:border-amber-400 hover:text-amber-600 hover:bg-amber-50 transition-all text-sm">${area} 줄눈시공 →</a>`
+  }).join('\n')
+
+  return `
+      <!-- 인근 지역 링크 (SSG) -->
+      <section class="py-12 px-6 bg-white border-t border-stone-100">
+        <div class="max-w-5xl mx-auto">
+          <h3 class="text-lg font-semibold text-stone-800 mb-4">📍 ${region.name} 인근 지역 줄눈시공</h3>
+          <div class="flex flex-wrap gap-3">
+${links}
+          </div>
+        </div>
+      </section>`
+}
+
+// 해시태그 HTML 생성
+function generateHashtagsHtml(hashtags, regionName) {
+  const tags = hashtags.map(tag =>
+    `        <span class="bg-white border border-stone-200 hover:border-amber-400 hover:bg-amber-50 rounded-full px-4 py-2 text-sm text-stone-600 hover:text-amber-600 transition-all cursor-default">#${tag}</span>`
+  ).join('\n')
+
+  return `
+      <!-- 해시태그 클라우드 (SSG) -->
+      <section class="py-12 px-6 bg-stone-100 border-t border-stone-200">
+        <div class="max-w-5xl mx-auto">
+          <h3 class="text-lg font-semibold text-stone-800 mb-4"># ${regionName} 줄눈시공 관련 태그</h3>
+          <div class="flex flex-wrap gap-2">
+${tags}
+          </div>
+        </div>
+      </section>`
+}
+
+// SEO 본문 콘텐츠 HTML 생성
+function generateSEOBodyHtml(region, seoContent) {
+  const { intro, bodyParts, conclusion } = seoContent
+
+  let bodyHtml = bodyParts.map(part => `
+          <div class="bg-white rounded-xl p-6 shadow-sm">
+            <h4 class="font-semibold text-stone-800 mb-2">${part.title}</h4>
+            <p class="text-stone-600 text-sm leading-relaxed">${part.content}</p>
+          </div>`).join('')
+
+  return `
+      <!-- SEO 스토리텔링 콘텐츠 (SSG) -->
+      <section class="py-12 px-6 bg-gradient-to-b from-amber-50 to-white">
+        <div class="max-w-5xl mx-auto">
+          <p class="text-stone-700 leading-relaxed mb-8">${intro}</p>
+          <div class="grid md:grid-cols-3 gap-6 mb-8">
+${bodyHtml}
+          </div>
+          <p class="text-stone-700 leading-relaxed">${conclusion}</p>
+        </div>
+      </section>`
+}
+
+// 지역 소개 섹션 HTML 생성
+function generateRegionIntroHtml(region) {
+  const landmarksHtml = region.landmarks && region.landmarks.length > 0
+    ? `
+          <div class="mb-6">
+            <h4 class="text-sm font-semibold text-stone-500 mb-2">주요 랜드마크</h4>
+            <div class="flex flex-wrap gap-2">
+              ${region.landmarks.map(l => `<span class="px-3 py-1 bg-stone-100 rounded-full text-sm text-stone-600">${l}</span>`).join('')}
+            </div>
+          </div>`
+    : ''
+
+  const apartmentsHtml = region.apartments && region.apartments.length > 0
+    ? `
+          <div>
+            <h4 class="text-sm font-semibold text-stone-500 mb-2">주요 아파트</h4>
+            <div class="flex flex-wrap gap-2">
+              ${region.apartments.map(a => `<span class="px-3 py-1 bg-amber-50 border border-amber-200 rounded-full text-sm text-amber-700">${a}</span>`).join('')}
+            </div>
+          </div>`
+    : ''
+
+  return `
+      <!-- 지역 소개 (SSG) -->
+      <section class="py-12 px-6 bg-white">
+        <div class="max-w-5xl mx-auto">
+          <h2 class="text-2xl font-bold text-stone-800 mb-4">${region.fullName} 줄눈시공</h2>
+          <p class="text-stone-600 leading-relaxed mb-6">${region.description || ''}</p>
+${landmarksHtml}${apartmentsHtml}
+        </div>
+      </section>`
+}
+
+// 세부 지역(subAreas) HTML 생성
+function generateSubAreasHtml(region) {
+  if (!region.subAreas || region.subAreas.length === 0) return ''
+
+  const areas = region.subAreas.map(area =>
+    `        <span class="px-3 py-1 bg-stone-50 border border-stone-200 rounded-full text-sm text-stone-600">${area}</span>`
+  ).join('\n')
+
+  return `
+      <!-- 세부 서비스 지역 (SSG) -->
+      <section class="py-8 px-6 bg-stone-50 border-t border-stone-200">
+        <div class="max-w-5xl mx-auto">
+          <h4 class="text-sm font-semibold text-stone-500 mb-3">${region.fullName} 세부 서비스 지역</h4>
+          <div class="flex flex-wrap gap-2">
+${areas}
+          </div>
+        </div>
+      </section>`
 }
 
 // 기존 regions 데이터 (백업용, 이제 사용하지 않음)
@@ -214,6 +353,15 @@ regions.forEach(region => {
   const dynamicDescription = generateDynamicDescription(region)
   const dynamicKeywords = generateMetaKeywords(region)
 
+  // SSG 본문 콘텐츠 생성
+  const seoContent = generateSEOContent(region)
+  const hashtags = generateHashtags(region)
+  const regionIntroHtml = generateRegionIntroHtml(region)
+  const seoBodyHtml = generateSEOBodyHtml(region, seoContent)
+  const hashtagsHtml = generateHashtagsHtml(hashtags, region.name)
+  const nearbyLinksHtml = generateNearbyLinksHtml(region)
+  const subAreasHtml = generateSubAreasHtml(region)
+
   // subAreas가 있으면 Title용 텍스트 생성 (최대 3개) - 기존 호환성 유지
   const subAreasForTitle = region.subAreas?.length > 0
     ? `(${region.subAreas.slice(0, 3).join(', ')})`
@@ -240,6 +388,12 @@ regions.forEach(region => {
     .replace(/\{\{DYNAMIC_DESCRIPTION\}\}/g, dynamicDescription)
     .replace(/\{\{VITE_JS\}\}/g, viteJs)
     .replace(/\{\{VITE_CSS\}\}/g, viteCss)
+    // SSG 본문 콘텐츠 주입
+    .replace('{{REGION_INTRO}}', regionIntroHtml)
+    .replace('{{SEO_BODY}}', seoBodyHtml)
+    .replace('{{HASHTAGS}}', hashtagsHtml)
+    .replace('{{NEARBY_LINKS}}', nearbyLinksHtml)
+    .replace('{{SUB_AREAS}}', subAreasHtml)
 
   const regionDir = path.join(distPath, region.slug)
   if (!fs.existsSync(regionDir)) {

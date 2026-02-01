@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-552DZEE4ZE"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-552DZEE4ZE');
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="naver-site-verification" content="e7ac6357e6f055ffe8364abb7df96323f89293f6" />
+    <!-- Microsoft Clarity -->
+    <script type="text/javascript">
+      (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "v8a4rmukl6");
+    </script>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="alternate" type="application/rss+xml" title="하우스Pick RSS" href="/rss.xml" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- SEO Meta Tags -->
+    <title>개인정보처리방침 | 하우스Pick</title>
+    <meta name="description" content="하우스Pick의 개인정보처리방침입니다. 고객님의 개인정보를 안전하게 보호합니다." />
+    <meta name="keywords" content="하우스픽 개인정보처리방침, 줄눈시공 개인정보, 하우스Pick 정책" />
+    <link rel="canonical" href="https://housepick-web.vercel.app/privacy" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="개인정보처리방침 | 하우스Pick" />
+    <meta property="og:description" content="하우스Pick의 개인정보처리방침입니다. 고객님의 개인정보를 안전하게 보호합니다." />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://housepick-web.vercel.app/privacy" />
+    <meta property="og:image" content="https://housepick-web.vercel.app/images/og-template.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="하우스Pick" />
+
+    <!-- JSON-LD BreadcrumbList Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "홈",
+          "item": "https://housepick-web.vercel.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "개인정보처리방침",
+          "item": "https://housepick-web.vercel.app/privacy"
+        }
+      ]
+    }
+    </script>
+
+    <!-- Vite 빌드된 CSS -->
+    <link rel="stylesheet" crossorigin href="{{VITE_CSS}}">
+
+    <style>
+      .prerender-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        z-index: 50;
+      }
+      .prerender-header-inner {
+        max-width: 72rem;
+        margin: 0 auto;
+        padding: 0.75rem 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .prerender-logo {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #f59e0b;
+        text-decoration: none;
+      }
+      .prerender-nav {
+        display: none;
+        align-items: center;
+        gap: 0.25rem;
+      }
+      .prerender-nav a {
+        color: #44403c;
+        text-decoration: none;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        border-radius: 0.5rem;
+        transition: all 0.2s;
+      }
+      .prerender-nav a:hover {
+        color: #f59e0b;
+        background: #fafaf9;
+      }
+      .prerender-cta-btn {
+        background: #f59e0b;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 9999px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+      }
+      .prerender-breadcrumb {
+        background: #f5f5f4;
+        padding: 0.75rem 1.5rem;
+        margin-top: 60px;
+      }
+      .prerender-breadcrumb-inner {
+        max-width: 72rem;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.875rem;
+        color: #57534e;
+      }
+      .prerender-breadcrumb a {
+        color: #57534e;
+        text-decoration: none;
+      }
+      .prerender-breadcrumb a:hover {
+        color: #f59e0b;
+      }
+      .prerender-breadcrumb-separator {
+        color: #a8a29e;
+      }
+      .prerender-breadcrumb-current {
+        color: #1c1917;
+        font-weight: 500;
+      }
+      .prerender-privacy-main {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        background: #fafaf9;
+      }
+      .prerender-privacy-content {
+        flex: 1;
+        padding: 3rem 1.5rem;
+        max-width: 48rem;
+        margin: 0 auto;
+      }
+      .prerender-privacy-h1 {
+        font-size: 1.875rem;
+        font-weight: 700;
+        color: #1c1917;
+        margin-bottom: 2rem;
+      }
+      .prerender-privacy-section {
+        margin-bottom: 2rem;
+      }
+      .prerender-privacy-h2 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #1c1917;
+        margin-bottom: 1rem;
+      }
+      .prerender-privacy-p {
+        color: #57534e;
+        line-height: 1.75;
+        margin-bottom: 1rem;
+      }
+      .prerender-privacy-ul {
+        list-style: disc;
+        padding-left: 1.5rem;
+        color: #57534e;
+        line-height: 1.75;
+      }
+      .prerender-footer {
+        background: #1c1917;
+        color: #a8a29e;
+        padding: 2rem 1.5rem;
+        text-align: center;
+      }
+      .prerender-footer-logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #f59e0b;
+        text-decoration: none;
+      }
+      .prerender-footer-copy {
+        font-size: 0.75rem;
+        color: #57534e;
+        margin-top: 1rem;
+      }
+      @media (min-width: 768px) {
+        .prerender-nav {
+          display: flex;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-page="privacy">
+      <div class="prerender-privacy-main">
+        <!-- 헤더 -->
+        <header class="prerender-header">
+          <div class="prerender-header-inner">
+            <a href="/" class="prerender-logo">HousePick</a>
+            <nav class="prerender-nav">
+              <a href="/types">줄눈 종류</a>
+              <a href="/bathroom">화장실 줄눈</a>
+              <a href="/price">가격표</a>
+              <a href="/review">후기</a>
+              <a href="/faq">FAQ</a>
+            </nav>
+            <a href="tel:010-6461-0131" class="prerender-cta-btn">
+              전화 상담
+            </a>
+          </div>
+        </header>
+
+        <!-- 브레드크럼 -->
+        <nav class="prerender-breadcrumb" aria-label="Breadcrumb">
+          <div class="prerender-breadcrumb-inner">
+            <a href="/">홈</a>
+            <span class="prerender-breadcrumb-separator">›</span>
+            <span class="prerender-breadcrumb-current">개인정보처리방침</span>
+          </div>
+        </nav>
+
+        <!-- 콘텐츠 -->
+        <main class="prerender-privacy-content">
+          <h1 class="prerender-privacy-h1">개인정보처리방침</h1>
+
+          <div class="prerender-privacy-section">
+            <p class="prerender-privacy-p">
+              하우스Pick(이하 "회사")은 「개인정보 보호법」 제30조에 따라 정보주체의 개인정보를 보호하고
+              이와 관련한 고충을 신속하고 원활하게 처리할 수 있도록 하기 위하여 다음과 같이 개인정보 처리방침을 수립·공개합니다.
+            </p>
+          </div>
+
+          <div class="prerender-privacy-section">
+            <h2 class="prerender-privacy-h2">1. 개인정보의 처리 목적</h2>
+            <p class="prerender-privacy-p">
+              회사는 다음의 목적을 위하여 개인정보를 처리합니다.
+            </p>
+            <ul class="prerender-privacy-ul">
+              <li>견적 상담 및 서비스 제공</li>
+              <li>시공 예약 및 일정 관리</li>
+              <li>고객 문의 응대 및 상담</li>
+              <li>서비스 개선 및 품질 향상</li>
+            </ul>
+          </div>
+
+          <div class="prerender-privacy-section">
+            <h2 class="prerender-privacy-h2">2. 수집하는 개인정보 항목</h2>
+            <ul class="prerender-privacy-ul">
+              <li><strong>필수 항목:</strong> 성함, 연락처(전화번호), 시공 희망 지역</li>
+              <li><strong>선택 항목:</strong> 이메일, 상세 주소, 시공 희망 일정, 기타 요청사항</li>
+            </ul>
+          </div>
+
+          <div class="prerender-privacy-section">
+            <h2 class="prerender-privacy-h2">3. 개인정보의 보유 및 이용 기간</h2>
+            <ul class="prerender-privacy-ul">
+              <li>견적 상담 관련 정보: 상담 완료 후 1년</li>
+              <li>시공 계약 관련 정보: 시공 완료 후 5년 (보증 기간)</li>
+            </ul>
+          </div>
+
+          <div class="prerender-privacy-section">
+            <h2 class="prerender-privacy-h2">7. 개인정보 보호책임자</h2>
+            <p class="prerender-privacy-p">
+              담당: 하우스Pick 고객센터<br />
+              연락처: 010-6461-0131
+            </p>
+          </div>
+
+          <div class="prerender-privacy-section" style="padding-top: 2rem; border-top: 1px solid #e7e5e4;">
+            <p style="color: #78716c; font-size: 0.875rem;">
+              시행일자: 2024년 1월 1일
+            </p>
+          </div>
+        </main>
+
+        <!-- 푸터 -->
+        <footer class="prerender-footer">
+          <a href="/" class="prerender-footer-logo">HousePick</a>
+          <p class="prerender-footer-copy">© 2024 HousePick. 업계 최초 정찰제 줄눈 브랜드</p>
+        </footer>
+      </div>
+    </div>
+
+    <!-- Vite 빌드된 JS -->
+    <script type="module" crossorigin src="{{VITE_JS}}"></script>
+  </body>
+</html>

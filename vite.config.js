@@ -10,6 +10,8 @@ export default defineConfig({
         main: resolve(__dirname, 'index.html'),
         regional: resolve(__dirname, 'regional.html'),
         service: resolve(__dirname, 'service.html'),
+        notfound: resolve(__dirname, '404.html'),
+        privacy: resolve(__dirname, 'privacy.html'),
       },
     },
   },

@@ -621,4 +621,32 @@ const rssContent = generateRSS()
 fs.writeFileSync(path.join(distPath, 'rss.xml'), rssContent)
 console.log(`  ✓ /rss.xml 생성 (${regions.length + 1}개 항목)`)
 
-console.log(`\n완료! ${regions.length}개 지역 페이지 + sitemap.xml + robots.txt + rss.xml 생성되었습니다.`)
+// 404.html 생성 (Vite 빌드 파일에서 복사)
+const notfound404Path = path.join(distPath, '404.html')
+const template404Path = path.join(__dirname, '..', 'templates', '404.html')
+if (fs.existsSync(template404Path)) {
+  const template404 = fs.readFileSync(template404Path, 'utf-8')
+  const notfoundHtml = template404
+    .replace(/\{\{VITE_JS\}\}/g, viteJs.replace('regional', 'notfound'))
+    .replace(/\{\{VITE_CSS\}\}/g, viteCss)
+  fs.writeFileSync(notfound404Path, notfoundHtml)
+  console.log(`  ✓ /404.html 생성`)
+}
+
+// privacy 페이지 생성
+const templatePrivacyPath = path.join(__dirname, '..', 'templates', 'privacy.html')
+if (fs.existsSync(templatePrivacyPath)) {
+  const templatePrivacy = fs.readFileSync(templatePrivacyPath, 'utf-8')
+  const privacyHtml = templatePrivacy
+    .replace(/\{\{VITE_JS\}\}/g, viteJs.replace('regional', 'privacy'))
+    .replace(/\{\{VITE_CSS\}\}/g, viteCss)
+
+  const privacyDir = path.join(distPath, 'privacy')
+  if (!fs.existsSync(privacyDir)) {
+    fs.mkdirSync(privacyDir, { recursive: true })
+  }
+  fs.writeFileSync(path.join(privacyDir, 'index.html'), privacyHtml)
+  console.log(`  ✓ /privacy/index.html 생성`)
+}
+
+console.log(`\n완료! ${regions.length}개 지역 페이지 + sitemap.xml + robots.txt + rss.xml + 404.html + privacy 생성되었습니다.`)

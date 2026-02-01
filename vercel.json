@@ -53,6 +53,22 @@
     { "source": "/yangju", "destination": "/yangju/index.html" },
     { "source": "/pocheon", "destination": "/pocheon/index.html" },
     { "source": "/gwacheon", "destination": "/gwacheon/index.html" },
-    { "source": "/incheon", "destination": "/incheon/index.html" }
+    { "source": "/incheon", "destination": "/incheon/index.html" },
+    { "source": "/dongducheon", "destination": "/dongducheon/index.html" },
+    { "source": "/yeoju", "destination": "/yeoju/index.html" },
+    { "source": "/yeoncheon", "destination": "/yeoncheon/index.html" },
+    { "source": "/gapyeong", "destination": "/gapyeong/index.html" },
+    { "source": "/yangpyeong", "destination": "/yangpyeong/index.html" },
+    { "source": "/junggu-incheon", "destination": "/junggu-incheon/index.html" },
+    { "source": "/donggu-incheon", "destination": "/donggu-incheon/index.html" },
+    { "source": "/michuhol", "destination": "/michuhol/index.html" },
+    { "source": "/yeonsu", "destination": "/yeonsu/index.html" },
+    { "source": "/namdong", "destination": "/namdong/index.html" },
+    { "source": "/bupyeong", "destination": "/bupyeong/index.html" },
+    { "source": "/gyeyang", "destination": "/gyeyang/index.html" },
+    { "source": "/seogu-incheon", "destination": "/seogu-incheon/index.html" },
+    { "source": "/ganghwa", "destination": "/ganghwa/index.html" },
+    { "source": "/ongjin", "destination": "/ongjin/index.html" },
+    { "source": "/privacy", "destination": "/privacy/index.html" }
   ]
 }

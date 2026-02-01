@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-552DZEE4ZE"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-552DZEE4ZE');
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="naver-site-verification" content="e7ac6357e6f055ffe8364abb7df96323f89293f6" />
+    <!-- Microsoft Clarity -->
+    <script type="text/javascript">
+      (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "v8a4rmukl6");
+    </script>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 - 페이지를 찾을 수 없습니다 | 하우스Pick</title>
+    <meta name="description" content="요청하신 페이지를 찾을 수 없습니다. 하우스Pick 홈페이지로 이동해 주세요." />
+    <meta name="robots" content="noindex, nofollow" />
+
+    <!-- Vite 빌드된 CSS -->
+    <link rel="stylesheet" crossorigin href="{{VITE_CSS}}">
+
+    <style>
+      .prerender-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        z-index: 50;
+      }
+      .prerender-header-inner {
+        max-width: 72rem;
+        margin: 0 auto;
+        padding: 0.75rem 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .prerender-logo {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #f59e0b;
+        text-decoration: none;
+      }
+      .prerender-nav {
+        display: none;
+        align-items: center;
+        gap: 0.25rem;
+      }
+      .prerender-nav a {
+        color: #44403c;
+        text-decoration: none;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        border-radius: 0.5rem;
+        transition: all 0.2s;
+      }
+      .prerender-nav a:hover {
+        color: #f59e0b;
+        background: #fafaf9;
+      }
+      .prerender-cta-btn {
+        background: #f59e0b;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 9999px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+      }
+      .prerender-404-main {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        background: #fafaf9;
+      }
+      .prerender-404-content {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 5rem 1.5rem;
+        margin-top: 60px;
+      }
+      .prerender-404-inner {
+        text-align: center;
+        max-width: 28rem;
+      }
+      .prerender-404-code {
+        font-size: 6rem;
+        font-weight: 900;
+        color: #f59e0b;
+        line-height: 1;
+        margin-bottom: 1rem;
+      }
+      .prerender-404-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #1c1917;
+        margin-bottom: 1rem;
+      }
+      .prerender-404-desc {
+        color: #57534e;
+        margin-bottom: 2rem;
+        line-height: 1.6;
+      }
+      .prerender-404-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        justify-content: center;
+        align-items: center;
+      }
+      .prerender-404-btn-primary {
+        display: inline-block;
+        background: #f59e0b;
+        color: white;
+        font-weight: 700;
+        padding: 1rem 2rem;
+        border-radius: 9999px;
+        text-decoration: none;
+        transition: background 0.2s;
+      }
+      .prerender-404-btn-primary:hover {
+        background: #d97706;
+      }
+      .prerender-404-btn-secondary {
+        display: inline-block;
+        background: #1c1917;
+        color: white;
+        font-weight: 700;
+        padding: 1rem 2rem;
+        border-radius: 9999px;
+        text-decoration: none;
+        transition: background 0.2s;
+      }
+      .prerender-404-btn-secondary:hover {
+        background: #292524;
+      }
+      .prerender-footer {
+        background: #1c1917;
+        color: #a8a29e;
+        padding: 2rem 1.5rem;
+        text-align: center;
+      }
+      .prerender-footer-logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #f59e0b;
+        text-decoration: none;
+      }
+      .prerender-footer-copy {
+        font-size: 0.75rem;
+        color: #57534e;
+        margin-top: 1rem;
+      }
+      @media (min-width: 640px) {
+        .prerender-404-buttons {
+          flex-direction: row;
+        }
+      }
+      @media (min-width: 768px) {
+        .prerender-nav {
+          display: flex;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <!-- 프리렌더링된 404 콘텐츠 -->
+      <div class="prerender-404-main">
+        <!-- 헤더 -->
+        <header class="prerender-header">
+          <div class="prerender-header-inner">
+            <a href="/" class="prerender-logo">HousePick</a>
+            <nav class="prerender-nav">
+              <a href="/types">줄눈 종류</a>
+              <a href="/bathroom">화장실 줄눈</a>
+              <a href="/price">가격표</a>
+              <a href="/review">후기</a>
+              <a href="/faq">FAQ</a>
+            </nav>
+            <a href="tel:010-6461-0131" class="prerender-cta-btn">
+              전화 상담
+            </a>
+          </div>
+        </header>
+
+        <!-- 404 콘텐츠 -->
+        <main class="prerender-404-content">
+          <div class="prerender-404-inner">
+            <div class="prerender-404-code">404</div>
+            <h1 class="prerender-404-title">페이지를 찾을 수 없습니다</h1>
+            <p class="prerender-404-desc">
+              요청하신 페이지가 존재하지 않거나 이동되었습니다.<br />
+              URL을 다시 확인해 주세요.
+            </p>
+            <div class="prerender-404-buttons">
+              <a href="/" class="prerender-404-btn-primary">홈으로 가기</a>
+              <a href="tel:010-6461-0131" class="prerender-404-btn-secondary">전화 상담</a>
+            </div>
+          </div>
+        </main>
+
+        <!-- 푸터 -->
+        <footer class="prerender-footer">
+          <a href="/" class="prerender-footer-logo">HousePick</a>
+          <p class="prerender-footer-copy">© 2024 HousePick. 업계 최초 정찰제 줄눈 브랜드</p>
+        </footer>
+      </div>
+    </div>
+
+    <!-- Vite 빌드된 JS -->
+    <script type="module" crossorigin src="{{VITE_JS}}"></script>
+  </body>
+</html>

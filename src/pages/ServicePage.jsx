@@ -275,7 +275,7 @@ export default function ServicePage({ service }) {
 
       {/* 브레드크럼 */}
       <div className="pt-[60px]">
-        <Breadcrumb slug={pageSlug} />
+        <Breadcrumb slug={service.slug} />
       </div>
 
       {/* 플로팅 CTA 버튼 */}
@@ -416,7 +416,7 @@ export default function ServicePage({ service }) {
       </section>
 
       {/* 관련 페이지 */}
-      <RelatedPages currentSlug={pageSlug} />
+      <RelatedPages currentSlug={service.slug} />
 
       {/* Footer */}
       <Footer />

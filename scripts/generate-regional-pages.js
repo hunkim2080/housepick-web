@@ -33,7 +33,7 @@ function getRegionLabel(region) {
   return `${short} ${region.fullName}`
 }
 
-// 52개 지역 slug 매핑
+// 67개 지역 slug 매핑
 const areaSlugMap = {
   // 서울 (25개)
   '강남': 'gangnam', '강동': 'gangdong', '강북': 'gangbuk', '강서': 'gangseo',
@@ -43,7 +43,7 @@ const areaSlugMap = {
   '성북': 'seongbuk', '송파': 'songpa', '양천': 'yangcheon', '영등포': 'yeongdeungpo',
   '용산': 'yongsan', '은평': 'eunpyeong', '종로': 'jongno', '중구': 'junggu-seoul',
   '중랑': 'jungnang',
-  // 경기 (26개)
+  // 경기 (31개)
   '수원': 'suwon', '성남': 'seongnam', '용인': 'yongin', '부천': 'bucheon',
   '안산': 'ansan', '안양': 'anyang', '남양주': 'namyangju', '화성': 'hwaseong',
   '평택': 'pyeongtaek', '시흥': 'siheung', '김포': 'gimpo', '광명': 'gwangmyeong',
@@ -51,8 +51,19 @@ const areaSlugMap = {
   '이천': 'icheon', '안성': 'anseong', '의왕': 'uiwang', '구리': 'guri',
   '의정부': 'uijeongbu', '고양': 'goyang', '파주': 'paju', '양주': 'yangju',
   '포천': 'pocheon', '과천': 'gwacheon',
-  // 인천 (1개)
-  '인천': 'incheon'
+  '동두천': 'dongducheon', '여주': 'yeoju', '연천': 'yeoncheon', '가평': 'gapyeong', '양평': 'yangpyeong',
+  // 인천 (11개)
+  '인천': 'incheon',
+  '인천 중구': 'junggu-incheon', '인천중구': 'junggu-incheon', '중구(인천)': 'junggu-incheon',
+  '인천 동구': 'donggu-incheon', '인천동구': 'donggu-incheon', '동구(인천)': 'donggu-incheon',
+  '미추홀': 'michuhol', '미추홀구': 'michuhol',
+  '연수': 'yeonsu', '연수구': 'yeonsu',
+  '남동': 'namdong', '남동구': 'namdong',
+  '부평': 'bupyeong', '부평구': 'bupyeong',
+  '계양': 'gyeyang', '계양구': 'gyeyang',
+  '인천 서구': 'seogu-incheon', '인천서구': 'seogu-incheon', '서구(인천)': 'seogu-incheon',
+  '강화': 'ganghwa', '강화군': 'ganghwa',
+  '옹진': 'ongjin', '옹진군': 'ongjin'
 }
 
 // 인근 지역 링크 HTML 생성

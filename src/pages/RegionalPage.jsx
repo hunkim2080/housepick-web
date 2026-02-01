@@ -31,6 +31,9 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import * as ChannelService from '@channel.io/channel-web-sdk-loader';
 import { generateSEOContent, generateHashtags, generateImageAlt, generateFallbackAlt } from '../utils/contentGenerator';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import Breadcrumb from '../components/Breadcrumb';
 
 // 카운트업 애니메이션 컴포넌트
 function CountUp({ end, suffix = '', decimal = 0, duration = 2000 }) {
@@ -142,19 +145,12 @@ export default function RegionalPage({ region }) {
       `}</style>
 
       {/* 상단 고정 헤더 */}
-      <header className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm shadow-sm z-40">
-        <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
-          <a href="/" className="font-black text-xl text-amber-600">HousePick</a>
-          <a
-            href="tel:010-6461-0131"
-            className="flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white font-bold px-4 py-2 rounded-full transition-all"
-          >
-            <span className="animate-pulse">📞</span>
-            <span className="hidden sm:inline">010-6461-0131</span>
-            <span className="sm:hidden">전화상담</span>
-          </a>
-        </div>
-      </header>
+      <Header />
+
+      {/* 브레드크럼 */}
+      <div className="pt-[60px]">
+        <Breadcrumb slug={region.slug} regionName={region.name} />
+      </div>
 
       {/* 플로팅 CTA 버튼 */}
       <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
@@ -584,40 +580,7 @@ export default function RegionalPage({ region }) {
       )}
 
       {/* Footer */}
-      <footer className="bg-stone-900 text-stone-400 py-12 px-6">
-        <div className="max-w-5xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <div>
-              <a href="/" className="font-black text-2xl text-amber-500">HousePick</a>
-              <p className="mt-2">업계 최초 정찰제 줄눈 브랜드</p>
-            </div>
-            <div className="text-center md:text-right">
-              <p>대표전화: <a href="tel:010-6461-0131" className="text-white hover:text-amber-400">010-6461-0131</a></p>
-              <p className="mt-1">© 2024 HousePick. All rights reserved.</p>
-            </div>
-          </div>
-
-          {/* 서비스 지역 링크 (내부 링크 빌딩) */}
-          <div className="mt-8 pt-8 border-t border-stone-800">
-            <p className="text-sm text-stone-500 mb-4">서비스 가능 지역</p>
-            <div className="flex flex-wrap gap-2 text-xs">
-              {['gangnam', 'songpa', 'seocho', 'gangdong', 'seongnam', 'yongin', 'suwon', 'hwaseong', 'anyang', 'bucheon'].map((slug, idx) => {
-                const nameMap = {
-                  gangnam: '강남', songpa: '송파', seocho: '서초', gangdong: '강동',
-                  seongnam: '성남', yongin: '용인', suwon: '수원', hwaseong: '화성',
-                  anyang: '안양', bucheon: '부천'
-                };
-                return (
-                  <a key={idx} href={`/${slug}`} className="text-stone-500 hover:text-amber-400 transition-colors">
-                    {nameMap[slug]}
-                  </a>
-                );
-              })}
-              <a href="/" className="text-amber-400 hover:text-amber-300">전체 지역 보기 →</a>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

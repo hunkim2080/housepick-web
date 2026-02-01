@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import * as ChannelService from '@channel.io/channel-web-sdk-loader';
+import Header from './components/Header';
+import Footer from './components/Footer';
 
 // 카운트업 애니메이션 컴포넌트
 function CountUp({ end, suffix = '', decimal = 0, duration = 2000 }) {
@@ -843,19 +845,7 @@ export default function HousePickFlyer() {
       {showPriceModal && <PriceModal onClose={() => setShowPriceModal(false)} />}
 
       {/* 상단 고정 헤더 */}
-      <header className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm shadow-sm z-40">
-        <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
-          <div className="font-black text-xl text-amber-600">HousePick</div>
-          <a 
-            href="tel:010-6461-0131" 
-            className="flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white font-bold px-4 py-2 rounded-full transition-all"
-          >
-            <span className="animate-pulse">📞</span>
-            <span className="hidden sm:inline">010-6461-0131</span>
-            <span className="sm:hidden">전화상담</span>
-          </a>
-        </div>
-      </header>
+      <Header />
 
       {/* 플로팅 CTA 버튼 */}
       <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
@@ -1446,11 +1436,7 @@ export default function HousePickFlyer() {
       </section>
 
       {/* Footer */}
-      <footer className="py-8 px-6 bg-stone-900 text-center">
-        <div className="text-2xl font-black text-amber-500 mb-1">HousePick</div>
-        <p className="text-stone-400 text-sm mb-2">줄눈 가격, 이제 검색하지 마세요</p>
-        <p className="text-stone-500 text-xs">© 2024 디테일라인. 줄눈 시공 전문</p>
-      </footer>
+      <Footer />
     </div>
   );
 }

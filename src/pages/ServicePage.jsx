@@ -7,6 +7,10 @@ import * as ChannelService from '@channel.io/channel-web-sdk-loader'
 import { faqData, reviewsData, getAllServices, serviceImages } from '../data/services'
 import BeforeAfter from '../components/BeforeAfter'
 import OptimizedImage from '../components/OptimizedImage'
+import Header from '../components/Header'
+import Footer from '../components/Footer'
+import Breadcrumb from '../components/Breadcrumb'
+import RelatedPages from '../components/RelatedPages'
 
 // 컴포넌트 외부에서 SSG 콘텐츠 즉시 읽기 (hydration 이전)
 const getInitialSsgHtml = () => {
@@ -267,19 +271,12 @@ export default function ServicePage({ service }) {
       `}</style>
 
       {/* 상단 고정 헤더 */}
-      <header className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm shadow-sm z-40">
-        <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
-          <a href="/" className="font-black text-xl text-amber-600">HousePick</a>
-          <a
-            href="tel:010-6461-0131"
-            className="flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white font-bold px-4 py-2 rounded-full transition-all"
-          >
-            <span className="animate-pulse">📞</span>
-            <span className="hidden sm:inline">010-6461-0131</span>
-            <span className="sm:hidden">전화상담</span>
-          </a>
-        </div>
-      </header>
+      <Header />
+
+      {/* 브레드크럼 */}
+      <div className="pt-[60px]">
+        <Breadcrumb slug={pageSlug} />
+      </div>
 
       {/* 플로팅 CTA 버튼 */}
       <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
@@ -418,36 +415,11 @@ export default function ServicePage({ service }) {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-stone-900 text-stone-400 py-12 px-6">
-        <div className="max-w-5xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <div>
-              <a href="/" className="font-black text-2xl text-amber-500">HousePick</a>
-              <p className="mt-2">업계 최초 정찰제 줄눈 브랜드</p>
-            </div>
-            <div className="text-center md:text-right">
-              <p>대표전화: <a href="tel:010-6461-0131" className="text-white hover:text-amber-400">010-6461-0131</a></p>
-              <p className="mt-1">© 2024 HousePick. All rights reserved.</p>
-            </div>
-          </div>
+      {/* 관련 페이지 */}
+      <RelatedPages currentSlug={pageSlug} />
 
-          {/* 서비스 페이지 링크 */}
-          <div className="mt-8 pt-8 border-t border-stone-800">
-            <p className="text-sm text-stone-500 mb-4">서비스 안내</p>
-            <div className="flex flex-wrap gap-4 text-sm">
-              <a href="/faq" className="text-stone-500 hover:text-amber-400 transition-colors">FAQ</a>
-              <a href="/types" className="text-stone-500 hover:text-amber-400 transition-colors">줄눈 종류</a>
-              <a href="/bathroom" className="text-stone-500 hover:text-amber-400 transition-colors">화장실 가이드</a>
-              <a href="/price" className="text-stone-500 hover:text-amber-400 transition-colors">가격표</a>
-              <a href="/review" className="text-stone-500 hover:text-amber-400 transition-colors">후기</a>
-              <a href="/self-diy" className="text-stone-500 hover:text-amber-400 transition-colors">셀프 vs 업체</a>
-              <a href="/find" className="text-stone-500 hover:text-amber-400 transition-colors">업체 선택</a>
-              <a href="/" className="text-amber-400 hover:text-amber-300">홈으로 →</a>
-            </div>
-          </div>
-        </div>
-      </footer>
+      {/* Footer */}
+      <Footer />
     </div>
   )
 }

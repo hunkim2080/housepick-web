@@ -76,6 +76,25 @@
         font-size: 1.25rem;
         font-weight: 700;
         color: #f59e0b;
+        text-decoration: none;
+      }
+      .prerender-nav {
+        display: none;
+        align-items: center;
+        gap: 0.25rem;
+      }
+      .prerender-nav a {
+        color: #44403c;
+        text-decoration: none;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        border-radius: 0.5rem;
+        transition: all 0.2s;
+      }
+      .prerender-nav a:hover {
+        color: #f59e0b;
+        background: #fafaf9;
       }
       .prerender-cta-btn {
         background: #f59e0b;
@@ -89,8 +108,105 @@
         align-items: center;
         gap: 0.25rem;
       }
+      .prerender-breadcrumb {
+        background: #f5f5f4;
+        padding: 0.75rem 1.5rem;
+        margin-top: 60px;
+      }
+      .prerender-breadcrumb-inner {
+        max-width: 72rem;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.875rem;
+        color: #57534e;
+      }
+      .prerender-breadcrumb a {
+        color: #57534e;
+        text-decoration: none;
+      }
+      .prerender-breadcrumb a:hover {
+        color: #f59e0b;
+      }
+      .prerender-breadcrumb-separator {
+        color: #a8a29e;
+      }
+      .prerender-breadcrumb-current {
+        color: #1c1917;
+        font-weight: 500;
+      }
+      .prerender-footer {
+        background: #1c1917;
+        color: #a8a29e;
+        padding: 3rem 1.5rem 2rem;
+      }
+      .prerender-footer-inner {
+        max-width: 72rem;
+        margin: 0 auto;
+      }
+      .prerender-footer-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+      .prerender-footer h4 {
+        color: white;
+        font-weight: 700;
+        font-size: 0.875rem;
+        margin-bottom: 1rem;
+      }
+      .prerender-footer ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .prerender-footer li {
+        margin-bottom: 0.5rem;
+      }
+      .prerender-footer a {
+        color: #a8a29e;
+        text-decoration: none;
+        font-size: 0.875rem;
+        transition: color 0.2s;
+      }
+      .prerender-footer a:hover {
+        color: #fbbf24;
+      }
+      .prerender-footer-bottom {
+        border-top: 1px solid #292524;
+        padding-top: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        text-align: center;
+      }
+      .prerender-footer-logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #f59e0b;
+        text-decoration: none;
+      }
+      .prerender-footer-copy {
+        font-size: 0.75rem;
+        color: #57534e;
+      }
+      @media (min-width: 768px) {
+        .prerender-nav {
+          display: flex;
+        }
+        .prerender-footer-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+        .prerender-footer-bottom {
+          flex-direction: row;
+          justify-content: space-between;
+        }
+      }
       .prerender-hero {
-        padding-top: 7rem;
+        padding-top: 3rem;
         padding-bottom: 4rem;
         background: linear-gradient(to bottom right, #1c1917, #292524, #1c1917);
         color: white;
@@ -219,11 +335,27 @@
       <header class="prerender-header">
         <div class="prerender-header-inner">
           <a href="/" class="prerender-logo">HousePick</a>
+          <nav class="prerender-nav">
+            <a href="/types">줄눈 종류</a>
+            <a href="/bathroom">화장실 줄눈</a>
+            <a href="/price">가격표</a>
+            <a href="/review">후기</a>
+            <a href="/faq">FAQ</a>
+          </nav>
           <a href="tel:010-6461-0131" class="prerender-cta-btn">
-            전화 상담
+            📞 전화 상담
           </a>
         </div>
       </header>
+
+      <!-- 브레드크럼 -->
+      <nav class="prerender-breadcrumb" aria-label="Breadcrumb">
+        <div class="prerender-breadcrumb-inner">
+          <a href="/">홈</a>
+          <span class="prerender-breadcrumb-separator">›</span>
+          <span class="prerender-breadcrumb-current">{{PAGE_H1}}</span>
+        </div>
+      </nav>
 
       <!-- 히어로 섹션 -->
       <section class="prerender-hero">
@@ -249,6 +381,56 @@
       <div id="content" class="prerender-content">
 {{SSG_CONTENT}}
       </div>
+
+      <!-- 푸터 -->
+      <footer class="prerender-footer">
+        <div class="prerender-footer-inner">
+          <div class="prerender-footer-grid">
+            <div>
+              <h4>서비스 안내</h4>
+              <ul>
+                <li><a href="/types">줄눈 종류</a></li>
+                <li><a href="/bathroom">화장실 줄눈</a></li>
+                <li><a href="/price">가격표</a></li>
+                <li><a href="/self-diy">셀프 vs 업체</a></li>
+                <li><a href="/faq">FAQ</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4>고객지원</h4>
+              <ul>
+                <li><a href="/review">고객 후기</a></li>
+                <li><a href="/find">업체 선택법</a></li>
+                <li><a href="tel:010-6461-0131">📞 전화 상담</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4>지역별 서비스</h4>
+              <ul>
+                <li><a href="/gangnam">강남 줄눈시공</a></li>
+                <li><a href="/songpa">송파 줄눈시공</a></li>
+                <li><a href="/seocho">서초 줄눈시공</a></li>
+                <li><a href="/seongnam">성남 줄눈시공</a></li>
+                <li><a href="/suwon">수원 줄눈시공</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4>&nbsp;</h4>
+              <ul>
+                <li><a href="/yongin">용인 줄눈시공</a></li>
+                <li><a href="/hwaseong">화성 줄눈시공</a></li>
+                <li><a href="/anyang">안양 줄눈시공</a></li>
+                <li><a href="/bucheon">부천 줄눈시공</a></li>
+                <li><a href="/">전체 지역 →</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="prerender-footer-bottom">
+            <a href="/" class="prerender-footer-logo">HousePick</a>
+            <p class="prerender-footer-copy">© 2024 HousePick. 업계 최초 정찰제 줄눈 브랜드</p>
+          </div>
+        </div>
+      </footer>
     </div>
 
     <!-- Vite 빌드된 JS -->

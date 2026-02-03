@@ -160,49 +160,25 @@ export function generateHashtags(region) {
 
 /**
  * 동적 SEO Title 생성
+ * 클릭률 최적화: 브랜드명 뒤로, 핵심 가치 앞으로
  */
 export function generateDynamicTitle(region) {
-  const seed = region.slug;
-  const selectedKeyword = selectItems(seed + '-title', groutServiceKeywords, 1)[0];
-  const selectedSpace = selectItems(seed + '-title-space', groutSpaces, 1)[0];
-
-  // subAreas가 있으면 포함
-  const subAreasText = region.subAreas && region.subAreas.length > 0
-    ? `(${region.subAreas.slice(0, 2).join(', ')})`
-    : '';
-
-  return `${region.name}${subAreasText} ${selectedKeyword} | ${selectedSpace} - 하우스Pick`;
+  return `${region.fullName} 줄눈시공 | 망친 줄눈, 망가진 오염된 줄눈, 다시 해드립니다`;
 }
 
 /**
  * 동적 SEO Description 생성
- * 지역별 랜드마크/아파트 정보를 포함하여 네이버 검색 최적화
+ * 클릭률 최적화: 숫자 앞에, 지역 세부정보 포함
  */
 export function generateDynamicDescription(region) {
-  const seed = region.slug;
-  const selectedKeywords = selectItems(seed + '-desc', groutServiceKeywords, 2);
-  const selectedSpace = selectItems(seed + '-desc-space', groutSpaces, 1)[0];
-
-  // 지역 고유 정보 (랜드마크 또는 아파트)
-  const landmark = region.landmarks && region.landmarks.length > 0
-    ? region.landmarks[0]
-    : '';
-  const apartment = region.apartments && region.apartments.length > 0
-    ? region.apartments[0]
+  // subAreas에서 주요 동/읍/면 추출 (최대 3개)
+  const areas = region.subAreas && region.subAreas.length > 0
+    ? region.subAreas.slice(0, 3).join(', ')
     : '';
 
-  // 지역 특성 문구 생성
-  const localInfo = landmark && apartment
-    ? `${landmark}, ${apartment} 인근`
-    : landmark || apartment
-      ? `${landmark || apartment} 인근`
-      : '';
+  const areaText = areas ? `${areas} ` : '';
 
-  const subAreasText = region.subAreas && region.subAreas.length > 0
-    ? ` ${region.subAreas.slice(0, 2).join(', ')} 등`
-    : '';
-
-  return `${region.fullName}${subAreasText} ${selectedKeywords[0]}, ${selectedKeywords[1]} 전문.${localInfo ? ` ${localInfo}` : ''} ${selectedSpace} 업계 최초 정찰제, 5년 무상보장.`;
+  return `${region.fullName} ${areaText}줄눈시공 전문. 화장실 30만원부터. 정찰제 가격, 5년 보증.`;
 }
 
 /**

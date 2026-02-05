@@ -160,15 +160,15 @@ export function generateHashtags(region) {
 
 /**
  * 동적 SEO Title 생성
- * 클릭률 최적화: 브랜드명 뒤로, 핵심 가치 앞으로
+ * 클릭률 최적화: 케라폭시 키워드 앞에, 브랜드명 뒤로
  */
 export function generateDynamicTitle(region) {
-  return `${region.fullName} 줄눈시공 | 망친 줄눈, 망가진 오염된 줄눈, 다시 해드립니다`;
+  return `${region.fullName} 케라폭시 줄눈시공 | 30만원~ 정찰제`;
 }
 
 /**
  * 동적 SEO Description 생성
- * 클릭률 최적화: 숫자 앞에, 지역 세부정보 포함
+ * 클릭률 최적화: 케라폭시 키워드 앞에, 숫자 포함, 지역 세부정보 포함
  */
 export function generateDynamicDescription(region) {
   // subAreas에서 주요 동/읍/면 추출 (최대 3개)
@@ -178,7 +178,7 @@ export function generateDynamicDescription(region) {
 
   const areaText = areas ? `${areas} ` : '';
 
-  return `${region.fullName} ${areaText}줄눈시공 전문. 화장실 30만원부터. 정찰제 가격, 5년 보증.`;
+  return `${region.fullName} ${areaText}케라폭시 줄눈시공 전문. 화장실 30만원~. 정찰제 가격, 5년 무상 A/S 보장.`;
 }
 
 /**

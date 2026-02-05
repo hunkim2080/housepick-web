@@ -240,8 +240,8 @@ function generateLocalBusinessJsonLd(region) {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "@id": `${BASE_URL}/${region.slug}`,
-    "name": `하우스Pick ${region.name}`,
-    "description": `${region.fullName} 줄눈시공 전문업체. 업계 최초 정찰제, 5년 무상보장.${landmarksText}`,
+    "name": `하우스Pick ${region.name} - 케라폭시 줄눈시공`,
+    "description": `${region.fullName} 케라폭시 줄눈시공 전문. 화장실 30만원~. 정찰제 가격, 5년 무상 A/S 보장.${landmarksText}`,
     "url": `${BASE_URL}/${region.slug}`,
     "telephone": "010-6461-0131",
     "areaServed": {

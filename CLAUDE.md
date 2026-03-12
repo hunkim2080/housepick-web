@@ -159,6 +159,7 @@ website/
 ├── /blog/:id              # 블로그 상세
 ├── /:region               # 지역 페이지 (서울, 경기, 인천, 부산)
 ├── /:region/:service      # 지역별 서비스
+├── /:region/:district/:apartment  # 아파트 단지 페이지 (신규)
 └── /admin/*               # 관리자 페이지
 ```
 
@@ -172,6 +173,65 @@ website/
 /admin/posts/new           # 새 포스트
 /admin/posts/:id/edit      # 포스트 수정
 ```
+
+---
+
+## 현재 진행 중인 작업 (2026-03)
+
+### 아파트 단지별 SEO 페이지 자동 생성 프로젝트
+
+**배경**
+네이버 검색에서 "아파트명 + 줄눈시공" 키워드로 사이트 영역 최상단 노출이 확인됨.
+수도권 6000개 아파트 단지별 롱테일 SEO 페이지를 자동 생성하는 시스템 구축 중.
+
+**작업 지시서**: `claude-code-prompt-v2.md` 파일 반드시 먼저 읽을 것.
+
+**핵심 설계 원칙**
+- 라우트는 전체 6000개 전부 동작 (직접 URL 접근 항상 가능)
+- sitemap.xml은 Phase별로 단계적 노출 (스팸 신호 방지)
+- 한 번 배포 후 Vercel Cron이 3주마다 자동으로 다음 Phase 전환
+
+**새로 추가되는 URL 구조**
+```
+/:region/:district/:apartment    # 아파트 단지 페이지
+예: /seoul/gangdong/godeok-raemian-hilstate
+```
+
+**새로 추가되는 파일 목록**
+```
+website/
+├── 6000개아파트명.xlsx          # 원본 데이터 (레포 루트)
+├── claude-code-prompt-v2.md    # 작업 지시서
+├── vercel.json                 # Cron Job 설정
+├── scripts/
+│   └── parse-apartments.js    # 엑셀 → JSON 변환 스크립트
+├── api/
+│   └── advance-phase.js       # Phase 자동 전환 Cron API
+├── data/
+│   └── apartments.json        # 파싱 결과물 (6000개 단지)
+└── views/
+    └── apartment.ejs          # 아파트 단지 페이지 템플릿
+```
+
+**Phase 배포 전략**
+| Phase | 지역 | 노출 시작 |
+|---|---|---|
+| 1 | 서울 강남/서초/송파/강동/마포/용산 | 즉시 |
+| 2 | 서울 나머지 구 | 3주 후 자동 |
+| 3 | 경기 주요 시 | 6주 후 자동 |
+| 4 | 경기 나머지 + 인천 | 9주 후 자동 |
+
+**타겟 키워드 구조**
+- `[aptName] 줄눈시공` → title, H1
+- `[districtName] [aptName] 줄눈` → 메타 디스크립션, 브레드크럼
+- `[aptName] 줄눈시공업체` → H2 소제목
+- `[aptName] 줄눈시공 전문업체` → CTA 섹션
+- `[aptName] 줄눈시공 개선 사례` → 시공 과정 H2
+
+**절대 금지 사항**
+- server.js 기존 라우트 순서 변경 금지
+- 기존 페이지 동작 수정 금지
+- 새 라우트는 반드시 `/:region/:service?` (414줄) 바로 위에 삽입
 
 ---
 

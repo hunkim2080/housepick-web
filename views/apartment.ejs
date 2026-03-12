@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <%
+  // aptType별 title 결정
+  let pageTitle = '';
+  if (aptType === 'new') {
+    pageTitle = aptName + ' 입주청소·줄눈시공 전문 | 하우스픽';
+  } else if (aptType === 'mid') {
+    pageTitle = aptName + ' 줄눈시공 전문업체 | 하우스픽';
+  } else {
+    pageTitle = aptName + ' 줄눈 곰팡이 제거·재시공 | 하우스픽';
+  }
+
+  // aptType별 메인 문구
+  let mainMessage = '';
+  if (aptType === 'new') {
+    mainMessage = '입주 전 줄눈시공이 필수인 이유 — ' + aptName + '처럼 새 아파트일수록 빠른 코팅으로 오염을 원천 차단합니다.';
+  } else if (aptType === 'mid') {
+    mainMessage = aptName + ' 준공 ' + year + '년, 지금이 줄눈 재시공 적기입니다. 10년 전 줄눈은 이미 곰팡이 온상이 되어 있을 수 있습니다.';
+  } else {
+    let brandText = brand !== '기타' ? brand + ' 특유의 고밀도 타일' : '타일';
+    let yearText = year || '오래된';
+    mainMessage = brandText + ' 사이에 낀 ' + yearText + '년부터의 묵은 곰팡이를 케라폭시로 완전 제거합니다.';
+  }
+
+  // brand별 추가 문구
+  let brandMessage = '';
+  if (brand === '삼성물산') {
+    brandMessage = '래미안 특유의 고급 타일 시공에 맞춘 정밀 줄눈작업으로 마감 품질을 한층 높입니다.';
+  } else if (brand === '현대건설') {
+    brandMessage = '힐스테이트 프리미엄 마감재에 어울리는 케라폭시 줄눈으로 청결함을 오래 유지합니다.';
+  } else if (brand === 'GS건설') {
+    brandMessage = '자이의 세련된 인테리어와 조화를 이루는 깔끔한 줄눈시공을 제공합니다.';
+  } else if (brand === 'HDC현대산업개발') {
+    brandMessage = '아이파크의 넓은 욕실 공간에 최적화된 줄눈시공으로 위생적인 환경을 만들어드립니다.';
+  } else if (brand === '대우건설') {
+    brandMessage = '푸르지오의 모던한 디자인에 맞춘 세심한 줄눈작업으로 완성도를 높입니다.';
+  } else if (brand === 'DL이앤씨') {
+    brandMessage = 'e편한세상의 실용적인 공간 설계에 맞는 효율적인 줄눈시공을 진행합니다.';
+  }
+  %>
+  <title><%= pageTitle %></title>
+  <meta name="description" content="<%= description %>">
+  <link rel="canonical" href="<%= canonicalUrl %>">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="<%= pageTitle %>">
+  <meta property="og:description" content="<%= description %>">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="<%= canonicalUrl %>">
+
+  <!-- JSON-LD 구조화 데이터 -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "<%= aptName %> 케라폭시 줄눈시공",
+    "provider": {
+      "@type": "LocalBusiness",
+      "name": "하우스픽",
+      "telephone": "010-6461-0131",
+      "areaServed": "<%= districtName %>"
+    },
+    "serviceType": "줄눈시공",
+    "areaServed": "<%= districtName %> <%= aptName %>"
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "<%= aptName %> 줄눈시공 비용은 얼마인가요?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<%= aptName %> 줄눈시공 비용은 화장실 크기와 상태에 따라 다르며, 일반적으로 화장실 1곳 기준 30~50만원 선입니다."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "<%= aptName %> 시공 기간은 얼마나 걸리나요?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<%= aptName %> 케라폭시 줄눈시공은 화장실 1곳 기준 약 3~4시간이 소요되며, 당일 시공 후 바로 사용 가능합니다."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "홈", "item": "https://housepick-web.vercel.app/" },
+      { "@type": "ListItem", "position": 2, "name": "<%= regionName %>", "item": "https://housepick-web.vercel.app/<%= regionSlug %>" },
+      { "@type": "ListItem", "position": 3, "name": "<%= districtName %>", "item": "https://housepick-web.vercel.app/<%= regionSlug %>/julnoon" },
+      { "@type": "ListItem", "position": 4, "name": "<%= aptName %> 줄눈시공" }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <!-- 헤더 -->
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <a href="/" class="logo">
+          <h1>하우스픽</h1>
+        </a>
+        <nav class="nav">
+          <a href="/julnoon">줄눈시공</a>
+          <a href="/move-in-cleaning">입주청소</a>
+          <a href="/elastic-coat">탄성코트</a>
+          <a href="/bathroom-remodeling">화장실 리모델링</a>
+          <a href="/reservation" class="btn-reservation">온라인 예약</a>
+        </nav>
+        <button class="mobile-menu-toggle" aria-label="메뉴">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 메인 콘텐츠 -->
+  <main class="main">
+    <!-- 브레드크럼 -->
+    <nav class="breadcrumb" aria-label="breadcrumb">
+      <div class="container">
+        <ol class="breadcrumb-list">
+          <li><a href="/">홈</a></li>
+          <li><a href="/<%= regionSlug %>"><%= regionName %></a></li>
+          <li><a href="/<%= regionSlug %>/julnoon"><%= districtName %></a></li>
+          <li aria-current="page"><%= aptName %> 줄눈시공</li>
+        </ol>
+      </div>
+    </nav>
+
+    <!-- 히어로 섹션 -->
+    <section class="apartment-hero">
+      <div class="container">
+        <h1><%= aptName %> 케라폭시 줄눈시공</h1>
+        <p class="hero-subtitle"><%= districtName %> <%= aptName %> 줄눈시공 전문업체 하우스픽</p>
+        <div class="apartment-meta">
+          <% if (year) { %><span class="meta-item"><strong>준공연도:</strong> <%= year %>년</span><% } %>
+          <% if (households) { %><span class="meta-item"><strong>세대수:</strong> <%= households.toLocaleString() %>세대</span><% } %>
+          <% if (brand !== '기타') { %><span class="meta-item"><strong>시공사:</strong> <%= brand %></span><% } %>
+        </div>
+        <a href="/reservation?region=<%= regionSlug %>&apt=<%= aptSlug %>" class="btn btn-primary btn-large">무료 견적 받기</a>
+      </div>
+    </section>
+
+    <!-- 왜 하우스픽인가 섹션 -->
+    <section class="why-housepick">
+      <div class="container">
+        <h2><%= aptName %> 줄눈시공업체, 왜 하우스픽인가?</h2>
+        <p class="section-intro"><%= mainMessage %></p>
+        <% if (brandMessage) { %><p class="brand-message"><%= brandMessage %></p><% } %>
+
+        <div class="benefits-grid">
+          <div class="benefit-card">
+            <div class="benefit-icon">✓</div>
+            <h3>정찰제 가격</h3>
+            <p><%= aptName %> 시공 시 현장에서 추가 비용 없이 견적 그대로 진행합니다.</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">✓</div>
+            <h3>팀장 직영 시공</h3>
+            <p>하도급 없이 <%= aptName %> 담당 전문 팀장이 직접 시공합니다.</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">✓</div>
+            <h3>100% 정품 케라폭시</h3>
+            <p><%= aptName %> 줄눈시공에 이탈리아 마펠사 정품 케라폭시만 사용합니다.</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">✓</div>
+            <h3>12개월 AS 보증</h3>
+            <p>시공 후 12개월간 <%= aptName %> 줄눈 상태를 책임지고 관리합니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 시공 과정 섹션 -->
+    <section class="process-section">
+      <div class="container">
+        <h2><%= aptName %> 줄눈시공 개선 사례</h2>
+        <p class="section-intro"><%= aptName %> 아파트에서 진행한 케라폭시 줄눈시공 과정을 소개합니다.</p>
+
+        <div class="process-steps">
+          <div class="process-step">
+            <div class="step-number">1</div>
+            <h3>기존 줄눈 제거</h3>
+            <p><%= aptName %> 화장실의 오염된 기존 줄눈을 깔끔하게 제거합니다.</p>
+          </div>
+          <div class="process-step">
+            <div class="step-number">2</div>
+            <h3>곰팡이 살균 처리</h3>
+            <p>타일 사이 곰팡이균을 완전히 살균하여 재발을 방지합니다.</p>
+          </div>
+          <div class="process-step">
+            <div class="step-number">3</div>
+            <h3>케라폭시 줄눈 시공</h3>
+            <p>이탈리아 마펠사 정품 케라폭시로 새 줄눈을 채웁니다.</p>
+          </div>
+          <div class="process-step">
+            <div class="step-number">4</div>
+            <h3>마감 및 청소</h3>
+            <p><%= aptName %> 화장실을 깨끗하게 정리하고 시공을 완료합니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ 섹션 -->
+    <section class="faq-section">
+      <div class="container">
+        <h2><%= aptName %> 줄눈시공 자주 묻는 질문</h2>
+
+        <div class="faq-list">
+          <div class="faq-item">
+            <h3 class="faq-question"><%= aptName %> 줄눈시공 비용은 얼마인가요?</h3>
+            <div class="faq-answer">
+              <p><%= aptName %> 줄눈시공 비용은 화장실 크기와 상태에 따라 다르며, 일반적으로 화장실 1곳 기준 30~50만원 선입니다. 정확한 견적은 무료 현장 방문 후 안내해드립니다.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <h3 class="faq-question"><%= aptName %> 시공 기간은 얼마나 걸리나요?</h3>
+            <div class="faq-answer">
+              <p><%= aptName %> 케라폭시 줄눈시공은 화장실 1곳 기준 약 3~4시간이 소요되며, 당일 시공 후 바로 사용 가능합니다.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <h3 class="faq-question"><%= aptName %> 입주 전후 언제 시공하는 게 좋나요?</h3>
+            <div class="faq-answer">
+              <p>입주 전 시공을 권장합니다. 가구 배치 전에 시공하면 작업이 수월하고, 새 줄눈으로 깨끗하게 입주할 수 있습니다. <%= aptName %> 입주 예정이시라면 입주청소와 함께 진행하시면 할인 혜택도 받으실 수 있습니다.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA 섹션 -->
+    <section class="cta-section">
+      <div class="container">
+        <h2><%= aptName %> 줄눈시공 전문업체 하우스픽</h2>
+        <p><%= districtName %> <%= aptName %> 케라폭시 줄눈시공, 지금 바로 무료 견적을 받아보세요.</p>
+        <div class="cta-buttons">
+          <a href="tel:010-6461-0131" class="btn btn-primary btn-large">전화 문의</a>
+          <a href="/reservation?region=<%= regionSlug %>&apt=<%= aptSlug %>" class="btn btn-outline btn-large">온라인 예약</a>
+        </div>
+        <p class="cta-note">문자 상담 가능: 010-6461-0131</p>
+      </div>
+    </section>
+
+    <!-- 인근 아파트 섹션 -->
+    <% if (nearbyApts && nearbyApts.length > 0) { %>
+    <section class="nearby-apartments">
+      <div class="container">
+        <h3><%= districtName %> 다른 아파트 줄눈시공 사례</h3>
+        <ul class="nearby-list">
+          <% nearbyApts.forEach(function(apt) { %>
+            <li>
+              <a href="/<%= regionSlug %>/<%= districtSlug %>/<%= apt.slug %>">
+                <%= apt.name %> 줄눈시공
+              </a>
+              <% if (apt.year) { %><span class="apt-year">(<%= apt.year %>년)</span><% } %>
+            </li>
+          <% }) %>
+        </ul>
+      </div>
+    </section>
+    <% } %>
+  </main>
+
+  <!-- 푸터 -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>서비스</h3>
+          <ul>
+            <li><a href="/julnoon">줄눈시공</a></li>
+            <li><a href="/move-in-cleaning">입주청소</a></li>
+            <li><a href="/elastic-coat">탄성코트</a></li>
+            <li><a href="/bathroom-remodeling">화장실 리모델링</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>지역별 서비스</h3>
+          <ul>
+            <li><a href="/seoul">서울</a></li>
+            <li><a href="/gyeonggi">경기</a></li>
+            <li><a href="/incheon">인천</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>고객센터</h3>
+          <p>전화: 010-6461-0131</p>
+          <p>문자 상담 가능</p>
+          <p>운영시간: 평일 09:00 - 18:00</p>
+        </div>
+        <div class="footer-section">
+          <h3>신뢰 요소</h3>
+          <div class="trust-badges">
+            <span>✓ 정찰제 가격</span>
+            <span>✓ 12개월 AS 보증</span>
+            <span>✓ 100% 정품 자재</span>
+            <span>✓ 팀장 직영 시공</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 하우스픽. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 플로팅 예약 버튼 (모바일) -->
+  <div class="floating-cta">
+    <a href="/reservation" class="btn-floating">무료 견적 받기</a>
+  </div>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>

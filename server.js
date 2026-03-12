@@ -101,6 +101,68 @@ app.get('/', async (req, res) => {
   });
 });
 
+// sitemap.xml 엔드포인트 (정적 경로이므로 동적 라우트보다 먼저 정의)
+app.get('/sitemap.xml', async (req, res) => {
+  let apartments = {};
+  let settings = { currentPhase: 1 };
+
+  try {
+    apartments = require('./data/apartments.json');
+    settings = await readJSON(settingsPath);
+  } catch (e) {}
+
+  const currentPhase = settings.currentPhase || 1;
+  const baseUrl = 'https://housepick-web.vercel.app';
+  const today = new Date().toISOString().split('T')[0];
+
+  const urls = [
+    // 기존 주요 페이지
+    { loc: `${baseUrl}/`, priority: '1.0', changefreq: 'weekly' },
+    { loc: `${baseUrl}/julnoon`, priority: '0.9', changefreq: 'monthly' },
+    { loc: `${baseUrl}/move-in-cleaning`, priority: '0.9', changefreq: 'monthly' },
+    { loc: `${baseUrl}/elastic-coat`, priority: '0.9', changefreq: 'monthly' },
+    { loc: `${baseUrl}/bathroom-remodeling`, priority: '0.9', changefreq: 'monthly' },
+    { loc: `${baseUrl}/reservation`, priority: '0.8', changefreq: 'monthly' },
+    { loc: `${baseUrl}/blog`, priority: '0.7', changefreq: 'weekly' },
+    // 지역 페이지
+    { loc: `${baseUrl}/seoul`, priority: '0.8', changefreq: 'monthly' },
+    { loc: `${baseUrl}/gyeonggi`, priority: '0.8', changefreq: 'monthly' },
+    { loc: `${baseUrl}/incheon`, priority: '0.8', changefreq: 'monthly' },
+    { loc: `${baseUrl}/seoul/julnoon`, priority: '0.7', changefreq: 'monthly' },
+    { loc: `${baseUrl}/gyeonggi/julnoon`, priority: '0.7', changefreq: 'monthly' },
+    { loc: `${baseUrl}/incheon/julnoon`, priority: '0.7', changefreq: 'monthly' },
+  ];
+
+  // 아파트 페이지 (현재 phase 이하만 포함)
+  for (const [regionSlug, districts] of Object.entries(apartments)) {
+    for (const [districtSlug, districtData] of Object.entries(districts)) {
+      for (const apt of districtData.apartments) {
+        if (apt.phase <= currentPhase) {
+          urls.push({
+            loc: `${baseUrl}/${regionSlug}/${districtSlug}/${apt.slug}`,
+            priority: '0.6',
+            changefreq: 'monthly',
+            lastmod: today
+          });
+        }
+      }
+    }
+  }
+
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls.map(u => `  <url>
+    <loc>${u.loc}</loc>
+    <lastmod>${u.lastmod || today}</lastmod>
+    <changefreq>${u.changefreq}</changefreq>
+    <priority>${u.priority}</priority>
+  </url>`).join('\n')}
+</urlset>`;
+
+  res.header('Content-Type', 'application/xml');
+  res.send(xml);
+});
+
 // 예약 페이지
 app.get('/reservation', (req, res) => {
   res.render('reservation', {
@@ -410,18 +472,76 @@ app.get('/:service/reviews', async (req, res) => {
   });
 });
 
+// 아파트 단지 페이지: /:region/:district/:apartment
+// 반드시 /:region/:service? 라우트보다 앞에 위치해야 함
+app.get('/:region/:district/:apartment', async (req, res, next) => {
+  const { region, district, apartment } = req.params;
+
+  // apartments.json 로드
+  let apartments;
+  try {
+    apartments = require('./data/apartments.json');
+  } catch (e) {
+    return next();
+  }
+
+  if (!apartments[region]) return next();
+  const districtData = apartments[region][district];
+  if (!districtData) return next();
+  const aptData = districtData.apartments.find(a => a.slug === apartment);
+  if (!aptData) return next();
+
+  const regionNames = { seoul: '서울', gyeonggi: '경기', incheon: '인천' };
+  const regionName = regionNames[region] || region;
+
+  // 준공연도 기반 단지 유형 분류
+  const aptType = aptData.year >= 2015 ? 'new' : aptData.year >= 2005 ? 'mid' : 'old';
+
+  // 인근 아파트 (같은 district, 최대 5개, 자기 자신 제외)
+  const nearbyApts = districtData.apartments
+    .filter(a => a.slug !== apartment)
+    .slice(0, 5);
+
+  return res.render('apartment', {
+    regionSlug: region,
+    regionName,
+    districtSlug: district,
+    districtName: districtData.name,
+    aptName: aptData.name,
+    aptSlug: aptData.slug,
+    households: aptData.households,
+    year: aptData.year,
+    brand: aptData.brand,
+    aptType,
+    nearbyApts,
+    districtAllApts: districtData.apartments,
+    title: `${aptData.name} 줄눈시공 전문 | 하우스픽`,
+    description: `${districtData.name} ${aptData.name} 케라폭시 줄눈시공 전문업체. 하우스픽이 깔끔하게 시공해드립니다. 무료견적 문의 가능.`,
+    canonicalUrl: `https://housepick-web.vercel.app/${region}/${district}/${apartment}`
+  });
+});
+
 // 지역별 페이지
 app.get('/:region/:service?', async (req, res, next) => {
   const { region, service } = req.params;
   const regions = ['seoul', 'gyeonggi', 'incheon', 'busan'];
   const services = ['julnoon', 'move-in-cleaning', 'elastic-coat', 'bathroom-remodeling'];
-  
+
   // 서비스 페이지인 경우 다음으로
   if (services.includes(region)) {
     return next();
   }
   
   if (regions.includes(region)) {
+    const regionNames = { seoul: '서울', gyeonggi: '경기', incheon: '인천', busan: '부산' };
+    const regionName = regionNames[region] || region;
+
+    // 아파트 데이터 로드
+    let apartments = {};
+    try {
+      apartments = require('./data/apartments.json');
+    } catch (e) {}
+
     if (service) {
       // 지역별 서비스 페이지
       const serviceNames = {
@@ -430,20 +550,32 @@ app.get('/:region/:service?', async (req, res, next) => {
         'elastic-coat': '탄성코트',
         'bathroom-remodeling': '화장실 리모델링'
       };
-      
+
       if (serviceNames[service]) {
+        // 해당 지역의 아파트 리스트 (각 district에서 3개씩, 최대 20개)
+        const aptData = apartments[region] || {};
+        const districtApts = Object.entries(aptData).flatMap(([dSlug, d]) =>
+          d.apartments.slice(0, 3).map(a => ({
+            ...a, districtSlug: dSlug, districtName: d.name
+          }))
+        ).slice(0, 20);
+
         return res.render('region-service', {
-          title: `${region} ${serviceNames[service]}`,
+          title: `${regionName} ${serviceNames[service]}`,
           region: region,
+          regionSlug: region,
+          regionName: regionName,
           service: service,
-          serviceName: serviceNames[service]
+          serviceName: serviceNames[service],
+          districtApts: districtApts
         });
       }
     } else {
       // 지역 대표 페이지
       return res.render('region', {
-        title: `${region} 전문 서비스`,
-        region: region
+        title: `${regionName} 전문 서비스`,
+        region: region,
+        regionName: regionName
       });
     }
   }

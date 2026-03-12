@@ -1,25 +1,49 @@
-<% 
+<%
 let bodyContent = `
   <section class="region-service-hero">
     <div class="container">
-      <h1 class="service-title">${region} ${serviceName}</h1>
-      <p class="service-subtitle">${region} 지역 ${serviceName} 전문 서비스</p>
+      <h1 class="service-title">${regionName} ${serviceName}</h1>
+      <p class="service-subtitle">${regionName} 지역 ${serviceName} 전문 서비스</p>
     </div>
   </section>
 
   <section class="region-service-content">
     <div class="container">
       <div class="content-section">
-        <h2>${region}에서 ${serviceName}이 필요한 이유</h2>
-        <p>${region} 지역의 특성에 맞춘 전문적인 ${serviceName} 서비스를 제공합니다.</p>
+        <h2>${regionName}에서 ${serviceName}이 필요한 이유</h2>
+        <p>${regionName} 지역의 특성에 맞춘 전문적인 ${serviceName} 서비스를 제공합니다.</p>
       </div>
-      
+
       <div class="cta-section">
         <h2>지금 바로 무료 견적을 받아보세요</h2>
-        <a href="/reservation?region=${region}&service=${service}" class="btn btn-primary btn-large">온라인 예약하기</a>
+        <a href="/reservation?region=${regionSlug}&service=${service}" class="btn btn-primary btn-large">온라인 예약하기</a>
       </div>
     </div>
   </section>
 `;
+
+// 아파트 리스트가 있는 경우 섹션 추가
+if (typeof districtApts !== 'undefined' && districtApts && districtApts.length > 0) {
+  bodyContent += `
+  <section class="region-apartments">
+    <div class="container">
+      <h2>${regionName} 주요 아파트 줄눈시공</h2>
+      <ul class="apartments-grid">
+`;
+  districtApts.forEach(function(apt) {
+    bodyContent += `
+        <li class="apartment-link-item">
+          <a href="/${regionSlug}/${apt.districtSlug}/${apt.slug}">
+            ${apt.districtName} ${apt.name} 줄눈시공
+          </a>
+        </li>
+    `;
+  });
+  bodyContent += `
+      </ul>
+    </div>
+  </section>
+  `;
+}
 %>
 <%- include('layout', { body: bodyContent }) %>

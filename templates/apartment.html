@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-552DZEE4ZE"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-552DZEE4ZE');
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="naver-site-verification" content="e7ac6357e6f055ffe8364abb7df96323f89293f6" />
+    <!-- Microsoft Clarity -->
+    <script type="text/javascript">
+      (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "v8a4rmukl6");
+    </script>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="alternate" type="application/rss+xml" title="하우스Pick RSS" href="/rss.xml" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- SEO Meta Tags -->
+    <title>{{TITLE}}</title>
+    <meta name="description" content="{{META_DESCRIPTION}}" />
+    <meta name="keywords" content="{{APT_NAME}} 줄눈시공, {{DISTRICT_NAME}} 줄눈, {{APT_NAME}} 케라폭시, {{DISTRICT_NAME}} 화장실 줄눈" />
+    <link rel="canonical" href="{{CANONICAL_URL}}" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="{{TITLE}}" />
+    <meta property="og:description" content="{{META_DESCRIPTION}}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{CANONICAL_URL}}" />
+    <meta property="og:image" content="https://housepick-web.vercel.app/images/og/og-{{REGION}}.png" />
+    <meta property="og:image:width" content="1195" />
+    <meta property="og:image:height" content="625" />
+    <meta property="og:image:alt" content="{{APT_NAME}} 줄눈시공 - 하우스Pick" />
+
+    <!-- JSON-LD Schema -->
+    <script type="application/ld+json">
+{{JSON_LD}}
+    </script>
+
+    <!-- Vite 빌드된 CSS -->
+    <link rel="stylesheet" crossorigin href="{{VITE_CSS}}">
+
+    <!-- 프리렌더링 콘텐츠용 인라인 스타일 -->
+    <style>
+      .prerender-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        z-index: 50;
+      }
+      .prerender-header-inner {
+        max-width: 72rem;
+        margin: 0 auto;
+        padding: 0.75rem 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .prerender-logo {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #f59e0b;
+        text-decoration: none;
+      }
+      .prerender-nav {
+        display: none;
+        align-items: center;
+        gap: 0.25rem;
+      }
+      .prerender-nav a {
+        color: #44403c;
+        text-decoration: none;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        border-radius: 0.5rem;
+        transition: all 0.2s;
+      }
+      .prerender-nav a:hover {
+        color: #f59e0b;
+        background: #fafaf9;
+      }
+      .prerender-cta-btn {
+        background: #f59e0b;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 9999px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+      }
+      .prerender-breadcrumb {
+        background: #f5f5f4;
+        padding: 0.75rem 1.5rem;
+        margin-top: 60px;
+      }
+      .prerender-breadcrumb-inner {
+        max-width: 72rem;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.875rem;
+        color: #57534e;
+        flex-wrap: wrap;
+      }
+      .prerender-breadcrumb a {
+        color: #57534e;
+        text-decoration: none;
+      }
+      .prerender-breadcrumb a:hover {
+        color: #f59e0b;
+      }
+      .prerender-breadcrumb-separator {
+        color: #a8a29e;
+      }
+      .prerender-breadcrumb-current {
+        color: #1c1917;
+        font-weight: 500;
+      }
+      .apt-hero {
+        padding: 3rem 1rem 4rem;
+        background: linear-gradient(to bottom, #fffbeb, white);
+        text-align: center;
+      }
+      .apt-hero-inner {
+        max-width: 72rem;
+        margin: 0 auto;
+      }
+      .apt-hero h1 {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: #292524;
+        margin-bottom: 0.5rem;
+        line-height: 1.3;
+      }
+      .apt-hero-subtitle {
+        font-size: 1rem;
+        color: #57534e;
+        margin-bottom: 1.5rem;
+      }
+      .apt-hero-cta {
+        display: inline-block;
+        background: #f59e0b;
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 9999px;
+        font-size: 1.125rem;
+        font-weight: 700;
+        text-decoration: none;
+        transition: background 0.2s;
+      }
+      .apt-hero-cta:hover {
+        background: #d97706;
+      }
+      .apt-section {
+        padding: 3rem 1rem;
+        max-width: 72rem;
+        margin: 0 auto;
+      }
+      .apt-section h2 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #292524;
+        margin-bottom: 1rem;
+      }
+      .apt-section p {
+        color: #57534e;
+        line-height: 1.7;
+        margin-bottom: 1rem;
+      }
+      .apt-section ul, .apt-section ol {
+        color: #57534e;
+        line-height: 1.7;
+        padding-left: 1.5rem;
+        margin-bottom: 1rem;
+      }
+      .apt-section li {
+        margin-bottom: 0.5rem;
+      }
+      .apt-info-box {
+        background: #fafaf9;
+        border: 1px solid #e7e5e4;
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+      .apt-info-box h3 {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: #292524;
+        margin-bottom: 0.75rem;
+      }
+      .apt-info-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+      }
+      .apt-info-item {
+        display: flex;
+        flex-direction: column;
+      }
+      .apt-info-label {
+        font-size: 0.75rem;
+        color: #78716c;
+        margin-bottom: 0.25rem;
+      }
+      .apt-info-value {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #292524;
+      }
+      .apt-faq {
+        background: #f5f5f4;
+        padding: 3rem 1rem;
+      }
+      .apt-faq-inner {
+        max-width: 72rem;
+        margin: 0 auto;
+      }
+      .apt-faq h2 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #292524;
+        margin-bottom: 1.5rem;
+      }
+      .apt-faq dl {
+        background: white;
+        border-radius: 0.75rem;
+        overflow: hidden;
+      }
+      .apt-faq dt {
+        font-weight: 600;
+        color: #292524;
+        padding: 1rem 1.5rem;
+        background: #fafaf9;
+        border-bottom: 1px solid #e7e5e4;
+      }
+      .apt-faq dd {
+        padding: 1rem 1.5rem;
+        color: #57534e;
+        border-bottom: 1px solid #e7e5e4;
+      }
+      .apt-faq dd:last-child {
+        border-bottom: none;
+      }
+      .apt-cta-section {
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        padding: 3rem 1rem;
+        text-align: center;
+      }
+      .apt-cta-section h2 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 0.75rem;
+      }
+      .apt-cta-section p {
+        color: rgba(255,255,255,0.9);
+        margin-bottom: 1.5rem;
+      }
+      .apt-cta-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        align-items: center;
+      }
+      .apt-cta-phone {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: white;
+        color: #d97706;
+        padding: 1rem 2rem;
+        border-radius: 9999px;
+        font-size: 1.125rem;
+        font-weight: 700;
+        text-decoration: none;
+        transition: transform 0.2s;
+      }
+      .apt-cta-phone:hover {
+        transform: scale(1.05);
+      }
+      .apt-nearby {
+        padding: 3rem 1rem;
+        background: #fafaf9;
+      }
+      .apt-nearby-inner {
+        max-width: 72rem;
+        margin: 0 auto;
+      }
+      .apt-nearby h3 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #292524;
+        margin-bottom: 1rem;
+      }
+      .apt-nearby-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      .apt-nearby-list a {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        background: white;
+        border: 1px solid #e7e5e4;
+        border-radius: 9999px;
+        color: #57534e;
+        text-decoration: none;
+        font-size: 0.875rem;
+        transition: all 0.2s;
+      }
+      .apt-nearby-list a:hover {
+        border-color: #f59e0b;
+        color: #f59e0b;
+        background: #fffbeb;
+      }
+      .prerender-footer {
+        background: #1c1917;
+        color: #a8a29e;
+        padding: 3rem 1.5rem 2rem;
+      }
+      .prerender-footer-inner {
+        max-width: 72rem;
+        margin: 0 auto;
+      }
+      .prerender-footer-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+      .prerender-footer h4 {
+        color: white;
+        font-weight: 700;
+        font-size: 0.875rem;
+        margin-bottom: 1rem;
+      }
+      .prerender-footer ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .prerender-footer li {
+        margin-bottom: 0.5rem;
+      }
+      .prerender-footer a {
+        color: #a8a29e;
+        text-decoration: none;
+        font-size: 0.875rem;
+        transition: color 0.2s;
+      }
+      .prerender-footer a:hover {
+        color: #fbbf24;
+      }
+      .prerender-footer-bottom {
+        border-top: 1px solid #292524;
+        padding-top: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        text-align: center;
+      }
+      .prerender-footer-logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #f59e0b;
+        text-decoration: none;
+      }
+      .prerender-footer-copy {
+        font-size: 0.75rem;
+        color: #57534e;
+      }
+      @media (min-width: 768px) {
+        .prerender-nav {
+          display: flex;
+        }
+        .apt-hero h1 {
+          font-size: 2.25rem;
+        }
+        .apt-info-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+        .apt-cta-buttons {
+          flex-direction: row;
+          justify-content: center;
+        }
+        .prerender-footer-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+        .prerender-footer-bottom {
+          flex-direction: row;
+          justify-content: space-between;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-apartment="{{APT_SLUG}}">
+      <!-- 헤더 -->
+      <header class="prerender-header">
+        <div class="prerender-header-inner">
+          <a href="/" class="prerender-logo">HousePick</a>
+          <nav class="prerender-nav">
+            <a href="/types">줄눈 종류</a>
+            <a href="/bathroom">화장실 줄눈</a>
+            <a href="/price">가격표</a>
+            <a href="/review">후기</a>
+            <a href="/faq">FAQ</a>
+          </nav>
+          <a href="tel:010-6461-0131" class="prerender-cta-btn">
+            전화 상담
+          </a>
+        </div>
+      </header>
+
+      <!-- 브레드크럼 -->
+      <nav class="prerender-breadcrumb" aria-label="Breadcrumb">
+        <div class="prerender-breadcrumb-inner">
+          <a href="/">홈</a>
+          <span class="prerender-breadcrumb-separator">›</span>
+          <a href="/{{REGION}}">{{REGION_NAME}}</a>
+          <span class="prerender-breadcrumb-separator">›</span>
+          <span class="prerender-breadcrumb-current">{{APT_NAME}} 줄눈시공</span>
+        </div>
+      </nav>
+
+      <!-- 히어로 섹션 -->
+      <section class="apt-hero">
+        <div class="apt-hero-inner">
+          <h1>{{APT_NAME}} 케라폭시 줄눈시공</h1>
+          <p class="apt-hero-subtitle">{{DISTRICT_NAME}} {{APT_NAME}} 입주민을 위한 프리미엄 줄눈시공</p>
+          <a href="tel:010-6461-0131" class="apt-hero-cta">무료 견적 받기</a>
+        </div>
+      </section>
+
+      <!-- 아파트 정보 -->
+      <section class="apt-section">
+        <div class="apt-info-box">
+          <h3>{{APT_NAME}} 단지 정보</h3>
+          <div class="apt-info-grid">
+            <div class="apt-info-item">
+              <span class="apt-info-label">위치</span>
+              <span class="apt-info-value">{{DISTRICT_NAME}}</span>
+            </div>
+            <div class="apt-info-item">
+              <span class="apt-info-label">세대수</span>
+              <span class="apt-info-value">{{APT_HOUSEHOLDS}}세대</span>
+            </div>
+            <div class="apt-info-item">
+              <span class="apt-info-label">준공년도</span>
+              <span class="apt-info-value">{{APT_YEAR}}년</span>
+            </div>
+            <div class="apt-info-item">
+              <span class="apt-info-label">시공사</span>
+              <span class="apt-info-value">{{APT_BRAND}}</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 왜 하우스픽인가 -->
+      <section class="apt-section">
+        <h2>{{APT_NAME}} 줄눈시공, 왜 하우스픽인가?</h2>
+        <p>{{TYPE_MESSAGE}}</p>
+        <p>{{BRAND_MESSAGE}}</p>
+        <ul>
+          <li><strong>정찰제 가격</strong> — 현장 추가비용 없음, 견적 그대로 시공</li>
+          <li><strong>팀장 직영 시공</strong> — 하도급 없이 책임 시공</li>
+          <li><strong>100% 정품 케라폭시</strong> — 이탈리아 수입 정품 자재만 사용</li>
+          <li><strong>5년 무상 A/S</strong> — 시공 후에도 책임지는 하우스픽</li>
+        </ul>
+      </section>
+
+      <!-- 시공 사례 -->
+      <section class="apt-section">
+        <h2>{{APT_NAME}} 줄눈시공 개선 사례</h2>
+        <p>{{DISTRICT_NAME}} {{APT_NAME}}({{APT_HOUSEHOLDS}}세대) 아파트 입주민분들께서 선택한 하우스픽 케라폭시 줄눈시공 사례입니다. 오래된 실리콘 줄눈의 곰팡이와 변색을 케라폭시로 깔끔하게 해결했습니다.</p>
+      </section>
+
+      <!-- 시공 과정 -->
+      <section class="apt-section">
+        <h2>줄눈시공 진행 과정</h2>
+        <ol>
+          <li><strong>무료 현장 방문 견적</strong> — 욕실 상태 확인 후 정확한 견적 안내</li>
+          <li><strong>기존 줄눈 제거</strong> — 묵은 실리콘과 오염물 완벽 제거</li>
+          <li><strong>케라폭시 줄눈 시공</strong> — 이탈리아 정품 케라폭시 시공</li>
+          <li><strong>마감 처리 및 검수</strong> — 꼼꼼한 마무리와 시공 품질 확인</li>
+        </ol>
+      </section>
+
+      <!-- FAQ -->
+      <section class="apt-faq">
+        <div class="apt-faq-inner">
+          <h2>{{APT_NAME}} 줄눈시공 FAQ</h2>
+          <dl>
+            <dt>{{APT_NAME}} 줄눈시공 비용은 얼마인가요?</dt>
+            <dd>욕실 1개 기준 15~25만원이며, 무료 현장 방문 후 정확한 금액을 안내드립니다. 견적 후 추가 비용은 절대 없습니다.</dd>
+            <dt>{{APT_NAME}} 줄눈시공 기간은 얼마나 걸리나요?</dt>
+            <dd>욕실 1개 기준 약 2~3시간이며, 당일 시공 완료됩니다. 시공 후 바로 사용 가능합니다.</dd>
+            <dt>입주 전후 언제 시공하는 게 좋을까요?</dt>
+            <dd>입주 전 시공을 권장합니다. 가구 배치 전에 시공하면 더 깔끔한 마감이 가능합니다.</dd>
+          </dl>
+        </div>
+      </section>
+
+      <!-- CTA 섹션 -->
+      <section class="apt-cta-section">
+        <h2>{{DISTRICT_NAME}} {{APT_NAME}} 줄눈시공 무료 견적</h2>
+        <p>지금 바로 무료 현장 방문 견적을 받아보세요</p>
+        <div class="apt-cta-buttons">
+          <a href="tel:010-6461-0131" class="apt-cta-phone">010-6461-0131 전화 문의</a>
+        </div>
+      </section>
+
+      <!-- 인근 아파트 -->
+      <section class="apt-nearby">
+        <div class="apt-nearby-inner">
+          <h3>{{DISTRICT_NAME}} 다른 아파트 줄눈시공</h3>
+          <div class="apt-nearby-list">
+{{NEARBY_APTS_HTML}}
+          </div>
+        </div>
+      </section>
+
+      <!-- 푸터 -->
+      <footer class="prerender-footer">
+        <div class="prerender-footer-inner">
+          <div class="prerender-footer-grid">
+            <div>
+              <h4>서비스 안내</h4>
+              <ul>
+                <li><a href="/types">줄눈 종류</a></li>
+                <li><a href="/bathroom">화장실 줄눈</a></li>
+                <li><a href="/price">가격표</a></li>
+                <li><a href="/self-diy">셀프 vs 업체</a></li>
+                <li><a href="/faq">FAQ</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4>고객지원</h4>
+              <ul>
+                <li><a href="/review">고객 후기</a></li>
+                <li><a href="/find">업체 선택법</a></li>
+                <li><a href="tel:010-6461-0131">전화 상담</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4>지역별 서비스</h4>
+              <ul>
+                <li><a href="/gangnam">강남 줄눈시공</a></li>
+                <li><a href="/songpa">송파 줄눈시공</a></li>
+                <li><a href="/seocho">서초 줄눈시공</a></li>
+                <li><a href="/seongnam">성남 줄눈시공</a></li>
+                <li><a href="/suwon">수원 줄눈시공</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4>&nbsp;</h4>
+              <ul>
+                <li><a href="/yongin">용인 줄눈시공</a></li>
+                <li><a href="/hwaseong">화성 줄눈시공</a></li>
+                <li><a href="/anyang">안양 줄눈시공</a></li>
+                <li><a href="/bucheon">부천 줄눈시공</a></li>
+                <li><a href="/">전체 지역</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="prerender-footer-bottom">
+            <a href="/" class="prerender-footer-logo">HousePick</a>
+            <p class="prerender-footer-copy">© 2024 HousePick. 업계 최초 정찰제 줄눈 브랜드</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Vite 빌드된 JS -->
+    <script type="module" crossorigin src="{{VITE_JS}}"></script>
+  </body>
+</html>

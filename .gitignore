@@ -1,5 +1,7 @@
 node_modules/
 data/
+!data/apartments.json
+!data/settings.json
 *.log
 .DS_Store
 .env

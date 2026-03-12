@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== 'undefined' ? title + ' | ' : '' %>전국 시공 전문 서비스</title>
+  <meta name="description" content="전국 시공 가능한 줄눈시공, 입주청소, 탄성코트, 화장실 리모델링 전문 서비스. 방문 1회 원스톱 시공, 팀장 직영, 12개월 AS 보증">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="canonical" href="https://example.com<%= typeof canonical !== 'undefined' ? canonical : '' %>">
+  
+  <!-- Schema.org 구조화 데이터 -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "전국 시공 전문 서비스",
+    "description": "줄눈시공, 입주청소, 탄성코트, 화장실 리모델링 전문",
+    "areaServed": {
+      "@type": "Country",
+      "name": "대한민국"
+    },
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "KRW"
+    }
+  }
+  </script>
+</head>
+<body>
+  <!-- 헤더 -->
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <a href="/" class="logo">
+          <h1>전국 시공 전문</h1>
+        </a>
+        <nav class="nav">
+          <a href="/julnoon">줄눈시공</a>
+          <a href="/move-in-cleaning">입주청소</a>
+          <a href="/elastic-coat">탄성코트</a>
+          <a href="/bathroom-remodeling">화장실 리모델링</a>
+          <a href="/blog">블로그</a>
+          <a href="/reservation" class="btn-reservation">온라인 예약</a>
+        </nav>
+        <button class="mobile-menu-toggle" aria-label="메뉴">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 메인 콘텐츠 -->
+  <main class="main">
+

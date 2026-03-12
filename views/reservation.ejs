@@ -1,0 +1,173 @@
+<% 
+let bodyContent = `
+  <section class="reservation-page">
+    <div class="container">
+      <h1 class="page-title">온라인 예약</h1>
+      <p class="page-subtitle">전화 문의 없이 간편하게 예약하세요</p>
+
+      <form id="reservationForm" class="reservation-form">
+        <!-- 1단계: 서비스 선택 -->
+        <div class="form-step active" data-step="1">
+          <h2>원하시는 서비스를 선택해주세요</h2>
+          <div class="service-selection">
+            <label class="service-option">
+              <input type="radio" name="service" value="julnoon" required>
+              <div class="service-card-small">
+                <h3>줄눈시공</h3>
+                <p>평당 XX만원부터</p>
+              </div>
+            </label>
+            <label class="service-option">
+              <input type="radio" name="service" value="move-in-cleaning" required>
+              <div class="service-card-small">
+                <h3>입주청소</h3>
+                <p>기본 XX만원부터</p>
+              </div>
+            </label>
+            <label class="service-option">
+              <input type="radio" name="service" value="elastic-coat" required>
+              <div class="service-card-small">
+                <h3>탄성코트</h3>
+                <p>평당 XX만원부터</p>
+              </div>
+            </label>
+            <label class="service-option">
+              <input type="radio" name="service" value="bathroom-remodeling" required>
+              <div class="service-card-small">
+                <h3>화장실 리모델링</h3>
+                <p>기본 XX만원부터</p>
+              </div>
+            </label>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn btn-primary" onclick="nextStep()">다음</button>
+          </div>
+        </div>
+
+        <!-- 2단계: 옵션 선택 -->
+        <div class="form-step" data-step="2">
+          <h2>서비스 옵션을 선택해주세요</h2>
+          <div class="form-group">
+            <label>서비스 타입</label>
+            <div class="radio-group">
+              <label><input type="radio" name="serviceType" value="basic" checked> 기본</label>
+              <label><input type="radio" name="serviceType" value="premium"> 프리미엄</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>면적 (평)</label>
+            <input type="number" name="area" min="1" value="1" required>
+          </div>
+          <div class="form-group">
+            <label>추가 서비스 (패키지 할인)</label>
+            <div class="checkbox-group">
+              <label><input type="checkbox" name="addServices" value="move-in-cleaning"> 입주청소 추가</label>
+              <label><input type="checkbox" name="addServices" value="elastic-coat"> 탄성코트 추가</label>
+              <label><input type="checkbox" name="addServices" value="bathroom-remodeling"> 화장실 리모델링 추가</label>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn btn-outline" onclick="prevStep()">이전</button>
+            <button type="button" class="btn btn-primary" onclick="calculateEstimate()">견적 확인</button>
+          </div>
+        </div>
+
+        <!-- 3단계: 견적 확인 -->
+        <div class="form-step" data-step="3">
+          <h2>견적 안내</h2>
+          <div id="estimateDisplay" class="estimate-display">
+            <!-- 견적이 여기에 표시됩니다 -->
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn btn-outline" onclick="prevStep()">이전</button>
+            <button type="button" class="btn btn-primary" onclick="nextStep()">다음</button>
+          </div>
+        </div>
+
+        <!-- 4단계: 날짜 및 주소 -->
+        <div class="form-step" data-step="4">
+          <h2>시공 정보를 입력해주세요</h2>
+          <div class="form-group">
+            <label>시공 희망일 *</label>
+            <input type="date" name="workDate" class="required-field" required>
+          </div>
+          <div class="form-group">
+            <label>시공 희망시간 *</label>
+            <select name="workTime" class="required-field" required>
+              <option value="">선택하세요</option>
+              <option value="09:00">오전 9시</option>
+              <option value="13:00">오후 1시</option>
+              <option value="15:00">오후 3시</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>시/도 *</label>
+            <select name="city" id="city" class="required-field" required>
+              <option value="">선택하세요</option>
+              <option value="seoul">서울</option>
+              <option value="gyeonggi">경기</option>
+              <option value="incheon">인천</option>
+              <option value="busan">부산</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>구 *</label>
+            <input type="text" name="district" class="required-field" placeholder="구명" required>
+          </div>
+          <div class="form-group">
+            <label>상세 주소 *</label>
+            <input type="text" name="detailAddress" class="required-field" placeholder="동/호수, 상세주소" required>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn btn-outline" onclick="prevStep()">이전</button>
+            <button type="button" class="btn btn-primary" onclick="nextStep()">다음</button>
+          </div>
+        </div>
+
+        <!-- 5단계: 고객 정보 -->
+        <div class="form-step" data-step="5">
+          <h2>고객 정보를 입력해주세요</h2>
+          <div class="form-group">
+            <label>이름 *</label>
+            <input type="text" name="customerName" required>
+          </div>
+          <div class="form-group">
+            <label>전화번호 *</label>
+            <input type="tel" name="customerPhone" placeholder="010-1234-5678" required>
+          </div>
+          <div class="form-group">
+            <label>이메일 *</label>
+            <input type="email" name="customerEmail" required>
+          </div>
+          <div class="form-group">
+            <label>특이사항</label>
+            <textarea name="notes" rows="4" placeholder="시공 시 참고사항을 입력해주세요"></textarea>
+          </div>
+          <div class="form-group">
+            <label>
+              <input type="checkbox" required>
+              <a href="/privacy">개인정보 처리방침</a>에 동의합니다.
+            </label>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn btn-outline" onclick="prevStep()">이전</button>
+            <button type="submit" class="btn btn-primary btn-large">예약 완료</button>
+          </div>
+        </div>
+
+        <!-- 6단계: 예약 완료 -->
+        <div class="form-step" data-step="6">
+          <div class="success-message">
+            <h2>예약이 완료되었습니다!</h2>
+            <p id="reservationId"></p>
+            <p>계약금 입금 안내는 이메일로 발송되었습니다.</p>
+            <a href="/" class="btn btn-primary">홈으로 가기</a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+`;
+%>
+<%- include('layout', { body: bodyContent }) %>
+<script src="/js/reservation.js"></script>

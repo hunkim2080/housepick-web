@@ -1,0 +1,39 @@
+<% 
+let bodyContent = `
+  <section class="region-hero">
+    <div class="container">
+      <h1 class="region-title">${region} 전문 서비스</h1>
+      <p class="region-subtitle">${region} 지역에서 제공하는 전문 서비스입니다.</p>
+    </div>
+  </section>
+
+  <section class="region-services">
+    <div class="container">
+      <h2 class="section-title">제공 서비스</h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <h3>줄눈시공</h3>
+          <p>${region} 지역 줄눈시공 전문 서비스</p>
+          <a href="/${region}/julnoon" class="btn btn-primary">자세히 보기</a>
+        </div>
+        <div class="service-card">
+          <h3>입주청소</h3>
+          <p>${region} 지역 입주청소 전문 서비스</p>
+          <a href="/${region}/move-in-cleaning" class="btn btn-primary">자세히 보기</a>
+        </div>
+        <div class="service-card">
+          <h3>탄성코트</h3>
+          <p>${region} 지역 탄성코트 전문 서비스</p>
+          <a href="/${region}/elastic-coat" class="btn btn-primary">자세히 보기</a>
+        </div>
+        <div class="service-card">
+          <h3>화장실 리모델링</h3>
+          <p>${region} 지역 화장실 리모델링 전문 서비스</p>
+          <a href="/${region}/bathroom-remodeling" class="btn btn-primary">자세히 보기</a>
+        </div>
+      </div>
+    </div>
+  </section>
+`;
+%>
+<%- include('layout', { body: bodyContent }) %>

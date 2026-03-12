@@ -1,0 +1,173 @@
+<% 
+let bodyContent = `
+  <!-- 히어로 섹션 -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1 class="hero-title">전국 시공 가능한 전문 서비스</h1>
+        <p class="hero-subtitle">방문 1회 원스톱 시공 · 팀장 직영 · 100% 정품 자재 · 12개월 AS 보증</p>
+        <div class="hero-cta">
+          <a href="/reservation" class="btn btn-primary btn-large">무료 견적 받기</a>
+          <a href="tel:02-1234-5678" class="btn btn-outline">전화 상담: 02-1234-5678</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 신뢰 요소 -->
+  <section class="trust-section">
+    <div class="container">
+      <div class="trust-badges">
+        <div class="trust-badge">
+          <span class="icon">✓</span>
+          <span>공식 인증 업체</span>
+        </div>
+        <div class="trust-badge">
+          <span class="icon">✓</span>
+          <span>12개월 AS 보증</span>
+        </div>
+        <div class="trust-badge">
+          <span class="icon">✓</span>
+          <span>친환경 자재 사용</span>
+        </div>
+        <div class="trust-badge">
+          <span class="icon">✓</span>
+          <span>안전 인증 완료</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 서비스 소개 -->
+  <section class="services-section">
+    <div class="container">
+      <h2 class="section-title">전문 서비스</h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-image">
+            <img src="/images/services/julnoon.jpg" alt="줄눈시공">
+          </div>
+          <div class="service-content">
+            <h3>줄눈시공</h3>
+            <p>방문 1회 원스톱 시공으로 빠르고 깔끔하게</p>
+            <ul class="service-features">
+              <li>✓ 팀장 직영 관리</li>
+              <li>✓ 100% 정품 자재</li>
+              <li>✓ 12개월 AS 보증</li>
+            </ul>
+            <a href="/julnoon" class="btn btn-primary">자세히 보기</a>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-image">
+            <img src="/images/services/cleaning.jpg" alt="입주청소">
+          </div>
+          <div class="service-content">
+            <h3>입주청소</h3>
+            <p>위생·안전 최우선 프리미엄 입주청소</p>
+            <ul class="service-features">
+              <li>✓ 친환경 세제 사용</li>
+              <li>✓ 전문 청소 장비</li>
+              <li>✓ 세밀한 청소 서비스</li>
+            </ul>
+            <a href="/move-in-cleaning" class="btn btn-primary">자세히 보기</a>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-image">
+            <img src="/images/services/elastic-coat.jpg" alt="탄성코트">
+          </div>
+          <div class="service-content">
+            <h3>탄성코트</h3>
+            <p>내구성과 미관을 모두 고려한 탄성코트 시공</p>
+            <ul class="service-features">
+              <li>✓ 우수한 내구성</li>
+              <li>✓ 다양한 색상</li>
+              <li>✓ 전문 시공</li>
+            </ul>
+            <a href="/elastic-coat" class="btn btn-primary">자세히 보기</a>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-image">
+            <img src="/images/services/bathroom.jpg" alt="화장실 리모델링">
+          </div>
+          <div class="service-content">
+            <h3>화장실 리모델링</h3>
+            <p>완전한 화장실 리모델링 서비스</p>
+            <ul class="service-features">
+              <li>✓ 맞춤형 디자인</li>
+              <li>✓ 고품질 자재</li>
+              <li>✓ 전문 시공</li>
+            </ul>
+            <a href="/bathroom-remodeling" class="btn btn-primary">자세히 보기</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 패키지 할인 배너 -->
+  <section class="discount-banner">
+    <div class="container">
+      <div class="banner-content">
+        <h3>🎉 패키지 할인 이벤트</h3>
+        <p>2개 이상 서비스 동시 예약 시 최대 20% 할인</p>
+        <ul class="discount-list">
+          <li>줄눈시공 + 입주청소: 15% 할인</li>
+          <li>입주청소 + 탄성코트: 15% 할인</li>
+          <li>3개 서비스 이상: 20% 할인</li>
+        </ul>
+        <a href="/reservation?package=true" class="btn btn-primary">패키지 할인 받기</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 고객 후기 -->
+  <section class="reviews-section">
+    <div class="container">
+      <h2 class="section-title">고객 후기</h2>
+      <div class="reviews-grid">
+`;
+if (typeof reviews !== 'undefined' && reviews.length > 0) {
+  reviews.forEach(function(review) {
+    bodyContent += `
+        <div class="review-card">
+          <div class="review-header">
+            <div class="reviewer-info">
+              <span class="reviewer-name">${review.customerName}님</span>
+              <span class="review-location">${review.location || ''}</span>
+            </div>
+            <div class="review-rating">`;
+    for (let i = 0; i < review.rating; i++) {
+      bodyContent += '★';
+    }
+    bodyContent += `
+            </div>
+          </div>
+          <div class="review-content">
+            <p>${review.content}</p>
+          </div>
+          <div class="review-meta">
+            <span class="review-date">${new Date(review.createdAt).toLocaleDateString('ko-KR')}</span>
+            <span class="review-service">${review.serviceName || ''}</span>
+          </div>
+        </div>`;
+  });
+} else {
+  bodyContent += `
+        <p class="no-reviews">아직 등록된 후기가 없습니다.</p>`;
+}
+bodyContent += `
+      </div>
+      <div class="reviews-cta">
+        <a href="/reviews" class="btn btn-outline">모든 후기 보기</a>
+      </div>
+    </div>
+  </section>
+`;
+%>
+<%- include('layout', { body: bodyContent }) %>

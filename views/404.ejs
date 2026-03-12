@@ -1,0 +1,30 @@
+<% 
+let bodyContent = `
+  <section class="error-page">
+    <div class="container">
+      <div class="error-content">
+        <h1>404</h1>
+        <h2>페이지를 찾을 수 없습니다</h2>
+        <p>요청하신 페이지가 존재하지 않습니다.</p>
+        <a href="/" class="btn btn-primary">홈으로 가기</a>
+      </div>
+    </div>
+  </section>
+  <style>
+    .error-page {
+      padding: 5rem 0;
+      text-align: center;
+    }
+    .error-content h1 {
+      font-size: 6rem;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+    }
+    .error-content h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+  </style>
+`;
+%>
+<%- include('layout', { body: bodyContent }) %>

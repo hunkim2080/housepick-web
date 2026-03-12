@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>관리자 대시보드</title>
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+  <div class="admin-container">
+    <aside class="admin-sidebar">
+      <h2>관리자</h2>
+      <nav>
+        <a href="/admin" class="active">대시보드</a>
+        <a href="/admin/reservations">예약 관리</a>
+        <a href="/admin/reviews">후기 관리</a>
+        <a href="/admin/posts">블로그 콘텐츠</a>
+        <a href="/admin/logout">로그아웃</a>
+      </nav>
+    </aside>
+    
+    <main class="admin-main">
+      <header class="admin-header">
+        <h1>관리자 대시보드</h1>
+      </header>
+      
+      <div class="stats-grid">
+        <div class="stat-card">
+          <h3>오늘 예약</h3>
+          <p class="stat-value"><%= stats.todayReservations %></p>
+        </div>
+        <div class="stat-card">
+          <h3>이번 달 예약</h3>
+          <p class="stat-value"><%= stats.totalReservations %></p>
+        </div>
+        <div class="stat-card">
+          <h3>입금 대기</h3>
+          <p class="stat-value"><%= stats.pendingDeposits %></p>
+        </div>
+        <div class="stat-card">
+          <h3>후기 승인 대기</h3>
+          <p class="stat-value"><%= stats.pendingReviews %></p>
+        </div>
+      </div>
+      
+      <section class="recent-section">
+        <h2>최근 예약</h2>
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>예약번호</th>
+              <th>고객명</th>
+              <th>서비스</th>
+              <th>시공일</th>
+              <th>상태</th>
+              <th>작업</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% recentReservations.forEach(reservation => { %>
+              <tr>
+                <td><%= reservation.id.substring(0, 8) %></td>
+                <td><%= reservation.customerName %></td>
+                <td><%= reservation.service %></td>
+                <td><%= reservation.workDate %></td>
+                <td><span class="status-badge <%= reservation.status %>"><%= reservation.status %></span></td>
+                <td><a href="/admin/reservations/<%= reservation.id %>">상세</a></td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
+

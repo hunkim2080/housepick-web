@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof post !== 'undefined' && post.id ? '글 수정' : '새 글 작성' %></title>
+  <link rel="stylesheet" href="/css/admin.css">
+  <style>
+    .editor-container {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #E0E0E0;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+    
+    .form-group textarea {
+      min-height: 300px;
+      font-family: monospace;
+    }
+    
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    
+    .editor-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+      margin-top: 2rem;
+    }
+    
+    .btn-save, .btn-publish, .btn-cancel {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    
+    .btn-save {
+      background: #6B5B95;
+      color: white;
+    }
+    
+    .btn-publish {
+      background: #28A745;
+      color: white;
+    }
+    
+    .btn-cancel {
+      background: #6C757D;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-container">
+    <aside class="admin-sidebar">
+      <h2>관리자</h2>
+      <nav>
+        <a href="/admin">대시보드</a>
+        <a href="/admin/reservations">예약 관리</a>
+        <a href="/admin/reviews">후기 관리</a>
+        <a href="/admin/posts" class="active">블로그 콘텐츠</a>
+        <a href="/admin/logout">로그아웃</a>
+      </nav>
+    </aside>
+    
+    <main class="admin-main">
+      <h1><%= typeof post !== 'undefined' && post.id ? '글 수정' : '새 글 작성' %></h1>
+      
+      <div class="editor-container">
+        <form id="postForm">
+          <div class="form-group">
+            <label>제목 *</label>
+            <input type="text" name="title" value="<%= typeof post !== 'undefined' ? post.title : '' %>" required>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label>카테고리</label>
+              <select name="category">
+                <option value="">선택하세요</option>
+                <option value="julnoon" <%= typeof post !== 'undefined' && post.category === 'julnoon' ? 'selected' : '' %>>줄눈시공</option>
+                <option value="move-in-cleaning" <%= typeof post !== 'undefined' && post.category === 'move-in-cleaning' ? 'selected' : '' %>>입주청소</option>
+                <option value="elastic-coat" <%= typeof post !== 'undefined' && post.category === 'elastic-coat' ? 'selected' : '' %>>탄성코트</option>
+                <option value="bathroom-remodeling" <%= typeof post !== 'undefined' && post.category === 'bathroom-remodeling' ? 'selected' : '' %>>화장실 리모델링</option>
+                <option value="tips" <%= typeof post !== 'undefined' && post.category === 'tips' ? 'selected' : '' %>>시공 팁</option>
+                <option value="news" <%= typeof post !== 'undefined' && post.category === 'news' ? 'selected' : '' %>>공지사항</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label>상태</label>
+              <select name="status">
+                <option value="draft" <%= typeof post !== 'undefined' && post.status === 'draft' ? 'selected' : '' %>>임시저장</option>
+                <option value="published" <%= typeof post !== 'undefined' && post.status === 'published' ? 'selected' : '' %>>발행</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label>요약 (메타 디스크립션)</label>
+            <textarea name="excerpt" rows="3"><%= typeof post !== 'undefined' ? post.excerpt || '' : '' %></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label>본문 내용 *</label>
+            <textarea name="content" required><%= typeof post !== 'undefined' ? post.content : '' %></textarea>
+            <small>마크다운 형식 지원</small>
+          </div>
+          
+          <div class="form-group">
+            <label>태그 (쉼표로 구분)</label>
+            <input type="text" name="tags" value="<%= typeof post !== 'undefined' && post.tags ? post.tags.join(', ') : '' %>" placeholder="예: 줄눈시공, 서울, 시공팁">
+          </div>
+          
+          <div class="editor-actions">
+            <a href="/admin/posts" class="btn-cancel">취소</a>
+            <button type="submit" name="action" value="save" class="btn-save">저장</button>
+            <button type="submit" name="action" value="publish" class="btn-publish">발행</button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+  
+  <script>
+    document.getElementById('postForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const formData = new FormData(this);
+      const action = e.submitter.value;
+      
+      const data = {
+        title: formData.get('title'),
+        category: formData.get('category'),
+        status: action === 'publish' ? 'published' : formData.get('status'),
+        excerpt: formData.get('excerpt'),
+        content: formData.get('content'),
+        tags: formData.get('tags') ? formData.get('tags').split(',').map(t => t.trim()) : []
+      };
+      
+      const url = '<%= typeof post !== 'undefined' && post.id ? `/api/posts/${post.id}` : '/api/posts' %>';
+      const method = '<%= typeof post !== 'undefined' && post.id ? 'PUT' : 'POST' %>';
+      
+      try {
+        const response = await fetch(url, {
+          method: method,
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+          alert(action === 'publish' ? '글이 발행되었습니다.' : '저장되었습니다.');
+          location.href = '/admin/posts';
+        } else {
+          alert('오류가 발생했습니다: ' + (result.error || '알 수 없는 오류'));
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('오류가 발생했습니다.');
+      }
+    });
+  </script>
+</body>
+</html>
+

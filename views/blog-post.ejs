@@ -1,0 +1,107 @@
+<%- include('partials/header') %>
+
+<article class="blog-post-page">
+  <div class="container">
+    <% if (typeof post !== 'undefined') { %>
+      <div class="post-header">
+        <h1><%= post.title %></h1>
+        <div class="post-meta">
+          <span class="post-date">작성일: <%= new Date(post.createdAt).toLocaleDateString('ko-KR') %></span>
+          <% if (post.category) { %>
+            <span class="post-category"><%= getCategoryName(post.category) %></span>
+          <% } %>
+          <% if (post.views) { %>
+            <span class="post-views">조회 <%= post.views %></span>
+          <% } %>
+        </div>
+      </div>
+      
+      <div class="post-content">
+        <%= post.content.replace(/\n/g, '<br>') %>
+      </div>
+      
+      <% if (post.tags && post.tags.length > 0) { %>
+        <div class="post-tags">
+          <% post.tags.forEach(tag => { %>
+            <span class="tag">#<%= tag %></span>
+          <% }); %>
+        </div>
+      <% } %>
+      
+      <div class="post-navigation">
+        <a href="/blog" class="btn btn-outline">목록으로</a>
+      </div>
+    <% } else { %>
+      <p>글이 존재하지 않습니다.</p>
+    <% } %>
+  </div>
+</article>
+
+<style>
+  .blog-post-page {
+    padding: 3rem 0;
+  }
+  
+  .post-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #E0E0E0;
+  }
+  
+  .post-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #2C3E50;
+  }
+  
+  .post-meta {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.9rem;
+    color: #666;
+  }
+  
+  .post-content {
+    line-height: 1.8;
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .post-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+  
+  .tag {
+    background: #F7F7F7;
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px;
+    font-size: 0.85rem;
+    color: #6B5B95;
+  }
+  
+  .post-navigation {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #E0E0E0;
+  }
+</style>
+
+<% 
+function getCategoryName(category) {
+  const names = {
+    'julnoon': '줄눈시공',
+    'move-in-cleaning': '입주청소',
+    'elastic-coat': '탄성코트',
+    'bathroom-remodeling': '화장실 리모델링',
+    'tips': '시공 팁',
+    'news': '공지사항'
+  };
+  return names[category] || category;
+}
+%>
+
+<%- include('partials/footer') %>
+

@@ -1,0 +1,142 @@
+<% 
+let bodyContent = `
+  <!-- 서비스 히어로 -->
+  <section class="service-hero">
+    <div class="container">
+      <h1 class="service-title">${serviceName}</h1>
+      <p class="service-subtitle">전국 시공 가능한 ${serviceName} 전문 서비스</p>
+    </div>
+  </section>
+
+  <!-- 서비스 소개 -->
+  <section class="service-intro">
+    <div class="container">
+      <div class="intro-content">
+        <h2>왜 우리를 선택해야 할까요?</h2>
+        <div class="features-grid">
+          <div class="feature-item">
+            <h3>방문 1회 원스톱 시공</h3>
+            <p>한 번의 방문으로 모든 작업 완료. 불필요한 재방문 없이 빠른 시공</p>
+          </div>
+          <div class="feature-item">
+            <h3>팀장 직영 관리</h3>
+            <p>전문 팀장이 직접 시공 관리. 품질 보장 및 안전한 작업</p>
+          </div>
+          <div class="feature-item">
+            <h3>100% 정품 자재 사용</h3>
+            <p>검증된 정품 자재만 사용. 내구성과 미관 모두 고려</p>
+          </div>
+          <div class="feature-item">
+            <h3>12개월 AS 보증</h3>
+            <p>시공 후 12개월 무상 AS 제공. 안심하고 사용하실 수 있습니다</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 서비스 프로세스 -->
+  <section class="service-process">
+    <div class="container">
+      <h2 class="section-title">${serviceName} 프로세스</h2>
+      <div class="process-steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>무료 상담 및 견적</h3>
+          <p>전화 또는 온라인 예약</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>현장 방문 및 측정</h3>
+          <p>정확한 면적 측정</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>자재 준비 및 시공</h3>
+          <p>전문 시공진 투입</p>
+        </div>
+        <div class="step">
+          <div class="step-number">4</div>
+          <h3>완료 검수 및 정리</h3>
+          <p>철저한 마무리</p>
+        </div>
+        <div class="step">
+          <div class="step-number">5</div>
+          <h3>AS 서비스</h3>
+          <p>12개월 보증 기간</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 견적 안내 -->
+  <section class="estimate-section">
+    <div class="container">
+      <h2 class="section-title">${serviceName} 견적 안내</h2>
+      <div class="estimate-info">
+        <div class="estimate-item">
+          <h3>기본 ${serviceName}</h3>
+          <p class="price">평당 XX만원부터</p>
+        </div>
+        <div class="estimate-item">
+          <h3>프리미엄 ${serviceName}</h3>
+          <p class="price">평당 XX만원부터</p>
+        </div>
+      </div>
+      <p class="estimate-note">※ 최종 견적은 현장 방문 후 정확한 측정을 통해 확정됩니다.</p>
+      <div class="estimate-cta">
+        <a href="/reservation?service=${service}" class="btn btn-primary btn-large">무료 견적 받기</a>
+      </div>
+    </div>
+  </section>
+`;
+if (typeof reviews !== 'undefined' && reviews.length > 0) {
+  bodyContent += `
+  <!-- 고객 후기 -->
+  <section class="reviews-section">
+    <div class="container">
+      <h2 class="section-title">${serviceName} 고객 후기</h2>
+      <div class="reviews-grid">`;
+  reviews.forEach(function(review) {
+    bodyContent += `
+        <div class="review-card">
+          <div class="review-header">
+            <div class="reviewer-info">
+              <span class="reviewer-name">${review.customerName}님</span>
+              <span class="review-location">${review.location || ''}</span>
+            </div>
+            <div class="review-rating">`;
+    for (let i = 0; i < review.rating; i++) {
+      bodyContent += '★';
+    }
+    bodyContent += `
+            </div>
+          </div>
+          <div class="review-content">
+            <p>${review.content}</p>
+          </div>
+          <div class="review-meta">
+            <span class="review-date">${new Date(review.createdAt).toLocaleDateString('ko-KR')}</span>
+          </div>
+        </div>`;
+  });
+  bodyContent += `
+      </div>
+      <div class="reviews-cta">
+        <a href="/${service}/reviews" class="btn btn-outline">모든 후기 보기</a>
+      </div>
+    </div>
+  </section>`;
+}
+bodyContent += `
+  <!-- CTA 섹션 -->
+  <section class="cta-section">
+    <div class="container">
+      <h2>지금 바로 무료 견적을 받아보세요</h2>
+      <p>전화 문의 없이 온라인으로 간편하게 예약하실 수 있습니다.</p>
+      <a href="/reservation?service=${service}" class="btn btn-primary btn-large">온라인 예약하기</a>
+    </div>
+  </section>
+`;
+%>
+<%- include('layout', { body: bodyContent }) %>

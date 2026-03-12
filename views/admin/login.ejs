@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>관리자 로그인</title>
+  <link rel="stylesheet" href="/css/admin.css">
+  <style>
+    .login-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #F7F7F7;
+    }
+    
+    .login-box {
+      background: white;
+      padding: 3rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+    
+    .login-box h1 {
+      margin-bottom: 2rem;
+      text-align: center;
+      color: #6B5B95;
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+    
+    .form-group input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #E0E0E0;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+    
+    .error {
+      color: red;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    
+    .btn-login {
+      width: 100%;
+      padding: 0.75rem;
+      background: #6B5B95;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    
+    .btn-login:hover {
+      background: #5A4A7F;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-box">
+      <h1>관리자 로그인</h1>
+      <% if (typeof error !== 'undefined') { %>
+        <div class="error"><%= error %></div>
+      <% } %>
+      <form method="POST" action="/admin/login">
+        <div class="form-group">
+          <label>사용자명</label>
+          <input type="text" name="username" required>
+        </div>
+        <div class="form-group">
+          <label>비밀번호</label>
+          <input type="password" name="password" required>
+        </div>
+        <button type="submit" class="btn-login">로그인</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
+

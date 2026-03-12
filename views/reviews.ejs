@@ -1,0 +1,44 @@
+<% 
+let bodyContent = `
+  <section class="reviews-page">
+    <div class="container">
+      <h1 class="page-title">${serviceName} 고객 후기</h1>
+      
+      <div class="reviews-grid">
+`;
+if (typeof reviews !== 'undefined' && reviews.length > 0) {
+  reviews.forEach(function(review) {
+    bodyContent += `
+        <div class="review-card">
+          <div class="review-header">
+            <div class="reviewer-info">
+              <span class="reviewer-name">${review.customerName}님</span>
+              <span class="review-location">${review.location || ''}</span>
+            </div>
+            <div class="review-rating">`;
+    for (let i = 0; i < review.rating; i++) {
+      bodyContent += '★';
+    }
+    bodyContent += `
+            </div>
+          </div>
+          <div class="review-content">
+            <p>${review.content}</p>
+          </div>
+          <div class="review-meta">
+            <span class="review-date">${new Date(review.createdAt).toLocaleDateString('ko-KR')}</span>
+            <span class="review-service">${review.serviceName || ''}</span>
+          </div>
+        </div>`;
+  });
+} else {
+  bodyContent += `
+        <p class="no-reviews">아직 등록된 후기가 없습니다.</p>`;
+}
+bodyContent += `
+      </div>
+    </div>
+  </section>
+`;
+%>
+<%- include('layout', { body: bodyContent }) %>

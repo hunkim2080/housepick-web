@@ -1,0 +1,162 @@
+<%- include('partials/header') %>
+
+<section class="blog-page">
+  <div class="container">
+    <h1 class="page-title">블로그</h1>
+    
+    <div class="blog-filters">
+      <a href="/blog" class="filter-btn <%= typeof category === 'undefined' || !category ? 'active' : '' %>">전체</a>
+      <a href="/blog?category=julnoon" class="filter-btn <%= category === 'julnoon' ? 'active' : '' %>">줄눈시공</a>
+      <a href="/blog?category=move-in-cleaning" class="filter-btn <%= category === 'move-in-cleaning' ? 'active' : '' %>">입주청소</a>
+      <a href="/blog?category=elastic-coat" class="filter-btn <%= category === 'elastic-coat' ? 'active' : '' %>">탄성코트</a>
+      <a href="/blog?category=bathroom-remodeling" class="filter-btn <%= category === 'bathroom-remodeling' ? 'active' : '' %>">화장실 리모델링</a>
+      <a href="/blog?category=tips" class="filter-btn <%= category === 'tips' ? 'active' : '' %>">시공 팁</a>
+    </div>
+    
+    <div class="blog-posts">
+      <% if (typeof posts !== 'undefined' && posts.length > 0) { %>
+        <% posts.forEach(post => { %>
+          <article class="blog-post-card">
+            <div class="post-header">
+              <h2><a href="/blog/<%= post.id %>"><%= post.title %></a></h2>
+              <div class="post-meta">
+                <span class="post-date"><%= new Date(post.createdAt).toLocaleDateString('ko-KR') %></span>
+                <% if (post.category) { %>
+                  <span class="post-category"><%= getCategoryName(post.category) %></span>
+                <% } %>
+                <% if (post.views) { %>
+                  <span class="post-views">조회 <%= post.views %></span>
+                <% } %>
+              </div>
+            </div>
+            <% if (post.excerpt) { %>
+              <p class="post-excerpt"><%= post.excerpt %></p>
+            <% } %>
+            <div class="post-tags">
+              <% if (post.tags && post.tags.length > 0) { %>
+                <% post.tags.forEach(tag => { %>
+                  <span class="tag">#<%= tag %></span>
+                <% }); %>
+              <% } %>
+            </div>
+            <a href="/blog/<%= post.id %>" class="read-more">자세히 보기 →</a>
+          </article>
+        <% }); %>
+      <% } else { %>
+        <p class="no-posts">등록된 글이 없습니다.</p>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<style>
+  .blog-page {
+    padding: 3rem 0;
+  }
+  
+  .blog-filters {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+  
+  .filter-btn {
+    padding: 0.5rem 1rem;
+    border: 1px solid #E0E0E0;
+    border-radius: 20px;
+    text-decoration: none;
+    color: #666;
+    transition: all 0.3s;
+  }
+  
+  .filter-btn:hover,
+  .filter-btn.active {
+    background: #6B5B95;
+    color: white;
+    border-color: #6B5B95;
+  }
+  
+  .blog-posts {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+  
+  .blog-post-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+  }
+  
+  .blog-post-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .post-header h2 {
+    margin-bottom: 1rem;
+  }
+  
+  .post-header h2 a {
+    color: #2C3E50;
+    text-decoration: none;
+  }
+  
+  .post-meta {
+    font-size: 0.9rem;
+    color: #666;
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .post-excerpt {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+  
+  .post-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+  
+  .tag {
+    background: #F7F7F7;
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px;
+    font-size: 0.85rem;
+    color: #6B5B95;
+  }
+  
+  .read-more {
+    color: #6B5B95;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  
+  .read-more:hover {
+    text-decoration: underline;
+  }
+</style>
+
+<% 
+function getCategoryName(category) {
+  const names = {
+    'julnoon': '줄눈시공',
+    'move-in-cleaning': '입주청소',
+    'elastic-coat': '탄성코트',
+    'bathroom-remodeling': '화장실 리모델링',
+    'tips': '시공 팁',
+    'news': '공지사항'
+  };
+  return names[category] || category;
+}
+%>
+
+<%- include('partials/footer') %>
+

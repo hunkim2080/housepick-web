@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-552DZEE4ZE"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-552DZEE4ZE');
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="naver-site-verification" content="e7ac6357e6f055ffe8364abb7df96323f89293f6" />
+    <!-- Microsoft Clarity -->
+    <script type="text/javascript">
+      (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "v8a4rmukl6");
+    </script>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="alternate" type="application/rss+xml" title="하우스Pick RSS" href="/rss.xml" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- SEO Meta Tags -->
+    <title>{{DISTRICT_NAME}} 줄눈시공 전문업체 | 하우스픽</title>
+    <meta name="description" content="{{DISTRICT_NAME}} 아파트 줄눈시공 전문 하우스픽. {{DISTRICT_NAME}} {{APT_COUNT}}개 아파트, {{TOTAL_HOUSEHOLDS}}세대 시공 가능. 정찰제 가격, 5년 무상 A/S." />
+    <meta name="keywords" content="{{DISTRICT_NAME}} 줄눈시공, {{DISTRICT_NAME}} 줄눈, {{DISTRICT_NAME}} 케라폭시, {{DISTRICT_NAME}} 화장실 줄눈, {{DISTRICT_NAME}} 욕실 줄눈" />
+    <link rel="canonical" href="{{CANONICAL_URL}}" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="{{DISTRICT_NAME}} 줄눈시공 전문업체 | 하우스픽" />
+    <meta property="og:description" content="{{DISTRICT_NAME}} 아파트 줄눈시공 전문. {{APT_COUNT}}개 아파트, {{TOTAL_HOUSEHOLDS}}세대. 정찰제 가격." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{CANONICAL_URL}}" />
+    <meta property="og:image" content="https://housepick-web.vercel.app/images/og/og-{{REGION_SLUG}}.png" />
+    <meta property="og:image:width" content="1195" />
+    <meta property="og:image:height" content="625" />
+    <meta property="og:image:alt" content="{{DISTRICT_NAME}} 줄눈시공 - 하우스Pick" />
+
+    <!-- JSON-LD LocalBusiness Schema -->
+    <script type="application/ld+json">
+{{JSON_LD_LOCAL_BUSINESS}}
+    </script>
+
+    <!-- JSON-LD BreadcrumbList Schema -->
+    <script type="application/ld+json">
+{{JSON_LD_BREADCRUMB}}
+    </script>
+
+    <!-- Vite 빌드된 CSS -->
+    <link rel="stylesheet" crossorigin href="{{VITE_CSS}}">
+
+    <!-- 프리렌더링 콘텐츠용 인라인 스타일 -->
+    <style>
+      .prerender-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        z-index: 50;
+      }
+      .prerender-header-inner {
+        max-width: 72rem;
+        margin: 0 auto;
+        padding: 0.75rem 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .prerender-logo {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #f59e0b;
+        text-decoration: none;
+      }
+      .prerender-nav {
+        display: none;
+        align-items: center;
+        gap: 0.25rem;
+      }
+      .prerender-nav a {
+        color: #44403c;
+        text-decoration: none;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        border-radius: 0.5rem;
+        transition: all 0.2s;
+      }
+      .prerender-nav a:hover {
+        color: #f59e0b;
+        background: #fafaf9;
+      }
+      .prerender-cta-btn {
+        background: #f59e0b;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 9999px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+      }
+      .prerender-breadcrumb {
+        background: #f5f5f4;
+        padding: 0.75rem 1.5rem;
+        margin-top: 60px;
+      }
+      .prerender-breadcrumb-inner {
+        max-width: 72rem;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.875rem;
+        color: #57534e;
+        flex-wrap: wrap;
+      }
+      .prerender-breadcrumb a {
+        color: #57534e;
+        text-decoration: none;
+      }
+      .prerender-breadcrumb a:hover {
+        color: #f59e0b;
+      }
+      .prerender-breadcrumb-separator {
+        color: #a8a29e;
+      }
+      .prerender-breadcrumb-current {
+        color: #1c1917;
+        font-weight: 500;
+      }
+      .district-hero {
+        padding: 3rem 1rem 4rem;
+        background: linear-gradient(to bottom, #fffbeb, white);
+        text-align: center;
+      }
+      .district-hero-inner {
+        max-width: 72rem;
+        margin: 0 auto;
+      }
+      .district-hero h1 {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: #292524;
+        margin-bottom: 0.5rem;
+        line-height: 1.3;
+      }
+      .district-hero-subtitle {
+        font-size: 1rem;
+        color: #57534e;
+        margin-bottom: 1.5rem;
+      }
+      .district-hero-cta {
+        display: inline-block;
+        background: #f59e0b;
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 9999px;
+        font-size: 1.125rem;
+        font-weight: 700;
+        text-decoration: none;
+        transition: background 0.2s;
+      }
+      .district-hero-cta:hover {
+        background: #d97706;
+      }
+      .district-stats {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin-top: 2rem;
+        flex-wrap: wrap;
+      }
+      .district-stat {
+        text-align: center;
+      }
+      .district-stat-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #f59e0b;
+      }
+      .district-stat-label {
+        font-size: 0.875rem;
+        color: #78716c;
+      }
+      .district-section {
+        padding: 3rem 1rem;
+        max-width: 72rem;
+        margin: 0 auto;
+      }
+      .district-section h2 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #292524;
+        margin-bottom: 1rem;
+      }
+      .district-section p {
+        color: #57534e;
+        line-height: 1.7;
+        margin-bottom: 1rem;
+      }
+      .district-section ul {
+        color: #57534e;
+        line-height: 1.7;
+        padding-left: 1.5rem;
+        margin-bottom: 1rem;
+      }
+      .district-section li {
+        margin-bottom: 0.5rem;
+      }
+      .apt-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+      .apt-card {
+        background: #fafaf9;
+        border: 1px solid #e7e5e4;
+        border-radius: 0.75rem;
+        padding: 1rem;
+        text-decoration: none;
+        color: inherit;
+        transition: all 0.2s;
+      }
+      .apt-card:hover {
+        border-color: #f59e0b;
+        box-shadow: 0 4px 12px rgba(245, 158, 11, 0.15);
+      }
+      .apt-card-name {
+        font-weight: 600;
+        color: #292524;
+        margin-bottom: 0.25rem;
+        font-size: 0.9rem;
+      }
+      .apt-card-info {
+        font-size: 0.75rem;
+        color: #78716c;
+      }
+      .district-cta-section {
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        padding: 3rem 1rem;
+        text-align: center;
+      }
+      .district-cta-section h2 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 0.75rem;
+      }
+      .district-cta-section p {
+        color: rgba(255,255,255,0.9);
+        margin-bottom: 1.5rem;
+      }
+      .district-cta-phone {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: white;
+        color: #d97706;
+        padding: 1rem 2rem;
+        border-radius: 9999px;
+        font-size: 1.125rem;
+        font-weight: 700;
+        text-decoration: none;
+        transition: transform 0.2s;
+      }
+      .district-cta-phone:hover {
+        transform: scale(1.05);
+      }
+      .nearby-districts {
+        padding: 3rem 1rem;
+        background: #fafaf9;
+      }
+      .nearby-districts-inner {
+        max-width: 72rem;
+        margin: 0 auto;
+      }
+      .nearby-districts h3 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #292524;
+        margin-bottom: 1rem;
+      }
+      .nearby-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      .nearby-list a {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        background: white;
+        border: 1px solid #e7e5e4;
+        border-radius: 9999px;
+        color: #57534e;
+        text-decoration: none;
+        font-size: 0.875rem;
+        transition: all 0.2s;
+      }
+      .nearby-list a:hover {
+        border-color: #f59e0b;
+        color: #f59e0b;
+        background: #fffbeb;
+      }
+      .prerender-footer {
+        background: #1c1917;
+        color: #a8a29e;
+        padding: 3rem 1.5rem 2rem;
+      }
+      .prerender-footer-inner {
+        max-width: 72rem;
+        margin: 0 auto;
+      }
+      .prerender-footer-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+      .prerender-footer h4 {
+        color: white;
+        font-weight: 700;
+        font-size: 0.875rem;
+        margin-bottom: 1rem;
+      }
+      .prerender-footer ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .prerender-footer li {
+        margin-bottom: 0.5rem;
+      }
+      .prerender-footer a {
+        color: #a8a29e;
+        text-decoration: none;
+        font-size: 0.875rem;
+        transition: color 0.2s;
+      }
+      .prerender-footer a:hover {
+        color: #fbbf24;
+      }
+      .prerender-footer-bottom {
+        border-top: 1px solid #292524;
+        padding-top: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        text-align: center;
+      }
+      .prerender-footer-logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #f59e0b;
+        text-decoration: none;
+      }
+      .prerender-footer-copy {
+        font-size: 0.75rem;
+        color: #57534e;
+      }
+      @media (min-width: 768px) {
+        .prerender-nav {
+          display: flex;
+        }
+        .district-hero h1 {
+          font-size: 2.25rem;
+        }
+        .apt-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+        .prerender-footer-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+        .prerender-footer-bottom {
+          flex-direction: row;
+          justify-content: space-between;
+        }
+      }
+      @media (min-width: 1024px) {
+        .apt-grid {
+          grid-template-columns: repeat(5, 1fr);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-district="{{DISTRICT_SLUG}}">
+      <!-- 헤더 -->
+      <header class="prerender-header">
+        <div class="prerender-header-inner">
+          <a href="/" class="prerender-logo">HousePick</a>
+          <nav class="prerender-nav">
+            <a href="/types">줄눈 종류</a>
+            <a href="/bathroom">화장실 줄눈</a>
+            <a href="/price">가격표</a>
+            <a href="/review">후기</a>
+            <a href="/faq">FAQ</a>
+          </nav>
+          <a href="tel:010-6461-0131" class="prerender-cta-btn">
+            전화 상담
+          </a>
+        </div>
+      </header>
+
+      <!-- 브레드크럼 -->
+      <nav class="prerender-breadcrumb" aria-label="Breadcrumb">
+        <div class="prerender-breadcrumb-inner">
+          <a href="/">홈</a>
+          <span class="prerender-breadcrumb-separator">›</span>
+          <a href="/{{REGION_SLUG}}">{{REGION_NAME}}</a>
+          <span class="prerender-breadcrumb-separator">›</span>
+          <span class="prerender-breadcrumb-current">{{DISTRICT_NAME}} 줄눈시공</span>
+        </div>
+      </nav>
+
+      <!-- 히어로 섹션 -->
+      <section class="district-hero">
+        <div class="district-hero-inner">
+          <h1>{{DISTRICT_NAME}} 아파트 줄눈시공</h1>
+          <p class="district-hero-subtitle">{{DISTRICT_NAME}} {{APT_COUNT}}개 아파트 줄눈시공 전문 · 정찰제 가격</p>
+          <a href="tel:010-6461-0131" class="district-hero-cta">무료 견적 받기</a>
+          <div class="district-stats">
+            <div class="district-stat">
+              <div class="district-stat-value">{{APT_COUNT}}개</div>
+              <div class="district-stat-label">아파트 단지</div>
+            </div>
+            <div class="district-stat">
+              <div class="district-stat-value">{{TOTAL_HOUSEHOLDS}}</div>
+              <div class="district-stat-label">총 세대수</div>
+            </div>
+            <div class="district-stat">
+              <div class="district-stat-value">{{AVG_YEAR}}년</div>
+              <div class="district-stat-label">평균 준공연도</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 줄눈시공 업체 선택 기준 -->
+      <section class="district-section">
+        <h2>{{DISTRICT_NAME}} 줄눈시공 업체 선택 기준</h2>
+        <p>{{DISTRICT_NAME}}에는 {{APT_COUNT}}개의 아파트 단지, 총 {{TOTAL_HOUSEHOLDS}}세대가 있습니다. 평균 준공연도는 {{AVG_YEAR}}년으로, {{APT_TYPE_DESC}}</p>
+        <ul>
+          <li><strong>정찰제 가격</strong> — 현장에서 추가 비용 없이, 견적 그대로 시공합니다</li>
+          <li><strong>팀장 직영 시공</strong> — 하도급 없이 전문 팀장이 직접 책임 시공합니다</li>
+          <li><strong>100% 정품 케라폭시</strong> — 이탈리아 수입 정품 자재만 사용합니다</li>
+          <li><strong>5년 무상 A/S</strong> — 시공 후에도 5년간 무상으로 A/S를 보장합니다</li>
+        </ul>
+      </section>
+
+      <!-- 세대수 상위 아파트 목록 -->
+      <section class="district-section">
+        <h2>{{DISTRICT_NAME}} 주요 아파트 줄눈시공</h2>
+        <p>{{DISTRICT_NAME}}에서 세대수가 많은 주요 아파트 단지입니다. 각 아파트 페이지에서 상세 정보와 시공 사례를 확인하세요.</p>
+        <div class="apt-grid">
+{{TOP_APTS_HTML}}
+        </div>
+      </section>
+
+      <!-- CTA 섹션 -->
+      <section class="district-cta-section">
+        <h2>{{DISTRICT_NAME}} 줄눈시공 무료 견적</h2>
+        <p>지금 바로 무료 현장 방문 견적을 받아보세요</p>
+        <a href="tel:010-6461-0131" class="district-cta-phone">010-6461-0131 전화 문의</a>
+      </section>
+
+      <!-- 인근 지역 허브 -->
+      <section class="nearby-districts">
+        <div class="nearby-districts-inner">
+          <h3>{{REGION_NAME}} 다른 지역 줄눈시공</h3>
+          <div class="nearby-list">
+{{NEARBY_DISTRICTS_HTML}}
+          </div>
+        </div>
+      </section>
+
+      <!-- 푸터 -->
+      <footer class="prerender-footer">
+        <div class="prerender-footer-inner">
+          <div class="prerender-footer-grid">
+            <div>
+              <h4>서비스 안내</h4>
+              <ul>
+                <li><a href="/types">줄눈 종류</a></li>
+                <li><a href="/bathroom">화장실 줄눈</a></li>
+                <li><a href="/price">가격표</a></li>
+                <li><a href="/self-diy">셀프 vs 업체</a></li>
+                <li><a href="/faq">FAQ</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4>고객지원</h4>
+              <ul>
+                <li><a href="/review">고객 후기</a></li>
+                <li><a href="/find">업체 선택법</a></li>
+                <li><a href="tel:010-6461-0131">전화 상담</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4>지역별 서비스</h4>
+              <ul>
+                <li><a href="/gangnam">강남 줄눈시공</a></li>
+                <li><a href="/songpa">송파 줄눈시공</a></li>
+                <li><a href="/seocho">서초 줄눈시공</a></li>
+                <li><a href="/seongnam">성남 줄눈시공</a></li>
+                <li><a href="/suwon">수원 줄눈시공</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4>&nbsp;</h4>
+              <ul>
+                <li><a href="/yongin">용인 줄눈시공</a></li>
+                <li><a href="/hwaseong">화성 줄눈시공</a></li>
+                <li><a href="/anyang">안양 줄눈시공</a></li>
+                <li><a href="/bucheon">부천 줄눈시공</a></li>
+                <li><a href="/">전체 지역</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="prerender-footer-bottom">
+            <a href="/" class="prerender-footer-logo">HousePick</a>
+            <p class="prerender-footer-copy">© 2024 HousePick. 업계 최초 정찰제 줄눈 브랜드</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Vite 빌드된 JS -->
+    <script type="module" crossorigin src="{{VITE_JS}}"></script>
+  </body>
+</html>

@@ -32629,6 +32629,66 @@
           "year": 2023,
           "brand": "기타",
           "phase": 6
+        },
+        {
+          "slug": "yeongjong-opakeu-moaelga-geurangde",
+          "name": "영종 오션파크 모아엘가 그랑데",
+          "households": 560,
+          "year": 2026,
+          "month": 4,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 4,
+            "units": 560
+          }
+        },
+        {
+          "slug": "unseoyeok-daerasu-eoedyu",
+          "name": "운서역 대라수 어썸에듀",
+          "households": 311,
+          "year": 2026,
+          "month": 8,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 8,
+            "units": 311
+          }
+        },
+        {
+          "slug": "incheonyeongjonggukjedosirc4-12",
+          "name": "인천영종국제도시RC4-1,2",
+          "households": 1021,
+          "year": 2027,
+          "month": 2,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 2,
+            "units": 1021
+          }
+        },
+        {
+          "slug": "yeongjong-jinarehi",
+          "name": "영종 진아레히",
+          "households": 547,
+          "year": 2027,
+          "month": 5,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 5,
+            "units": 547
+          }
         }
       ]
     },
@@ -36762,33 +36822,7 @@
           "year": 2010,
           "brand": "GS건설",
           "phase": 6
-        }
-      ]
-    },
-    "ganghwa": {
-      "name": "강화군",
-      "apartments": [
-        {
-          "slug": "ganghwa-seohuiseutahilseu-1danji",
-          "name": "강화 서희스타힐스 1단지",
-          "households": 1040,
-          "year": 2024,
-          "brand": "기타",
-          "phase": 6
         },
-        {
-          "slug": "segwangenrichibil",
-          "name": "세광엔리치빌",
-          "households": 576,
-          "year": 2001,
-          "brand": "기타",
-          "phase": 6
-        }
-      ]
-    },
-    "seogu": {
-      "name": "서구",
-      "apartments": [
         {
           "slug": "incheon-dansindosi-ab19beulrok-hoban",
           "name": "인천 검단신도시 AB19블록 호반써밋",
@@ -37016,68 +37050,24 @@
         }
       ]
     },
-    "junggu": {
-      "name": "중구",
+    "ganghwa": {
+      "name": "강화군",
       "apartments": [
         {
-          "slug": "yeongjong-opakeu-moaelga-geurangde",
-          "name": "영종 오션파크 모아엘가 그랑데",
-          "households": 560,
-          "year": 2026,
-          "month": 4,
-          "brand": "미확인",
-          "phase": 7,
-          "isUpcoming": true,
-          "recentMoveIn": {
-            "year": 2026,
-            "month": 4,
-            "units": 560
-          }
+          "slug": "ganghwa-seohuiseutahilseu-1danji",
+          "name": "강화 서희스타힐스 1단지",
+          "households": 1040,
+          "year": 2024,
+          "brand": "기타",
+          "phase": 6
         },
         {
-          "slug": "unseoyeok-daerasu-eoedyu",
-          "name": "운서역 대라수 어썸에듀",
-          "households": 311,
-          "year": 2026,
-          "month": 8,
-          "brand": "미확인",
-          "phase": 7,
-          "isUpcoming": true,
-          "recentMoveIn": {
-            "year": 2026,
-            "month": 8,
-            "units": 311
-          }
-        },
-        {
-          "slug": "incheonyeongjonggukjedosirc4-12",
-          "name": "인천영종국제도시RC4-1,2",
-          "households": 1021,
-          "year": 2027,
-          "month": 2,
-          "brand": "미확인",
-          "phase": 7,
-          "isUpcoming": true,
-          "recentMoveIn": {
-            "year": 2027,
-            "month": 2,
-            "units": 1021
-          }
-        },
-        {
-          "slug": "yeongjong-jinarehi",
-          "name": "영종 진아레히",
-          "households": 547,
-          "year": 2027,
-          "month": 5,
-          "brand": "미확인",
-          "phase": 7,
-          "isUpcoming": true,
-          "recentMoveIn": {
-            "year": 2027,
-            "month": 5,
-            "units": 547
-          }
+          "slug": "segwangenrichibil",
+          "name": "세광엔리치빌",
+          "households": 576,
+          "year": 2001,
+          "brand": "기타",
+          "phase": 6
         }
       ]
     }

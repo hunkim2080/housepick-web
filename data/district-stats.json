@@ -1,0 +1,632 @@
+{
+  "seoul": {
+    "jongno": {
+      "name": "종로구",
+      "aptCount": 8,
+      "existingCount": 8,
+      "upcomingCount": 0,
+      "totalHouseholds": 6201,
+      "avgYear": 2004
+    },
+    "jung": {
+      "name": "중구",
+      "aptCount": 12,
+      "existingCount": 12,
+      "upcomingCount": 0,
+      "totalHouseholds": 14034,
+      "avgYear": 2009
+    },
+    "yongsan": {
+      "name": "용산구",
+      "aptCount": 22,
+      "existingCount": 21,
+      "upcomingCount": 1,
+      "totalHouseholds": 19150,
+      "avgYear": 1999
+    },
+    "seongdong": {
+      "name": "성동구",
+      "aptCount": 42,
+      "existingCount": 40,
+      "upcomingCount": 2,
+      "totalHouseholds": 41629,
+      "avgYear": 2004
+    },
+    "gwangjin": {
+      "name": "광진구",
+      "aptCount": 14,
+      "existingCount": 13,
+      "upcomingCount": 1,
+      "totalHouseholds": 12388,
+      "avgYear": 1997
+    },
+    "dongdaemun": {
+      "name": "동대문구",
+      "aptCount": 38,
+      "existingCount": 37,
+      "upcomingCount": 1,
+      "totalHouseholds": 39153,
+      "avgYear": 2006
+    },
+    "jungnang": {
+      "name": "중랑구",
+      "aptCount": 34,
+      "existingCount": 33,
+      "upcomingCount": 1,
+      "totalHouseholds": 31696,
+      "avgYear": 2000
+    },
+    "seongbuk": {
+      "name": "성북구",
+      "aptCount": 55,
+      "existingCount": 52,
+      "upcomingCount": 3,
+      "totalHouseholds": 58808,
+      "avgYear": 2007
+    },
+    "gangbuk": {
+      "name": "강북구",
+      "aptCount": 20,
+      "existingCount": 18,
+      "upcomingCount": 2,
+      "totalHouseholds": 22635,
+      "avgYear": 2002
+    },
+    "dobong": {
+      "name": "도봉구",
+      "aptCount": 36,
+      "existingCount": 35,
+      "upcomingCount": 1,
+      "totalHouseholds": 43560,
+      "avgYear": 1993
+    },
+    "nowon": {
+      "name": "노원구",
+      "aptCount": 103,
+      "existingCount": 102,
+      "upcomingCount": 1,
+      "totalHouseholds": 123617,
+      "avgYear": 1994
+    },
+    "eunpyeong": {
+      "name": "은평구",
+      "aptCount": 31,
+      "existingCount": 30,
+      "upcomingCount": 1,
+      "totalHouseholds": 30776,
+      "avgYear": 2013
+    },
+    "seodaemun": {
+      "name": "서대문구",
+      "aptCount": 37,
+      "existingCount": 36,
+      "upcomingCount": 1,
+      "totalHouseholds": 34723,
+      "avgYear": 2006
+    },
+    "mapo": {
+      "name": "마포구",
+      "aptCount": 54,
+      "existingCount": 51,
+      "upcomingCount": 3,
+      "totalHouseholds": 44869,
+      "avgYear": 2007
+    },
+    "yangcheon": {
+      "name": "양천구",
+      "aptCount": 48,
+      "existingCount": 44,
+      "upcomingCount": 4,
+      "totalHouseholds": 54898,
+      "avgYear": 1999
+    },
+    "gangseo": {
+      "name": "강서구",
+      "aptCount": 58,
+      "existingCount": 57,
+      "upcomingCount": 1,
+      "totalHouseholds": 67680,
+      "avgYear": 2002
+    },
+    "guro": {
+      "name": "구로구",
+      "aptCount": 54,
+      "existingCount": 51,
+      "upcomingCount": 3,
+      "totalHouseholds": 46808,
+      "avgYear": 2003
+    },
+    "geumcheon": {
+      "name": "금천구",
+      "aptCount": 17,
+      "existingCount": 17,
+      "upcomingCount": 0,
+      "totalHouseholds": 20628,
+      "avgYear": 2000
+    },
+    "yeongdeungpo": {
+      "name": "영등포구",
+      "aptCount": 45,
+      "existingCount": 43,
+      "upcomingCount": 2,
+      "totalHouseholds": 39710,
+      "avgYear": 2001
+    },
+    "dongjak": {
+      "name": "동작구",
+      "aptCount": 45,
+      "existingCount": 44,
+      "upcomingCount": 1,
+      "totalHouseholds": 39969,
+      "avgYear": 2005
+    },
+    "gwanak": {
+      "name": "관악구",
+      "aptCount": 24,
+      "existingCount": 24,
+      "upcomingCount": 0,
+      "totalHouseholds": 29626,
+      "avgYear": 2003
+    },
+    "seocho": {
+      "name": "서초구",
+      "aptCount": 50,
+      "existingCount": 44,
+      "upcomingCount": 6,
+      "totalHouseholds": 50409,
+      "avgYear": 2008
+    },
+    "gangnam": {
+      "name": "강남구",
+      "aptCount": 79,
+      "existingCount": 76,
+      "upcomingCount": 3,
+      "totalHouseholds": 80810,
+      "avgYear": 1999
+    },
+    "songpa": {
+      "name": "송파구",
+      "aptCount": 73,
+      "existingCount": 69,
+      "upcomingCount": 4,
+      "totalHouseholds": 103822,
+      "avgYear": 2001
+    },
+    "gangdong": {
+      "name": "강동구",
+      "aptCount": 58,
+      "existingCount": 53,
+      "upcomingCount": 5,
+      "totalHouseholds": 67048,
+      "avgYear": 2008
+    }
+  },
+  "gyeonggi": {
+    "suwonjangangu": {
+      "name": "수원장안구",
+      "aptCount": 42,
+      "existingCount": 42,
+      "upcomingCount": 0,
+      "totalHouseholds": 43400,
+      "avgYear": 2004
+    },
+    "suwongwonseongu": {
+      "name": "수원권선구",
+      "aptCount": 70,
+      "existingCount": 70,
+      "upcomingCount": 0,
+      "totalHouseholds": 66875,
+      "avgYear": 2008
+    },
+    "suwonpaldalgu": {
+      "name": "수원팔달구",
+      "aptCount": 22,
+      "existingCount": 22,
+      "upcomingCount": 0,
+      "totalHouseholds": 31173,
+      "avgYear": 2003
+    },
+    "suwonyeongtonggu": {
+      "name": "수원영통구",
+      "aptCount": 76,
+      "existingCount": 76,
+      "upcomingCount": 0,
+      "totalHouseholds": 78526,
+      "avgYear": 2005
+    },
+    "seongnamsujeonggu": {
+      "name": "성남수정구",
+      "aptCount": 25,
+      "existingCount": 25,
+      "upcomingCount": 0,
+      "totalHouseholds": 29367,
+      "avgYear": 2016
+    },
+    "seongnamjungwongu": {
+      "name": "성남중원구",
+      "aptCount": 26,
+      "existingCount": 26,
+      "upcomingCount": 0,
+      "totalHouseholds": 26037,
+      "avgYear": 2011
+    },
+    "seongnambundanggu": {
+      "name": "성남분당구",
+      "aptCount": 112,
+      "existingCount": 112,
+      "upcomingCount": 0,
+      "totalHouseholds": 100629,
+      "avgYear": 1998
+    },
+    "uijeongbu": {
+      "name": "의정부시",
+      "aptCount": 102,
+      "existingCount": 100,
+      "upcomingCount": 2,
+      "totalHouseholds": 90642,
+      "avgYear": 2007
+    },
+    "anyangmanangu": {
+      "name": "안양만안구",
+      "aptCount": 22,
+      "existingCount": 22,
+      "upcomingCount": 0,
+      "totalHouseholds": 25591,
+      "avgYear": 2004
+    },
+    "anyangdongangu": {
+      "name": "안양동안구",
+      "aptCount": 67,
+      "existingCount": 67,
+      "upcomingCount": 0,
+      "totalHouseholds": 71342,
+      "avgYear": 1999
+    },
+    "bucheonwonmigu": {
+      "name": "부천원미구",
+      "aptCount": 59,
+      "existingCount": 59,
+      "upcomingCount": 0,
+      "totalHouseholds": 53080,
+      "avgYear": 2000
+    },
+    "bucheonsosagu": {
+      "name": "부천소사구",
+      "aptCount": 34,
+      "existingCount": 34,
+      "upcomingCount": 0,
+      "totalHouseholds": 34466,
+      "avgYear": 2006
+    },
+    "bucheonojeonggu": {
+      "name": "부천오정구",
+      "aptCount": 6,
+      "existingCount": 6,
+      "upcomingCount": 0,
+      "totalHouseholds": 4387,
+      "avgYear": 2007
+    },
+    "gwangmyeong": {
+      "name": "광명시",
+      "aptCount": 55,
+      "existingCount": 52,
+      "upcomingCount": 3,
+      "totalHouseholds": 68945,
+      "avgYear": 2003
+    },
+    "pyeongtaek": {
+      "name": "평택시",
+      "aptCount": 164,
+      "existingCount": 150,
+      "upcomingCount": 14,
+      "totalHouseholds": 149262,
+      "avgYear": 2012
+    },
+    "dongducheon": {
+      "name": "동두천시",
+      "aptCount": 10,
+      "existingCount": 10,
+      "upcomingCount": 0,
+      "totalHouseholds": 8984,
+      "avgYear": 2004
+    },
+    "ansansangroggu": {
+      "name": "안산상록구",
+      "aptCount": 38,
+      "existingCount": 38,
+      "upcomingCount": 0,
+      "totalHouseholds": 43142,
+      "avgYear": 1997
+    },
+    "ansandanwongu": {
+      "name": "안산단원구",
+      "aptCount": 61,
+      "existingCount": 61,
+      "upcomingCount": 0,
+      "totalHouseholds": 64665,
+      "avgYear": 2003
+    },
+    "goyangdeogyanggu": {
+      "name": "고양덕양구",
+      "aptCount": 101,
+      "existingCount": 101,
+      "upcomingCount": 0,
+      "totalHouseholds": 94638,
+      "avgYear": 2008
+    },
+    "goyangilsandonggu": {
+      "name": "고양일산동구",
+      "aptCount": 49,
+      "existingCount": 49,
+      "upcomingCount": 0,
+      "totalHouseholds": 46549,
+      "avgYear": 2004
+    },
+    "goyangilsanseogu": {
+      "name": "고양일산서구",
+      "aptCount": 67,
+      "existingCount": 67,
+      "upcomingCount": 0,
+      "totalHouseholds": 54316,
+      "avgYear": 2000
+    },
+    "gwacheonsi": {
+      "name": "과천시",
+      "aptCount": 17,
+      "existingCount": 17,
+      "upcomingCount": 0,
+      "totalHouseholds": 18361,
+      "avgYear": 2013
+    },
+    "guri": {
+      "name": "구리시",
+      "aptCount": 34,
+      "existingCount": 32,
+      "upcomingCount": 2,
+      "totalHouseholds": 29301,
+      "avgYear": 2004
+    },
+    "namyangju": {
+      "name": "남양주시",
+      "aptCount": 157,
+      "existingCount": 154,
+      "upcomingCount": 3,
+      "totalHouseholds": 141792,
+      "avgYear": 2010
+    },
+    "osan": {
+      "name": "오산시",
+      "aptCount": 70,
+      "existingCount": 65,
+      "upcomingCount": 5,
+      "totalHouseholds": 68167,
+      "avgYear": 2010
+    },
+    "siheung": {
+      "name": "시흥시",
+      "aptCount": 132,
+      "existingCount": 129,
+      "upcomingCount": 3,
+      "totalHouseholds": 114349,
+      "avgYear": 2010
+    },
+    "gunpo": {
+      "name": "군포시",
+      "aptCount": 58,
+      "existingCount": 58,
+      "upcomingCount": 0,
+      "totalHouseholds": 57734,
+      "avgYear": 2000
+    },
+    "uiwang": {
+      "name": "의왕시",
+      "aptCount": 36,
+      "existingCount": 33,
+      "upcomingCount": 3,
+      "totalHouseholds": 33436,
+      "avgYear": 2008
+    },
+    "hanam": {
+      "name": "하남시",
+      "aptCount": 86,
+      "existingCount": 86,
+      "upcomingCount": 0,
+      "totalHouseholds": 78755,
+      "avgYear": 2014
+    },
+    "yongincheoingu": {
+      "name": "용인처인구",
+      "aptCount": 31,
+      "existingCount": 31,
+      "upcomingCount": 0,
+      "totalHouseholds": 31623,
+      "avgYear": 2014
+    },
+    "yongingiheunggu": {
+      "name": "용인기흥구",
+      "aptCount": 102,
+      "existingCount": 102,
+      "upcomingCount": 0,
+      "totalHouseholds": 86599,
+      "avgYear": 2008
+    },
+    "yonginsujigu": {
+      "name": "용인수지구",
+      "aptCount": 84,
+      "existingCount": 84,
+      "upcomingCount": 0,
+      "totalHouseholds": 73483,
+      "avgYear": 2004
+    },
+    "paju": {
+      "name": "파주시",
+      "aptCount": 113,
+      "existingCount": 106,
+      "upcomingCount": 7,
+      "totalHouseholds": 118745,
+      "avgYear": 2012
+    },
+    "icheon": {
+      "name": "이천시",
+      "aptCount": 33,
+      "existingCount": 23,
+      "upcomingCount": 10,
+      "totalHouseholds": 21875,
+      "avgYear": 2008
+    },
+    "anseong": {
+      "name": "안성시",
+      "aptCount": 45,
+      "existingCount": 42,
+      "upcomingCount": 3,
+      "totalHouseholds": 43743,
+      "avgYear": 2011
+    },
+    "gimpo": {
+      "name": "김포시",
+      "aptCount": 106,
+      "existingCount": 106,
+      "upcomingCount": 0,
+      "totalHouseholds": 114232,
+      "avgYear": 2012
+    },
+    "hwaseong": {
+      "name": "화성시",
+      "aptCount": 292,
+      "existingCount": 287,
+      "upcomingCount": 5,
+      "totalHouseholds": 260496,
+      "avgYear": 2014
+    },
+    "gwangju-gyeonggi": {
+      "name": "광주시",
+      "aptCount": 32,
+      "existingCount": 32,
+      "upcomingCount": 0,
+      "totalHouseholds": 24346,
+      "avgYear": 2015
+    },
+    "yangju": {
+      "name": "양주시",
+      "aptCount": 80,
+      "existingCount": 77,
+      "upcomingCount": 3,
+      "totalHouseholds": 75991,
+      "avgYear": 2015
+    },
+    "pocheon": {
+      "name": "포천시",
+      "aptCount": 12,
+      "existingCount": 12,
+      "upcomingCount": 0,
+      "totalHouseholds": 10854,
+      "avgYear": 2009
+    },
+    "yeoju": {
+      "name": "여주시",
+      "aptCount": 16,
+      "existingCount": 15,
+      "upcomingCount": 1,
+      "totalHouseholds": 10245,
+      "avgYear": 2010
+    },
+    "yeoncheon": {
+      "name": "연천군",
+      "aptCount": 1,
+      "existingCount": 1,
+      "upcomingCount": 0,
+      "totalHouseholds": 845,
+      "avgYear": 2024
+    },
+    "gapyeong": {
+      "name": "가평군",
+      "aptCount": 1,
+      "existingCount": 1,
+      "upcomingCount": 0,
+      "totalHouseholds": 505,
+      "avgYear": 2023
+    },
+    "yangpyeong": {
+      "name": "양평군",
+      "aptCount": 3,
+      "existingCount": 2,
+      "upcomingCount": 1,
+      "totalHouseholds": 2881,
+      "avgYear": 2023
+    }
+  },
+  "incheon": {
+    "jung": {
+      "name": "중구",
+      "aptCount": 41,
+      "existingCount": 37,
+      "upcomingCount": 4,
+      "totalHouseholds": 38257,
+      "avgYear": 2013
+    },
+    "dong": {
+      "name": "동구",
+      "aptCount": 12,
+      "existingCount": 12,
+      "upcomingCount": 0,
+      "totalHouseholds": 12970,
+      "avgYear": 2005
+    },
+    "michuhol": {
+      "name": "미추홀구",
+      "aptCount": 46,
+      "existingCount": 44,
+      "upcomingCount": 2,
+      "totalHouseholds": 49515,
+      "avgYear": 2007
+    },
+    "yeonsu": {
+      "name": "연수구",
+      "aptCount": 105,
+      "existingCount": 103,
+      "upcomingCount": 2,
+      "totalHouseholds": 105238,
+      "avgYear": 2006
+    },
+    "namdong": {
+      "name": "남동구",
+      "aptCount": 99,
+      "existingCount": 99,
+      "upcomingCount": 0,
+      "totalHouseholds": 105687,
+      "avgYear": 2005
+    },
+    "bupyeong": {
+      "name": "부평구",
+      "aptCount": 78,
+      "existingCount": 78,
+      "upcomingCount": 0,
+      "totalHouseholds": 86947,
+      "avgYear": 2001
+    },
+    "gyeyang": {
+      "name": "계양구",
+      "aptCount": 45,
+      "existingCount": 43,
+      "upcomingCount": 2,
+      "totalHouseholds": 38711,
+      "avgYear": 1998
+    },
+    "seo": {
+      "name": "서구",
+      "aptCount": 137,
+      "existingCount": 122,
+      "upcomingCount": 15,
+      "totalHouseholds": 137692,
+      "avgYear": 2012
+    },
+    "ganghwa": {
+      "name": "강화군",
+      "aptCount": 2,
+      "existingCount": 2,
+      "upcomingCount": 0,
+      "totalHouseholds": 1616,
+      "avgYear": 2013
+    }
+  }
+}

@@ -69,6 +69,10 @@
     { "source": "/seogu-incheon", "destination": "/seogu-incheon/index.html" },
     { "source": "/ganghwa", "destination": "/ganghwa/index.html" },
     { "source": "/ongjin", "destination": "/ongjin/index.html" },
-    { "source": "/privacy", "destination": "/privacy/index.html" }
+    { "source": "/privacy", "destination": "/privacy/index.html" },
+    { "source": "/:region/:district/:apartment", "destination": "/:region/:district/:apartment/index.html" }
+  ],
+  "crons": [
+    { "path": "/api/advance-phase", "schedule": "0 9 * * 1" }
   ]
 }

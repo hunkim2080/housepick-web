@@ -30,12 +30,23 @@ export default async function handler(req, res) {
 
       console.log(`Phase advanced: ${settings.currentPhase - 1} -> ${settings.currentPhase}`)
 
+      // 자동 재배포 트리거
+      if (process.env.VERCEL_DEPLOY_HOOK) {
+        try {
+          await fetch(process.env.VERCEL_DEPLOY_HOOK, { method: 'POST' })
+          console.log('Deploy hook triggered successfully')
+        } catch (hookError) {
+          console.error('Failed to trigger deploy hook:', hookError.message)
+        }
+      }
+
       return res.status(200).json({
         success: true,
         updated: true,
         previousPhase: settings.currentPhase - 1,
         currentPhase: settings.currentPhase,
-        message: `Phase advanced to ${settings.currentPhase}. Rebuild required to update sitemap.`
+        deployTriggered: !!process.env.VERCEL_DEPLOY_HOOK,
+        message: `Phase advanced to ${settings.currentPhase}. Rebuild triggered.`
       })
     }
 

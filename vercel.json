@@ -1,6 +1,12 @@
 {
   "buildCommand": "npm run build && npm run generate-regions",
   "outputDirectory": "dist",
+  "crons": [
+    {
+      "path": "/api/advance-phase",
+      "schedule": "0 0 * * 0"
+    }
+  ],
   "rewrites": [
     { "source": "/gangnam", "destination": "/gangnam/index.html" },
     { "source": "/gangdong", "destination": "/gangdong/index.html" },

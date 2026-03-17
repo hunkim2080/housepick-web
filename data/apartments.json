@@ -340,6 +340,21 @@
           "year": 1984,
           "brand": "기타",
           "phase": 2
+        },
+        {
+          "slug": "ichonreuelichondaerimodelring",
+          "name": "이촌르엘(이촌현대리모델링)",
+          "households": 750,
+          "year": 2027,
+          "month": 2,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 2,
+            "units": 750
+          }
         }
       ]
     },
@@ -665,6 +680,36 @@
           "year": 2003,
           "brand": "롯데건설",
           "phase": 2
+        },
+        {
+          "slug": "cheonggyeribeobyujai",
+          "name": "청계리버뷰자이",
+          "households": 1670,
+          "year": 2026,
+          "month": 12,
+          "brand": "GS건설",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 12,
+            "units": 1670
+          }
+        },
+        {
+          "slug": "seongdonggu-doseondong-286cheongansimjutaek",
+          "name": "성동구 도선동 286(청년안심주택)",
+          "households": 381,
+          "year": 2027,
+          "month": 5,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 5,
+            "units": 381
+          }
         }
       ]
     },
@@ -774,6 +819,21 @@
           "year": 1998,
           "brand": "기타",
           "phase": 1
+        },
+        {
+          "slug": "gangyeok-teureol-aipakeu",
+          "name": "강변역 센트럴 아이파크",
+          "households": 215,
+          "year": 2026,
+          "month": 11,
+          "brand": "HDC현대산업개발",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 11,
+            "units": 215
+          }
         }
       ]
     },
@@ -1075,6 +1135,21 @@
           "year": 2004,
           "brand": "삼성물산",
           "phase": 2
+        },
+        {
+          "slug": "cheongri-dekaeseul-hairuche",
+          "name": "청량리 롯데캐슬 하이루체",
+          "households": 761,
+          "year": 2026,
+          "month": 4,
+          "brand": "롯데건설",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 4,
+            "units": 761
+          }
         }
       ]
     },
@@ -1344,6 +1419,21 @@
           "year": 2013,
           "brand": "기타",
           "phase": 2
+        },
+        {
+          "slug": "sehanitaungarojutaekjeongbisaeop",
+          "name": "세광하니타운가로주택정비사업",
+          "households": 219,
+          "year": 2027,
+          "month": 1,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 1,
+            "units": 219
+          }
         }
       ]
     },
@@ -1765,6 +1855,51 @@
           "year": 2019,
           "brand": "삼성물산",
           "phase": 1
+        },
+        {
+          "slug": "bomun-teureol-aipakeu",
+          "name": "보문 센트럴 아이파크",
+          "households": 199,
+          "year": 2026,
+          "month": 9,
+          "brand": "HDC현대산업개발",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 9,
+            "units": 199
+          }
+        },
+        {
+          "slug": "pureujio-radiuseu-pakeu",
+          "name": "푸르지오 라디우스 파크",
+          "households": 1637,
+          "year": 2027,
+          "month": 3,
+          "brand": "대우건설",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 3,
+            "units": 1637
+          }
+        },
+        {
+          "slug": "changgyeonggung-dekaeseul-sigeunicheo",
+          "name": "창경궁 롯데캐슬 시그니처",
+          "households": 1223,
+          "year": 2027,
+          "month": 3,
+          "brand": "롯데건설",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 3,
+            "units": 1223
+          }
         }
       ]
     },
@@ -1914,6 +2049,36 @@
           "year": 2021,
           "brand": "기타",
           "phase": 1
+        },
+        {
+          "slug": "elripeu-miayeok-1danji",
+          "name": "엘리프 미아역 1단지",
+          "households": 78,
+          "year": 2026,
+          "month": 8,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 8,
+            "units": 78
+          }
+        },
+        {
+          "slug": "elripeu-miayeok-2danji",
+          "name": "엘리프 미아역 2단지",
+          "households": 182,
+          "year": 2026,
+          "month": 8,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 8,
+            "units": 182
+          }
         }
       ]
     },
@@ -2199,6 +2364,21 @@
           "year": 2003,
           "brand": "기타",
           "phase": 1
+        },
+        {
+          "slug": "dobong-geumhoeoulrim-ribeopakeu",
+          "name": "도봉 금호어울림 리버파크",
+          "households": 299,
+          "year": 2026,
+          "month": 3,
+          "brand": "금호건설",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 3,
+            "units": 299
+          }
         }
       ]
     },
@@ -3020,6 +3200,21 @@
           "year": 1999,
           "brand": "기타",
           "phase": 1
+        },
+        {
+          "slug": "hauseutori-teureolpore",
+          "name": "하우스토리 센트럴포레",
+          "households": 161,
+          "year": 2027,
+          "month": 6,
+          "brand": "기타",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 6,
+            "units": 161
+          }
         }
       ]
     },
@@ -3265,6 +3460,21 @@
           "year": 2010,
           "brand": "기타",
           "phase": 2
+        },
+        {
+          "slug": "hilseuteiteu-medialre",
+          "name": "힐스테이트 메디알레",
+          "households": 2451,
+          "year": 2026,
+          "month": 10,
+          "brand": "현대건설",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 10,
+            "units": 2451
+          }
         }
       ]
     },
@@ -3558,6 +3768,21 @@
           "year": 2020,
           "brand": "삼성물산",
           "phase": 2
+        },
+        {
+          "slug": "gyeonggung-yubora",
+          "name": "경희궁 유보라",
+          "households": 199,
+          "year": 2026,
+          "month": 7,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 7,
+            "units": 199
+          }
         }
       ]
     },
@@ -3971,6 +4196,51 @@
           "year": 2010,
           "brand": "기타",
           "phase": 2
+        },
+        {
+          "slug": "mapohaneulchaedeoribeo",
+          "name": "마포하늘채더리버",
+          "households": 69,
+          "year": 2026,
+          "month": 3,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 3,
+            "units": 69
+          }
+        },
+        {
+          "slug": "hongdaeipguyeokhaemoro",
+          "name": "홍대입구역해모로",
+          "households": 123,
+          "year": 2026,
+          "month": 10,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 10,
+            "units": 123
+          }
+        },
+        {
+          "slug": "mapojaihilseuteiteu-raseu",
+          "name": "마포자이힐스테이트 라첼스",
+          "households": 1101,
+          "year": 2027,
+          "month": 3,
+          "brand": "GS건설",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 3,
+            "units": 1101
+          }
         }
       ]
     },
@@ -4328,6 +4598,66 @@
           "year": 2020,
           "brand": "HDC현대산업개발",
           "phase": 2
+        },
+        {
+          "slug": "sinjeong282garojutaekjeongbisaeop",
+          "name": "신정282(가로주택정비사업)",
+          "households": 103,
+          "year": 2026,
+          "month": 6,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 6,
+            "units": 103
+          }
+        },
+        {
+          "slug": "seoulmokdongeleichichamhyeonggarojutaekjeongbisaeop",
+          "name": "서울목동엘에이치참여형가로주택정비사업",
+          "households": 85,
+          "year": 2027,
+          "month": 3,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 3,
+            "units": 85
+          }
+        },
+        {
+          "slug": "sinwol",
+          "name": "신월",
+          "households": 127,
+          "year": 2027,
+          "month": 3,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 3,
+            "units": 127
+          }
+        },
+        {
+          "slug": "samjinripjaegeonchuk",
+          "name": "삼진연립재건축",
+          "households": 50,
+          "year": 2027,
+          "month": 6,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 6,
+            "units": 50
+          }
         }
       ]
     },
@@ -4789,6 +5119,21 @@
           "year": 1994,
           "brand": "기타",
           "phase": 2
+        },
+        {
+          "slug": "hilseuteiteu-deungchonyeok",
+          "name": "힐스테이트 등촌역 ",
+          "households": 543,
+          "year": 2026,
+          "month": 10,
+          "brand": "현대건설",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 10,
+            "units": 543
+          }
         }
       ]
     },
@@ -5202,6 +5547,51 @@
           "year": 2019,
           "brand": "기타",
           "phase": 2
+        },
+        {
+          "slug": "gaebong-rubeuru",
+          "name": "개봉 루브루 ",
+          "households": 295,
+          "year": 2026,
+          "month": 4,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 4,
+            "units": 295
+          }
+        },
+        {
+          "slug": "sindorimyeokdongmundiiseuteu",
+          "name": "신도림역동문디이스트",
+          "households": 61,
+          "year": 2026,
+          "month": 4,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 4,
+            "units": 61
+          }
+        },
+        {
+          "slug": "dusanwibeudeopeureseutiji",
+          "name": "두산위브더프레스티지",
+          "households": 302,
+          "year": 2027,
+          "month": 1,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 1,
+            "units": 302
+          }
         }
       ]
     },
@@ -5692,6 +6082,36 @@
           "year": 2020,
           "brand": "DL이앤씨",
           "phase": 2
+        },
+        {
+          "slug": "yeongdeungpojai-digeuniti",
+          "name": "영등포자이 디그니티",
+          "households": 707,
+          "year": 2026,
+          "month": 3,
+          "brand": "GS건설",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 3,
+            "units": 707
+          }
+        },
+        {
+          "slug": "seouldaebang-sinhonmangtaungonggongbun",
+          "name": "서울대방 신혼희망타운(공공분양) ",
+          "households": 183,
+          "year": 2027,
+          "month": 6,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 6,
+            "units": 183
+          }
         }
       ]
     },
@@ -6049,6 +6469,21 @@
           "year": 2021,
           "brand": "GS건설",
           "phase": 2
+        },
+        {
+          "slug": "sangdodonghilseuteiteujangseungbaegiyeok",
+          "name": "상도동힐스테이트장승배기역",
+          "households": 370,
+          "year": 2026,
+          "month": 2,
+          "brand": "현대건설",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 2,
+            "units": 370
+          }
         }
       ]
     },
@@ -6603,6 +7038,96 @@
           "year": 2015,
           "brand": "기타",
           "phase": 1
+        },
+        {
+          "slug": "poseukootiereusinbanpo18cha337dong",
+          "name": "포스코오티에르(신반포18차337동)",
+          "households": 178,
+          "year": 2026,
+          "month": 6,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 6,
+            "units": 178
+          }
+        },
+        {
+          "slug": "dieichi-bangbae",
+          "name": "디에이치 방배",
+          "households": 3064,
+          "year": 2026,
+          "month": 9,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 9,
+            "units": 3064
+          }
+        },
+        {
+          "slug": "bangbaesamho1213dong",
+          "name": "방배삼호12,13동",
+          "households": 111,
+          "year": 2027,
+          "month": 5,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 5,
+            "units": 111
+          }
+        },
+        {
+          "slug": "seochogu-jaedong-1-26cheongansimjutaek",
+          "name": "서초구 양재동 1-26(청년안심주택)",
+          "households": 342,
+          "year": 2027,
+          "month": 5,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 5,
+            "units": 342
+          }
+        },
+        {
+          "slug": "seochodong1622ildae",
+          "name": "서초동1622일대",
+          "households": 68,
+          "year": 2027,
+          "month": 6,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 6,
+            "units": 68
+          }
+        },
+        {
+          "slug": "eopeohauseu-reuel",
+          "name": "어퍼하우스 르엘",
+          "households": 239,
+          "year": 2027,
+          "month": 6,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 6,
+            "units": 239
+          }
         }
       ]
     },
@@ -7216,6 +7741,51 @@
           "year": 1995,
           "brand": "기타",
           "phase": 1
+        },
+        {
+          "slug": "raemian-retuseu",
+          "name": "래미안 레벤투스",
+          "households": 308,
+          "year": 2026,
+          "month": 10,
+          "brand": "삼성물산",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 10,
+            "units": 308
+          }
+        },
+        {
+          "slug": "dogokdonggarojutaekjeongbi",
+          "name": "도곡동가로주택정비",
+          "households": 82,
+          "year": 2026,
+          "month": 12,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 12,
+            "units": 82
+          }
+        },
+        {
+          "slug": "bichwitaun",
+          "name": "비취타운",
+          "households": 95,
+          "year": 2027,
+          "month": 5,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 5,
+            "units": 95
+          }
         }
       ]
     },
@@ -7773,6 +8343,66 @@
           "year": 2011,
           "brand": "기타",
           "phase": 1
+        },
+        {
+          "slug": "jamsilreuelmiseongkeurobajaegeonchuk",
+          "name": "잠실르엘(미성크로바재건축)",
+          "households": 1865,
+          "year": 2026,
+          "month": 1,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 1,
+            "units": 1865
+          }
+        },
+        {
+          "slug": "hilteuriumsongpa",
+          "name": "힐트리움송파",
+          "households": 44,
+          "year": 2026,
+          "month": 3,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 3,
+            "units": 44
+          }
+        },
+        {
+          "slug": "deosongparumiseuta",
+          "name": "더샵송파루미스타",
+          "households": 179,
+          "year": 2026,
+          "month": 5,
+          "brand": "포스코건설",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 5,
+            "units": 179
+          }
+        },
+        {
+          "slug": "ssanghaicheubilradeung",
+          "name": "쌍용하이츠빌라등",
+          "households": 65,
+          "year": 2027,
+          "month": 6,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 6,
+            "units": 65
+          }
         }
       ]
     },
@@ -8202,6 +8832,81 @@
           "year": 2011,
           "brand": "기타",
           "phase": 1
+        },
+        {
+          "slug": "ehansesang-gangdong-peureseutijiwon",
+          "name": "e편한세상 강동 프레스티지원",
+          "households": 535,
+          "year": 2026,
+          "month": 1,
+          "brand": "DL이앤씨",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 1,
+            "units": 535
+          }
+        },
+        {
+          "slug": "viorrbioreu",
+          "name": "VIORR(비오르)",
+          "households": 53,
+          "year": 2026,
+          "month": 5,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 5,
+            "units": 53
+          }
+        },
+        {
+          "slug": "di-ateonthe-atheon",
+          "name": "디 아테온(THE ATHEON)",
+          "households": 64,
+          "year": 2026,
+          "month": 6,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 6,
+            "units": 64
+          }
+        },
+        {
+          "slug": "gangdonggu-seongnaedong-382-6cheongansimjutaek",
+          "name": "강동구 성내동 382-6(청년안심주택)",
+          "households": 281,
+          "year": 2027,
+          "month": 2,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 2,
+            "units": 281
+          }
+        },
+        {
+          "slug": "godeokgangil3danjisajeonye",
+          "name": "고덕강일3단지(사전예약)",
+          "households": 1305,
+          "year": 2027,
+          "month": 3,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 3,
+            "units": 1305
+          }
         }
       ]
     }
@@ -12028,6 +12733,36 @@
           "year": 2024,
           "brand": "기타",
           "phase": 5
+        },
+        {
+          "slug": "ehansesang-singok-sigeunicheobyu-1danji-2danji",
+          "name": "e편한세상 신곡 시그니처뷰 1단지 & 2단지",
+          "households": 815,
+          "year": 2026,
+          "month": 9,
+          "brand": "DL이앤씨",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 9,
+            "units": 815
+          }
+        },
+        {
+          "slug": "uijeongbuyeok-pamilrie",
+          "name": "의정부역 파밀리에 Ⅱ",
+          "households": 150,
+          "year": 2026,
+          "month": 10,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 10,
+            "units": 150
+          }
         }
       ]
     },
@@ -13978,6 +14713,51 @@
           "year": 2017,
           "brand": "대우건설",
           "phase": 5
+        },
+        {
+          "slug": "myeong-soha-sinwonachimdosi2",
+          "name": "광명 소하 신원아침도시2",
+          "households": 203,
+          "year": 2026,
+          "month": 1,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 1,
+            "units": 203
+          }
+        },
+        {
+          "slug": "cheolsanjai-beuriereu",
+          "name": "철산자이 브리에르",
+          "households": 1490,
+          "year": 2026,
+          "month": 1,
+          "brand": "GS건설",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 1,
+            "units": 1490
+          }
+        },
+        {
+          "slug": "myeong-soha-sinwonachimdosi1",
+          "name": "광명 소하 신원아침도시1*",
+          "households": 144,
+          "year": 2026,
+          "month": 2,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 2,
+            "units": 144
+          }
         }
       ]
     },
@@ -15183,6 +15963,216 @@
           "year": 2024,
           "brand": "기타",
           "phase": 5
+        },
+        {
+          "slug": "jijeyeok-bandocheri-jeilpunggyeongchae",
+          "name": "지제역 반도체밸리 제일풍경채",
+          "households": 1152,
+          "year": 2026,
+          "month": 3,
+          "brand": "제일건설",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 3,
+            "units": 1152
+          }
+        },
+        {
+          "slug": "hilseuteiteu-pyeongtaek-hwa",
+          "name": "힐스테이트 평택 화양",
+          "households": 1571,
+          "year": 2026,
+          "month": 3,
+          "brand": "현대건설",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 3,
+            "units": 1571
+          }
+        },
+        {
+          "slug": "pyeongtaekhwa-seoseutahilseu-teureolpakeu",
+          "name": "평택화양 서희스타힐스 센트럴파크",
+          "households": 1554,
+          "year": 2026,
+          "month": 7,
+          "brand": "기타",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 7,
+            "units": 1554
+          }
+        },
+        {
+          "slug": "pyeongtaek-godeogukjesindosi-a48-geumseongbaekjo-yemiji",
+          "name": "평택 고더국제신도시 A48 금성백조 예미지",
+          "households": 431,
+          "year": 2026,
+          "month": 8,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 8,
+            "units": 431
+          }
+        },
+        {
+          "slug": "pyeongtaek-beureinsiti-2bl-daerojebiang-moaelga",
+          "name": "평택 브레인시티 2BL 대광로제비앙 모아엘가",
+          "households": 1700,
+          "year": 2026,
+          "month": 8,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 8,
+            "units": 1700
+          }
+        },
+        {
+          "slug": "pyeongtaek-hwa-dongmun-di-iseuteu",
+          "name": "평택 화양 동문 디 이스트",
+          "households": 753,
+          "year": 2026,
+          "month": 11,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 11,
+            "units": 753
+          }
+        },
+        {
+          "slug": "pyeongtaek-pureujio-teopain",
+          "name": "평택 푸르지오 센터파인",
+          "households": 851,
+          "year": 2026,
+          "month": 11,
+          "brand": "대우건설",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 11,
+            "units": 851
+          }
+        },
+        {
+          "slug": "jijeyeok-bandocheri-ssang-deo-peulraeti",
+          "name": "지제역 반도체밸리 쌍용 더 플래티넘",
+          "households": 1340,
+          "year": 2027,
+          "month": 1,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 1,
+            "units": 1340
+          }
+        },
+        {
+          "slug": "pyeongtaek-beureinsiti-5bl-daerojebiang-geuraendeu",
+          "name": "평택 브레인시티 5BL 대광로제비앙 그랜드센텀",
+          "households": 1182,
+          "year": 2027,
+          "month": 1,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 1,
+            "units": 1182
+          }
+        },
+        {
+          "slug": "jijeyeok-bandocheri-haeringteon-peulreiseu",
+          "name": "지제역 반도체밸리 해링턴 플레이스",
+          "households": 1209,
+          "year": 2027,
+          "month": 2,
+          "brand": "효성중공업",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 2,
+            "units": 1209
+          }
+        },
+        {
+          "slug": "pyeongtaek-beureinsiti-jungheungs-keulraeseu",
+          "name": "평택 브레인시티 중흥S-클래스",
+          "households": 1980,
+          "year": 2027,
+          "month": 2,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 2,
+            "units": 1980
+          }
+        },
+        {
+          "slug": "jinwiyeok-seoseutahilseu-deo-pakeubyu",
+          "name": "진위역 서희스타힐스 더 파크뷰",
+          "households": 1659,
+          "year": 2027,
+          "month": 2,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 2,
+            "units": 1659
+          }
+        },
+        {
+          "slug": "sinyeongji-pyeongtaekhwa",
+          "name": "신영지웰 평택화양",
+          "households": 999,
+          "year": 2027,
+          "month": 4,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 4,
+            "units": 999
+          }
+        },
+        {
+          "slug": "godeokgukjesindosi-seohanidaeum-geureiteun",
+          "name": "고덕국제신도시 서한이다음 그레이튼",
+          "households": 1138,
+          "year": 2027,
+          "month": 5,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 5,
+            "units": 1138
+          }
         }
       ]
     },
@@ -18223,6 +19213,36 @@
           "year": 2001,
           "brand": "기타",
           "phase": 6
+        },
+        {
+          "slug": "guriyeok-dekaeseul-sigeunicheo",
+          "name": "구리역 롯데캐슬 시그니처",
+          "households": 1180,
+          "year": 2026,
+          "month": 3,
+          "brand": "롯데건설",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 3,
+            "units": 1180
+          }
+        },
+        {
+          "slug": "inchangteurebilindeopore",
+          "name": "인창센트레빌인더포레",
+          "households": 244,
+          "year": 2027,
+          "month": 4,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 4,
+            "units": 244
+          }
         }
       ]
     },
@@ -19460,6 +20480,51 @@
           "year": 1999,
           "brand": "기타",
           "phase": 4
+        },
+        {
+          "slug": "maseokyeok-geukdongseutakeulraeseu-deo-peoseuteu",
+          "name": "마석역 극동스타클래스 더 퍼스트",
+          "households": 138,
+          "year": 2026,
+          "month": 1,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 1,
+            "units": 138
+          }
+        },
+        {
+          "slug": "dasanjigeuma3gonggongimdae",
+          "name": "다산지금A3(공공임대)",
+          "households": 518,
+          "year": 2026,
+          "month": 3,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 3,
+            "units": 518
+          }
+        },
+        {
+          "slug": "toegyewongyeongnamaneoseubilapateu",
+          "name": "퇴계원경남아너스빌아파트",
+          "households": 227,
+          "year": 2027,
+          "month": 5,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 5,
+            "units": 227
+          }
         }
       ]
     },
@@ -19985,6 +21050,81 @@
           "year": 2007,
           "brand": "기타",
           "phase": 6
+        },
+        {
+          "slug": "osansegyoparagona3",
+          "name": "오산세교파라곤(A3)",
+          "households": 1068,
+          "year": 2026,
+          "month": 4,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 4,
+            "units": 1068
+          }
+        },
+        {
+          "slug": "hoban",
+          "name": "호반써밋",
+          "households": 1030,
+          "year": 2026,
+          "month": 6,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 6,
+            "units": 1030
+          }
+        },
+        {
+          "slug": "osanyeok-geumgangterium-teureolpakeu",
+          "name": "오산역 금강펜테리움 센트럴파크",
+          "households": 730,
+          "year": 2026,
+          "month": 10,
+          "brand": "기타",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 10,
+            "units": 730
+          }
+        },
+        {
+          "slug": "osansegyo2a5umirin",
+          "name": "오산세교2A5(우미린)",
+          "households": 1050,
+          "year": 2026,
+          "month": 11,
+          "brand": "우미건설",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 11,
+            "units": 1050
+          }
+        },
+        {
+          "slug": "osansegyo-hildeseuhaima20beulrok",
+          "name": "오산세교 힐데스하임(A20블록)",
+          "households": 715,
+          "year": 2027,
+          "month": 2,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 2,
+            "units": 715
+          }
         }
       ]
     },
@@ -21022,6 +22162,51 @@
           "year": 2017,
           "brand": "기타",
           "phase": 5
+        },
+        {
+          "slug": "sihwamtv-pureujio-dio",
+          "name": "시화MTV 푸르지오 디오션",
+          "households": 400,
+          "year": 2026,
+          "month": 5,
+          "brand": "대우건설",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 5,
+            "units": 400
+          }
+        },
+        {
+          "slug": "siheung-eungye-epiteu",
+          "name": "시흥 은계 에피트",
+          "households": 218,
+          "year": 2026,
+          "month": 10,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 10,
+            "units": 218
+          }
+        },
+        {
+          "slug": "hilseuteiteu-deoweibeusiti",
+          "name": "힐스테이트 더웨이브시티",
+          "households": 851,
+          "year": 2027,
+          "month": 6,
+          "brand": "현대건설",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 6,
+            "units": 851
+          }
         }
       ]
     },
@@ -21760,6 +22945,51 @@
           "year": 2023,
           "brand": "기타",
           "phase": 6
+        },
+        {
+          "slug": "jeilpunggyeongchae-uigocheon",
+          "name": "제일풍경채 의왕고천 ",
+          "households": 900,
+          "year": 2026,
+          "month": 3,
+          "brand": "제일건설",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 3,
+            "units": 900
+          }
+        },
+        {
+          "slug": "indeokwon-peoseubiel",
+          "name": "인덕원 퍼스비엘",
+          "households": 2180,
+          "year": 2026,
+          "month": 6,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 6,
+            "units": 2180
+          }
+        },
+        {
+          "slug": "ui-teurain-desiang",
+          "name": "의왕 센트라인 데시앙",
+          "households": 733,
+          "year": 2026,
+          "month": 11,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 11,
+            "units": 733
+          }
         }
       ]
     },
@@ -25057,6 +26287,111 @@
           "year": 2000,
           "brand": "기타",
           "phase": 5
+        },
+        {
+          "slug": "andanteandantepajuunjeong3a23",
+          "name": "ANDANTE(안단테)(파주운정3A23)",
+          "households": 1012,
+          "year": 2026,
+          "month": 2,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 2,
+            "units": 1012
+          }
+        },
+        {
+          "slug": "unjeongjai-sigeunicheo",
+          "name": "운정자이 시그니처",
+          "households": 988,
+          "year": 2026,
+          "month": 3,
+          "brand": "GS건설",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 3,
+            "units": 988
+          }
+        },
+        {
+          "slug": "pajuunjeong3a22gonggongbun",
+          "name": "파주운정3A22(공공분양)",
+          "households": 642,
+          "year": 2026,
+          "month": 7,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 7,
+            "units": 642
+          }
+        },
+        {
+          "slug": "paju-unjeongsindosi-umi-rin-deo",
+          "name": "파주 운정신도시 우미 린 더 센텀",
+          "households": 418,
+          "year": 2026,
+          "month": 8,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 8,
+            "units": 418
+          }
+        },
+        {
+          "slug": "paju-unjeong3-ijideowona44bl",
+          "name": "파주 운정3 이지더원(A44BL)",
+          "households": 379,
+          "year": 2026,
+          "month": 9,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 9,
+            "units": 379
+          }
+        },
+        {
+          "slug": "unjeong3-jeilpunggyeongchaea46bl",
+          "name": "운정3 제일풍경채(A46BL)",
+          "households": 383,
+          "year": 2026,
+          "month": 10,
+          "brand": "제일건설",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 10,
+            "units": 383
+          }
+        },
+        {
+          "slug": "jeilpunggyeongchae-unjeong-a45bl",
+          "name": "제일풍경채 운정 A45BL",
+          "households": 520,
+          "year": 2027,
+          "month": 4,
+          "brand": "제일건설",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 4,
+            "units": 520
+          }
         }
       ]
     },
@@ -25246,6 +26581,156 @@
           "year": 2024,
           "brand": "기타",
           "phase": 6
+        },
+        {
+          "slug": "bilribeu-eobain-siti-1bl",
+          "name": "빌리브 어바인 시티 1BL",
+          "households": 264,
+          "year": 2026,
+          "month": 1,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 1,
+            "units": 264
+          }
+        },
+        {
+          "slug": "bilribeu-eobainsiti-2bl",
+          "name": "빌리브 어바인시티 2BL",
+          "households": 264,
+          "year": 2026,
+          "month": 1,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 1,
+            "units": 264
+          }
+        },
+        {
+          "slug": "umirin-teuriideu",
+          "name": "우미린 트리쉐이드",
+          "households": 849,
+          "year": 2026,
+          "month": 2,
+          "brand": "우미건설",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 2,
+            "units": 849
+          }
+        },
+        {
+          "slug": "umirin-eobanpeoseuteu",
+          "name": "우미린 어반퍼스트",
+          "households": 785,
+          "year": 2026,
+          "month": 6,
+          "brand": "우미건설",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 6,
+            "units": 785
+          }
+        },
+        {
+          "slug": "hilseuteiteu-icheonyeok-2danji",
+          "name": "힐스테이트 이천역 2단지",
+          "households": 885,
+          "year": 2026,
+          "month": 7,
+          "brand": "현대건설",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 7,
+            "units": 885
+          }
+        },
+        {
+          "slug": "hilseuteiteu-icheonyeok-1danji",
+          "name": "힐스테이트 이천역 1단지",
+          "households": 937,
+          "year": 2026,
+          "month": 7,
+          "brand": "현대건설",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 7,
+            "units": 937
+          }
+        },
+        {
+          "slug": "icheonjai-deo-riche",
+          "name": "이천자이 더 리체",
+          "households": 558,
+          "year": 2026,
+          "month": 7,
+          "brand": "GS건설",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 7,
+            "units": 558
+          }
+        },
+        {
+          "slug": "icheonjungritaekjigaebalb3yemiji",
+          "name": "이천중리택지개발B3(예미지)",
+          "households": 1009,
+          "year": 2026,
+          "month": 11,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 11,
+            "units": 1009
+          }
+        },
+        {
+          "slug": "icheon-jungrijigu-a-2-sinaninseubil-peoseutiji",
+          "name": "이천 중리지구 A-2 신안인스빌 퍼스티지",
+          "households": 523,
+          "year": 2026,
+          "month": 11,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 11,
+            "units": 523
+          }
+        },
+        {
+          "slug": "icheonjai-deo-rebeu",
+          "name": "이천자이 더 레브",
+          "households": 635,
+          "year": 2027,
+          "month": 4,
+          "brand": "GS건설",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 4,
+            "units": 635
+          }
         }
       ]
     },
@@ -25587,6 +27072,51 @@
           "year": 2018,
           "brand": "기타",
           "phase": 6
+        },
+        {
+          "slug": "haeringteon-peulreiseu-jinsa1bl",
+          "name": "해링턴 플레이스 진사(1BL)",
+          "households": 355,
+          "year": 2026,
+          "month": 3,
+          "brand": "효성중공업",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 3,
+            "units": 355
+          }
+        },
+        {
+          "slug": "haeringteon-peulreiseu-jinsa2bl",
+          "name": "해링턴 플레이스 진사(2BL)",
+          "households": 637,
+          "year": 2026,
+          "month": 3,
+          "brand": "효성중공업",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 3,
+            "units": 637
+          }
+        },
+        {
+          "slug": "anseongdangb-1-gyeongnamaneoseubil-haiseuteu",
+          "name": "안성당왕(B-1) 경남아너스빌 하이스트",
+          "households": 976,
+          "year": 2027,
+          "month": 3,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 3,
+            "units": 976
+          }
         }
       ]
     },
@@ -28741,6 +30271,81 @@
           "year": 2000,
           "brand": "기타",
           "phase": 4
+        },
+        {
+          "slug": "hwaseongtaean3jigu-b-3beulrok-gonggongbunjutaek",
+          "name": "화성태안3지구 B-3블록 공공분양주택",
+          "households": 688,
+          "year": 2026,
+          "month": 2,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 2,
+            "units": 688
+          }
+        },
+        {
+          "slug": "dongtansindosi-geumgangterium-6cha-teureolpakeu",
+          "name": "동탄신도시 금강펜테리움 6차 센트럴파크",
+          "households": 1103,
+          "year": 2026,
+          "month": 2,
+          "brand": "기타",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 2,
+            "units": 1103
+          }
+        },
+        {
+          "slug": "bongdam-jungheungs-keulraeseu-teureoledyu",
+          "name": "봉담 중흥S-클래스 센트럴에듀",
+          "households": 806,
+          "year": 2026,
+          "month": 5,
+          "brand": "기타",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 5,
+            "units": 806
+          }
+        },
+        {
+          "slug": "dongtansindosi-geumgangterium7cha-teureolpakeu",
+          "name": "동탄신도시 금강펜테리움7차 센트럴파크",
+          "households": 662,
+          "year": 2026,
+          "month": 7,
+          "brand": "기타",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 7,
+            "units": 662
+          }
+        },
+        {
+          "slug": "dongtan2sindosi-dongtanyeok-daebang-elrium-deo-sigeunicheoc18bl",
+          "name": "동탄2신도시 동탄역 대방 엘리움 더 시그니처(C18BL)",
+          "households": 464,
+          "year": 2027,
+          "month": 6,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 6,
+            "units": 464
+          }
         }
       ]
     },
@@ -29623,6 +31228,51 @@
           "year": 2022,
           "brand": "기타",
           "phase": 6
+        },
+        {
+          "slug": "hoecheonjungangyeok-daerojebiang",
+          "name": "회천중앙역 대광로제비앙 ",
+          "households": 621,
+          "year": 2026,
+          "month": 7,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 7,
+            "units": 621
+          }
+        },
+        {
+          "slug": "hoecheonjungangyeok-rojebiang-geuraendeu",
+          "name": "회천중앙역 로제비앙 그랜드센텀",
+          "households": 642,
+          "year": 2026,
+          "month": 11,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 11,
+            "units": 642
+          }
+        },
+        {
+          "slug": "ju-deokjeongyeok-hanrabibaldi-peoseutieo",
+          "name": "양주 덕정역 한라비발디 퍼스티어",
+          "households": 427,
+          "year": 2027,
+          "month": 6,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 6,
+            "units": 427
+          }
         }
       ]
     },
@@ -29849,6 +31499,21 @@
           "year": 1999,
           "brand": "기타",
           "phase": 6
+        },
+        {
+          "slug": "juyeokjai-heritiji",
+          "name": "여주역자이 헤리티지",
+          "households": 769,
+          "year": 2027,
+          "month": 6,
+          "brand": "GS건설",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 6,
+            "units": 769
+          }
         }
       ]
     },
@@ -29896,6 +31561,771 @@
           "year": 2023,
           "brand": "기타",
           "phase": 6
+        },
+        {
+          "slug": "pyeong-haneulchae-teurohilseu",
+          "name": "양평 하늘채 센트로힐스",
+          "households": 539,
+          "year": 2027,
+          "month": 3,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 3,
+            "units": 539
+          }
+        }
+      ]
+    },
+    "bucheon": {
+      "name": "부천시",
+      "apartments": [
+        {
+          "slug": "robilraoegarojutaekjeongbisaeop",
+          "name": "로얄빌라외가로주택정비사업",
+          "households": 72,
+          "year": 2026,
+          "month": 1,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 1,
+            "units": 72
+          }
+        },
+        {
+          "slug": "buchon3chaapateuoegarojutaekjeongbisaeop",
+          "name": "부촌3차아파트외가로주택정비사업",
+          "households": 231,
+          "year": 2026,
+          "month": 1,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 1,
+            "units": 231
+          }
+        },
+        {
+          "slug": "eunseongbilragarojutaekjeongbisaeop",
+          "name": "은성빌라가로주택정비사업",
+          "households": 82,
+          "year": 2026,
+          "month": 1,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 1,
+            "units": 82
+          }
+        },
+        {
+          "slug": "yeongdongjutaekgarojutaekjeongbisaeop",
+          "name": "영동주택가로주택정비사업",
+          "households": 164,
+          "year": 2026,
+          "month": 1,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 1,
+            "units": 164
+          }
+        },
+        {
+          "slug": "daeseongripgarojutaekjeongbisaeop",
+          "name": "대성연립가로주택정비사업",
+          "households": 62,
+          "year": 2026,
+          "month": 1,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 1,
+            "units": 62
+          }
+        },
+        {
+          "slug": "yeokgokyeok-ateum-seuwi",
+          "name": "역곡역 아테움 스위첸",
+          "households": 189,
+          "year": 2026,
+          "month": 2,
+          "brand": "대림산업",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 2,
+            "units": 189
+          }
+        },
+        {
+          "slug": "daejutaekoegarojutaekjeongbisaeop",
+          "name": "현대주택외가로주택정비사업",
+          "households": 99,
+          "year": 2026,
+          "month": 4,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 4,
+            "units": 99
+          }
+        },
+        {
+          "slug": "sanguapateuseongwonjutaeksujeongbilragarojutaeksaeop",
+          "name": "상우아파트성원주택수정빌라가로주택사업",
+          "households": 108,
+          "year": 2026,
+          "month": 6,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 6,
+            "units": 108
+          }
+        },
+        {
+          "slug": "samhadonghojinjugarojutaekjeongbisaeop",
+          "name": "삼하동호진주가로주택정비사업",
+          "households": 90,
+          "year": 2026,
+          "month": 7,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 7,
+            "units": 90
+          }
+        },
+        {
+          "slug": "gogangyeok-sinwonachimdosi-peoseutiji",
+          "name": "고강역 신원아침도시 퍼스티지",
+          "households": 237,
+          "year": 2026,
+          "month": 8,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 8,
+            "units": 237
+          }
+        },
+        {
+          "slug": "woldongnambokjigarojutaekjeongbisaeop",
+          "name": "여월동광남복지가로주택정비사업",
+          "households": 102,
+          "year": 2026,
+          "month": 9,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 9,
+            "units": 102
+          }
+        },
+        {
+          "slug": "ujinapateugarojutaekjeongbisaeop",
+          "name": "우진아파트가로주택정비사업",
+          "households": 48,
+          "year": 2026,
+          "month": 9,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 9,
+            "units": 48
+          }
+        },
+        {
+          "slug": "andong130beonjiilwongarojutaekjeongbisaeop",
+          "name": "범안동130번지일원가로주택정비사업",
+          "households": 59,
+          "year": 2026,
+          "month": 10,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 10,
+            "units": 59
+          }
+        },
+        {
+          "slug": "songnaeyeok-pureujio-teubi",
+          "name": "송내역 푸르지오 센트비엔",
+          "households": 1045,
+          "year": 2026,
+          "month": 10,
+          "brand": "대우건설",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 10,
+            "units": 1045
+          }
+        },
+        {
+          "slug": "bucheonaterajaibucheongoeanjigu-b-2",
+          "name": "부천아테라자이(부천괴안지구 B-2)",
+          "households": 200,
+          "year": 2027,
+          "month": 1,
+          "brand": "GS건설",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 1,
+            "units": 200
+          }
+        },
+        {
+          "slug": "seongsanjutaekgarojutaekjeongbisaeop",
+          "name": "성산주택가로주택정비사업",
+          "households": 33,
+          "year": 2027,
+          "month": 1,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 1,
+            "units": 33
+          }
+        },
+        {
+          "slug": "wonjong-hyumeonbil-keulracheu",
+          "name": "원종 휴먼빌 클라츠",
+          "households": 255,
+          "year": 2027,
+          "month": 5,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 5,
+            "units": 255
+          }
+        }
+      ]
+    },
+    "suwon": {
+      "name": "수원시",
+      "apartments": [
+        {
+          "slug": "omokcheonyeok-deoribeu",
+          "name": "오목천역 더리브",
+          "households": 201,
+          "year": 2026,
+          "month": 2,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 2,
+            "units": 201
+          }
+        },
+        {
+          "slug": "maegyoyeok-rusideu",
+          "name": "매교역 팰루시드",
+          "households": 2178,
+          "year": 2026,
+          "month": 8,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 8,
+            "units": 2178
+          }
+        },
+        {
+          "slug": "jeongjadong-jusangbokhap",
+          "name": "정자동 주상복합",
+          "households": 92,
+          "year": 2026,
+          "month": 9,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 9,
+            "units": 92
+          }
+        },
+        {
+          "slug": "seogyo-hanrabibaldi-reikeupore",
+          "name": "서광교 한라비발디 레이크포레",
+          "households": 285,
+          "year": 2027,
+          "month": 2,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 2,
+            "units": 285
+          }
+        },
+        {
+          "slug": "yeongtongjai-teureolpakeu",
+          "name": "영통자이 센트럴파크",
+          "households": 580,
+          "year": 2027,
+          "month": 3,
+          "brand": "GS건설",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 3,
+            "units": 580
+          }
+        },
+        {
+          "slug": "sinhonmangtaungonggongbunsuwondangsua5",
+          "name": "신혼희망타운(공공분양)(수원당수A5)",
+          "households": 484,
+          "year": 2027,
+          "month": 6,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 6,
+            "units": 484
+          }
+        },
+        {
+          "slug": "dongdo-teurium",
+          "name": "동도 센트리움",
+          "households": 134,
+          "year": 2027,
+          "month": 6,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 6,
+            "units": 134
+          }
+        }
+      ]
+    },
+    "goyang": {
+      "name": "고양시",
+      "apartments": [
+        {
+          "slug": "gojanghanga2sinhonmangtaun",
+          "name": "고양장항A2(신혼희망타운)",
+          "households": 371,
+          "year": 2026,
+          "month": 4,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 4,
+            "units": 371
+          }
+        },
+        {
+          "slug": "gojanghang-jeilpunggyeongchae",
+          "name": "고양장항 제일풍경채",
+          "households": 1184,
+          "year": 2026,
+          "month": 12,
+          "brand": "제일건설",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 12,
+            "units": 1184
+          }
+        },
+        {
+          "slug": "ehansesang-ilsan-meipore-1danji",
+          "name": "e편한세상 일산 메이포레 1단지",
+          "households": 321,
+          "year": 2027,
+          "month": 3,
+          "brand": "DL이앤씨",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 3,
+            "units": 321
+          }
+        },
+        {
+          "slug": "ehansesang-ilsan-meipore-3danji",
+          "name": "e편한세상 일산 메이포레 3단지",
+          "households": 457,
+          "year": 2027,
+          "month": 3,
+          "brand": "DL이앤씨",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 3,
+            "units": 457
+          }
+        },
+        {
+          "slug": "ehansesang-ilsan-meipore-2danji",
+          "name": "e편한세상 일산 메이포레 2단지",
+          "households": 564,
+          "year": 2027,
+          "month": 3,
+          "brand": "DL이앤씨",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 3,
+            "units": 564
+          }
+        },
+        {
+          "slug": "hyumeonbil-ilsan-keulraeseuwon",
+          "name": "휴먼빌 일산 클래스원",
+          "households": 529,
+          "year": 2027,
+          "month": 4,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 4,
+            "units": 529
+          }
+        },
+        {
+          "slug": "go-janghang-aterajanghangjigu-b-3",
+          "name": "고양 장항 아테라(장항지구 B-3)",
+          "households": 760,
+          "year": 2027,
+          "month": 5,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 5,
+            "units": 760
+          }
+        }
+      ]
+    },
+    "gwangju": {
+      "name": "광주시",
+      "apartments": [
+        {
+          "slug": "ju-deopakeu-biseuta-desiang",
+          "name": "광주 더파크 비스타 데시앙",
+          "households": 1690,
+          "year": 2026,
+          "month": 4,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 4,
+            "units": 1690
+          }
+        },
+        {
+          "slug": "ju-songjeong-jungheungs-keulraeseu-pakeubyu",
+          "name": "광주 송정 중흥S-클래스 파크뷰",
+          "households": 840,
+          "year": 2026,
+          "month": 6,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 6,
+            "units": 840
+          }
+        },
+        {
+          "slug": "gonjiamyeok-teureol-aipakeu",
+          "name": "곤지암역 센트럴 아이파크",
+          "households": 347,
+          "year": 2027,
+          "month": 5,
+          "brand": "HDC현대산업개발",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 5,
+            "units": 347
+          }
+        },
+        {
+          "slug": "hilseuteiteu-jugonjiamyeok",
+          "name": "힐스테이트 광주곤지암역",
+          "households": 635,
+          "year": 2027,
+          "month": 5,
+          "brand": "현대건설",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 5,
+            "units": 635
+          }
+        }
+      ]
+    },
+    "seongnam": {
+      "name": "성남시",
+      "apartments": [
+        {
+          "slug": "elripeu-seongnamsinchon",
+          "name": "엘리프 성남신촌",
+          "households": 320,
+          "year": 2026,
+          "month": 5,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 5,
+            "units": 320
+          }
+        },
+        {
+          "slug": "wiryejigu-a2-7beulrok-sinhonmangtaun",
+          "name": "위례지구 A2-7블록 신혼희망타운",
+          "households": 440,
+          "year": 2026,
+          "month": 12,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 12,
+            "units": 440
+          }
+        },
+        {
+          "slug": "pangyotekeunori-jungheungs-keulraeseu",
+          "name": "판교테크노밸리 중흥S-클래스",
+          "households": 317,
+          "year": 2027,
+          "month": 2,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 2,
+            "units": 317
+          }
+        },
+        {
+          "slug": "seongnamgeumtoa4sinhonmangtaunsajeoncheong",
+          "name": "성남금토A4신혼희망타운(사전청약)",
+          "households": 766,
+          "year": 2027,
+          "month": 3,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 3,
+            "units": 766
+          }
+        },
+        {
+          "slug": "elripeu-namwiryeyeok-edyupore",
+          "name": "엘리프 남위례역 에듀포레",
+          "households": 510,
+          "year": 2027,
+          "month": 6,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 6,
+            "units": 510
+          }
+        }
+      ]
+    },
+    "ansan": {
+      "name": "안산시",
+      "apartments": [
+        {
+          "slug": "hanhwaporena-ansangojan2cha",
+          "name": "한화포레나 안산고잔2차 ",
+          "households": 472,
+          "year": 2026,
+          "month": 9,
+          "brand": "한화건설",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 9,
+            "units": 472
+          }
+        }
+      ]
+    },
+    "anyang": {
+      "name": "안양시",
+      "apartments": [
+        {
+          "slug": "ehansesang-pyeongchon-eobanri",
+          "name": "e편한세상 평촌 어반밸리",
+          "households": 458,
+          "year": 2026,
+          "month": 10,
+          "brand": "DL이앤씨",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 10,
+            "units": 458
+          }
+        }
+      ]
+    },
+    "yongin": {
+      "name": "용인시",
+      "apartments": [
+        {
+          "slug": "in-ebeoraendeuyeok-kantabil",
+          "name": "용인 에버랜드역 칸타빌",
+          "households": 348,
+          "year": 2026,
+          "month": 11,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 11,
+            "units": 348
+          }
+        },
+        {
+          "slug": "yeongtongyeokjai-peurasiel",
+          "name": "영통역자이 프라시엘",
+          "households": 472,
+          "year": 2026,
+          "month": 12,
+          "brand": "GS건설",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 12,
+            "units": 472
+          }
+        },
+        {
+          "slug": "dusanwibeudeojeniseu-teureol-in",
+          "name": "두산위브더제니스 센트럴 용인",
+          "households": 568,
+          "year": 2027,
+          "month": 3,
+          "brand": "기타",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 3,
+            "units": 568
+          }
+        },
+        {
+          "slug": "yeokbuk-seoseutahilseu-peuraimsiti",
+          "name": "역북 서희스타힐스 프라임시티",
+          "households": 912,
+          "year": 2027,
+          "month": 3,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 3,
+            "units": 912
+          }
+        }
+      ]
+    },
+    "gwacheon": {
+      "name": "과천시",
+      "apartments": [
+        {
+          "slug": "gwacheon-dieteureu-peoseutijis2bl",
+          "name": "과천 디에트르 퍼스티지(S2BL)",
+          "households": 740,
+          "year": 2027,
+          "month": 5,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 5,
+            "units": 740
+          }
         }
       ]
     }
@@ -30657,6 +33087,36 @@
           "year": 2022,
           "brand": "한화건설",
           "phase": 6
+        },
+        {
+          "slug": "ubang-aiyu-teureolmarin",
+          "name": "용현 우방 아이유쉘 센트럴마린",
+          "households": 252,
+          "year": 2026,
+          "month": 12,
+          "brand": "기타",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 12,
+            "units": 252
+          }
+        },
+        {
+          "slug": "dowonyeokehansesangpeoseuteuhaim",
+          "name": "도원역e편한세상퍼스트하임",
+          "households": 1705,
+          "year": 2027,
+          "month": 3,
+          "brand": "DL이앤씨",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 3,
+            "units": 1705
+          }
         }
       ]
     },
@@ -31486,6 +33946,36 @@
           "year": 2019,
           "brand": "현대건설",
           "phase": 6
+        },
+        {
+          "slug": "songdojaipunggyeongchae-geuranobeul-1danji",
+          "name": "송도자이풍경채 그라노블 1단지",
+          "households": 469,
+          "year": 2027,
+          "month": 6,
+          "brand": "GS건설",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 6,
+            "units": 469
+          }
+        },
+        {
+          "slug": "songdojaipunggyeongchae-geuranobeul-2danji",
+          "name": "송도자이풍경채 그라노블 2단지",
+          "households": 548,
+          "year": 2027,
+          "month": 6,
+          "brand": "GS건설",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 6,
+            "units": 548
+          }
         }
       ]
     },
@@ -33261,6 +35751,36 @@
           "year": 1997,
           "brand": "기타",
           "phase": 6
+        },
+        {
+          "slug": "incheongyejigu-a3beulrok-sinhonmangtaun",
+          "name": "인천계양지구 A3블록 신혼희망타운",
+          "households": 359,
+          "year": 2026,
+          "month": 12,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 12,
+            "units": 359
+          }
+        },
+        {
+          "slug": "andanteincheongye-a2-gonggongbun",
+          "name": "ANDANTE(인천계양 A2 공공분양)",
+          "households": 747,
+          "year": 2026,
+          "month": 12,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 12,
+            "units": 747
+          }
         }
       ]
     },
@@ -34263,6 +36783,301 @@
           "year": 2001,
           "brand": "기타",
           "phase": 6
+        }
+      ]
+    },
+    "seogu": {
+      "name": "서구",
+      "apartments": [
+        {
+          "slug": "incheon-dansindosi-ab19beulrok-hoban",
+          "name": "인천 검단신도시 AB19블록 호반써밋",
+          "households": 856,
+          "year": 2026,
+          "month": 3,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 3,
+            "units": 856
+          }
+        },
+        {
+          "slug": "dansindosi-dekaeseul-seutiel",
+          "name": "검단신도시 롯데캐슬 넥스티엘",
+          "households": 372,
+          "year": 2026,
+          "month": 4,
+          "brand": "롯데건설",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 4,
+            "units": 372
+          }
+        },
+        {
+          "slug": "sinhonmangtaungonggongbun",
+          "name": "신혼희망타운(공공분양)",
+          "households": 534,
+          "year": 2026,
+          "month": 5,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 5,
+            "units": 534
+          }
+        },
+        {
+          "slug": "incheondansindosi-dieteureu-deo-edyuaa20bl",
+          "name": "인천검단신도시 디에트르 더 에듀(AA20BL)",
+          "households": 781,
+          "year": 2026,
+          "month": 5,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 5,
+            "units": 781
+          }
+        },
+        {
+          "slug": "kantabil-deo-seuwiteu",
+          "name": "칸타빌 더 스위트",
+          "households": 625,
+          "year": 2026,
+          "month": 6,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 6,
+            "units": 625
+          }
+        },
+        {
+          "slug": "ehansesang-dan-ekobiseuta",
+          "name": "e편한세상 검단 에코비스타",
+          "households": 732,
+          "year": 2026,
+          "month": 7,
+          "brand": "DL이앤씨",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 7,
+            "units": 732
+          }
+        },
+        {
+          "slug": "ehansesang-dan-kauntigonggongbun",
+          "name": "e편한세상 검단 웰카운티(공공분양)",
+          "households": 1458,
+          "year": 2026,
+          "month": 7,
+          "brand": "DL이앤씨",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 7,
+            "units": 1458
+          }
+        },
+        {
+          "slug": "incheondanaa21gonggongbun",
+          "name": "인천검단AA21(공공분양)",
+          "households": 1224,
+          "year": 2026,
+          "month": 8,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 8,
+            "units": 1224
+          }
+        },
+        {
+          "slug": "jeilpunggyeongchae-dan",
+          "name": "제일풍경채 검단 Ⅲ ",
+          "households": 610,
+          "year": 2026,
+          "month": 10,
+          "brand": "제일건설",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 10,
+            "units": 610
+          }
+        },
+        {
+          "slug": "incheon-gongwon-hoban-pakeuedi",
+          "name": "인천 연희공원 호반써밋 파크에디션",
+          "households": 1370,
+          "year": 2026,
+          "month": 12,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 12,
+            "units": 1370
+          }
+        },
+        {
+          "slug": "incheondanab13hobansajeoncheong",
+          "name": "인천검단AB13호반써밋Ⅲ(사전청약)",
+          "households": 905,
+          "year": 2026,
+          "month": 12,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 12,
+            "units": 905
+          }
+        },
+        {
+          "slug": "danaterajaiaab21-1beulrok",
+          "name": "검단아테라자이(AAB21-1블록)",
+          "households": 709,
+          "year": 2027,
+          "month": 2,
+          "brand": "GS건설",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 2,
+            "units": 709
+          }
+        },
+        {
+          "slug": "jeilpunggyeongchae-dan-upcoming",
+          "name": "제일풍경채 검단Ⅳ",
+          "households": 1048,
+          "year": 2027,
+          "month": 2,
+          "brand": "제일건설",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 2,
+            "units": 1048
+          }
+        },
+        {
+          "slug": "dan-seutahilseu-ga",
+          "name": "검단 스타힐스 가현숲",
+          "households": 709,
+          "year": 2027,
+          "month": 4,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 4,
+            "units": 709
+          }
+        },
+        {
+          "slug": "jungheungs-keulraeseu-edyupakeu",
+          "name": "중흥S-클래스 에듀파크",
+          "households": 1448,
+          "year": 2027,
+          "month": 6,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 6,
+            "units": 1448
+          }
+        }
+      ]
+    },
+    "junggu": {
+      "name": "중구",
+      "apartments": [
+        {
+          "slug": "yeongjong-opakeu-moaelga-geurangde",
+          "name": "영종 오션파크 모아엘가 그랑데",
+          "households": 560,
+          "year": 2026,
+          "month": 4,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 4,
+            "units": 560
+          }
+        },
+        {
+          "slug": "unseoyeok-daerasu-eoedyu",
+          "name": "운서역 대라수 어썸에듀",
+          "households": 311,
+          "year": 2026,
+          "month": 8,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2026,
+            "month": 8,
+            "units": 311
+          }
+        },
+        {
+          "slug": "incheonyeongjonggukjedosirc4-12",
+          "name": "인천영종국제도시RC4-1,2",
+          "households": 1021,
+          "year": 2027,
+          "month": 2,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 2,
+            "units": 1021
+          }
+        },
+        {
+          "slug": "yeongjong-jinarehi",
+          "name": "영종 진아레히",
+          "households": 547,
+          "year": 2027,
+          "month": 5,
+          "brand": "미확인",
+          "phase": 7,
+          "isUpcoming": true,
+          "recentMoveIn": {
+            "year": 2027,
+            "month": 5,
+            "units": 547
+          }
         }
       ]
     }

@@ -172,11 +172,43 @@ function getJsonLd(apt, districtName, regionSlug, districtSlug) {
   ], null, 2)
 }
 
+// Sitemap 포함 여부 결정 함수
+function shouldIncludeInSitemap(apt) {
+  if (!apt.isUpcoming) {
+    // 기존 아파트: phase 기준 유지
+    return apt.phase <= settings.currentPhase
+  } else {
+    // 입주예정 아파트: 입주 3개월 전부터 자동 노출
+    if (!apt.recentMoveIn) return false
+    const moveInDate = new Date(apt.recentMoveIn.year, apt.recentMoveIn.month - 1)
+    const threeMonthsBefore = new Date(moveInDate)
+    threeMonthsBefore.setMonth(threeMonthsBefore.getMonth() - 3)
+    return new Date() >= threeMonthsBefore
+  }
+}
+
+// 입주예정 배지 HTML 생성
+function getUpcomingBadgeHtml(apt) {
+  if (!apt.isUpcoming || !apt.recentMoveIn) return ''
+  return `<div class="apt-upcoming-badge">🏗️ ${apt.recentMoveIn.year}년 ${apt.recentMoveIn.month}월 입주 예정 · 지금 예약하면 입주 당일 시공 가능</div>`
+}
+
+// CTA 문구 생성
+function getCtaText(apt) {
+  if (apt.isUpcoming) {
+    return '입주 전 줄눈시공 예약하기'
+  }
+  return '무료 견적 신청'
+}
+
 // 메인 생성 로직
 console.log(`\n아파트 페이지 생성 시작...`)
 console.log(`현재 Phase: ${settings.currentPhase}`)
+console.log(`현재 날짜: ${new Date().toISOString().split('T')[0]}`)
 
 let generatedCount = 0
+let upcomingCount = 0
+let upcomingInSitemapCount = 0
 const sitemapUrls = []
 
 for (const [regionSlug, districts] of Object.entries(apartmentsData)) {
@@ -190,6 +222,9 @@ for (const [regionSlug, districts] of Object.entries(apartmentsData)) {
       const description = getMetaDescription(apt, districtName)
       const canonicalUrl = `${BASE_URL}/${regionSlug}/${districtSlug}/${apt.slug}`
 
+      // 입주예정 카운트
+      if (apt.isUpcoming) upcomingCount++
+
       // 인근 아파트 크로스링킹 (같은 district, 자기 자신 제외, 최대 5개)
       const nearbyApts = districtData.apartments
         .filter(a => a.slug !== apt.slug)
@@ -202,6 +237,10 @@ for (const [regionSlug, districts] of Object.entries(apartmentsData)) {
 
       const brandMsg = (brandMessages[apt.brand] || defaultBrandMessage)(apt.name)
       const typeMsg = typeMessages[aptType](apt.name, apt.year)
+
+      // 입주예정 관련 치환
+      const upcomingBadgeHtml = getUpcomingBadgeHtml(apt)
+      const ctaText = getCtaText(apt)
 
       let html = template
         .replace(/\{\{TITLE\}\}/g, title)
@@ -222,6 +261,8 @@ for (const [regionSlug, districts] of Object.entries(apartmentsData)) {
         .replace(/\{\{BRAND_MESSAGE\}\}/g, brandMsg)
         .replace(/\{\{NEARBY_APTS_HTML\}\}/g, nearbyHtml)
         .replace(/\{\{JSON_LD\}\}/g, getJsonLd(apt, districtName, regionSlug, districtSlug))
+        .replace(/\{\{UPCOMING_BADGE\}\}/g, upcomingBadgeHtml)
+        .replace(/\{\{CTA_TEXT\}\}/g, ctaText)
 
       // dist 폴더에 저장: dist/{region}/{district}/{apt-slug}/index.html
       const outputDir = path.join(distPath, regionSlug, districtSlug, apt.slug)
@@ -230,12 +271,13 @@ for (const [regionSlug, districts] of Object.entries(apartmentsData)) {
 
       generatedCount++
 
-      // Phase 이하 아파트만 sitemap 포함
-      if (apt.phase <= settings.currentPhase) {
+      // Sitemap 포함 여부 결정 (기존 + 입주예정 통합)
+      if (shouldIncludeInSitemap(apt)) {
         sitemapUrls.push({
           url: canonicalUrl,
-          priority: apt.phase === 1 ? '0.7' : '0.6'
+          priority: apt.isUpcoming ? '0.8' : (apt.phase === 1 ? '0.7' : '0.6')
         })
+        if (apt.isUpcoming) upcomingInSitemapCount++
       }
 
       // 진행 상황 표시 (100개마다)
@@ -273,10 +315,16 @@ if (fs.existsSync(existingSitemapPath)) {
 }
 
 // 결과 요약
+const existingInSitemap = sitemapUrls.length - upcomingInSitemapCount
 console.log(`\n========================================`)
 console.log(`📊 생성 결과 요약`)
 console.log(`========================================`)
 console.log(`총 아파트 페이지: ${generatedCount}개`)
-console.log(`Sitemap 포함: ${sitemapUrls.length}개 (Phase ${settings.currentPhase} 이하)`)
-console.log(`Sitemap 미포함: ${generatedCount - sitemapUrls.length}개 (Phase ${settings.currentPhase + 1} 이상)`)
+console.log(`  - 기존 아파트: ${generatedCount - upcomingCount}개`)
+console.log(`  - 입주예정 아파트: ${upcomingCount}개`)
+console.log(`----------------------------------------`)
+console.log(`Sitemap 포함: ${sitemapUrls.length}개`)
+console.log(`  - 기존 (Phase ${settings.currentPhase} 이하): ${existingInSitemap}개`)
+console.log(`  - 입주예정 (3개월 이내): ${upcomingInSitemapCount}개`)
+console.log(`Sitemap 미포함: ${generatedCount - sitemapUrls.length}개`)
 console.log(`========================================\n`)

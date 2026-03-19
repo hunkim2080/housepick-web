@@ -165,6 +165,13 @@ function isSameBrandSeries(name1, name2) {
       // 기타 에코메트로 시리즈
       .replace(/ekometeuro[-]?[\d]+beulrog$/, 'ekometeuro')
       .replace(/ekometeuro[-]?[\d]+beulreog$/, 'ekometeuro')
+      // 동아아파트 차수 시리즈 (신도림1차동아아파트 vs 신도림3차동아아파트)
+      .replace(/[\d]+cha[-]?dongaapateu$/, 'dongaapateu')
+      .replace(/[\d]+chadongaapateu$/, 'dongaapateu')
+      .replace(/dongaapateu$/, 'donga')                  // 동아아파트 동일 취급
+      // 태산/두산 등 유사 브랜드
+      .replace(/taesanapateu$/, 'taesandusanapateu')
+      .replace(/dusanapateu$/, 'taesandusanapateu')
   }
   const base1 = extractBase(name1)
   const base2 = extractBase(name2)

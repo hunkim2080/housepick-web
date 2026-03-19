@@ -50,7 +50,7 @@ const regionSlugToPageSlug = {
   incheon: 'incheon' // 인천은 인천으로 대표
 }
 
-// aptType 계산 (준공년도 기준)
+// aptType 계산 (준공년도 기준) - SEO title용
 function getAptType(year) {
   const currentYear = new Date().getFullYear()
   const age = currentYear - year
@@ -59,25 +59,112 @@ function getAptType(year) {
   return 'old'                      // 21년 이상 = 구축
 }
 
-// aptType별 본문 문구 (중복 콘텐츠 방지 핵심)
-const typeMessages = {
-  new: (name, year) => `${name}은 ${year}년 준공된 신축 아파트입니다. 입주 전 줄눈시공이 필수인 이유 — 새 아파트일수록 빠른 케라폭시 코팅으로 오염을 원천 차단할 수 있습니다. 처음부터 깔끔하게 관리하면 10년 후에도 새것 같은 욕실을 유지할 수 있습니다.`,
-  mid: (name, year) => `${name}은 ${year}년 준공되어 지금이 줄눈 재시공 적기입니다. 10~15년 된 아파트의 욕실 줄눈은 눈에 보이지 않는 곰팡이 포자가 이미 깊숙이 침투해 있을 가능성이 높습니다. 케라폭시 줄눈시공으로 위생적인 욕실 환경을 되찾으세요.`,
-  old: (name, year) => `${name}은 ${year}년 준공된 아파트로, 오래된 실리콘 줄눈에 쌓인 묵은 곰팡이와 변색을 케라폭시로 완전히 제거할 수 있습니다. 리모델링 없이도 깔끔한 욕실로 탈바꿈합니다.`
+// ========================================
+// 콘텐츠 고유성 강화: 5가지 동적 계산 필드
+// ========================================
+
+// 1. 난방방식 계산
+function getHeating(year) {
+  if (year < 2000) return '중앙난방'
+  if (year < 2010) return '개별난방(구형)'
+  return '개별난방(신형)'
 }
 
-// 시공사별 본문 문구
-const brandMessages = {
-  '삼성물산': (name) => `${name}은 래미안 브랜드 특유의 고밀도 타일이 적용되어 있습니다. 하우스픽은 래미안 아파트에 최적화된 케라폭시 시공 노하우로 완벽한 마감을 제공합니다.`,
-  '현대건설': (name) => `${name}은 힐스테이트 브랜드의 프리미엄 욕실 인테리어가 특징입니다. 고급스러운 타일 줄눈을 케라폭시로 더욱 돋보이게 시공합니다.`,
-  'GS건설': (name) => `${name}은 자이 브랜드의 세련된 욕실 디자인이 적용되어 있습니다. 케라폭시 줄눈시공으로 자이 욕실의 청결함을 오래 유지하세요.`,
-  '대우건설': (name) => `${name}은 푸르지오 브랜드의 실용적인 욕실 설계가 특징입니다. 케라폭시 줄눈으로 푸르지오 특유의 깔끔함을 더욱 살려드립니다.`,
-  'DL이앤씨': (name) => `${name}은 e편한세상 브랜드의 편안한 생활 공간이 특징입니다. 케라폭시 줄눈시공으로 e편한세상의 쾌적함을 완성하세요.`,
-  '포스코건설': (name) => `${name}은 더샵 브랜드의 고품격 마감재가 적용되어 있습니다. 케라폭시로 더샵 욕실의 프리미엄 느낌을 유지하세요.`,
-  '롯데건설': (name) => `${name}은 롯데캐슬 브랜드의 럭셔리한 인테리어가 특징입니다. 케라폭시 줄눈으로 롯데캐슬의 고급스러움을 완성합니다.`,
-  'HDC현대산업개발': (name) => `${name}은 아이파크 브랜드의 현대적인 디자인이 적용되어 있습니다. 케라폭시 줄눈시공으로 아이파크 욕실을 더욱 깔끔하게 관리하세요.`
+// 2. 타일종류 계산 (브랜드 기반)
+function getTileType(brand) {
+  const tileMap = {
+    '삼성물산': '포세린',      // 래미안
+    '현대건설': '세라믹',      // 힐스테이트
+    'GS건설': '포세린',        // 자이
+    '대우건설': '세라믹',      // 푸르지오
+    'DL이앤씨': '강화세라믹',  // e편한세상
+    '포스코건설': '포세린',    // 더샵
+    '롯데건설': '세라믹',      // 롯데캐슬
+    'HDC현대산업개발': '포세린' // 아이파크
+  }
+  return tileMap[brand] || '세라믹'
 }
-const defaultBrandMessage = (name) => `${name} 아파트의 욕실 타일 줄눈을 이탈리아 정품 케라폭시로 전문 시공합니다. 곰팡이 걱정 없는 청결한 욕실 환경을 만들어 드립니다.`
+
+// 3. 단지규모 계산
+function getComplexType(households) {
+  if (households >= 2000) return '대단지'
+  if (households >= 500) return '중형단지'
+  return '소형단지'
+}
+
+// 4. 경과 개월수 계산
+function getAgeMonths(year, month = 6) {
+  const now = new Date()
+  const completionDate = new Date(year, month - 1) // month는 1-based
+  const diffMs = now - completionDate
+  const diffMonths = Math.floor(diffMs / (1000 * 60 * 60 * 24 * 30.44))
+  return Math.max(0, diffMonths)
+}
+
+// 5. 경과 기간 텍스트 계산
+function getAgePeriod(ageMonths) {
+  if (ageMonths <= 36) {
+    return `${ageMonths}개월`
+  }
+  if (ageMonths <= 84) {
+    const years = Math.floor(ageMonths / 12)
+    const months = ageMonths % 12
+    return months > 0 ? `${years}년 ${months}개월` : `${years}년`
+  }
+  const years = Math.floor(ageMonths / 12)
+  return `${years}년`
+}
+
+// 핵심 분석 문구 생성 (아파트마다 전부 다르게)
+function generateAnalysis(apt) {
+  const heating = getHeating(apt.year)
+  const tileType = getTileType(apt.brand)
+  const complexType = getComplexType(apt.households)
+  const ageMonths = getAgeMonths(apt.year, apt.month)
+  const agePeriod = getAgePeriod(ageMonths)
+
+  // 난방방식별 특성
+  const heatingNote = {
+    '중앙난방': '중앙난방 방식으로 계절별 온도 편차가 커 줄눈 수축·팽창이 반복됩니다',
+    '개별난방(구형)': '개별난방이지만 구형 보일러 특성상 욕실 바닥 온도가 불균일한 편입니다',
+    '개별난방(신형)': '개별난방 방식으로 욕실 온도 조절이 자유롭지만 줄눈 주변 습기 관리가 중요합니다'
+  }[heating]
+
+  // 타일종류별 특성
+  const tileNote = {
+    '포세린': '포세린 타일은 줄눈 폭이 좁아 오염 침투 속도가 일반 타일 대비 1.5배 빠릅니다',
+    '세라믹': '세라믹 타일은 흡수율이 높아 줄눈에 수분이 스며들면 곰팡이 번식 속도가 빠릅니다',
+    '강화세라믹': '강화세라믹 타일은 표면이 단단하지만 줄눈 경계면이 취약해 정기 관리가 필요합니다'
+  }[tileType]
+
+  // 경과기간별 진단
+  const ageNote = (() => {
+    if (ageMonths <= 36) {
+      return `준공 ${agePeriod} 시점으로, 입주 초기 줄눈 코팅으로 오염을 원천 차단할 적기입니다`
+    }
+    if (ageMonths <= 84) {
+      return `${agePeriod} 경과 시점으로, 줄눈 변색이 시작되는 평균 구간(5~7년)에 해당해 재시공 적기입니다`
+    }
+    return `${agePeriod} 경과로, 줄눈 내부 곰팡이 포자가 깊숙이 침투했을 가능성이 높아 전면 재시공을 권장합니다`
+  })()
+
+  return `${apt.name}(준공 ${agePeriod}, ${apt.households.toLocaleString()}세대 ${complexType})은 ${heatingNote}. ${tileNote}. ${ageNote}.`
+}
+
+// 세대수 기반 단지 특성 문구 생성
+function getComplexNote(apt) {
+  const complexType = getComplexType(apt.households)
+
+  if (complexType === '대단지') {
+    return `${apt.households.toLocaleString()}세대 대단지 특성상 동별 배관 노후화 속도가 다를 수 있어, 입주 연차가 같아도 동마다 줄눈 상태가 다릅니다. 세대별 맞춤 진단을 권장합니다.`
+  }
+  if (complexType === '중형단지') {
+    return `${apt.households.toLocaleString()}세대 규모로 관리비 효율이 높은 단지입니다. 공용부 청결도가 높은 단지일수록 세대 내 욕실 관리 의식도 높아, 이웃 세대와 함께 줄눈시공 시 할인 혜택이 가능합니다.`
+  }
+  return `${apt.households.toLocaleString()}세대 소형 단지로, 관리사무소 통한 일괄 예약보다 개별 문의가 빠릅니다. 소규모 단지는 시공 일정 조율이 유연해 원하는 날짜에 시공받기 수월합니다.`
+}
+
+// [DEPRECATED] 기존 메시지 시스템은 generateAnalysis()와 getComplexNote()로 대체됨
 
 // title 패턴 (aptType별 차별화)
 function getTitle(apt) {
@@ -235,8 +322,9 @@ for (const [regionSlug, districts] of Object.entries(apartmentsData)) {
           ).join('\n')
         : `            <a href="/${regionSlugToPageSlug[regionSlug]}">${regionName} 전체 지역 보기</a>`
 
-      const brandMsg = (brandMessages[apt.brand] || defaultBrandMessage)(apt.name)
-      const typeMsg = typeMessages[aptType](apt.name, apt.year)
+      // 콘텐츠 고유성 강화: 동적 계산 기반 문구 생성
+      const analysisMsg = generateAnalysis(apt)
+      const complexNote = getComplexNote(apt)
 
       // 입주예정 관련 치환
       const upcomingBadgeHtml = getUpcomingBadgeHtml(apt)
@@ -257,8 +345,8 @@ for (const [regionSlug, districts] of Object.entries(apartmentsData)) {
         .replace(/\{\{APT_YEAR\}\}/g, apt.year)
         .replace(/\{\{APT_HOUSEHOLDS\}\}/g, apt.households.toLocaleString())
         .replace(/\{\{APT_BRAND\}\}/g, apt.brand || '기타')
-        .replace(/\{\{TYPE_MESSAGE\}\}/g, typeMsg)
-        .replace(/\{\{BRAND_MESSAGE\}\}/g, brandMsg)
+        .replace(/\{\{ANALYSIS_MESSAGE\}\}/g, analysisMsg)
+        .replace(/\{\{COMPLEX_NOTE\}\}/g, complexNote)
         .replace(/\{\{NEARBY_APTS_HTML\}\}/g, nearbyHtml)
         .replace(/\{\{JSON_LD\}\}/g, getJsonLd(apt, districtName, regionSlug, districtSlug))
         .replace(/\{\{UPCOMING_BADGE\}\}/g, upcomingBadgeHtml)

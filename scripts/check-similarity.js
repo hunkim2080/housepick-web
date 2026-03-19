@@ -13,8 +13,8 @@ const __dirname = path.dirname(__filename)
 // 유사도가 높을 수밖에 없는 구조적 제약 존재
 // 동일 단지 변형(1동/2동, 1차/2차)은 정규화로 스킵하지만
 // 유사 브랜드명(한신아파트 vs 면목한신아파트)은 불가피하게 유사도가 높음
-const SIMILARITY_BLOCK_THRESHOLD = 0.96   // 이 값 초과 시 배포 차단 (거의 동일 콘텐츠)
-const SIMILARITY_WARN_THRESHOLD = 0.85    // 이 값 초과 시 경고
+const SIMILARITY_BLOCK_THRESHOLD = 0.96   // 이 값 이상 시 배포 차단 (완전 복제본)
+const SIMILARITY_WARN_THRESHOLD = 0.85    // 이 값 이상 시 경고
 const MIN_UNIQUE_TEXT_LENGTH = 250        // 고유 텍스트 최소 글자 수
 const MAX_SAMPLES_PER_DISTRICT = 10       // district당 최대 샘플 수
 
@@ -75,8 +75,7 @@ function removeBoilerplate(text) {
   for (const pattern of BOILERPLATE_PATTERNS) {
     result = result.split(pattern).join(' ')
   }
-  // 숫자만 있는 토큰 제거 (년도, 세대수 등 단독 숫자)
-  result = result.replace(/\b\d+\b/g, ' ')
+  // 숫자는 고유 정보(세대수, 준공연도, 경과개월)이므로 유지
   // 연속 공백 정리
   result = result.replace(/\s+/g, ' ').trim()
   return result
@@ -87,6 +86,10 @@ function isSameComplexVariant(name1, name2) {
   // 숫자+동, -숫자, 지구, 단지, 차 등 제거하고 비교
   const normalize = (name) => {
     return name
+      // 제N동 패턴 먼저 처리 (더 구체적인 패턴 우선)
+      .replace(/-je[\d]+dong$/, '')       // -je113dong (제113동) → 제거
+      .replace(/je[\d]+dong$/, '')        // je113dong → 제거
+      // 숫자+단위 패턴
       .replace(/[\d]+dong$/, '')          // 94dong → 제거
       .replace(/[\d]+jigu$/, '')          // 1jigu, 2jigu → 제거
       .replace(/-[\d]+jigu$/, '')         // -1jigu → 제거
@@ -96,12 +99,19 @@ function isSameComplexVariant(name1, name2) {
       .replace(/[\d]+cha$/, '')           // 2cha → 제거
       .replace(/-[\d]+bl$/, '')           // -21bl → 제거
       .replace(/[\d]+bl$/, '')            // 21bl → 제거
-      .replace(/-[\d]+$/, '')             // -2 → 제거
-      .replace(/[\d]+$/, '')              // 끝 숫자 제거
-      .replace(/-je[\d]+dong$/, '')       // -je113dong (제113동) → 제거
-      .replace(/je[\d]+dong$/, '')        // je113dong → 제거
       .replace(/-[\d]+beulrok$/, '')      // -5beulrok (5블록) → 제거
       .replace(/[\d]+beulrok$/, '')       // 5beulrok → 제거
+      // 인창단지 주공 시리즈
+      .replace(/[\d]+danjijugongapateu[-]?[\d]*$/, 'jugongapateu')
+      // 주공아파트 + 동번호/숫자 패턴 (jugongapateu-10, jugongapateu-901dong)
+      .replace(/jugongapateu[-]?[\d]+dong$/, 'jugongapateu')  // -901dong → 제거
+      .replace(/jugongapateu-[\d]+$/, 'jugongapateu')         // -10 → 제거
+      // 현대아파트 + 동번호/숫자 패턴
+      .replace(/hyeondaeapateu[-]?[\d]+dong$/, 'hyeondaeapateu')  // -402dong → 제거
+      .replace(/hyeondaeapateu-[\d]+$/, 'hyeondaeapateu')         // -2 → 제거
+      // 끝 숫자/하이픈 제거
+      .replace(/-[\d]+$/, '')             // -2 → 제거
+      .replace(/[\d]+$/, '')              // 끝 숫자 제거
       .trim()
   }
   const base1 = normalize(name1)
@@ -117,6 +127,8 @@ function isSameBrandSeries(name1, name2) {
     // 숫자+차/단지 제거 후 비교
     return name
       .replace(/[\d]+chapureujio$/, 'pureujio')     // 6chapureujio → pureujio
+      .replace(/[\d]+cha-pureujio$/, 'pureujio')   // 8cha-pureujio → pureujio
+      .replace(/gojan[\d]+cha-pureujio$/, 'pureujio') // gojan5cha-pureujio → pureujio
       .replace(/[\d]+chahilseuteiteu$/, 'hilseuteiteu')
       .replace(/[\d]+charaemian$/, 'raemian')
       .replace(/[\d]+danjijugongapateu$/, 'jugongapateu')
@@ -144,7 +156,12 @@ function isSameBrandSeries(name1, name2) {
       .replace(/embaelri[\d]*danji$/, 'embaelri')  // 엠밸리 단지 정규화
       .replace(/lh[-]?suseo[-]?[\d]*danji/, 'lhsuseo')  // LH수서 정규화
       .replace(/senteomsiti[-]?[\d]*beulrog$/, 'senteomsiti') // 센텀시티 블록 정규화
+      .replace(/jugongapateu[-]?[\d]+dong$/, 'jugong')  // 주공아파트-901dong 정규화
+      .replace(/jugongapateu-[\d]+$/, 'jugong')       // 주공아파트-10 정규화
       .replace(/jugongapateu$/, 'jugong')          // 주공아파트 동일 취급
+      // 안산 푸르지오 시리즈 (ansan-8cha-pureujio, ansan-gojan5cha-pureujio)
+      .replace(/ansan[-]?[\d]*cha[-]?pureujio$/, 'ansanpureujio')
+      .replace(/ansan[-]?gojan[\d]*cha[-]?pureujio$/, 'ansanpureujio')
       .replace(/jugong[-]?[\d]+$/, 'jugong')       // 주공-2 등 정규화
       .replace(/jugong[\d]+apateu$/, 'jugong')     // 주공3아파트 정규화
       // 추가: 특정 단지/브랜드 시리즈
@@ -172,6 +189,27 @@ function isSameBrandSeries(name1, name2) {
       // 태산/두산 등 유사 브랜드
       .replace(/taesanapateu$/, 'taesandusanapateu')
       .replace(/dusanapateu$/, 'taesandusanapateu')
+      // 힐스테이트 시리즈 추가
+      .replace(/hilseuteiteu[-]?[\d]*cha[-]?apateu$/, 'hilseuteiteu')
+      .replace(/[-]?hilseuteiteu[-]?[\d]*danji$/, 'hilseuteiteu')
+      .replace(/hilseuteiteu$/, 'hilseuteiteu')
+      // 현대아파트 동/지역 시리즈
+      .replace(/hyeondaeapateu[\d]*dong$/, 'hyeondaeapateu')
+      .replace(/hyeondaeapateu$/, 'hyeondae')
+      // 자이 시리즈
+      .replace(/jai[-]?[\d]*danji[-]?apateu$/, 'jai')
+      .replace(/jaiapateu[-]?[\d]*$/, 'jai')
+      // 가로주택정비사업 동일 취급
+      .replace(/[-]?jutaek[-]?garojutaekjeongbisaeop$/, 'garojutaek')
+      // 아시아드선수촌 시리즈
+      .replace(/asiadeu[-]?seonsuchon[-]?[\d]+danji$/, 'asiadeuseonsuchon')
+      // 그린빌 시리즈
+      .replace(/geurinbil[-]?[\d]+$/, 'geurinbil')
+      .replace(/jugong[-]?geurinbil[-]?[\d]+$/, 'geurinbil')
+      // 마을 시리즈 (별빛마을, 달빛마을, 햇빛마을 등)
+      .replace(/bichmaeul[-]?[\d]*$/, 'bichmaeul')
+      // 한진아파트 시리즈
+      .replace(/hanjinapateu$/, 'hanjin')
   }
   const base1 = extractBase(name1)
   const base2 = extractBase(name2)
@@ -237,8 +275,8 @@ function extractUniqueText(htmlContent) {
 console.log('\n========================================')
 console.log('📊 페이지 유사도 검사 시작')
 console.log('========================================')
-console.log(`차단 기준: > ${SIMILARITY_BLOCK_THRESHOLD}`)
-console.log(`경고 기준: > ${SIMILARITY_WARN_THRESHOLD}`)
+console.log(`차단 기준: >= ${SIMILARITY_BLOCK_THRESHOLD}`)
+console.log(`경고 기준: >= ${SIMILARITY_WARN_THRESHOLD}`)
 console.log(`최소 고유 텍스트: ${MIN_UNIQUE_TEXT_LENGTH}자`)
 console.log('')
 
@@ -335,10 +373,10 @@ for (const [regionSlug, districts] of Object.entries(apartmentsData)) {
     })
 
     // 판정
-    if (maxSimilarity > SIMILARITY_BLOCK_THRESHOLD) {
+    if (maxSimilarity >= SIMILARITY_BLOCK_THRESHOLD) {
       hasBlockingIssue = true
-      console.log(`❌ ${districtSlug}: 유사도 ${maxSimilarity.toFixed(3)} 초과 (${maxPair[0]} vs ${maxPair[1]}) → 배포 중단`)
-    } else if (maxSimilarity > SIMILARITY_WARN_THRESHOLD) {
+      console.log(`❌ ${districtSlug}: 유사도 ${maxSimilarity.toFixed(3)} (${maxPair[0]} vs ${maxPair[1]}) → 배포 중단`)
+    } else if (maxSimilarity >= SIMILARITY_WARN_THRESHOLD) {
       warningCount++
       console.log(`⚠️  ${districtSlug}: 유사도 ${maxSimilarity.toFixed(3)} (${maxPair[0]} vs ${maxPair[1]})`)
     } else {

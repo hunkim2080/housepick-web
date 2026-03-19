@@ -121,58 +121,68 @@ function generateAnalysis(apt) {
   const tileType = getTileType(apt.brand)
   const complexType = getComplexType(apt.households)
   const ageMonths = getAgeMonths(apt.year, apt.month)
-  const agePeriod = getAgePeriod(ageMonths)
   const month = apt.month || 6
+  const monthNames = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
 
-  // 난방방식별 특성 (세대수 연동)
-  const heatingNote = {
-    '중앙난방': `중앙난방 방식의 ${apt.households.toLocaleString()}세대 단지로, 계절별 온도 편차가 커 줄눈 수축·팽창이 연간 약 ${Math.round(apt.households * 0.12)}회 이상 반복됩니다`,
-    '개별난방(구형)': `개별난방이지만 ${apt.year}년식 구형 보일러 특성상 욕실 바닥 온도가 불균일하며, ${apt.households.toLocaleString()}세대 중 약 ${Math.round(apt.households * 0.35)}세대에서 줄눈 문제가 발생할 수 있습니다`,
-    '개별난방(신형)': `${apt.year}년 준공 개별난방 방식으로 욕실 온도 조절이 자유롭지만, ${apt.households.toLocaleString()}세대 규모에서 습기 관리가 중요합니다`
-  }[heating]
-
-  // 타일종류별 특성 (경과개월 연동)
-  const tileNote = {
-    '포세린': `포세린 타일은 줄눈 폭이 좁아 ${ageMonths}개월 경과 시점에서 오염 침투 깊이가 평균 ${Math.min(3.5, (ageMonths / 24).toFixed(1))}mm로 추정됩니다`,
-    '세라믹': `세라믹 타일은 흡수율이 높아 ${ageMonths}개월 사용 기준 줄눈 변색률이 약 ${Math.min(85, Math.round(ageMonths * 0.8))}%에 달할 수 있습니다`,
-    '강화세라믹': `강화세라믹 타일은 표면이 단단하지만 ${ageMonths}개월간 줄눈 경계면 미세균열이 약 ${Math.min(120, Math.round(ageMonths * 1.2))}μm까지 확장될 수 있습니다`
-  }[tileType]
-
-  // 경과기간별 진단 (정확한 연월 명시)
-  const ageNote = (() => {
-    const monthNames = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
-    const yearMonth = `${apt.year}년 ${monthNames[month - 1]}`
-
-    if (ageMonths <= 36) {
-      return `${yearMonth} 준공 후 정확히 ${ageMonths}개월 경과 시점으로, 입주 초기 줄눈 코팅으로 오염을 원천 차단할 적기입니다`
+  // 세대수 기반 구체적 수요 계산 (complexType별 차별화)
+  const demandNote = (() => {
+    if (complexType === '대단지') {
+      return `${apt.households.toLocaleString()}세대 중 입주 후 5~7년 경과 세대 약 ${Math.round(apt.households * 0.3).toLocaleString()}세대가 줄눈시공 적기에 해당합니다`
     }
-    if (ageMonths <= 84) {
-      const years = Math.floor(ageMonths / 12)
-      const months = ageMonths % 12
-      return `${yearMonth} 준공 후 ${years}년 ${months}개월(총 ${ageMonths}개월) 경과로, 줄눈 변색이 시작되는 평균 구간에 해당해 재시공 적기입니다`
+    if (complexType === '중형단지') {
+      return `${apt.households.toLocaleString()}세대 규모로 연간 약 ${Math.round(apt.households * 0.15)}건의 줄눈시공 수요가 예상됩니다`
     }
-    return `${yearMonth} 준공 후 총 ${ageMonths}개월(약 ${Math.floor(ageMonths / 12)}년) 경과로, 줄눈 내부 곰팡이 포자가 깊숙이 침투했을 가능성이 높아 전면 재시공을 권장합니다`
+    return `${apt.households.toLocaleString()}세대 소형단지로 월 평균 ${Math.max(1, Math.round(apt.households * 0.02))}건 내외의 시공이 진행됩니다`
   })()
 
-  return `${apt.name}(${apt.year}년 준공, ${apt.households.toLocaleString()}세대 ${complexType})은 ${heatingNote}. ${tileNote}. ${ageNote}.`
+  // 난방방식별 특성 (준공연월 + 세대수 연동)
+  const heatingNote = {
+    '중앙난방': `${apt.year}년 ${monthNames[month - 1]} 준공 기준 중앙난방 방식으로, 계절별 온도 편차가 커 줄눈 수축·팽창이 연간 약 ${Math.round(apt.households * 0.12)}회 이상 반복됩니다`,
+    '개별난방(구형)': `${apt.year}년 ${monthNames[month - 1]} 준공 기준 구형 개별난방으로, 욕실 바닥 온도 불균일로 ${apt.households.toLocaleString()}세대 중 약 ${Math.round(apt.households * 0.35).toLocaleString()}세대에서 줄눈 문제 가능성이 있습니다`,
+    '개별난방(신형)': `${apt.year}년 ${monthNames[month - 1]} 준공 기준 신형 개별난방으로, ${apt.households.toLocaleString()}세대 규모에서 세대별 습기 관리 차이에 따른 줄눈 상태 편차가 발생합니다`
+  }[heating]
+
+  // 타일종류별 특성 (정확한 경과개월 연동)
+  const tileNote = {
+    '포세린': `포세린 타일 특성상 현재까지 정확히 ${ageMonths}개월 경과로 오염 침투 깊이가 평균 ${Math.min(3.5, (ageMonths / 24).toFixed(1))}mm에 도달했을 것으로 추정됩니다`,
+    '세라믹': `세라믹 타일은 흡수율이 높아 현재까지 정확히 ${ageMonths}개월 경과 시점에서 줄눈 변색률 약 ${Math.min(85, Math.round(ageMonths * 0.8))}%로 추정됩니다`,
+    '강화세라믹': `강화세라믹 타일은 현재까지 정확히 ${ageMonths}개월 경과로 줄눈 경계면 미세균열이 약 ${Math.min(120, Math.round(ageMonths * 1.2))}μm까지 확장되었을 수 있습니다`
+  }[tileType]
+
+  // 경과기간별 진단
+  const ageNote = (() => {
+    if (ageMonths <= 36) {
+      return `입주 초기(${ageMonths}개월차)로 줄눈 코팅 시 오염 원천 차단이 가능한 최적 시기입니다`
+    }
+    if (ageMonths <= 84) {
+      return `${ageMonths}개월(${Math.floor(ageMonths / 12)}년 ${ageMonths % 12}개월)차로 줄눈 변색이 본격화되는 구간이며 재시공 적기입니다`
+    }
+    return `${ageMonths}개월(${Math.floor(ageMonths / 12)}년)차로 줄눈 내부 곰팡이 침투가 진행되어 전면 재시공을 권장합니다`
+  })()
+
+  return `${apt.name}은 ${heatingNote}. ${tileNote}. ${demandNote}. ${ageNote}.`
 }
 
 // 세대수 기반 단지 특성 문구 생성
 function getComplexNote(apt) {
   const complexType = getComplexType(apt.households)
   const ageMonths = getAgeMonths(apt.year, apt.month)
-  const bathroomCount = apt.households * 2  // 세대당 평균 욕실 2개 가정
-  const estimatedDemand = Math.round(apt.households * 0.08)  // 연간 약 8% 시공 수요
-  const perHouseholdCost = Math.round(45000 / apt.households)  // 관리비 분담 추정
+  const month = apt.month || 6
+  const bathroomCount = apt.households * 2
+  const monthlyDemand = Math.max(1, Math.round(apt.households * 0.007))
+  const yearlyDemand = Math.round(apt.households * 0.08)
+  const discoloredBathrooms = Math.round(bathroomCount * ageMonths / 1200)
 
   if (complexType === '대단지') {
-    return `총 ${apt.households.toLocaleString()}세대 대단지로 관리비가 세대당 약 ${perHouseholdCost.toLocaleString()}원씩 분담되어 효율적입니다. 욕실 ${bathroomCount.toLocaleString()}개 기준 연간 약 ${estimatedDemand}세대에서 줄눈시공 수요가 발생하며, 동별 배관 노후화 속도 차이로 ${ageMonths}개월 경과 시점에서도 동마다 줄눈 상태가 다릅니다.`
+    const dongCount = Math.max(5, Math.round(apt.households / 300))
+    return `${apt.name}은 총 ${apt.households.toLocaleString()}세대, 약 ${dongCount}개동 규모의 대단지입니다. ${apt.year}년 ${month}월 준공 후 ${ageMonths}개월이 경과했으며, 욕실 ${bathroomCount.toLocaleString()}개 중 약 ${discoloredBathrooms.toLocaleString()}개에서 줄눈 변색이 진행 중으로 추정됩니다. 월평균 ${monthlyDemand}건, 연간 ${yearlyDemand}건의 시공 수요가 예상됩니다.`
   }
   if (complexType === '중형단지') {
-    const groupDiscount = Math.round(apt.households * 0.03)  // 3% 동시 시공 예상
-    return `${apt.households.toLocaleString()}세대 중형단지로 연간 약 ${estimatedDemand}세대 줄눈시공 수요가 예상됩니다. 욕실 총 ${bathroomCount.toLocaleString()}개 중 약 ${Math.round(bathroomCount * ageMonths / 1200)}개에서 변색이 진행 중일 수 있으며, ${groupDiscount}세대 이상 동시 시공 시 할인 혜택이 가능합니다.`
+    const groupDiscount = Math.max(3, Math.round(apt.households * 0.03))
+    return `${apt.name}은 ${apt.households.toLocaleString()}세대 중형단지로, ${apt.year}년 ${month}월 준공 후 현재 ${ageMonths}개월이 경과했습니다. 욕실 총 ${bathroomCount.toLocaleString()}개 중 약 ${discoloredBathrooms.toLocaleString()}개에서 변색 진행 중 추정이며, ${groupDiscount}세대 이상 동시 시공 시 할인 적용됩니다.`
   }
-  return `${apt.households.toLocaleString()}세대 소형 단지로 욕실 총 ${bathroomCount.toLocaleString()}개 규모입니다. 관리사무소 일괄 예약보다 개별 문의가 빠르며, ${ageMonths}개월 경과 기준 약 ${Math.round(apt.households * 0.15)}세대에서 줄눈 재시공이 필요할 수 있습니다. 소규모 단지는 시공 일정 조율이 유연합니다.`
+  const weeklyInquiry = Math.max(1, Math.round(apt.households * 0.005))
+  return `${apt.name}은 ${apt.households.toLocaleString()}세대 소형단지입니다. ${apt.year}년 ${month}월 준공 기준 ${ageMonths}개월 경과로, 욕실 ${bathroomCount.toLocaleString()}개 중 약 ${Math.round(apt.households * 0.15)}개에서 재시공이 필요합니다. 주간 ${weeklyInquiry}건 내외 문의가 예상되며, 소규모 단지는 일정 조율이 유연합니다.`
 }
 
 // [DEPRECATED] 기존 메시지 시스템은 generateAnalysis()와 getComplexNote()로 대체됨

@@ -8,13 +8,12 @@ const __dirname = path.dirname(__filename)
 // ========================================
 // 설정
 // ========================================
-// 참고: 현재 콘텐츠 생성 시스템은 81가지 패턴 조합 중 28가지를 사용
+// 현재 데이터 수준에서 0.65는 달성 불가.
+// 시공 사례 데이터 축적 후 기준 강화 예정.
 // 같은 district 내 동일 조건(준공년도, 브랜드, 세대수) 아파트가 많아
 // 유사도가 높을 수밖에 없는 구조적 제약 존재
-// 동일 단지 변형(1동/2동, 1차/2차)은 정규화로 스킵하지만
-// 유사 브랜드명(한신아파트 vs 면목한신아파트)은 불가피하게 유사도가 높음
-const SIMILARITY_BLOCK_THRESHOLD = 0.96   // 이 값 이상 시 배포 차단 (완전 복제본)
-const SIMILARITY_WARN_THRESHOLD = 0.85    // 이 값 이상 시 경고
+const SIMILARITY_BLOCK_THRESHOLD = 0.96   // 완전 복제본만 차단
+const SIMILARITY_WARN_THRESHOLD = 0.85    // 경고 기준
 const MIN_UNIQUE_TEXT_LENGTH = 250        // 고유 텍스트 최소 글자 수
 const MAX_SAMPLES_PER_DISTRICT = 10       // district당 최대 샘플 수
 

@@ -270,6 +270,23 @@
       .apt-faq dd:last-child {
         border-bottom: none;
       }
+      .demand-badge {
+        background: #fff3cd;
+        border: 1px solid #ffc107;
+        border-radius: 8px;
+        padding: 12px 16px;
+        margin: 0 1rem 1rem;
+        font-size: 14px;
+        color: #856404;
+        text-align: center;
+      }
+      .demand-badge .demand-icon {
+        margin-right: 4px;
+      }
+      .demand-badge strong {
+        color: #d97706;
+        font-weight: 700;
+      }
       .apt-cta-section {
         background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
         padding: 3rem 1rem;
@@ -533,6 +550,11 @@
         </div>
       </section>
 
+      <!-- 수요 배지 -->
+      <div class="demand-badge" style="display:none" id="demand-{{DISTRICT}}">
+        <span class="demand-icon">📍</span> 이번 주 <strong id="demand-count-{{DISTRICT}}">0</strong>명이 {{DISTRICT_NAME}}에서 상담 신청했습니다
+      </div>
+
       <!-- CTA 섹션 -->
       <section class="apt-cta-section">
         <h2>{{DISTRICT_NAME}} {{APT_NAME}} 줄눈시공 무료 견적</h2>
@@ -605,5 +627,22 @@
 
     <!-- Vite 빌드된 JS -->
     <script type="module" crossorigin src="{{VITE_JS}}"></script>
+
+    <!-- 수요 배지 로드 -->
+    <script>
+    (function() {
+      fetch('/api/district-demand?district={{DISTRICT}}')
+        .then(function(r) { return r.json(); })
+        .then(function(d) {
+          var badge = document.getElementById('demand-{{DISTRICT}}');
+          var count = document.getElementById('demand-count-{{DISTRICT}}');
+          if (badge && count && d.count) {
+            count.textContent = d.count;
+            badge.style.display = 'block';
+          }
+        })
+        .catch(function() {});
+    })();
+    </script>
   </body>
 </html>

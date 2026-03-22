@@ -98,8 +98,10 @@ function isSameComplexVariant(name1, name2) {
       .replace(/[\d]+cha$/, '')           // 2cha → 제거
       .replace(/-[\d]+bl$/, '')           // -21bl → 제거
       .replace(/[\d]+bl$/, '')            // 21bl → 제거
-      .replace(/-[\d]+beulrok$/, '')      // -5beulrok (5블록) → 제거
-      .replace(/[\d]+beulrok$/, '')       // 5beulrok → 제거
+      .replace(/-[\d]+beulrok-/g, '-')      // -5beulrok- (5블록 중간) → 하이픈으로
+      .replace(/-[\d]+beulrok$/g, '')     // -5beulrok (5블록 끝) → 제거
+      .replace(/[\d]+beulrok-/g, '-')     // 5beulrok- → 하이픈으로
+      .replace(/[\d]+beulrok$/g, '')      // 5beulrok → 제거
       // 인창단지 주공 시리즈
       .replace(/[\d]+danjijugongapateu[-]?[\d]*$/, 'jugongapateu')
       // 주공아파트 + 동번호/숫자 패턴 (jugongapateu-10, jugongapateu-901dong)

@@ -1,12 +1,11 @@
 /**
- * 입주예정정보 186개를 apartments.json에 추가하는 스크립트
- * 실행: node scripts/add-upcoming-apartments.js
+ * apartments.json의 모든 slug를 SEO 친화적으로 재생성하는 스크립트
+ * 실행: node scripts/regenerate-slugs.js
  */
 
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
-import XLSX from 'xlsx'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -56,7 +55,6 @@ const brandMap = {
   '플래티넘': 'platinum',
   '그랑': 'grand',
   '메트로': 'metro',
-  '팰리스': 'palace',
   '포레나': 'forena',
 }
 
@@ -157,239 +155,63 @@ function koreanToSlug(text) {
   return result.replace(/-+/g, '-').replace(/^-|-$/g, '')
 }
 
-// 브랜드 추출
-function extractBrand(name) {
-  const brandRules = [
-    { keyword: '자이', brand: 'GS건설' },
-    { keyword: '래미안', brand: '삼성물산' },
-    { keyword: '힐스테이트', brand: '현대건설' },
-    { keyword: '푸르지오', brand: '대우건설' },
-    { keyword: 'e편한세상', brand: 'DL이앤씨' },
-    { keyword: '아이파크', brand: 'HDC현대산업개발' },
-    { keyword: '롯데캐슬', brand: '롯데건설' },
-    { keyword: '더샵', brand: '포스코건설' },
-    { keyword: '스위첸', brand: '대림산업' },
-    { keyword: '금호어울림', brand: '금호건설' },
-    { keyword: '제일풍경채', brand: '제일건설' },
-    { keyword: '우미린', brand: '우미건설' },
-    { keyword: '해링턴', brand: '효성중공업' },
-    { keyword: '센트럴', brand: '기타' },
-    { keyword: '반도유보라', brand: '반도건설' },
-    { keyword: '한화포레나', brand: '한화건설' },
-  ]
-
-  for (const rule of brandRules) {
-    if (name.includes(rule.keyword)) return rule.brand
-  }
-  return '미확인'
-}
-
-// 주소에서 region/district 추출
-function extractLocation(address, regionName) {
-  let region, districtName, districtSlug
-
-  if (regionName === '서울') {
-    region = 'seoul'
-    const match = address.match(/서울특별시\s+([가-힣]+구)/)
-    if (match) {
-      districtName = match[1]
-      districtSlug = districtNameToSlug(districtName, 'seoul')
-    }
-  } else if (regionName === '경기') {
-    region = 'gyeonggi'
-    const match = address.match(/경기도\s+([가-힣]+[시군])/)
-    if (match) {
-      districtName = match[1]
-      districtSlug = districtNameToSlug(districtName, 'gyeonggi')
-    }
-  } else if (regionName === '인천') {
-    region = 'incheon'
-    const match = address.match(/인천광역시\s+([가-힣]+구)/)
-    if (match) {
-      districtName = match[1]
-      districtSlug = districtNameToSlug(districtName, 'incheon')
-    }
-  }
-
-  return { region, districtName, districtSlug }
-}
-
-// 구/시 이름 → slug 변환
-function districtNameToSlug(name, region) {
-  const seoulMap = {
-    '강남구': 'gangnam', '강동구': 'gangdong', '강북구': 'gangbuk', '강서구': 'gangseo',
-    '관악구': 'gwanak', '광진구': 'gwangjin', '구로구': 'guro', '금천구': 'geumcheon',
-    '노원구': 'nowon', '도봉구': 'dobong', '동대문구': 'dongdaemun', '동작구': 'dongjak',
-    '마포구': 'mapo', '서대문구': 'seodaemun', '서초구': 'seocho', '성동구': 'seongdong',
-    '성북구': 'seongbuk', '송파구': 'songpa', '양천구': 'yangcheon', '영등포구': 'yeongdeungpo',
-    '용산구': 'yongsan', '은평구': 'eunpyeong', '종로구': 'jongno', '중구': 'jung',
-    '중랑구': 'jungnang'
-  }
-
-  const gyeonggiMap = {
-    '수원시': 'suwon', '성남시': 'seongnam', '용인시': 'yongin', '부천시': 'bucheon',
-    '안산시': 'ansan', '안양시': 'anyang', '남양주시': 'namyangju', '화성시': 'hwaseong',
-    '평택시': 'pyeongtaek', '시흥시': 'siheung', '김포시': 'gimpo', '광명시': 'gwangmyeong',
-    '광주시': 'gwangju', '군포시': 'gunpo', '하남시': 'hanam', '오산시': 'osan',
-    '이천시': 'icheon', '안성시': 'anseong', '의왕시': 'uiwang', '구리시': 'guri',
-    '의정부시': 'uijeongbu', '고양시': 'goyang', '파주시': 'paju', '양주시': 'yangju',
-    '포천시': 'pocheon', '과천시': 'gwacheon', '동두천시': 'dongducheon', '여주시': 'yeoju',
-    '연천군': 'yeoncheon', '가평군': 'gapyeong', '양평군': 'yangpyeong'
-  }
-
-  const incheonMap = {
-    '중구': 'junggu', '동구': 'donggu', '미추홀구': 'michuhol', '연수구': 'yeonsu',
-    '남동구': 'namdong', '부평구': 'bupyeong', '계양구': 'gyeyang', '서구': 'seogu',
-    '강화군': 'ganghwa', '옹진군': 'ongjin'
-  }
-
-  if (region === 'seoul') return seoulMap[name] || koreanToSlug(name)
-  if (region === 'gyeonggi') return gyeonggiMap[name] || koreanToSlug(name)
-  if (region === 'incheon') return incheonMap[name] || koreanToSlug(name)
-  return koreanToSlug(name)
-}
-
-// 엑셀 날짜 → JS Date
-function excelDateToDate(serial) {
-  if (!serial || typeof serial !== 'number') return null
-  return new Date((serial - 25569) * 86400 * 1000)
-}
-
 // 메인 실행
-async function main() {
-  console.log('=== 입주예정정보 추가 스크립트 시작 ===\n')
+const dataPath = path.join(__dirname, '..', 'data')
+const apartmentsPath = path.join(dataPath, 'apartments.json')
+const apartments = JSON.parse(fs.readFileSync(apartmentsPath, 'utf-8'))
 
-  // 1. 기존 apartments.json 로드
-  const apartmentsPath = path.join(__dirname, '..', 'data', 'apartments.json')
-  const apartments = JSON.parse(fs.readFileSync(apartmentsPath, 'utf-8'))
+let totalCount = 0
+let changedCount = 0
+const samples = []
 
-  // 기존 개수 계산
-  let existingCount = 0
-  for (const districts of Object.values(apartments)) {
-    for (const districtData of Object.values(districts)) {
-      existingCount += districtData.apartments.length
-    }
-  }
-  console.log('기존 아파트 수:', existingCount)
+// 모든 아파트 순회하며 slug 재생성
+for (const [region, districts] of Object.entries(apartments)) {
+  for (const [district, districtData] of Object.entries(districts)) {
+    const slugCounts = {}  // 같은 district 내 slug 중복 체크
 
-  // 2. 엑셀 파일 로드
-  const xlsxPath = path.join(__dirname, '..', '20260317 입주예정정보.xlsx')
-  const wb = XLSX.readFile(xlsxPath)
-  const sheet = wb.Sheets[wb.SheetNames[0]]
-  const data = XLSX.utils.sheet_to_json(sheet, { header: 1 })
+    for (const apt of districtData.apartments) {
+      totalCount++
+      const oldSlug = apt.slug
+      let newSlug = koreanToSlug(apt.name)
 
-  // 서울/경기/인천 + 분양만 필터링
-  const filtered = data.filter((row, i) => {
-    if (i === 0) return false
-    const region = row[1]
-    const type = row[2]
-    return (region === '서울' || region === '경기' || region === '인천') && type === '분양'
-  })
-
-  console.log('입주예정 단지 수 (서울/경기/인천 분양):', filtered.length)
-
-  // 3. 변환 및 추가
-  let addedCount = 0
-  let skippedCount = 0
-  const addedByRegion = { seoul: 0, gyeonggi: 0, incheon: 0 }
-
-  for (const row of filtered) {
-    const excelDate = row[0]
-    const regionName = row[1]
-    const address = row[3]
-    const aptName = row[4]
-    const households = row[5]
-
-    // 날짜 변환
-    const moveInDate = excelDateToDate(excelDate)
-    if (!moveInDate) {
-      skippedCount++
-      continue
-    }
-
-    const year = moveInDate.getFullYear()
-    const month = moveInDate.getMonth() + 1
-
-    // 위치 추출
-    const { region, districtName, districtSlug } = extractLocation(address, regionName)
-    if (!region || !districtSlug) {
-      console.log('  위치 추출 실패:', address)
-      skippedCount++
-      continue
-    }
-
-    // slug 생성
-    let slug = koreanToSlug(aptName)
-    if (!slug) {
-      skippedCount++
-      continue
-    }
-
-    // 브랜드 추출
-    const brand = extractBrand(aptName)
-
-    // district가 없으면 생성
-    if (!apartments[region]) {
-      apartments[region] = {}
-    }
-    if (!apartments[region][districtSlug]) {
-      apartments[region][districtSlug] = {
-        name: districtName,
-        apartments: []
+      // 중복 slug 처리: 같은 district 내 중복이면 숫자 추가
+      if (slugCounts[newSlug]) {
+        slugCounts[newSlug]++
+        newSlug = `${newSlug}-${slugCounts[newSlug]}`
+      } else {
+        slugCounts[newSlug] = 1
       }
-    }
 
-    // 중복 체크 (같은 slug가 있으면 -upcoming 추가)
-    const existingSlugs = apartments[region][districtSlug].apartments.map(a => a.slug)
-    if (existingSlugs.includes(slug)) {
-      slug = slug + '-upcoming'
-    }
-
-    // 아파트 추가
-    const newApt = {
-      slug,
-      name: aptName,
-      households,
-      year,
-      month,
-      brand,
-      phase: 7,  // 입주예정은 phase 7
-      isUpcoming: true,
-      recentMoveIn: {
-        year,
-        month,
-        units: households
+      if (oldSlug !== newSlug) {
+        changedCount++
+        if (samples.length < 15) {
+          samples.push({ name: apt.name, oldSlug, newSlug })
+        }
       }
-    }
 
-    apartments[region][districtSlug].apartments.push(newApt)
-    addedCount++
-    addedByRegion[region]++
-  }
-
-  // 4. 저장
-  fs.writeFileSync(apartmentsPath, JSON.stringify(apartments, null, 2))
-
-  // 5. 최종 개수 확인
-  let finalCount = 0
-  for (const districts of Object.values(apartments)) {
-    for (const districtData of Object.values(districts)) {
-      finalCount += districtData.apartments.length
+      apt.slug = newSlug
     }
   }
-
-  console.log('\n=== 결과 ===')
-  console.log('추가된 아파트 수:', addedCount)
-  console.log('  서울:', addedByRegion.seoul)
-  console.log('  경기:', addedByRegion.gyeonggi)
-  console.log('  인천:', addedByRegion.incheon)
-  console.log('스킵된 수:', skippedCount)
-  console.log('')
-  console.log('기존:', existingCount)
-  console.log('추가:', addedCount)
-  console.log('최종:', finalCount)
-  console.log('예상:', existingCount + addedCount)
-  console.log('일치:', finalCount === existingCount + addedCount ? '✅' : '❌')
 }
 
-main().catch(console.error)
+// 결과 저장
+fs.writeFileSync(apartmentsPath, JSON.stringify(apartments, null, 2))
+
+// 결과 출력
+console.log(`\n========================================`)
+console.log(`📊 Slug 재생성 결과`)
+console.log(`========================================`)
+console.log(`총 아파트: ${totalCount}개`)
+console.log(`변경된 slug: ${changedCount}개`)
+console.log(`변경 비율: ${(changedCount / totalCount * 100).toFixed(1)}%`)
+console.log(`========================================\n`)
+
+console.log(`📝 변경 샘플 (${samples.length}개):\n`)
+for (const s of samples) {
+  console.log(`  ${s.name}`)
+  console.log(`    변경 전: ${s.oldSlug}`)
+  console.log(`    변경 후: ${s.newSlug}`)
+  console.log()
+}
+
+console.log(`✅ apartments.json 저장 완료`)

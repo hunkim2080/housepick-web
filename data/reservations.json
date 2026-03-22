@@ -1,0 +1,141 @@
+[
+  {
+    "id": "fd1cc531-94ac-4774-83e4-38e1e7443a61",
+    "service": "julnoon",
+    "serviceType": "basic",
+    "area": 1,
+    "addServices": [],
+    "status": "pending",
+    "depositStatus": "pending",
+    "createdAt": "2025-11-30T14:44:20.336Z",
+    "estimate": {
+      "subtotal": 50000,
+      "discount": {
+        "rate": 0,
+        "amount": 0
+      },
+      "finalPrice": 50000,
+      "breakdown": [
+        {
+          "name": "줄눈시공",
+          "type": "기본",
+          "price": 50000
+        }
+      ]
+    },
+    "depositAmount": 15000
+  },
+  {
+    "id": "219dd47a-fec8-4537-bc53-da376497d33c",
+    "service": "bathroom-remodeling",
+    "serviceType": "premium",
+    "area": 12,
+    "addServices": [],
+    "status": "pending",
+    "depositStatus": "pending",
+    "createdAt": "2025-11-30T14:45:48.133Z",
+    "estimate": {
+      "subtotal": 42000000,
+      "discount": {
+        "rate": 0,
+        "amount": 0
+      },
+      "finalPrice": 42000000,
+      "breakdown": [
+        {
+          "name": "화장실 리모델링",
+          "type": "프리미엄",
+          "price": 42000000
+        }
+      ]
+    },
+    "depositAmount": 12600000
+  },
+  {
+    "id": "c562cac3-00ee-459a-ad1b-d6c0f4e0f711",
+    "service": "move-in-cleaning",
+    "serviceType": "basic",
+    "area": 1,
+    "addServices": [],
+    "status": "pending",
+    "depositStatus": "pending",
+    "createdAt": "2025-11-30T14:48:35.369Z",
+    "estimate": {
+      "subtotal": 300000,
+      "discount": {
+        "rate": 0,
+        "amount": 0
+      },
+      "finalPrice": 300000,
+      "breakdown": [
+        {
+          "name": "입주청소",
+          "type": "기본",
+          "price": 300000
+        }
+      ]
+    },
+    "depositAmount": 90000
+  },
+  {
+    "id": "ca045a57-911e-4cf7-9aa0-6c60949c145b",
+    "service": "move-in-cleaning",
+    "serviceType": "basic",
+    "area": 1,
+    "addServices": [],
+    "status": "pending",
+    "depositStatus": "pending",
+    "createdAt": "2025-11-30T14:59:07.998Z",
+    "estimate": {
+      "subtotal": 300000,
+      "discount": {
+        "rate": 0,
+        "amount": 0
+      },
+      "finalPrice": 300000,
+      "breakdown": [
+        {
+          "name": "입주청소",
+          "type": "기본",
+          "price": 300000
+        }
+      ]
+    },
+    "depositAmount": 90000
+  },
+  {
+    "id": "5ebfac67-d6c0-4b5f-b0a7-32b73b4fb8a6",
+    "service": "move-in-cleaning",
+    "serviceType": "basic",
+    "area": 1,
+    "addServices": [],
+    "workDate": "2025-11-30",
+    "workTime": "13:00",
+    "city": "seoul",
+    "district": "ㄹ",
+    "detailAddress": "ㄹ",
+    "customerName": "ㄹ",
+    "customerPhone": "010-5535-5555",
+    "customerEmail": "dd@dd",
+    "notes": "",
+    "status": "pending",
+    "depositStatus": "pending",
+    "createdAt": "2025-11-30T14:59:28.265Z",
+    "estimate": {
+      "subtotal": 300000,
+      "discount": {
+        "rate": 0,
+        "amount": 0
+      },
+      "finalPrice": 300000,
+      "breakdown": [
+        {
+          "name": "입주청소",
+          "type": "기본",
+          "price": 300000
+        }
+      ]
+    },
+    "depositAmount": 90000
+  }
+]

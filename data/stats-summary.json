@@ -1,0 +1,1179 @@
+{
+  "meta": {
+    "generatedAt": "2026-03-22T15:22:21.109Z",
+    "dataVersion": "1.0",
+    "source": "housepick-apartments-db"
+  },
+  "summary": {
+    "totalCount": 4418,
+    "needsRenovation": 3577,
+    "renovationRate": 81,
+    "upcomingCount": 0,
+    "totalHouseholds": 4326705,
+    "renovationHouseholds": 3503771,
+    "analysisYear": 2026,
+    "analysisMonth": 3
+  },
+  "districtRanking": [
+    {
+      "name": "종로구",
+      "key": "jongno",
+      "region": "seoul",
+      "total": 8,
+      "needsRenovation": 8,
+      "renovationRate": 100,
+      "totalHouseholds": 6201,
+      "renovationHouseholds": 6201
+    },
+    {
+      "name": "부천오정구",
+      "key": "bucheonojeonggu",
+      "region": "gyeonggi",
+      "total": 6,
+      "needsRenovation": 6,
+      "renovationRate": 100,
+      "totalHouseholds": 4387,
+      "renovationHouseholds": 4387
+    },
+    {
+      "name": "동두천시",
+      "key": "dongducheon",
+      "region": "gyeonggi",
+      "total": 10,
+      "needsRenovation": 10,
+      "renovationRate": 100,
+      "totalHouseholds": 8984,
+      "renovationHouseholds": 8984
+    },
+    {
+      "name": "고양일산서구",
+      "key": "goyangilsanseogu",
+      "region": "gyeonggi",
+      "total": 67,
+      "needsRenovation": 66,
+      "renovationRate": 98.5,
+      "totalHouseholds": 54316,
+      "renovationHouseholds": 53764
+    },
+    {
+      "name": "군포시",
+      "key": "gunpo",
+      "region": "gyeonggi",
+      "total": 58,
+      "needsRenovation": 57,
+      "renovationRate": 98.3,
+      "totalHouseholds": 57734,
+      "renovationHouseholds": 56891
+    },
+    {
+      "name": "도봉구",
+      "key": "dobong",
+      "region": "seoul",
+      "total": 36,
+      "needsRenovation": 35,
+      "renovationRate": 97.2,
+      "totalHouseholds": 43560,
+      "renovationHouseholds": 43261
+    },
+    {
+      "name": "남동구",
+      "key": "namdong",
+      "region": "incheon",
+      "total": 99,
+      "needsRenovation": 95,
+      "renovationRate": 96,
+      "totalHouseholds": 105687,
+      "renovationHouseholds": 101718
+    },
+    {
+      "name": "용인수지구",
+      "key": "yonginsujigu",
+      "region": "gyeonggi",
+      "total": 84,
+      "needsRenovation": 80,
+      "renovationRate": 95.2,
+      "totalHouseholds": 73483,
+      "renovationHouseholds": 70086
+    },
+    {
+      "name": "노원구",
+      "key": "nowon",
+      "region": "seoul",
+      "total": 103,
+      "needsRenovation": 98,
+      "renovationRate": 95.1,
+      "totalHouseholds": 123617,
+      "renovationHouseholds": 119417
+    },
+    {
+      "name": "용인기흥구",
+      "key": "yongingiheunggu",
+      "region": "gyeonggi",
+      "total": 102,
+      "needsRenovation": 97,
+      "renovationRate": 95.1,
+      "totalHouseholds": 86599,
+      "renovationHouseholds": 81271
+    },
+    {
+      "name": "안산상록구",
+      "key": "ansansangroggu",
+      "region": "gyeonggi",
+      "total": 38,
+      "needsRenovation": 36,
+      "renovationRate": 94.7,
+      "totalHouseholds": 43142,
+      "renovationHouseholds": 36542
+    },
+    {
+      "name": "성남분당구",
+      "key": "seongnambundanggu",
+      "region": "gyeonggi",
+      "total": 112,
+      "needsRenovation": 106,
+      "renovationRate": 94.6,
+      "totalHouseholds": 100629,
+      "renovationHouseholds": 96117
+    },
+    {
+      "name": "금천구",
+      "key": "geumcheon",
+      "region": "seoul",
+      "total": 17,
+      "needsRenovation": 16,
+      "renovationRate": 94.1,
+      "totalHouseholds": 20628,
+      "renovationHouseholds": 19701
+    },
+    {
+      "name": "수원영통구",
+      "key": "suwonyeongtonggu",
+      "region": "gyeonggi",
+      "total": 76,
+      "needsRenovation": 71,
+      "renovationRate": 93.4,
+      "totalHouseholds": 78526,
+      "renovationHouseholds": 74449
+    },
+    {
+      "name": "부천원미구",
+      "key": "bucheonwonmigu",
+      "region": "gyeonggi",
+      "total": 59,
+      "needsRenovation": 55,
+      "renovationRate": 93.2,
+      "totalHouseholds": 53080,
+      "renovationHouseholds": 49602
+    },
+    {
+      "name": "강서구",
+      "key": "gangseo",
+      "region": "seoul",
+      "total": 58,
+      "needsRenovation": 54,
+      "renovationRate": 93.1,
+      "totalHouseholds": 67680,
+      "renovationHouseholds": 64509
+    },
+    {
+      "name": "성동구",
+      "key": "seongdong",
+      "region": "seoul",
+      "total": 42,
+      "needsRenovation": 39,
+      "renovationRate": 92.9,
+      "totalHouseholds": 41629,
+      "renovationHouseholds": 38753
+    },
+    {
+      "name": "안양동안구",
+      "key": "anyangdongangu",
+      "region": "gyeonggi",
+      "total": 67,
+      "needsRenovation": 62,
+      "renovationRate": 92.5,
+      "totalHouseholds": 71342,
+      "renovationHouseholds": 59815
+    },
+    {
+      "name": "안산단원구",
+      "key": "ansandanwongu",
+      "region": "gyeonggi",
+      "total": 61,
+      "needsRenovation": 56,
+      "renovationRate": 91.8,
+      "totalHouseholds": 64665,
+      "renovationHouseholds": 57744
+    },
+    {
+      "name": "고양일산동구",
+      "key": "goyangilsandonggu",
+      "region": "gyeonggi",
+      "total": 49,
+      "needsRenovation": 45,
+      "renovationRate": 91.8,
+      "totalHouseholds": 46549,
+      "renovationHouseholds": 42089
+    },
+    {
+      "name": "관악구",
+      "key": "gwanak",
+      "region": "seoul",
+      "total": 24,
+      "needsRenovation": 22,
+      "renovationRate": 91.7,
+      "totalHouseholds": 29626,
+      "renovationHouseholds": 27964
+    },
+    {
+      "name": "수원권선구",
+      "key": "suwongwonseongu",
+      "region": "gyeonggi",
+      "total": 70,
+      "needsRenovation": 64,
+      "renovationRate": 91.4,
+      "totalHouseholds": 66875,
+      "renovationHouseholds": 59449
+    },
+    {
+      "name": "중랑구",
+      "key": "jungnang",
+      "region": "seoul",
+      "total": 34,
+      "needsRenovation": 31,
+      "renovationRate": 91.2,
+      "totalHouseholds": 31696,
+      "renovationHouseholds": 28756
+    },
+    {
+      "name": "부천소사구",
+      "key": "bucheonsosagu",
+      "region": "gyeonggi",
+      "total": 34,
+      "needsRenovation": 31,
+      "renovationRate": 91.2,
+      "totalHouseholds": 34466,
+      "renovationHouseholds": 28990
+    },
+    {
+      "name": "구로구",
+      "key": "guro",
+      "region": "seoul",
+      "total": 54,
+      "needsRenovation": 48,
+      "renovationRate": 88.9,
+      "totalHouseholds": 46808,
+      "renovationHouseholds": 42903
+    },
+    {
+      "name": "계양구",
+      "key": "gyeyang",
+      "region": "incheon",
+      "total": 45,
+      "needsRenovation": 40,
+      "renovationRate": 88.9,
+      "totalHouseholds": 38711,
+      "renovationHouseholds": 33744
+    },
+    {
+      "name": "구리시",
+      "key": "guri",
+      "region": "gyeonggi",
+      "total": 34,
+      "needsRenovation": 30,
+      "renovationRate": 88.2,
+      "totalHouseholds": 29301,
+      "renovationHouseholds": 26512
+    },
+    {
+      "name": "수원장안구",
+      "key": "suwonjangangu",
+      "region": "gyeonggi",
+      "total": 42,
+      "needsRenovation": 37,
+      "renovationRate": 88.1,
+      "totalHouseholds": 43400,
+      "renovationHouseholds": 37521
+    },
+    {
+      "name": "성북구",
+      "key": "seongbuk",
+      "region": "seoul",
+      "total": 55,
+      "needsRenovation": 48,
+      "renovationRate": 87.3,
+      "totalHouseholds": 58808,
+      "renovationHouseholds": 49508
+    },
+    {
+      "name": "강남구",
+      "key": "gangnam",
+      "region": "seoul",
+      "total": 79,
+      "needsRenovation": 69,
+      "renovationRate": 87.3,
+      "totalHouseholds": 80810,
+      "renovationHouseholds": 71144
+    },
+    {
+      "name": "광명시",
+      "key": "gwangmyeong",
+      "region": "gyeonggi",
+      "total": 55,
+      "needsRenovation": 48,
+      "renovationRate": 87.3,
+      "totalHouseholds": 68945,
+      "renovationHouseholds": 61558
+    },
+    {
+      "name": "동대문구",
+      "key": "dongdaemun",
+      "region": "seoul",
+      "total": 38,
+      "needsRenovation": 33,
+      "renovationRate": 86.8,
+      "totalHouseholds": 39153,
+      "renovationHouseholds": 34787
+    },
+    {
+      "name": "동작구",
+      "key": "dongjak",
+      "region": "seoul",
+      "total": 45,
+      "needsRenovation": 39,
+      "renovationRate": 86.7,
+      "totalHouseholds": 39969,
+      "renovationHouseholds": 35704
+    },
+    {
+      "name": "안양만안구",
+      "key": "anyangmanangu",
+      "region": "gyeonggi",
+      "total": 22,
+      "needsRenovation": 19,
+      "renovationRate": 86.4,
+      "totalHouseholds": 25591,
+      "renovationHouseholds": 22618
+    },
+    {
+      "name": "광진구",
+      "key": "gwangjin",
+      "region": "seoul",
+      "total": 14,
+      "needsRenovation": 12,
+      "renovationRate": 85.7,
+      "totalHouseholds": 12388,
+      "renovationHouseholds": 11443
+    },
+    {
+      "name": "연수구",
+      "key": "yeonsu",
+      "region": "incheon",
+      "total": 105,
+      "needsRenovation": 90,
+      "renovationRate": 85.7,
+      "totalHouseholds": 105238,
+      "renovationHouseholds": 86663
+    },
+    {
+      "name": "강북구",
+      "key": "gangbuk",
+      "region": "seoul",
+      "total": 20,
+      "needsRenovation": 17,
+      "renovationRate": 85,
+      "totalHouseholds": 22635,
+      "renovationHouseholds": 21817
+    },
+    {
+      "name": "송파구",
+      "key": "songpa",
+      "region": "seoul",
+      "total": 73,
+      "needsRenovation": 62,
+      "renovationRate": 84.9,
+      "totalHouseholds": 103822,
+      "renovationHouseholds": 94609
+    },
+    {
+      "name": "남양주시",
+      "key": "namyangju",
+      "region": "gyeonggi",
+      "total": 157,
+      "needsRenovation": 133,
+      "renovationRate": 84.7,
+      "totalHouseholds": 141792,
+      "renovationHouseholds": 114922
+    },
+    {
+      "name": "부평구",
+      "key": "bupyeong",
+      "region": "incheon",
+      "total": 78,
+      "needsRenovation": 66,
+      "renovationRate": 84.6,
+      "totalHouseholds": 86947,
+      "renovationHouseholds": 70666
+    },
+    {
+      "name": "서대문구",
+      "key": "seodaemun",
+      "region": "seoul",
+      "total": 37,
+      "needsRenovation": 31,
+      "renovationRate": 83.8,
+      "totalHouseholds": 34723,
+      "renovationHouseholds": 29656
+    },
+    {
+      "name": "마포구",
+      "key": "mapo",
+      "region": "seoul",
+      "total": 54,
+      "needsRenovation": 45,
+      "renovationRate": 83.3,
+      "totalHouseholds": 44869,
+      "renovationHouseholds": 37294
+    },
+    {
+      "name": "동구",
+      "key": "dong",
+      "region": "incheon",
+      "total": 12,
+      "needsRenovation": 10,
+      "renovationRate": 83.3,
+      "totalHouseholds": 12970,
+      "renovationHouseholds": 9488
+    },
+    {
+      "name": "고양덕양구",
+      "key": "goyangdeogyanggu",
+      "region": "gyeonggi",
+      "total": 101,
+      "needsRenovation": 83,
+      "renovationRate": 82.2,
+      "totalHouseholds": 94638,
+      "renovationHouseholds": 80444
+    },
+    {
+      "name": "용산구",
+      "key": "yongsan",
+      "region": "seoul",
+      "total": 22,
+      "needsRenovation": 18,
+      "renovationRate": 81.8,
+      "totalHouseholds": 19150,
+      "renovationHouseholds": 15422
+    },
+    {
+      "name": "수원팔달구",
+      "key": "suwonpaldalgu",
+      "region": "gyeonggi",
+      "total": 22,
+      "needsRenovation": 18,
+      "renovationRate": 81.8,
+      "totalHouseholds": 31173,
+      "renovationHouseholds": 17466
+    },
+    {
+      "name": "의정부시",
+      "key": "uijeongbu",
+      "region": "gyeonggi",
+      "total": 102,
+      "needsRenovation": 83,
+      "renovationRate": 81.4,
+      "totalHouseholds": 90642,
+      "renovationHouseholds": 71046
+    },
+    {
+      "name": "양천구",
+      "key": "yangcheon",
+      "region": "seoul",
+      "total": 48,
+      "needsRenovation": 39,
+      "renovationRate": 81.3,
+      "totalHouseholds": 54898,
+      "renovationHouseholds": 50407
+    },
+    {
+      "name": "김포시",
+      "key": "gimpo",
+      "region": "gyeonggi",
+      "total": 106,
+      "needsRenovation": 86,
+      "renovationRate": 81.1,
+      "totalHouseholds": 114232,
+      "renovationHouseholds": 91449
+    },
+    {
+      "name": "의왕시",
+      "key": "uiwang",
+      "region": "gyeonggi",
+      "total": 36,
+      "needsRenovation": 29,
+      "renovationRate": 80.6,
+      "totalHouseholds": 33436,
+      "renovationHouseholds": 24631
+    },
+    {
+      "name": "영등포구",
+      "key": "yeongdeungpo",
+      "region": "seoul",
+      "total": 45,
+      "needsRenovation": 35,
+      "renovationRate": 77.8,
+      "totalHouseholds": 39710,
+      "renovationHouseholds": 31138
+    },
+    {
+      "name": "화성시",
+      "key": "hwaseong",
+      "region": "gyeonggi",
+      "total": 292,
+      "needsRenovation": 226,
+      "renovationRate": 77.4,
+      "totalHouseholds": 260496,
+      "renovationHouseholds": 195671
+    },
+    {
+      "name": "시흥시",
+      "key": "siheung",
+      "region": "gyeonggi",
+      "total": 132,
+      "needsRenovation": 102,
+      "renovationRate": 77.3,
+      "totalHouseholds": 114349,
+      "renovationHouseholds": 89115
+    },
+    {
+      "name": "오산시",
+      "key": "osan",
+      "region": "gyeonggi",
+      "total": 70,
+      "needsRenovation": 54,
+      "renovationRate": 77.1,
+      "totalHouseholds": 68167,
+      "renovationHouseholds": 52774
+    },
+    {
+      "name": "용인처인구",
+      "key": "yongincheoingu",
+      "region": "gyeonggi",
+      "total": 31,
+      "needsRenovation": 23,
+      "renovationRate": 74.2,
+      "totalHouseholds": 31623,
+      "renovationHouseholds": 20324
+    },
+    {
+      "name": "서초구",
+      "key": "seocho",
+      "region": "seoul",
+      "total": 50,
+      "needsRenovation": 37,
+      "renovationRate": 74,
+      "totalHouseholds": 50409,
+      "renovationHouseholds": 37823
+    },
+    {
+      "name": "성남중원구",
+      "key": "seongnamjungwongu",
+      "region": "gyeonggi",
+      "total": 26,
+      "needsRenovation": 19,
+      "renovationRate": 73.1,
+      "totalHouseholds": 26037,
+      "renovationHouseholds": 19182
+    },
+    {
+      "name": "하남시",
+      "key": "hanam",
+      "region": "gyeonggi",
+      "total": 86,
+      "needsRenovation": 62,
+      "renovationRate": 72.1,
+      "totalHouseholds": 78755,
+      "renovationHouseholds": 60531
+    },
+    {
+      "name": "미추홀구",
+      "key": "michuhol",
+      "region": "incheon",
+      "total": 46,
+      "needsRenovation": 33,
+      "renovationRate": 71.7,
+      "totalHouseholds": 49515,
+      "renovationHouseholds": 32334
+    },
+    {
+      "name": "안성시",
+      "key": "anseong",
+      "region": "gyeonggi",
+      "total": 45,
+      "needsRenovation": 32,
+      "renovationRate": 71.1,
+      "totalHouseholds": 43743,
+      "renovationHouseholds": 32707
+    },
+    {
+      "name": "성남수정구",
+      "key": "seongnamsujeonggu",
+      "region": "gyeonggi",
+      "total": 25,
+      "needsRenovation": 17,
+      "renovationRate": 68,
+      "totalHouseholds": 29367,
+      "renovationHouseholds": 18558
+    },
+    {
+      "name": "은평구",
+      "key": "eunpyeong",
+      "region": "seoul",
+      "total": 31,
+      "needsRenovation": 21,
+      "renovationRate": 67.7,
+      "totalHouseholds": 30776,
+      "renovationHouseholds": 18629
+    },
+    {
+      "name": "파주시",
+      "key": "paju",
+      "region": "gyeonggi",
+      "total": 113,
+      "needsRenovation": 76,
+      "renovationRate": 67.3,
+      "totalHouseholds": 118745,
+      "renovationHouseholds": 82850
+    },
+    {
+      "name": "강동구",
+      "key": "gangdong",
+      "region": "seoul",
+      "total": 58,
+      "needsRenovation": 39,
+      "renovationRate": 67.2,
+      "totalHouseholds": 67048,
+      "renovationHouseholds": 48510
+    },
+    {
+      "name": "평택시",
+      "key": "pyeongtaek",
+      "region": "gyeonggi",
+      "total": 164,
+      "needsRenovation": 110,
+      "renovationRate": 67.1,
+      "totalHouseholds": 149262,
+      "renovationHouseholds": 91412
+    },
+    {
+      "name": "포천시",
+      "key": "pocheon",
+      "region": "gyeonggi",
+      "total": 12,
+      "needsRenovation": 8,
+      "renovationRate": 66.7,
+      "totalHouseholds": 10854,
+      "renovationHouseholds": 8306
+    },
+    {
+      "name": "중구",
+      "key": "jung",
+      "region": "seoul",
+      "total": 53,
+      "needsRenovation": 35,
+      "renovationRate": 66,
+      "totalHouseholds": 52291,
+      "renovationHouseholds": 37357
+    },
+    {
+      "name": "서구",
+      "key": "seo",
+      "region": "incheon",
+      "total": 137,
+      "needsRenovation": 80,
+      "renovationRate": 58.4,
+      "totalHouseholds": 137692,
+      "renovationHouseholds": 75347
+    },
+    {
+      "name": "이천시",
+      "key": "icheon",
+      "region": "gyeonggi",
+      "total": 33,
+      "needsRenovation": 19,
+      "renovationRate": 57.6,
+      "totalHouseholds": 21875,
+      "renovationHouseholds": 12407
+    },
+    {
+      "name": "여주시",
+      "key": "yeoju",
+      "region": "gyeonggi",
+      "total": 16,
+      "needsRenovation": 9,
+      "renovationRate": 56.3,
+      "totalHouseholds": 10245,
+      "renovationHouseholds": 5847
+    },
+    {
+      "name": "광주시",
+      "key": "gwangju-gyeonggi",
+      "region": "gyeonggi",
+      "total": 36,
+      "needsRenovation": 19,
+      "renovationRate": 52.8,
+      "totalHouseholds": 27858,
+      "renovationHouseholds": 13142
+    },
+    {
+      "name": "양주시",
+      "key": "yangju",
+      "region": "gyeonggi",
+      "total": 80,
+      "needsRenovation": 41,
+      "renovationRate": 51.3,
+      "totalHouseholds": 75991,
+      "renovationHouseholds": 38328
+    },
+    {
+      "name": "과천시",
+      "key": "gwacheonsi",
+      "region": "gyeonggi",
+      "total": 18,
+      "needsRenovation": 6,
+      "renovationRate": 33.3,
+      "totalHouseholds": 19101,
+      "renovationHouseholds": 7021
+    },
+    {
+      "name": "부천시",
+      "key": "bucheon",
+      "region": "gyeonggi",
+      "total": 17,
+      "needsRenovation": 0,
+      "renovationRate": 0,
+      "totalHouseholds": 3076,
+      "renovationHouseholds": 0
+    },
+    {
+      "name": "수원시",
+      "key": "suwon",
+      "region": "gyeonggi",
+      "total": 7,
+      "needsRenovation": 0,
+      "renovationRate": 0,
+      "totalHouseholds": 3954,
+      "renovationHouseholds": 0
+    },
+    {
+      "name": "고양시",
+      "key": "goyang",
+      "region": "gyeonggi",
+      "total": 7,
+      "needsRenovation": 0,
+      "renovationRate": 0,
+      "totalHouseholds": 4186,
+      "renovationHouseholds": 0
+    },
+    {
+      "name": "성남시",
+      "key": "seongnam",
+      "region": "gyeonggi",
+      "total": 5,
+      "needsRenovation": 0,
+      "renovationRate": 0,
+      "totalHouseholds": 2353,
+      "renovationHouseholds": 0
+    }
+  ],
+  "brandRanking": [
+    {
+      "name": "기타",
+      "total": 3065,
+      "needsRenovation": 2689,
+      "renovationRate": 87.7,
+      "totalHouseholds": 2977285,
+      "avgAge": 21.4
+    },
+    {
+      "name": "현대건설",
+      "total": 281,
+      "needsRenovation": 233,
+      "renovationRate": 82.9,
+      "totalHouseholds": 273113,
+      "avgAge": 21.1
+    },
+    {
+      "name": "대우건설",
+      "total": 169,
+      "needsRenovation": 124,
+      "renovationRate": 73.4,
+      "totalHouseholds": 188246,
+      "avgAge": 12.2
+    },
+    {
+      "name": "삼성물산",
+      "total": 156,
+      "needsRenovation": 144,
+      "renovationRate": 92.3,
+      "totalHouseholds": 172759,
+      "avgAge": 18.6
+    },
+    {
+      "name": "GS건설",
+      "total": 151,
+      "needsRenovation": 87,
+      "renovationRate": 57.6,
+      "totalHouseholds": 162505,
+      "avgAge": 9.4
+    },
+    {
+      "name": "미확인",
+      "total": 116,
+      "needsRenovation": 0,
+      "renovationRate": 0,
+      "totalHouseholds": 64237,
+      "avgAge": -0.4
+    },
+    {
+      "name": "DL이앤씨",
+      "total": 103,
+      "needsRenovation": 55,
+      "renovationRate": 53.4,
+      "totalHouseholds": 109996,
+      "avgAge": 7.2
+    },
+    {
+      "name": "HDC현대산업개발",
+      "total": 92,
+      "needsRenovation": 68,
+      "renovationRate": 73.9,
+      "totalHouseholds": 89492,
+      "avgAge": 12.7
+    },
+    {
+      "name": "롯데건설",
+      "total": 66,
+      "needsRenovation": 47,
+      "renovationRate": 71.2,
+      "totalHouseholds": 76818,
+      "avgAge": 10.3
+    },
+    {
+      "name": "호반건설",
+      "total": 63,
+      "needsRenovation": 40,
+      "renovationRate": 63.5,
+      "totalHouseholds": 58301,
+      "avgAge": 7.9
+    },
+    {
+      "name": "포스코이앤씨",
+      "total": 60,
+      "needsRenovation": 36,
+      "renovationRate": 60,
+      "totalHouseholds": 65638,
+      "avgAge": 8.8
+    },
+    {
+      "name": "두산건설",
+      "total": 33,
+      "needsRenovation": 25,
+      "renovationRate": 75.8,
+      "totalHouseholds": 35215,
+      "avgAge": 14.1
+    },
+    {
+      "name": "태영건설",
+      "total": 18,
+      "needsRenovation": 14,
+      "renovationRate": 77.8,
+      "totalHouseholds": 16317,
+      "avgAge": 15.3
+    },
+    {
+      "name": "동부건설",
+      "total": 17,
+      "needsRenovation": 12,
+      "renovationRate": 70.6,
+      "totalHouseholds": 15009,
+      "avgAge": 14.6
+    },
+    {
+      "name": "한화건설",
+      "total": 11,
+      "needsRenovation": 2,
+      "renovationRate": 18.2,
+      "totalHouseholds": 9921,
+      "avgAge": 5.1
+    }
+  ],
+  "yearDistribution": [
+    {
+      "year": 1971,
+      "count": 2,
+      "households": 2244
+    },
+    {
+      "year": 1974,
+      "count": 2,
+      "households": 1171
+    },
+    {
+      "year": 1975,
+      "count": 3,
+      "households": 2030
+    },
+    {
+      "year": 1977,
+      "count": 2,
+      "households": 1490
+    },
+    {
+      "year": 1978,
+      "count": 7,
+      "households": 9048
+    },
+    {
+      "year": 1979,
+      "count": 8,
+      "households": 11339
+    },
+    {
+      "year": 1980,
+      "count": 6,
+      "households": 4185
+    },
+    {
+      "year": 1981,
+      "count": 4,
+      "households": 4368
+    },
+    {
+      "year": 1982,
+      "count": 6,
+      "households": 4290
+    },
+    {
+      "year": 1983,
+      "count": 15,
+      "households": 13916
+    },
+    {
+      "year": 1984,
+      "count": 15,
+      "households": 11707
+    },
+    {
+      "year": 1985,
+      "count": 12,
+      "households": 12996
+    },
+    {
+      "year": 1986,
+      "count": 36,
+      "households": 43675
+    },
+    {
+      "year": 1987,
+      "count": 35,
+      "households": 43951
+    },
+    {
+      "year": 1988,
+      "count": 53,
+      "households": 73957
+    },
+    {
+      "year": 1989,
+      "count": 44,
+      "households": 44500
+    },
+    {
+      "year": 1990,
+      "count": 57,
+      "households": 61502
+    },
+    {
+      "year": 1991,
+      "count": 43,
+      "households": 52901
+    },
+    {
+      "year": 1992,
+      "count": 119,
+      "households": 120171
+    },
+    {
+      "year": 1993,
+      "count": 141,
+      "households": 126344
+    },
+    {
+      "year": 1994,
+      "count": 150,
+      "households": 135961
+    },
+    {
+      "year": 1995,
+      "count": 128,
+      "households": 109267
+    },
+    {
+      "year": 1996,
+      "count": 89,
+      "households": 80208
+    },
+    {
+      "year": 1997,
+      "count": 128,
+      "households": 113766
+    },
+    {
+      "year": 1998,
+      "count": 100,
+      "households": 92370
+    },
+    {
+      "year": 1999,
+      "count": 120,
+      "households": 107217
+    },
+    {
+      "year": 2000,
+      "count": 111,
+      "households": 111631
+    },
+    {
+      "year": 2001,
+      "count": 110,
+      "households": 105965
+    },
+    {
+      "year": 2002,
+      "count": 125,
+      "households": 111998
+    },
+    {
+      "year": 2003,
+      "count": 115,
+      "households": 107816
+    },
+    {
+      "year": 2004,
+      "count": 129,
+      "households": 126709
+    },
+    {
+      "year": 2005,
+      "count": 107,
+      "households": 96423
+    },
+    {
+      "year": 2006,
+      "count": 99,
+      "households": 81808
+    },
+    {
+      "year": 2007,
+      "count": 99,
+      "households": 95226
+    },
+    {
+      "year": 2008,
+      "count": 96,
+      "households": 107470
+    },
+    {
+      "year": 2009,
+      "count": 118,
+      "households": 109092
+    },
+    {
+      "year": 2010,
+      "count": 122,
+      "households": 114580
+    },
+    {
+      "year": 2011,
+      "count": 101,
+      "households": 97304
+    },
+    {
+      "year": 2012,
+      "count": 96,
+      "households": 94837
+    },
+    {
+      "year": 2013,
+      "count": 59,
+      "households": 60893
+    },
+    {
+      "year": 2014,
+      "count": 86,
+      "households": 84709
+    },
+    {
+      "year": 2015,
+      "count": 87,
+      "households": 90284
+    },
+    {
+      "year": 2016,
+      "count": 98,
+      "households": 110336
+    },
+    {
+      "year": 2017,
+      "count": 149,
+      "households": 149354
+    },
+    {
+      "year": 2018,
+      "count": 187,
+      "households": 197268
+    },
+    {
+      "year": 2019,
+      "count": 158,
+      "households": 165494
+    },
+    {
+      "year": 2020,
+      "count": 126,
+      "households": 146622
+    },
+    {
+      "year": 2021,
+      "count": 137,
+      "households": 151525
+    },
+    {
+      "year": 2022,
+      "count": 138,
+      "households": 138534
+    },
+    {
+      "year": 2023,
+      "count": 148,
+      "households": 157230
+    },
+    {
+      "year": 2024,
+      "count": 108,
+      "households": 112407
+    },
+    {
+      "year": 2026,
+      "count": 117,
+      "households": 74416
+    },
+    {
+      "year": 2027,
+      "count": 67,
+      "households": 42200
+    }
+  ],
+  "upcomingByMonth": []
+}

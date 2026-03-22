@@ -78,15 +78,11 @@ function generateBrandCards(brands) {
               <span class="brand-stat-value">${formatNumber(brand.total)}개</span>
             </div>
             <div class="brand-stat-row">
-              <span>시공 필요</span>
-              <span class="brand-stat-value">${formatNumber(brand.needsRenovation)}개</span>
-            </div>
-            <div class="brand-stat-row">
               <span>평균 연식</span>
               <span class="brand-stat-value">${brand.avgAge}년</span>
             </div>
             <div class="brand-stat-row">
-              <span>노후화율</span>
+              <span>준공 7년 이상</span>
               <span class="brand-stat-value">${brand.renovationRate}%</span>
             </div>
           </div>
@@ -144,10 +140,10 @@ function generateJsonLd(stats) {
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'Dataset',
-    name: '수도권 아파트 줄눈 노후도 데이터',
-    description: `수도권 ${formatNumber(stats.summary.totalCount)}개 아파트 단지의 욕실 타일 줄눈 노후도 분석 데이터. 준공연도 기반 시공 필요 비율, 구별 순위, 브랜드별 현황 포함.`,
+    name: '수도권 아파트 줄눈 재시공 권장 지수 데이터',
+    description: `수도권 ${formatNumber(stats.summary.totalCount)}개 아파트 단지의 욕실 타일 줄눈 재시공 권장 분석 데이터. 준공연도 기반 재시공 권장 비율, 구별 순위, 브랜드별 현황 포함.`,
     url: `${BASE_URL}/stats/metropolitan-grout-index`,
-    keywords: ['아파트 줄눈', '줄눈 시공', '욕실 타일', '수도권 아파트', '노후도 분석', '줄눈 노후화'],
+    keywords: ['아파트 줄눈', '줄눈 시공', '욕실 타일', '수도권 아파트', '줄눈 재시공', '줄눈 교체 주기'],
     creator: {
       '@type': 'Organization',
       name: '하우스Pick',
@@ -176,7 +172,7 @@ function generateJsonLd(stats) {
       },
       {
         '@type': 'PropertyValue',
-        name: '노후화율',
+        name: '재시공 권장 지수',
         value: stats.summary.renovationRate,
         unitText: '%'
       },
@@ -206,15 +202,15 @@ function generateStatsPage() {
 
   // 템플릿 치환
   let html = template
-    .replace(/\{\{TITLE\}\}/g, '2026 수도권 아파트 줄눈 노후도 리포트 | 하우스Pick')
-    .replace(/\{\{META_DESCRIPTION\}\}/g, `수도권 ${formatNumber(stats.summary.totalCount)}개 아파트 단지 중 ${stats.summary.renovationRate}%가 줄눈 재시공이 필요합니다. 구별 노후도 순위, 브랜드별 분석, 준공연도 분포 데이터를 확인하세요.`)
+    .replace(/\{\{TITLE\}\}/g, '2026 수도권 아파트 줄눈 재시공 권장 리포트 | 하우스Pick')
+    .replace(/\{\{META_DESCRIPTION\}\}/g, `수도권 ${formatNumber(stats.summary.totalCount)}개 아파트 단지 중 ${stats.summary.renovationRate}%가 줄눈 교체 주기에 도래했습니다. 구별 재시공 권장 순위, 브랜드별 분석, 준공연도 분포 데이터를 확인하세요.`)
     .replace(/\{\{CANONICAL_URL\}\}/g, `${BASE_URL}/stats/metropolitan-grout-index`)
     .replace(/\{\{PUBLISHED_DATE\}\}/g, publishedDate)
     .replace(/\{\{MODIFIED_DATE\}\}/g, modifiedDate)
     .replace(/\{\{VITE_CSS\}\}/g, viteCss)
     .replace(/\{\{JSON_LD\}\}/g, generateJsonLd(stats))
     .replace(/\{\{REPORT_YEAR\}\}/g, stats.summary.analysisYear.toString())
-    .replace(/\{\{REPORT_TITLE\}\}/g, '수도권 아파트 줄눈 노후도 리포트')
+    .replace(/\{\{REPORT_TITLE\}\}/g, '수도권 아파트 줄눈 재시공 권장 리포트')
     .replace(/\{\{REPORT_SUBTITLE\}\}/g, `${formatNumber(stats.summary.totalCount)}개 아파트 단지의 욕실 타일 줄눈 상태 종합 분석`)
     .replace(/\{\{ANALYSIS_DATE\}\}/g, analysisDate)
     .replace(/\{\{TOTAL_APARTMENTS\}\}/g, formatNumber(stats.summary.totalCount))
@@ -257,7 +253,7 @@ function generateStatsPage() {
   console.log('✅ 통계 리포트 페이지 생성 완료')
   console.log(`   URL: /stats/metropolitan-grout-index`)
   console.log(`   분석 단지: ${formatNumber(stats.summary.totalCount)}개`)
-  console.log(`   노후화율: ${stats.summary.renovationRate}%`)
+  console.log(`   재시공 권장 지수: ${stats.summary.renovationRate}%`)
   console.log(`   구별 순위: ${stats.districtRanking.length}개`)
   console.log(`   브랜드: ${stats.brandRanking.length}개`)
 }

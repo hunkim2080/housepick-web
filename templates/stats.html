@@ -29,7 +29,7 @@
     <!-- SEO Meta Tags -->
     <title>{{TITLE}}</title>
     <meta name="description" content="{{META_DESCRIPTION}}" />
-    <meta name="keywords" content="수도권 아파트 줄눈, 줄눈 노후도, 아파트 줄눈 시공, 욕실 타일 줄눈, 아파트 시공 데이터" />
+    <meta name="keywords" content="수도권 아파트 줄눈, 줄눈 재시공, 아파트 줄눈 시공, 욕실 타일 줄눈, 아파트 시공 데이터" />
     <link rel="canonical" href="{{CANONICAL_URL}}" />
 
     <!-- Open Graph -->
@@ -40,7 +40,7 @@
     <meta property="og:image" content="https://housepick-web.vercel.app/images/og/og-stats.png" />
     <meta property="og:image:width" content="1195" />
     <meta property="og:image:height" content="625" />
-    <meta property="og:image:alt" content="수도권 아파트 줄눈 노후도 리포트 - 하우스Pick" />
+    <meta property="og:image:alt" content="수도권 아파트 줄눈 재시공 권장 지수 리포트 - 하우스Pick" />
     <meta property="article:published_time" content="{{PUBLISHED_DATE}}" />
     <meta property="article:modified_time" content="{{MODIFIED_DATE}}" />
 
@@ -529,6 +529,41 @@
         font-size: 0.75rem;
         font-weight: 500;
       }
+
+      /* 데이터 출처 명시 */
+      .data-source-note {
+        margin-top: 1.5rem;
+        padding: 1rem;
+        background: #f5f5f4;
+        border-radius: 0.5rem;
+        font-size: 0.8125rem;
+        color: #57534e;
+        text-align: center;
+      }
+
+      /* 법적 고지사항 */
+      .legal-disclaimer {
+        max-width: 72rem;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+        background: #fafaf9;
+        border-top: 1px solid #e7e5e4;
+      }
+      .legal-disclaimer h4 {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: #44403c;
+        margin-bottom: 1rem;
+      }
+      .legal-disclaimer p {
+        font-size: 0.75rem;
+        color: #78716c;
+        line-height: 1.7;
+        margin-bottom: 0.75rem;
+      }
+      .legal-disclaimer p:last-child {
+        margin-bottom: 0;
+      }
     </style>
   </head>
   <body>
@@ -569,11 +604,11 @@
         <div class="stat-card-value">{{TOTAL_COUNT}}<span class="stat-card-unit">개</span></div>
       </div>
       <div class="stat-card">
-        <div class="stat-card-label">시공 필요 단지</div>
+        <div class="stat-card-label">재시공 권장 단지</div>
         <div class="stat-card-value highlight">{{RENOVATION_COUNT}}<span class="stat-card-unit">개</span></div>
       </div>
       <div class="stat-card">
-        <div class="stat-card-label">노후화율</div>
+        <div class="stat-card-label">재시공 권장 지수</div>
         <div class="stat-card-value highlight">{{RENOVATION_RATE}}<span class="stat-card-unit">%</span></div>
       </div>
       <div class="stat-card">
@@ -582,11 +617,11 @@
       </div>
     </div>
 
-    <!-- 구별 노후도 순위 -->
+    <!-- 구별 재시공 권장 지수 순위 -->
     <section class="report-section">
       <div class="section-header">
-        <h2 class="section-title">구별 줄눈 노후도 순위</h2>
-        <p class="section-subtitle">7년 이상 경과한 단지 비율 기준 (상위 20개 구)</p>
+        <h2 class="section-title">구별 줄눈 재시공 권장 지수</h2>
+        <p class="section-subtitle">준공 후 7년 이상 경과한 단지 비율 기준 (상위 20개 구)</p>
       </div>
       <div class="table-wrapper">
         <table class="ranking-table">
@@ -595,8 +630,8 @@
               <th>순위</th>
               <th>지역</th>
               <th>전체 단지</th>
-              <th>시공 필요</th>
-              <th>노후화율</th>
+              <th>재시공 권장</th>
+              <th>권장 지수</th>
             </tr>
           </thead>
           <tbody>
@@ -610,7 +645,7 @@
     <section class="report-section">
       <div class="section-header">
         <h2 class="section-title">브랜드별 줄눈 현황</h2>
-        <p class="section-subtitle">주요 아파트 브랜드의 평균 연식 및 시공 필요 비율</p>
+        <p class="section-subtitle">주요 아파트 브랜드의 평균 연식 및 준공 10년 이상 단지 비율</p>
       </div>
       <div class="brand-grid">
 {{BRAND_CARDS}}
@@ -642,8 +677,8 @@
             <span>수도권(서울, 경기, 인천) 500세대 이상 아파트 단지</span>
           </li>
           <li>
-            <span class="item-label">노후 기준</span>
-            <span>준공 후 7년 경과 (욕실 줄눈 권장 재시공 주기)</span>
+            <span class="item-label">재시공 권장 기준</span>
+            <span>준공 후 7년 경과 (일반 줄눈재 내구연한 기준)</span>
           </li>
           <li>
             <span class="item-label">갱신 주기</span>
@@ -652,6 +687,11 @@
         </ul>
       </div>
     </section>
+
+    <!-- 데이터 출처 명시 -->
+    <div class="data-source-note">
+      ※ 출처: 국토교통부 건축물대장 및 공공데이터포털 기반 하우스픽 자체 분석 (2026년 3월 기준)
+    </div>
 
     <!-- CTA -->
     <section class="report-cta">
@@ -664,6 +704,14 @@
         </a>
       </div>
     </section>
+
+    <!-- 법적 고지사항 -->
+    <div class="legal-disclaimer">
+      <h4>법적 고지사항</h4>
+      <p>본 리포트에 사용된 데이터는 국토교통부 공공데이터를 기반으로 하우스픽이 자체 분석한 통계이며, 실제 개별 세대의 시공 상태와는 차이가 있을 수 있습니다.</p>
+      <p>'재시공 권장 지수'는 일반적인 줄눈재의 내구연한(약 7년)을 기준으로 산출된 참고용 수치이며, 특정 아파트 단지의 자산 가치나 관리 상태를 평가하는 절대적 기준이 아닙니다.</p>
+      <p>본 콘텐츠의 무단 전재 및 재배포를 금하며, 인용 시 반드시 출처(하우스픽)를 밝혀주시기 바랍니다.</p>
+    </div>
 
     <!-- 푸터 -->
     <footer class="report-footer">

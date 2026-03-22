@@ -80,7 +80,7 @@
           "name": "케라폭시는 왜 일반 줄눈보다 3배 비싼가?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "생애주기 비용 관점에서 보면, 시멘트계 줄눈 5년 주기 재시공 비용(15만원) × 3회 = 45만원이고, 케라폭시 1회 시공 비용도 45만원입니다. 15년 기준 총비용은 동일하지만, 케라폭시는 1회 시공으로 끝나 번거로움이 없고 15년 후에도 양호한 상태를 유지합니다."
+            "text": "생애주기 비용 관점에서 보면 오히려 저렴합니다. 이탈리아 마페이 정품 케라폭시는 에폭시 수지 기반으로 수축률 0%를 달성합니다. 시멘트계 줄눈 15년 총비용(45만원)과 케라폭시 1회 시공 비용이 동일하지만, 케라폭시는 항균 인증 제품으로 15년 후에도 양호한 상태를 유지합니다."
           }
         },
         {
@@ -88,7 +88,7 @@
           "name": "케라폭시 DIY 시공이 불가능한 기술적 이유는?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "케라폭시는 A제(에폭시 수지)와 B제(경화제)를 정확한 비율(2:1)로 혼합해야 합니다. 혼합 후 가사시간(Pot Life)이 30분 이내로 신속한 시공이 필요하며, 타일 표면 온도 5~35°C 범위에서만 정상 경화됩니다. 이 조건을 맞추지 못하면 경화 불량으로 박리·변색이 발생합니다."
+            "text": "케라폭시는 A제(에폭시 수지)와 B제(경화제)를 정확한 비율(2:1)로 혼합해야 합니다. 이탈리아 마페이 정품은 이 비율이 맞아야만 수축률 0%와 최적의 화학적 내성을 발휘합니다. 혼합 후 가사시간이 30분 이내로 짧아 전문 시공이 필요합니다."
           }
         },
         {
@@ -96,7 +96,7 @@
           "name": "케라폭시 시공 후 24시간이 골든타임인 이유는?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "케라폭시는 시공 후 24시간 이내 초기 경화(Initial Cure) 단계에서 외부 충격이나 수분 접촉을 피해야 합니다. 이 시간 동안 에폭시 분자 결합이 형성되며, 완전 경화(Full Cure)는 72시간 후 완성됩니다. 24시간 이내 사용 시 표면 오염과 경화 불량이 동시에 발생할 수 있습니다."
+            "text": "케라폭시는 시공 후 24시간 이내 초기 경화 단계에서 에폭시 수지의 분자 결합이 형성됩니다. 완전 경화(72시간 후)되면 강력한 화학적 내성과 항균 인증 효과가 100% 발휘됩니다. 24시간 이내 사용 시 경화 불량이 발생할 수 있습니다."
           }
         },
         {
@@ -104,7 +104,7 @@
           "name": "케라폭시 시공 후 관리 방법은?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "완전 경화 후에는 중성 세제로 청소 가능합니다. 산성·염기성 세제는 사용 금지입니다. 연 1회 전용 보호제 도포 시 수명 연장이 가능합니다."
+            "text": "완전 경화 후에는 중성 세제로 청소 가능합니다. 에폭시 수지의 화학적 내성 덕분에 일반 세정제에 손상되지 않습니다. 이탈리아 마페이 정품 케라폭시는 수축률 0% 특성으로 크랙 없이 오래 유지됩니다. 연 1회 전용 보호제 도포 시 수명 연장이 가능합니다."
           }
         }
       ]
@@ -408,6 +408,133 @@
         font-weight: 600;
       }
 
+      /* 계산기 섹션 */
+      .calculator-section {
+        background: #f0fdf4;
+      }
+      .calculator-wrapper {
+        max-width: 40rem;
+        margin: 0 auto;
+      }
+      .calculator-form {
+        background: white;
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      }
+      .calc-input-group {
+        margin-bottom: 1rem;
+      }
+      .calc-input-group label {
+        display: block;
+        font-weight: 600;
+        color: #1c1917;
+        margin-bottom: 0.5rem;
+        font-size: 0.9375rem;
+      }
+      .calc-input-group input,
+      .calc-input-group select {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 1px solid #d6d3d1;
+        border-radius: 0.5rem;
+        font-size: 1rem;
+        color: #1c1917;
+        background: white;
+      }
+      .calc-input-group input:focus,
+      .calc-input-group select:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+      }
+      .calc-btn {
+        width: 100%;
+        padding: 0.875rem 1.5rem;
+        background: #166534;
+        color: white;
+        border: none;
+        border-radius: 0.5rem;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .calc-btn:hover {
+        background: #15803d;
+      }
+      .calculator-result {
+        margin-top: 1.5rem;
+        background: linear-gradient(135deg, #dbeafe 0%, #e0f2fe 100%);
+        border: 2px solid #3b82f6;
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+      }
+      .result-content {
+        font-size: 1rem;
+        line-height: 1.7;
+        color: #1e3a5f;
+      }
+      .result-content p {
+        margin-bottom: 0.75rem;
+      }
+      .result-content .result-highlight {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #166534;
+      }
+      .result-actions {
+        margin-top: 1.25rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+      .copy-link-btn {
+        padding: 0.75rem 1rem;
+        background: white;
+        color: #1c1917;
+        border: 1px solid #d6d3d1;
+        border-radius: 0.5rem;
+        font-size: 0.9375rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .copy-link-btn:hover {
+        background: #fef3c7;
+        border-color: #f59e0b;
+      }
+      .copy-link-btn.copied {
+        background: #dcfce7;
+        border-color: #22c55e;
+        color: #166534;
+      }
+      .result-cta {
+        display: block;
+        text-align: center;
+        padding: 0.875rem 1rem;
+        background: #1c1917;
+        color: white;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: transform 0.2s;
+      }
+      .result-cta:hover {
+        transform: scale(1.02);
+      }
+      @media (min-width: 768px) {
+        .result-actions {
+          flex-direction: row;
+        }
+        .copy-link-btn {
+          flex: 1;
+        }
+        .result-cta {
+          flex: 2;
+        }
+      }
+
       /* 칼럼 섹션 */
       .column-section {
         background: #1e3a5f;
@@ -479,6 +606,50 @@
       .diagnosis-card.old { border-top: 4px solid #ef4444; }
       @media (min-width: 768px) {
         .diagnosis-grid { grid-template-columns: repeat(3, 1fr); }
+      }
+
+      /* 지역 링크 그리드 */
+      .region-links-container {
+        max-width: 48rem;
+        margin: 0 auto;
+      }
+      .region-group {
+        margin-bottom: 1.5rem;
+      }
+      .region-group-title {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #57534e;
+        margin-bottom: 0.75rem;
+        padding-left: 0.25rem;
+      }
+      .region-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+      }
+      .region-link-btn {
+        display: block;
+        padding: 0.875rem 1rem;
+        background: white;
+        border: 1px solid #e7e5e4;
+        border-radius: 0.5rem;
+        text-align: center;
+        text-decoration: none;
+        color: #1c1917;
+        font-weight: 500;
+        font-size: 0.9375rem;
+        transition: all 0.2s;
+      }
+      .region-link-btn:hover {
+        background: #fef3c7;
+        border-color: #f59e0b;
+        color: #1c1917;
+      }
+      @media (min-width: 768px) {
+        .region-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
       }
 
       /* CTA 섹션 */
@@ -679,10 +850,10 @@
       <p class="section-subtitle">기술적 근거와 함께 답변합니다</p>
       <div class="faq-list">
         <div class="faq-item open">
-          <div class="faq-question">Q1. 케라폭시는 왜 일반 줄눈보다 3배 비싼가?</div>
+          <h3 class="faq-question">Q1. 케라폭시는 왜 일반 줄눈보다 3배 비싼가?</h3>
           <div class="faq-answer">
-            <p><strong>생애주기 비용(Life Cycle Cost)</strong> 관점에서 보면 오히려 저렴합니다.</p>
-            <p>시멘트계 줄눈은 5년마다 재시공이 필요합니다. 15년 동안 3회 시공하면 총비용이 케라폭시 1회 시공과 동일해집니다. 게다가 케라폭시는 15년 후에도 양호한 상태를 유지하므로, 장기적으로 더 경제적입니다.</p>
+            <p><strong>생애주기 비용(Life Cycle Cost)</strong> 관점에서 보면 오히려 저렴합니다. 이탈리아 마페이 정품 케라폭시는 에폭시 수지 기반으로 수축률 0%를 달성합니다.</p>
+            <p>시멘트계 줄눈은 5년마다 재시공이 필요합니다. 15년 동안 3회 시공하면 총비용이 케라폭시 1회 시공과 동일해집니다. 게다가 케라폭시는 항균 인증을 받은 제품으로, 15년 후에도 양호한 상태를 유지해 장기적으로 더 경제적입니다.</p>
             <table class="cost-table">
               <thead>
                 <tr>
@@ -717,27 +888,69 @@
           </div>
         </div>
         <div class="faq-item">
-          <div class="faq-question">Q2. DIY 시공이 불가능한 기술적 이유</div>
+          <h3 class="faq-question">Q2. DIY 시공이 불가능한 기술적 이유</h3>
           <div class="faq-answer">
-            <p>케라폭시는 <strong>A제(에폭시 수지)와 B제(경화제)를 정확한 비율(2:1)</strong>로 혼합해야 합니다.</p>
+            <p>케라폭시는 <strong>A제(에폭시 수지)와 B제(경화제)를 정확한 비율(2:1)</strong>로 혼합해야 합니다. 이탈리아 마페이 정품은 이 비율이 맞아야만 수축률 0%와 최적의 화학적 내성을 발휘합니다.</p>
             <p>혼합 후 <strong>가사시간(Pot Life)이 30분 이내</strong>로 매우 짧아, 신속하고 정확한 시공이 필요합니다. 또한 타일 표면 온도가 <strong>5~35°C 범위</strong>에서만 정상 경화됩니다.</p>
             <p>이 조건을 맞추지 못하면 경화 불량으로 박리·변색이 발생합니다. 전문 장비와 숙련된 기술 없이는 성공적인 시공이 어렵습니다.</p>
           </div>
         </div>
         <div class="faq-item">
-          <div class="faq-question">Q3. 시공 후 24시간이 골든타임인 이유</div>
+          <h3 class="faq-question">Q3. 시공 후 24시간이 골든타임인 이유</h3>
           <div class="faq-answer">
-            <p>케라폭시는 시공 후 24시간 이내 <strong>초기 경화(Initial Cure)</strong> 단계에서 외부 충격이나 수분 접촉을 피해야 합니다.</p>
-            <p>이 시간 동안 에폭시 분자 결합이 형성되며, <strong>완전 경화(Full Cure)는 72시간 후</strong> 완성됩니다.</p>
+            <p>케라폭시는 시공 후 24시간 이내 <strong>초기 경화(Initial Cure)</strong> 단계에서 외부 충격이나 수분 접촉을 피해야 합니다. 이 시간 동안 에폭시 수지의 분자 결합이 형성됩니다.</p>
+            <p><strong>완전 경화(Full Cure)는 72시간 후</strong> 완성되며, 이때 비로소 강력한 화학적 내성과 항균 인증 효과가 100% 발휘됩니다.</p>
             <p>24시간 이내 사용 시 표면 오염과 경화 불량이 동시에 발생할 수 있습니다. 시공 후 최소 24시간은 화장실 사용을 자제해야 합니다.</p>
           </div>
         </div>
         <div class="faq-item">
-          <div class="faq-question">Q4. 케라폭시 시공 후 관리 방법</div>
+          <h3 class="faq-question">Q4. 케라폭시 시공 후 관리 방법</h3>
           <div class="faq-answer">
-            <p>완전 경화 후(72시간 이후)에는 <strong>중성 세제</strong>로 일반 청소가 가능합니다.</p>
-            <p><strong>산성·염기성 세제는 사용 금지</strong>입니다. 에폭시 표면을 손상시킬 수 있습니다.</p>
-            <p>연 1회 전용 보호제 도포 시 수명을 더욱 연장할 수 있습니다. 하우스픽에서는 시공 고객에게 관리 가이드를 제공합니다.</p>
+            <p>완전 경화 후(72시간 이후)에는 <strong>중성 세제</strong>로 일반 청소가 가능합니다. 에폭시 수지의 화학적 내성 덕분에 일반 세정제에 손상되지 않습니다.</p>
+            <p><strong>산성·염기성 세제는 사용 금지</strong>입니다. 장기적으로 에폭시 표면을 손상시킬 수 있습니다.</p>
+            <p>연 1회 전용 보호제 도포 시 수명을 더욱 연장할 수 있습니다. 이탈리아 마페이 정품 케라폭시는 수축률 0% 특성으로 크랙 없이 오래 유지됩니다. 하우스픽에서는 시공 고객에게 관리 가이드를 제공합니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 케라폭시 예상 수명 계산기 -->
+    <section class="section calculator-section">
+      <h2 class="section-title">내 아파트 케라폭시 교체 시기 계산기</h2>
+      <p class="section-subtitle">준공연도와 사용 환경에 따른 맞춤 진단</p>
+      <div class="calculator-wrapper">
+        <div class="calculator-form">
+          <div class="calc-input-group">
+            <label for="calc-year">준공 연도</label>
+            <input type="number" id="calc-year" min="1990" max="2026" placeholder="예: 2010" />
+          </div>
+          <div class="calc-input-group">
+            <label for="calc-usage">욕실 사용 빈도</label>
+            <select id="calc-usage">
+              <option value="">선택하세요</option>
+              <option value="1">1인 가구</option>
+              <option value="2-3">2~3인 가구</option>
+              <option value="4+">4인 이상 가족</option>
+            </select>
+          </div>
+          <div class="calc-input-group">
+            <label for="calc-state">현재 줄눈 상태</label>
+            <select id="calc-state">
+              <option value="">선택하세요</option>
+              <option value="clean">깨끗함</option>
+              <option value="slight">약간 변색</option>
+              <option value="severe">많이 변색/곰팡이</option>
+            </select>
+          </div>
+          <button type="button" class="calc-btn" onclick="calculateKerapoxy()">진단 결과 보기</button>
+        </div>
+        <div class="calculator-result" id="calc-result" style="display: none;">
+          <div class="result-content" id="result-content"></div>
+          <div class="result-actions">
+            <button type="button" class="copy-link-btn" onclick="copyCurrentUrl()">
+              <span id="copy-btn-text">링크 복사하기 📋</span>
+            </button>
+            <a href="tel:010-6461-0131" class="result-cta">무료 현장 진단 신청 → 010-6461-0131</a>
           </div>
         </div>
       </div>
@@ -789,6 +1002,40 @@
       </div>
     </section>
 
+    <!-- 내부 링크: 활발한 시공 지역 -->
+    <section class="section" style="background: #fafaf9;">
+      <h2 class="section-title">현재 가장 활발하게 시공 중인 지역</h2>
+      <p class="section-subtitle">각 지역 전문 페이지에서 상세 정보를 확인하세요</p>
+      <div class="region-links-container">
+        <div class="region-group">
+          <h3 class="region-group-title">서울</h3>
+          <div class="region-grid">
+            <a href="/seoul/gangnam/julnoon" class="region-link-btn">강남구</a>
+            <a href="/seoul/gangdong/julnoon" class="region-link-btn">강동구</a>
+            <a href="/seoul/songpa/julnoon" class="region-link-btn">송파구</a>
+            <a href="/seoul/mapo/julnoon" class="region-link-btn">마포구</a>
+            <a href="/seoul/yongsan/julnoon" class="region-link-btn">용산구</a>
+            <a href="/seoul/seongdong/julnoon" class="region-link-btn">성동구</a>
+          </div>
+        </div>
+        <div class="region-group">
+          <h3 class="region-group-title">경기</h3>
+          <div class="region-grid">
+            <a href="/gyeonggi/suwon/julnoon" class="region-link-btn">수원시</a>
+            <a href="/gyeonggi/seongnam/julnoon" class="region-link-btn">성남시</a>
+            <a href="/gyeonggi/yongin/julnoon" class="region-link-btn">용인시</a>
+            <a href="/gyeonggi/goyang/julnoon" class="region-link-btn">고양시</a>
+          </div>
+        </div>
+        <div class="region-group">
+          <h3 class="region-group-title">인천</h3>
+          <div class="region-grid">
+            <a href="/incheon/namdong/julnoon" class="region-link-btn">남동구</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- CTA -->
     <section class="cta-section">
       <div class="cta-inner">
@@ -809,7 +1056,7 @@
         <p class="footer-text">수도권 아파트 줄눈시공 전문 플랫폼</p>
         <div class="footer-links">
           <a href="/">홈</a>
-          <a href="/stats/metropolitan-grout-index">노후도 리포트</a>
+          <a href="/stats/metropolitan-grout-index">재시공 권장 리포트</a>
           <a href="/privacy">개인정보처리방침</a>
           <a href="https://tally.so/r/3Ex6Wp" target="_blank" rel="noopener">상담 신청</a>
         </div>
@@ -830,6 +1077,96 @@
           }
         });
       });
+
+      // 케라폭시 예상 수명 계산기
+      function calculateKerapoxy() {
+        var yearInput = document.getElementById('calc-year');
+        var usageInput = document.getElementById('calc-usage');
+        var stateInput = document.getElementById('calc-state');
+        var resultDiv = document.getElementById('calc-result');
+        var contentDiv = document.getElementById('result-content');
+
+        var year = parseInt(yearInput.value);
+        var usage = usageInput.value;
+        var state = stateInput.value;
+
+        // 유효성 검사
+        if (!year || year < 1990 || year > 2026) {
+          alert('준공 연도를 1990~2026 사이로 입력해주세요.');
+          return;
+        }
+        if (!usage) {
+          alert('욕실 사용 빈도를 선택해주세요.');
+          return;
+        }
+        if (!state) {
+          alert('현재 줄눈 상태를 선택해주세요.');
+          return;
+        }
+
+        var age = 2026 - year;
+
+        // 승수 설정
+        var usageMultiplier = { '1': 1.2, '2-3': 1.0, '4+': 0.8 };
+        var stateMultiplier = { 'clean': 1.0, 'slight': 0.85, 'severe': 0.6 };
+
+        var baseLife = 15;
+        var expectedLife = (baseLife * usageMultiplier[usage] * stateMultiplier[state]).toFixed(1);
+
+        var resultHtml = '';
+
+        if (age < 5) {
+          resultHtml = '<p>현재 줄눈 상태가 <strong>양호</strong>합니다.</p>' +
+            '<p class="result-highlight">지금 케라폭시 코팅 시 향후 ' + expectedLife + '년 동안 추가 재시공이 필요 없습니다.</p>' +
+            '<p>입주 초기에 케라폭시를 시공하면 오염을 원천 차단하여 새것 같은 상태를 오래 유지할 수 있습니다.</p>';
+        } else if (age < 10) {
+          resultHtml = '<p>줄눈 <strong>변색이 시작되는 시점</strong>입니다.</p>' +
+            '<p class="result-highlight">지금 케라폭시 재시공 시 향후 ' + expectedLife + '년 추가 유지 가능합니다.</p>' +
+            '<p>곰팡이가 깊이 침투하기 전인 지금이 케라폭시 시공의 최적기입니다. 비용 대비 효과가 가장 큽니다.</p>';
+        } else {
+          resultHtml = '<p><strong>곰팡이 포자가 깊숙이 침투</strong>했을 가능성이 높습니다.</p>' +
+            '<p>기존 줄눈 V-Cutting(제거 공정) 후 <strong>케라폭시 전면 재시공</strong>을 권장합니다.</p>' +
+            '<p class="result-highlight">재시공 후 향후 ' + expectedLife + '년 유지 가능합니다.</p>' +
+            '<p>전문가 현장 진단을 통해 정확한 상태 확인을 권장합니다.</p>';
+        }
+
+        contentDiv.innerHTML = resultHtml;
+        resultDiv.style.display = 'block';
+
+        // 결과로 스크롤
+        resultDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+
+      // URL 복사 함수
+      function copyCurrentUrl() {
+        var url = window.location.href;
+        navigator.clipboard.writeText(url).then(function() {
+          var btn = document.querySelector('.copy-link-btn');
+          var btnText = document.getElementById('copy-btn-text');
+          btn.classList.add('copied');
+          btnText.textContent = '복사됐습니다! 단톡방에 붙여넣기 하세요 ✅';
+          setTimeout(function() {
+            btn.classList.remove('copied');
+            btnText.textContent = '링크 복사하기 📋';
+          }, 3000);
+        }).catch(function() {
+          // Fallback for older browsers
+          var textArea = document.createElement('textarea');
+          textArea.value = url;
+          document.body.appendChild(textArea);
+          textArea.select();
+          document.execCommand('copy');
+          document.body.removeChild(textArea);
+          var btn = document.querySelector('.copy-link-btn');
+          var btnText = document.getElementById('copy-btn-text');
+          btn.classList.add('copied');
+          btnText.textContent = '복사됐습니다! 단톡방에 붙여넣기 하세요 ✅';
+          setTimeout(function() {
+            btn.classList.remove('copied');
+            btnText.textContent = '링크 복사하기 📋';
+          }, 3000);
+        });
+      }
     </script>
 
     <!-- Channel Talk -->

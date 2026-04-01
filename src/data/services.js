@@ -367,7 +367,7 @@ export function generateReviewSchema() {
     "aggregateRating": {
       "@type": "AggregateRating",
       "ratingValue": "4.9",
-      "reviewCount": "127",
+      "reviewCount": "4200",
       "bestRating": "5",
       "worstRating": "1"
     },

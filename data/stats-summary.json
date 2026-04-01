@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-03-22T16:07:42.497Z",
+    "generatedAt": "2026-04-01T12:42:01.209Z",
     "dataVersion": "1.0",
     "source": "housepick-apartments-db"
   },
@@ -12,7 +12,7 @@
     "totalHouseholds": 4326705,
     "renovationHouseholds": 3503771,
     "analysisYear": 2026,
-    "analysisMonth": 3
+    "analysisMonth": 4
   },
   "districtRanking": [
     {

@@ -11,6 +11,10 @@ import {
   generateRating,
   generateProjectData
 } from '../src/utils/contentGenerator.js'
+import {
+  generateRegionalFAQSchema,
+  generateSiteNavigationSchema
+} from './schema-generators.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -559,6 +563,8 @@ regions.forEach(region => {
   const itemListScript = itemListJsonLd
     ? `    <script type="application/ld+json">\n${JSON.stringify(itemListJsonLd, null, 2)}\n    </script>`
     : ''
+  const faqSchema = generateRegionalFAQSchema(region.fullName, region.slug)
+  const siteNavSchema = generateSiteNavigationSchema()
 
   // subAreas가 있으면 Title용 텍스트 생성 (최대 3개) - 기존 호환성 유지
   const subAreasForTitle = region.subAreas?.length > 0
@@ -596,6 +602,8 @@ regions.forEach(region => {
     // JSON-LD 스키마 주입
     .replace('{{JSON_LD_LOCAL_BUSINESS}}', JSON.stringify(localBusinessJsonLd, null, 2))
     .replace('{{JSON_LD_ITEMLIST}}', itemListScript)
+    .replace('{{JSON_LD_FAQ}}', JSON.stringify(faqSchema, null, 2))
+    .replace('{{JSON_LD_SITE_NAV}}', JSON.stringify(siteNavSchema, null, 2))
 
   const regionDir = path.join(distPath, region.slug)
   if (!fs.existsSync(regionDir)) {

@@ -1178,7 +1178,7 @@ export default function HousePickFlyer() {
             <div className="flex items-center justify-center gap-2 mt-4">
               <div className="flex text-amber-400 text-xl">★★★★★</div>
               <span className="font-bold text-stone-800">4.9</span>
-              <span className="text-stone-500">/ 리뷰 127개</span>
+              <span className="text-stone-500">/ 리뷰 4.2천건</span>
             </div>
           </div>
           

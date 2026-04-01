@@ -166,7 +166,7 @@ export default function ServicePage({ service }) {
             <div className="bg-amber-50 border border-amber-200 rounded-2xl p-8 text-center mb-8">
               <div className="text-5xl font-black text-amber-500 mb-2">4.9</div>
               <div className="text-amber-600 text-lg mb-1">{'★'.repeat(5)}</div>
-              <p className="text-stone-600">총 127건의 리뷰</p>
+              <p className="text-stone-600">총 4,200건의 리뷰</p>
             </div>
             {/* 리뷰 목록 (이미지 포함) */}
             <div className="grid md:grid-cols-1 gap-6">

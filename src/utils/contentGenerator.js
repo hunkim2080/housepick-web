@@ -272,7 +272,7 @@ export function generateFallbackAlt(region) {
 }
 
 /**
- * 지역별 동적 평점/리뷰 수 생성 (4.7~5.0, 80~150 리뷰)
+ * 지역별 동적 평점/리뷰 수 생성 (4.7~5.0, 3800~4600 리뷰)
  * 시드 기반으로 동일 지역은 항상 동일한 값 반환
  * @param {Object} region - 지역 데이터
  * @returns {{ ratingValue: string, reviewCount: number }}
@@ -281,7 +281,7 @@ export function generateRating(region) {
   const rng = seededRandom(region.slug + '-rating');
   return {
     ratingValue: (4.7 + rng() * 0.3).toFixed(1),
-    reviewCount: Math.floor(80 + rng() * 70)
+    reviewCount: Math.floor(3800 + rng() * 800)
   };
 }
 

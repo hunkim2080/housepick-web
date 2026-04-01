@@ -2499,7 +2499,7 @@ function generateReviewSSGContent() {
         <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius: 1rem; padding: 2rem; text-align: center; margin-bottom: 1.5rem;">
           <div style="font-size: 3.5rem; font-weight: 900; color: #f59e0b; margin-bottom: 0.5rem;">4.9</div>
           <div style="color: #f59e0b; font-size: 1.5rem; margin-bottom: 0.5rem;">★★★★★</div>
-          <p style="color: #92400e; margin: 0; font-size: 1rem;">총 127건의 리뷰</p>
+          <p style="color: #92400e; margin: 0; font-size: 1rem;">총 4,200건의 리뷰</p>
         </div>
 
         <h3 style="font-size: 1.125rem; font-weight: 600; color: #1c1917; margin: 1.5rem 0 1rem;">⭐ 하우스Pick 평점</h3>
@@ -2519,7 +2519,7 @@ function generateReviewSSGContent() {
               </tr>
               <tr style="background: white;">
                 <td style="padding: 0.75rem; border: 1px solid #e7e5e4; font-weight: 600;">총 리뷰 수</td>
-                <td style="padding: 0.75rem; text-align: center; border: 1px solid #e7e5e4;">127건</td>
+                <td style="padding: 0.75rem; text-align: center; border: 1px solid #e7e5e4;">4,200건</td>
               </tr>
               <tr style="background: #f5f5f4;">
                 <td style="padding: 0.75rem; border: 1px solid #e7e5e4; font-weight: 600;">재주문율</td>
@@ -2548,17 +2548,17 @@ function generateReviewSSGContent() {
               <tr style="background: #dcfce7;">
                 <td style="padding: 0.75rem; border: 1px solid #e7e5e4;">⭐⭐⭐⭐⭐ (5점)</td>
                 <td style="padding: 0.75rem; text-align: center; border: 1px solid #e7e5e4; font-weight: 600;">92%</td>
-                <td style="padding: 0.75rem; text-align: center; border: 1px solid #e7e5e4;">117건</td>
+                <td style="padding: 0.75rem; text-align: center; border: 1px solid #e7e5e4;">3,864건</td>
               </tr>
               <tr style="background: white;">
                 <td style="padding: 0.75rem; border: 1px solid #e7e5e4;">⭐⭐⭐⭐ (4점)</td>
                 <td style="padding: 0.75rem; text-align: center; border: 1px solid #e7e5e4;">6%</td>
-                <td style="padding: 0.75rem; text-align: center; border: 1px solid #e7e5e4;">8건</td>
+                <td style="padding: 0.75rem; text-align: center; border: 1px solid #e7e5e4;">252건</td>
               </tr>
               <tr style="background: #f5f5f4;">
                 <td style="padding: 0.75rem; border: 1px solid #e7e5e4;">⭐⭐⭐ (3점)</td>
                 <td style="padding: 0.75rem; text-align: center; border: 1px solid #e7e5e4;">2%</td>
-                <td style="padding: 0.75rem; text-align: center; border: 1px solid #e7e5e4;">2건</td>
+                <td style="padding: 0.75rem; text-align: center; border: 1px solid #e7e5e4;">84건</td>
               </tr>
               <tr style="background: white;">
                 <td style="padding: 0.75rem; border: 1px solid #e7e5e4;">⭐⭐ (2점)</td>
@@ -4628,7 +4628,7 @@ function generateFindSSGContent() {
               </tr>
               <tr style="background: #dcfce7;">
                 <td style="padding: 0.75rem; border: 1px solid #e7e5e4;">✅ 실제 후기</td>
-                <td style="padding: 0.75rem; border: 1px solid #e7e5e4; font-weight: 600;">127건, 평점 4.9</td>
+                <td style="padding: 0.75rem; border: 1px solid #e7e5e4; font-weight: 600;">4,200건, 평점 4.9</td>
               </tr>
               <tr style="background: #dcfce7;">
                 <td style="padding: 0.75rem; border: 1px solid #e7e5e4;">✅ 사업자 등록</td>

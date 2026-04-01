@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import { generateHowToSchema } from './schema-generators.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -30,10 +31,14 @@ console.log(`Vite CSS 파일 감지: ${viteCss}`)
 const now = new Date()
 const modifiedDate = now.toISOString().split('T')[0]
 
+// HowTo 스키마 생성
+const howToSchema = generateHowToSchema()
+
 // 템플릿 치환
 let html = template
   .replace(/\{\{VITE_CSS\}\}/g, viteCss)
   .replace(/\{\{MODIFIED_DATE\}\}/g, modifiedDate)
+  .replace('{{JSON_LD_HOWTO}}', JSON.stringify(howToSchema, null, 2))
 
 // 디렉토리 생성
 const outputDir = path.join(distPath, 'kerapoxy-guide')

@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import { generateEnhancedDatasetSchema } from './schema-generators.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -131,65 +132,9 @@ function generateYearDistribution(yearData) {
   }).join('\n')
 }
 
-// JSON-LD Dataset 스키마 생성
+// JSON-LD Dataset 스키마 생성 (강화된 버전)
 function generateJsonLd(stats) {
-  const now = new Date()
-  const publishedDate = '2026-03-01'
-  const modifiedDate = now.toISOString().split('T')[0]
-
-  const schema = {
-    '@context': 'https://schema.org',
-    '@type': 'Dataset',
-    name: '수도권 아파트 줄눈 재시공 권장 지수 데이터',
-    description: `수도권 ${formatNumber(stats.summary.totalCount)}개 아파트 단지의 욕실 타일 줄눈 재시공 권장 분석 데이터. 준공연도 기반 재시공 권장 비율, 구별 순위, 브랜드별 현황 포함.`,
-    url: `${BASE_URL}/stats/metropolitan-grout-index`,
-    keywords: ['아파트 줄눈', '줄눈 시공', '욕실 타일', '수도권 아파트', '줄눈 재시공', '줄눈 교체 주기'],
-    creator: {
-      '@type': 'Organization',
-      name: '하우스Pick',
-      url: BASE_URL
-    },
-    datePublished: publishedDate,
-    dateModified: modifiedDate,
-    license: 'https://creativecommons.org/licenses/by-nc-sa/4.0/',
-    temporalCoverage: `1990/${now.getFullYear()}`,
-    spatialCoverage: {
-      '@type': 'Place',
-      name: '수도권 (서울, 경기, 인천)'
-    },
-    variableMeasured: [
-      {
-        '@type': 'PropertyValue',
-        name: '분석 단지 수',
-        value: stats.summary.totalCount,
-        unitText: '개'
-      },
-      {
-        '@type': 'PropertyValue',
-        name: '시공 필요 단지',
-        value: stats.summary.needsRenovation,
-        unitText: '개'
-      },
-      {
-        '@type': 'PropertyValue',
-        name: '재시공 권장 지수',
-        value: stats.summary.renovationRate,
-        unitText: '%'
-      },
-      {
-        '@type': 'PropertyValue',
-        name: '총 세대수',
-        value: stats.summary.totalHouseholds,
-        unitText: '세대'
-      }
-    ],
-    distribution: {
-      '@type': 'DataDownload',
-      encodingFormat: 'application/json',
-      contentUrl: `${BASE_URL}/api/stats-summary`
-    }
-  }
-
+  const schema = generateEnhancedDatasetSchema(stats)
   return JSON.stringify(schema, null, 2)
 }
 

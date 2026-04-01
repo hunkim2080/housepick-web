@@ -1,6 +1,10 @@
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import {
+  generateImageCarouselSchema,
+  generateHubFAQSchema
+} from './schema-generators.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -81,7 +85,7 @@ function getJsonLdLocalBusiness(districtName, regionName, canonicalUrl) {
     "aggregateRating": {
       "@type": "AggregateRating",
       "ratingValue": "4.9",
-      "reviewCount": "127"
+      "reviewCount": "4200"
     }
   }, null, 2)
 }
@@ -192,6 +196,10 @@ for (const [regionSlug, districts] of Object.entries(apartmentsData)) {
       `            <a href="/${regionSlug}/${d.slug}/julnoon">${d.name} 줄눈시공</a>`
     ).join('\n')
 
+    // 리치 스니펫 스키마 생성
+    const hubFaqSchema = generateHubFAQSchema(districtName, apts.length, totalHouseholds, avgYear)
+    const imageCarouselSchema = generateImageCarouselSchema(districtName, topApts, regionSlug, districtSlug)
+
     // HTML 생성
     let html = template
       .replace(/\{\{DISTRICT_NAME\}\}/g, districtName)
@@ -207,6 +215,8 @@ for (const [regionSlug, districts] of Object.entries(apartmentsData)) {
       .replace(/\{\{VITE_CSS\}\}/g, viteCss)
       .replace(/\{\{JSON_LD_LOCAL_BUSINESS\}\}/g, getJsonLdLocalBusiness(districtName, regionName, canonicalUrl))
       .replace(/\{\{JSON_LD_BREADCRUMB\}\}/g, getJsonLdBreadcrumb(regionSlug, regionName, districtSlug, districtName, canonicalUrl))
+      .replace(/\{\{JSON_LD_HUB_FAQ\}\}/g, JSON.stringify(hubFaqSchema, null, 2))
+      .replace(/\{\{JSON_LD_IMAGE_CAROUSEL\}\}/g, JSON.stringify(imageCarouselSchema, null, 2))
       .replace(/\{\{TOP_APTS_HTML\}\}/g, topAptsHtml)
       .replace(/\{\{NEARBY_DISTRICTS_HTML\}\}/g, nearbyHtml)
 

@@ -12,6 +12,48 @@ const dataPath = path.join(__dirname, '..', 'data')
 const apartmentsData = JSON.parse(fs.readFileSync(path.join(dataPath, 'apartments.json'), 'utf-8'))
 const settings = JSON.parse(fs.readFileSync(path.join(dataPath, 'settings.json'), 'utf-8'))
 
+// Supabase 거래량 데이터 로드 (빌드 시 priority 반영)
+const SUPABASE_URL = process.env.SUPABASE_URL || ''
+const SUPABASE_KEY = process.env.SUPABASE_SECRET_KEY || ''
+let tradeData = new Map() // key: 아파트명, value: 거래건수
+
+async function loadTradeData() {
+  if (!SUPABASE_URL || !SUPABASE_KEY) {
+    console.log('  ℹ️ SUPABASE 환경변수 없음 → 거래량 priority 미적용')
+    return
+  }
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/apartment_trades?select=apartment_name,trade_count&order=trade_count.desc`,
+      {
+        headers: {
+          'apikey': SUPABASE_KEY,
+          'Authorization': `Bearer ${SUPABASE_KEY}`,
+        }
+      }
+    )
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    const rows = await res.json()
+    for (const row of rows) {
+      const existing = tradeData.get(row.apartment_name) || 0
+      tradeData.set(row.apartment_name, existing + row.trade_count)
+    }
+    console.log(`  ✅ Supabase 거래량 데이터 로드: ${tradeData.size}개 아파트`)
+  } catch (e) {
+    console.log(`  ⚠️ Supabase 거래량 로드 실패 (기본 priority 사용): ${e.message}`)
+  }
+}
+
+function getTradePriority(apt) {
+  if (apt.isUpcoming) return '0.8'
+  const count = tradeData.get(apt.name) || 0
+  if (count >= 20) return '0.9'
+  if (count >= 10) return '0.8'
+  if (count >= 5) return '0.7'
+  if (apt.phase === 1) return '0.7'
+  return '0.6'
+}
+
 // 템플릿 로드
 const templatePath = path.join(__dirname, '..', 'templates', 'apartment.html')
 const template = fs.readFileSync(templatePath, 'utf-8')
@@ -310,9 +352,13 @@ function getCtaText(apt) {
 }
 
 // 메인 생성 로직
+async function generatePages() {
 console.log(`\n아파트 페이지 생성 시작...`)
 console.log(`현재 Phase: ${settings.currentPhase}`)
 console.log(`현재 날짜: ${new Date().toISOString().split('T')[0]}`)
+
+// 거래량 데이터 로드 (Supabase)
+await loadTradeData()
 
 let generatedCount = 0
 let upcomingCount = 0
@@ -384,7 +430,7 @@ for (const [regionSlug, districts] of Object.entries(apartmentsData)) {
       if (shouldIncludeInSitemap(apt)) {
         sitemapUrls.push({
           url: canonicalUrl,
-          priority: apt.isUpcoming ? '0.8' : (apt.phase === 1 ? '0.7' : '0.6')
+          priority: getTradePriority(apt)
         })
         if (apt.isUpcoming) upcomingInSitemapCount++
       }
@@ -436,4 +482,12 @@ console.log(`Sitemap 포함: ${sitemapUrls.length}개`)
 console.log(`  - 기존 (Phase ${settings.currentPhase} 이하): ${existingInSitemap}개`)
 console.log(`  - 입주예정 (3개월 이내): ${upcomingInSitemapCount}개`)
 console.log(`Sitemap 미포함: ${generatedCount - sitemapUrls.length}개`)
+if (tradeData.size > 0) {
+  const highPriority = sitemapUrls.filter(u => u.priority === '0.9').length
+  console.log(`  - 거래량 기반 우선순위 0.9: ${highPriority}개`)
+}
 console.log(`========================================\n`)
+
+} // end generatePages
+
+generatePages().catch(console.error)

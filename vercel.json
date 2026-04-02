@@ -5,6 +5,10 @@
     {
       "path": "/api/advance-phase",
       "schedule": "0 0 * * 0"
+    },
+    {
+      "path": "/api/collect-trade",
+      "schedule": "0 * * * *"
     }
   ],
   "rewrites": [
@@ -75,6 +79,7 @@
     { "source": "/seogu-incheon", "destination": "/seogu-incheon/index.html" },
     { "source": "/ganghwa", "destination": "/ganghwa/index.html" },
     { "source": "/ongjin", "destination": "/ongjin/index.html" },
+    { "source": "/admin/upload", "destination": "/admin/upload/index.html" },
     { "source": "/privacy", "destination": "/privacy/index.html" },
     { "source": "/kerapoxy-guide", "destination": "/kerapoxy-guide/index.html" },
     { "source": "/stats/metropolitan-grout-index", "destination": "/stats/metropolitan-grout-index/index.html" },

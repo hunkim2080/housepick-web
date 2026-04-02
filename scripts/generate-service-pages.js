@@ -2588,27 +2588,27 @@ function generateReviewSSGContent() {
             <tbody>
               <tr style="background: #fef3c7;">
                 <td style="padding: 0.75rem; text-align: center; border: 1px solid #e7e5e4; font-weight: 700;">1위</td>
-                <td style="padding: 0.75rem; border: 1px solid #e7e5e4; font-weight: 600;">정찰제 (가격 투명)</td>
+                <td style="padding: 0.75rem; border: 1px solid #e7e5e4; font-weight: 600;">정찰제 시공</td>
                 <td style="padding: 0.75rem; text-align: center; border: 1px solid #e7e5e4; font-weight: 600;">34%</td>
               </tr>
               <tr style="background: white;">
                 <td style="padding: 0.75rem; text-align: center; border: 1px solid #e7e5e4; font-weight: 700;">2위</td>
-                <td style="padding: 0.75rem; border: 1px solid #e7e5e4; font-weight: 600;">5년 무상 A/S</td>
+                <td style="padding: 0.75rem; border: 1px solid #e7e5e4; font-weight: 600;">꼼꼼한 시공</td>
                 <td style="padding: 0.75rem; text-align: center; border: 1px solid #e7e5e4;">28%</td>
               </tr>
               <tr style="background: #f5f5f4;">
                 <td style="padding: 0.75rem; text-align: center; border: 1px solid #e7e5e4; font-weight: 700;">3위</td>
-                <td style="padding: 0.75rem; border: 1px solid #e7e5e4;">꼼꼼한 시공</td>
+                <td style="padding: 0.75rem; border: 1px solid #e7e5e4;">지인 추천</td>
                 <td style="padding: 0.75rem; text-align: center; border: 1px solid #e7e5e4;">21%</td>
               </tr>
               <tr style="background: white;">
                 <td style="padding: 0.75rem; text-align: center; border: 1px solid #e7e5e4; font-weight: 700;">4위</td>
-                <td style="padding: 0.75rem; border: 1px solid #e7e5e4;">친절한 상담</td>
+                <td style="padding: 0.75rem; border: 1px solid #e7e5e4;">5년 무상 A/S</td>
                 <td style="padding: 0.75rem; text-align: center; border: 1px solid #e7e5e4;">12%</td>
               </tr>
               <tr style="background: #f5f5f4;">
                 <td style="padding: 0.75rem; text-align: center; border: 1px solid #e7e5e4; font-weight: 700;">5위</td>
-                <td style="padding: 0.75rem; border: 1px solid #e7e5e4;">지인 추천</td>
+                <td style="padding: 0.75rem; border: 1px solid #e7e5e4;">친절한 상담</td>
                 <td style="padding: 0.75rem; text-align: center; border: 1px solid #e7e5e4;">5%</td>
               </tr>
             </tbody>

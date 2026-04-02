@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>시공 사례 등록 | 하우스픽</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, 'Noto Sans KR', sans-serif; background: #f5f5f4; color: #1c1917; line-height: 1.6; }
+
+    .header { background: #1c1917; color: white; padding: 1rem; text-align: center; position: sticky; top: 0; z-index: 10; }
+    .header h1 { font-size: 1.1rem; font-weight: 600; }
+
+    .container { max-width: 500px; margin: 0 auto; padding: 1rem; }
+
+    /* 로그인 */
+    .login-box { background: white; border-radius: 16px; padding: 2rem; margin-top: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .login-box h2 { font-size: 1.2rem; margin-bottom: 1rem; text-align: center; }
+    .login-box input { width: 100%; padding: 0.8rem 1rem; border: 2px solid #e7e5e4; border-radius: 10px; font-size: 1rem; margin-bottom: 1rem; }
+    .login-box input:focus { border-color: #f59e0b; outline: none; }
+
+    /* 폼 */
+    .form-section { background: white; border-radius: 16px; padding: 1.5rem; margin-bottom: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .form-section h3 { font-size: 0.9rem; font-weight: 600; color: #78716c; margin-bottom: 0.8rem; }
+
+    label { display: block; font-weight: 600; font-size: 0.9rem; margin-bottom: 0.4rem; color: #44403c; }
+
+    .search-wrap { position: relative; }
+    .search-wrap input { width: 100%; padding: 0.8rem 1rem; border: 2px solid #e7e5e4; border-radius: 10px; font-size: 1rem; }
+    .search-wrap input:focus { border-color: #f59e0b; outline: none; }
+    .search-results { position: absolute; top: 100%; left: 0; right: 0; background: white; border: 2px solid #e7e5e4; border-top: none; border-radius: 0 0 10px 10px; max-height: 200px; overflow-y: auto; z-index: 5; display: none; }
+    .search-results .item { padding: 0.7rem 1rem; cursor: pointer; font-size: 0.9rem; border-bottom: 1px solid #f5f5f4; }
+    .search-results .item:hover, .search-results .item.active { background: #fef3c7; }
+    .search-results .item .sub { font-size: 0.75rem; color: #a8a29e; }
+
+    .selected-apt { background: #fef3c7; border: 2px solid #f59e0b; border-radius: 10px; padding: 0.8rem 1rem; margin-top: 0.5rem; display: none; }
+    .selected-apt .name { font-weight: 700; }
+    .selected-apt .info { font-size: 0.8rem; color: #78716c; }
+    .selected-apt .clear { float: right; cursor: pointer; color: #ef4444; font-size: 0.8rem; }
+
+    /* 시공 부위 */
+    .space-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin-top: 0.3rem; }
+    .space-btn { padding: 0.6rem; border: 2px solid #e7e5e4; border-radius: 10px; text-align: center; cursor: pointer; font-size: 0.85rem; transition: all 0.2s; }
+    .space-btn.active { border-color: #f59e0b; background: #fef3c7; font-weight: 600; }
+
+    /* 사진 업로드 */
+    .photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 0.5rem; }
+    .photo-box { border: 2px dashed #d6d3d1; border-radius: 12px; aspect-ratio: 4/3; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; overflow: hidden; position: relative; transition: border-color 0.2s; }
+    .photo-box:hover { border-color: #f59e0b; }
+    .photo-box.has-image { border-style: solid; border-color: #22c55e; }
+    .photo-box .icon { font-size: 2rem; margin-bottom: 0.3rem; }
+    .photo-box .label { font-size: 0.8rem; color: #a8a29e; }
+    .photo-box img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+    .photo-box .remove { position: absolute; top: 6px; right: 6px; background: rgba(0,0,0,0.6); color: white; border: none; border-radius: 50%; width: 24px; height: 24px; font-size: 14px; cursor: pointer; display: none; z-index: 2; }
+    .photo-box.has-image .remove { display: block; }
+    .photo-box input { display: none; }
+
+    /* 메모 */
+    textarea { width: 100%; padding: 0.8rem 1rem; border: 2px solid #e7e5e4; border-radius: 10px; font-size: 0.9rem; resize: vertical; min-height: 60px; font-family: inherit; }
+    textarea:focus { border-color: #f59e0b; outline: none; }
+
+    /* 버튼 */
+    .btn { width: 100%; padding: 1rem; border: none; border-radius: 12px; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+    .btn-primary { background: #f59e0b; color: white; }
+    .btn-primary:hover { background: #d97706; }
+    .btn-primary:disabled { background: #d6d3d1; cursor: not-allowed; }
+    .btn-login { background: #1c1917; color: white; }
+    .btn-login:hover { background: #44403c; }
+
+    /* 상태 */
+    .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); padding: 0.8rem 1.5rem; border-radius: 10px; color: white; font-weight: 600; font-size: 0.9rem; z-index: 100; display: none; }
+    .toast.success { background: #22c55e; }
+    .toast.error { background: #ef4444; }
+
+    .loading { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 50; align-items: center; justify-content: center; }
+    .loading.active { display: flex; }
+    .loading-box { background: white; border-radius: 16px; padding: 2rem; text-align: center; }
+    .spinner { width: 40px; height: 40px; border: 4px solid #e7e5e4; border-top-color: #f59e0b; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 1rem; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* 최근 등록 */
+    .recent { margin-top: 1rem; }
+    .recent h3 { font-size: 0.9rem; color: #78716c; margin-bottom: 0.5rem; }
+    .recent-item { background: white; border-radius: 10px; padding: 0.8rem; margin-bottom: 0.5rem; display: flex; gap: 0.8rem; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+    .recent-item img { width: 50px; height: 50px; border-radius: 8px; object-fit: cover; }
+    .recent-item .info { flex: 1; }
+    .recent-item .name { font-weight: 600; font-size: 0.85rem; }
+    .recent-item .meta { font-size: 0.75rem; color: #a8a29e; }
+    .recent-item .badge { font-size: 0.7rem; padding: 2px 8px; border-radius: 6px; }
+    .badge-pending { background: #fef3c7; color: #92400e; }
+    .badge-approved { background: #dcfce7; color: #166534; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>하우스픽 시공 사례 등록</h1>
+  </div>
+
+  <!-- 로그인 -->
+  <div id="loginView" class="container">
+    <div class="login-box">
+      <h2>직원 로그인</h2>
+      <input type="password" id="passwordInput" placeholder="비밀번호 입력" autofocus>
+      <button class="btn btn-login" onclick="login()">로그인</button>
+    </div>
+  </div>
+
+  <!-- 업로드 폼 -->
+  <div id="uploadView" class="container" style="display:none;">
+
+    <!-- 아파트 검색 -->
+    <div class="form-section">
+      <h3>1. 아파트 선택</h3>
+      <label>아파트 검색</label>
+      <div class="search-wrap">
+        <input type="text" id="aptSearch" placeholder="아파트명 입력 (예: 래미안)" oninput="searchApartment(this.value)">
+        <div class="search-results" id="searchResults"></div>
+      </div>
+      <div class="selected-apt" id="selectedApt">
+        <span class="clear" onclick="clearApartment()">취소</span>
+        <div class="name" id="selectedName"></div>
+        <div class="info" id="selectedInfo"></div>
+      </div>
+    </div>
+
+    <!-- 시공 부위 -->
+    <div class="form-section">
+      <h3>2. 시공 부위</h3>
+      <div class="space-grid">
+        <div class="space-btn active" data-type="bathroom" onclick="selectSpace(this)">🚿 화장실</div>
+        <div class="space-btn" data-type="living" onclick="selectSpace(this)">🛋️ 거실</div>
+        <div class="space-btn" data-type="entrance" onclick="selectSpace(this)">🚪 현관</div>
+        <div class="space-btn" data-type="veranda" onclick="selectSpace(this)">🌿 베란다</div>
+        <div class="space-btn" data-type="other" onclick="selectSpace(this)">📦 기타</div>
+      </div>
+    </div>
+
+    <!-- 사진 업로드 -->
+    <div class="form-section">
+      <h3>3. 사진 업로드</h3>
+      <div class="photo-grid">
+        <div class="photo-box" id="beforeBox" onclick="document.getElementById('beforeInput').click()">
+          <button class="remove" onclick="event.stopPropagation(); removePhoto('before')">&times;</button>
+          <div class="icon">📸</div>
+          <div class="label">시공 전</div>
+          <input type="file" id="beforeInput" accept="image/*" capture="environment" onchange="previewPhoto(this, 'before')">
+        </div>
+        <div class="photo-box" id="afterBox" onclick="document.getElementById('afterInput').click()">
+          <button class="remove" onclick="event.stopPropagation(); removePhoto('after')">&times;</button>
+          <div class="icon">✨</div>
+          <div class="label">시공 후</div>
+          <input type="file" id="afterInput" accept="image/*" capture="environment" onchange="previewPhoto(this, 'after')">
+        </div>
+      </div>
+    </div>
+
+    <!-- 메모 -->
+    <div class="form-section">
+      <h3>4. 메모 (선택)</h3>
+      <textarea id="memoInput" placeholder="특이사항 입력 (예: 곰팡이 심함, 2시간 소요)"></textarea>
+    </div>
+
+    <!-- 등록 버튼 -->
+    <button class="btn btn-primary" id="submitBtn" onclick="submitPortfolio()">등록하기</button>
+
+    <!-- 최근 등록 내역 -->
+    <div class="recent" id="recentList"></div>
+  </div>
+
+  <!-- 로딩 -->
+  <div class="loading" id="loading">
+    <div class="loading-box">
+      <div class="spinner"></div>
+      <div>사진 업로드 중...</div>
+    </div>
+  </div>
+
+  <!-- 토스트 -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // ─── 설정 ──────────────────────────────────────────────────
+    const SUPABASE_URL = 'https://bnzgtqktvevqxtnceiwv.supabase.co'
+    const SUPABASE_KEY = 'sb_publishable_DzloEuUCdoUpGgHOp--ctA__o3F7hvo'
+    const STAFF_PASSWORD = '2080abc!'
+
+    // ─── 상태 ──────────────────────────────────────────────────
+    let apartments = []
+    let selectedApartment = null
+    let selectedSpaceType = 'bathroom'
+    let beforeFile = null
+    let afterFile = null
+
+    // ─── 로그인 ────────────────────────────────────────────────
+    function login() {
+      const pw = document.getElementById('passwordInput').value
+      if (pw === STAFF_PASSWORD) {
+        document.getElementById('loginView').style.display = 'none'
+        document.getElementById('uploadView').style.display = 'block'
+        loadApartments()
+        loadRecent()
+        localStorage.setItem('hp_staff', 'true')
+      } else {
+        showToast('비밀번호가 틀렸습니다', 'error')
+      }
+    }
+
+    // 엔터키 로그인
+    document.getElementById('passwordInput').addEventListener('keydown', e => {
+      if (e.key === 'Enter') login()
+    })
+
+    // 자동 로그인
+    if (localStorage.getItem('hp_staff') === 'true') {
+      document.getElementById('loginView').style.display = 'none'
+      document.getElementById('uploadView').style.display = 'block'
+      setTimeout(() => { loadApartments(); loadRecent() }, 100)
+    }
+
+    // ─── 아파트 데이터 로드 ────────────────────────────────────
+    async function loadApartments() {
+      try {
+        const res = await fetch('/data/apartments.json')
+        const data = await res.json()
+        apartments = []
+        for (const [regionSlug, districts] of Object.entries(data)) {
+          for (const [districtSlug, districtData] of Object.entries(districts)) {
+            for (const apt of districtData.apartments) {
+              apartments.push({
+                slug: apt.slug,
+                name: apt.name,
+                districtName: districtData.name,
+                regionSlug,
+                districtSlug,
+                households: apt.households,
+                year: apt.year,
+                brand: apt.brand || ''
+              })
+            }
+          }
+        }
+        console.log(`아파트 ${apartments.length}개 로드 완료`)
+      } catch (e) {
+        console.error('아파트 데이터 로드 실패:', e)
+      }
+    }
+
+    // ─── 아파트 검색 ───────────────────────────────────────────
+    function searchApartment(query) {
+      const results = document.getElementById('searchResults')
+      if (query.length < 2) { results.style.display = 'none'; return }
+
+      const filtered = apartments
+        .filter(a => a.name.includes(query) || a.districtName.includes(query))
+        .slice(0, 20)
+
+      if (filtered.length === 0) {
+        results.innerHTML = '<div class="item"><span class="sub">검색 결과 없음</span></div>'
+      } else {
+        results.innerHTML = filtered.map(a => `
+          <div class="item" onclick="selectApartment('${a.slug}')">
+            ${a.name}
+            <div class="sub">${a.districtName} · ${a.households || '?'}세대 · ${a.year || '?'}년</div>
+          </div>
+        `).join('')
+      }
+      results.style.display = 'block'
+    }
+
+    function selectApartment(slug) {
+      selectedApartment = apartments.find(a => a.slug === slug)
+      if (!selectedApartment) return
+
+      document.getElementById('searchResults').style.display = 'none'
+      document.getElementById('aptSearch').value = ''
+      document.getElementById('selectedApt').style.display = 'block'
+      document.getElementById('selectedName').textContent = selectedApartment.name
+      document.getElementById('selectedInfo').textContent =
+        `${selectedApartment.districtName} · ${selectedApartment.households || '?'}세대 · ${selectedApartment.year || '?'}년 · ${selectedApartment.brand}`
+    }
+
+    function clearApartment() {
+      selectedApartment = null
+      document.getElementById('selectedApt').style.display = 'none'
+    }
+
+    // 바깥 클릭 시 검색 결과 닫기
+    document.addEventListener('click', e => {
+      if (!e.target.closest('.search-wrap')) {
+        document.getElementById('searchResults').style.display = 'none'
+      }
+    })
+
+    // ─── 시공 부위 선택 ────────────────────────────────────────
+    function selectSpace(el) {
+      document.querySelectorAll('.space-btn').forEach(b => b.classList.remove('active'))
+      el.classList.add('active')
+      selectedSpaceType = el.dataset.type
+    }
+
+    // ─── 사진 미리보기 ─────────────────────────────────────────
+    function previewPhoto(input, type) {
+      const file = input.files[0]
+      if (!file) return
+
+      if (type === 'before') beforeFile = file
+      else afterFile = file
+
+      const box = document.getElementById(type + 'Box')
+      const reader = new FileReader()
+      reader.onload = e => {
+        // 기존 img 제거
+        const existingImg = box.querySelector('img')
+        if (existingImg) existingImg.remove()
+
+        const img = document.createElement('img')
+        img.src = e.target.result
+        box.appendChild(img)
+        box.classList.add('has-image')
+      }
+      reader.readAsDataURL(file)
+    }
+
+    function removePhoto(type) {
+      if (type === 'before') { beforeFile = null; document.getElementById('beforeInput').value = '' }
+      else { afterFile = null; document.getElementById('afterInput').value = '' }
+
+      const box = document.getElementById(type + 'Box')
+      const img = box.querySelector('img')
+      if (img) img.remove()
+      box.classList.remove('has-image')
+    }
+
+    // ─── 이미지 리사이즈 ───────────────────────────────────────
+    function resizeImage(file, maxWidth = 1200) {
+      return new Promise((resolve) => {
+        const canvas = document.createElement('canvas')
+        const ctx = canvas.getContext('2d')
+        const img = new Image()
+        img.onload = () => {
+          let w = img.width, h = img.height
+          if (w > maxWidth) { h = h * (maxWidth / w); w = maxWidth }
+          canvas.width = w; canvas.height = h
+          ctx.drawImage(img, 0, 0, w, h)
+          canvas.toBlob(resolve, 'image/webp', 0.82)
+        }
+        img.src = URL.createObjectURL(file)
+      })
+    }
+
+    // ─── Supabase 업로드 ───────────────────────────────────────
+    async function uploadImage(file, path) {
+      const blob = await resizeImage(file)
+      const res = await fetch(`${SUPABASE_URL}/storage/v1/object/portfolio/${path}`, {
+        method: 'POST',
+        headers: {
+          'apikey': SUPABASE_KEY,
+          'Authorization': `Bearer ${SUPABASE_KEY}`,
+          'Content-Type': 'image/webp',
+        },
+        body: blob
+      })
+      if (!res.ok) throw new Error(`업로드 실패: ${res.status}`)
+      return `${SUPABASE_URL}/storage/v1/object/public/portfolio/${path}`
+    }
+
+    // ─── 제출 ──────────────────────────────────────────────────
+    async function submitPortfolio() {
+      // 유효성 검사
+      if (!selectedApartment) { showToast('아파트를 선택해주세요', 'error'); return }
+      if (!beforeFile && !afterFile) { showToast('사진을 1장 이상 올려주세요', 'error'); return }
+
+      const btn = document.getElementById('submitBtn')
+      btn.disabled = true
+      document.getElementById('loading').classList.add('active')
+
+      try {
+        const timestamp = Date.now()
+        const slug = selectedApartment.slug
+        let beforeUrl = null, afterUrl = null
+
+        // 사진 업로드
+        if (beforeFile) {
+          beforeUrl = await uploadImage(beforeFile, `${slug}/${timestamp}-before.webp`)
+        }
+        if (afterFile) {
+          afterUrl = await uploadImage(afterFile, `${slug}/${timestamp}-after.webp`)
+        }
+
+        // DB 저장
+        const row = {
+          apartment_slug: slug,
+          apartment_name: selectedApartment.name,
+          district_name: selectedApartment.districtName,
+          region_slug: selectedApartment.regionSlug,
+          space_type: selectedSpaceType,
+          before_image: beforeUrl,
+          after_image: afterUrl,
+          memo: document.getElementById('memoInput').value.trim() || null,
+          status: 'pending'
+        }
+
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/portfolio`, {
+          method: 'POST',
+          headers: {
+            'apikey': SUPABASE_KEY,
+            'Authorization': `Bearer ${SUPABASE_KEY}`,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify(row)
+        })
+
+        if (!res.ok) throw new Error(`저장 실패: ${await res.text()}`)
+
+        showToast('등록 완료!', 'success')
+        resetForm()
+        loadRecent()
+
+      } catch (e) {
+        showToast(e.message, 'error')
+      } finally {
+        btn.disabled = false
+        document.getElementById('loading').classList.remove('active')
+      }
+    }
+
+    function resetForm() {
+      clearApartment()
+      removePhoto('before')
+      removePhoto('after')
+      document.getElementById('memoInput').value = ''
+      document.querySelectorAll('.space-btn').forEach(b => b.classList.remove('active'))
+      document.querySelector('[data-type="bathroom"]').classList.add('active')
+      selectedSpaceType = 'bathroom'
+    }
+
+    // ─── 최근 등록 내역 ────────────────────────────────────────
+    async function loadRecent() {
+      try {
+        const res = await fetch(
+          `${SUPABASE_URL}/rest/v1/portfolio?select=*&order=created_at.desc&limit=10`,
+          {
+            headers: {
+              'apikey': SUPABASE_KEY,
+              'Authorization': `Bearer ${SUPABASE_KEY}`,
+            }
+          }
+        )
+        const items = await res.json()
+        const list = document.getElementById('recentList')
+
+        if (items.length === 0) {
+          list.innerHTML = '<div class="form-section"><h3>등록된 사례가 없습니다</h3></div>'
+          return
+        }
+
+        const spaceNames = { bathroom: '화장실', living: '거실', entrance: '현관', veranda: '베란다', other: '기타' }
+        list.innerHTML = `<h3>최근 등록 (${items.length}건)</h3>` + items.map(item => {
+          const img = item.after_image || item.before_image || ''
+          const date = new Date(item.created_at).toLocaleDateString('ko-KR', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })
+          const badgeClass = item.status === 'approved' ? 'badge-approved' : 'badge-pending'
+          const badgeText = item.status === 'approved' ? '승인' : '대기'
+          return `
+            <div class="recent-item">
+              ${img ? `<img src="${img}" alt="">` : ''}
+              <div class="info">
+                <div class="name">${item.apartment_name}</div>
+                <div class="meta">${item.district_name} · ${spaceNames[item.space_type] || item.space_type} · ${date}</div>
+              </div>
+              <span class="badge ${badgeClass}">${badgeText}</span>
+            </div>
+          `
+        }).join('')
+      } catch (e) {
+        console.error('최근 내역 로드 실패:', e)
+      }
+    }
+
+    // ─── 토스트 ────────────────────────────────────────────────
+    function showToast(msg, type = 'success') {
+      const toast = document.getElementById('toast')
+      toast.textContent = msg
+      toast.className = `toast ${type}`
+      toast.style.display = 'block'
+      setTimeout(() => { toast.style.display = 'none' }, 3000)
+    }
+  </script>
+</body>
+</html>

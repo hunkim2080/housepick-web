@@ -657,4 +657,19 @@ if (fs.existsSync(templatePrivacyPath)) {
   console.log(`  ✓ /privacy/index.html 생성`)
 }
 
-console.log(`\n완료! ${regions.length}개 지역 페이지 + sitemap.xml + robots.txt + rss.xml + 404.html + privacy 생성되었습니다.`)
+// admin 업로드 페이지 생성
+const adminUploadPath = path.join(__dirname, '..', 'templates', 'admin-upload.html')
+if (fs.existsSync(adminUploadPath)) {
+  const adminDir = path.join(distPath, 'admin', 'upload')
+  fs.mkdirSync(adminDir, { recursive: true })
+  fs.copyFileSync(adminUploadPath, path.join(adminDir, 'index.html'))
+  console.log(`  ✓ /admin/upload/index.html 생성`)
+}
+
+// apartments.json을 dist/data/에 복사 (업로드 페이지에서 참조)
+const dataDistDir = path.join(distPath, 'data')
+fs.mkdirSync(dataDistDir, { recursive: true })
+fs.copyFileSync(path.join(__dirname, '..', 'data', 'apartments.json'), path.join(dataDistDir, 'apartments.json'))
+console.log(`  ✓ /data/apartments.json 복사`)
+
+console.log(`\n완료! ${regions.length}개 지역 페이지 + sitemap.xml + robots.txt + rss.xml + 404.html + privacy + admin 생성되었습니다.`)

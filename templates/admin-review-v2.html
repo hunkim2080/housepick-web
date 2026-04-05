@@ -137,7 +137,7 @@
   <script>
   const SB_URL = 'https://bnzgtqktvevqxtnceiwv.supabase.co'
   const SB_KEY = 'sb_publishable_DzloEuUCdoUpGgHOp--ctA__o3F7hvo'
-  const ADMIN_PW = '2080admin!'
+  let authToken = ''
 
   const LOC = { 'bathroom-main':'거실화장실', 'bathroom-master':'안방화장실', bathroom:'화장실', entrance:'현관', veranda:'베란다', kitchen:'주방', laundry:'다용도실', living:'거실', other:'기타' }
   const STEP = { before:'시공 전', during:'작업 중', after:'시공 후' }
@@ -148,15 +148,38 @@
   let allCases = []
   let allImages = {}  // case_id → [images]
 
-  // 로그인
-  function adminLogin() {
-    if (document.getElementById('adminPw').value === ADMIN_PW) {
-      localStorage.setItem('hp_admin_v2', 'true')
+  // 로그인 (Supabase Auth - admin만)
+  async function adminLogin() {
+    const pw = document.getElementById('adminPw').value
+    try {
+      const res = await fetch(`${SB_URL}/auth/v1/token?grant_type=password`, {
+        method: 'POST',
+        headers: { 'apikey': SB_KEY, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: 'admin@hp.io', password: pw })
+      })
+      const data = await res.json()
+      if (!res.ok || !data.access_token) return showToast('비밀번호가 틀렸습니다', 'error')
+
+      authToken = data.access_token
+      localStorage.setItem('hp_admin_token', authToken)
       showMain()
-    } else showToast('비밀번호 틀림', 'error')
+    } catch(e) { showToast('로그인 실패', 'error') }
   }
   document.getElementById('adminPw').addEventListener('keydown', e => { if (e.key === 'Enter') adminLogin() })
-  if (localStorage.getItem('hp_admin_v2') === 'true') showMain()
+
+  // 자동 로그인
+  async function tryAdminAutoLogin() {
+    const token = localStorage.getItem('hp_admin_token')
+    if (!token) return
+    try {
+      const res = await fetch(`${SB_URL}/auth/v1/user`, {
+        headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${token}` }
+      })
+      if (res.ok) { authToken = token; showMain() }
+      else localStorage.removeItem('hp_admin_token')
+    } catch {}
+  }
+  tryAdminAutoLogin()
 
   let aptDistrictMap = {} // apt_slug → { regionSlug, districtSlug }
 
@@ -198,7 +221,7 @@
     } catch(e) { showToast('로드 실패', 'error') }
   }
 
-  function h() { return { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}` } }
+  function h() { return { 'apikey': SB_KEY, 'Authorization': `Bearer ${authToken}` } }
   function hJson() { return { ...h(), 'Content-Type': 'application/json', 'Prefer': 'return=minimal' } }
 
   // 통계
@@ -386,7 +409,7 @@
         // public-assets에 업로드
         await fetch(`${SB_URL}/storage/v1/object/public-assets/${publicPath}`, {
           method: 'POST',
-          headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}`, 'Content-Type': 'image/webp' },
+          headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${authToken}`, 'Content-Type': 'image/webp' },
           body: blob
         })
 

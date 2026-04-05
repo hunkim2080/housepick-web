@@ -247,30 +247,55 @@
   // ─── 설정 ─────────────────────────────────────────────────────
   const SB_URL = 'https://bnzgtqktvevqxtnceiwv.supabase.co'
   const SB_KEY = 'sb_publishable_DzloEuUCdoUpGgHOp--ctA__o3F7hvo'
-  const STAFF_PW = {
-    '제이쓴': '2080abc!',
-    '이동환': 'a01047262496!',
-    '임태현': 'b01037432611!'
-  }
   const MAX_PHOTOS = 20
+
+  // 이름 → Supabase Auth 이메일 매핑 (직원은 이메일을 모름)
+  const STAFF_EMAIL = {
+    '제이쓴': 'jason@hp.io',
+    '이동환': 'donghwan@hp.io',
+    '임태현': 'taehyun@hp.io'
+  }
 
   // ─── 상태 ─────────────────────────────────────────────────────
   let apartments = []
   let selectedApt = null
   let staffName = ''
-  let photos = [] // { id, file, thumbnail, exifTime, autoStep, confirmedStep, confirmedLocation, isExcluded, isSelected }
+  let authToken = ''
+  let photos = []
 
-  // ─── 로그인 ───────────────────────────────────────────────────
-  const validNames = ['제이쓴', '이동환', '임태현']
+  // ─── Auth 헤더 ────────────────────────────────────────────────
+  function authHeaders() {
+    return { 'apikey': SB_KEY, 'Authorization': `Bearer ${authToken}`, 'Content-Type': 'application/json' }
+  }
+  function authHeadersMinimal() {
+    return { 'apikey': SB_KEY, 'Authorization': `Bearer ${authToken}` }
+  }
 
-  function login() {
+  // ─── 로그인 (Supabase Auth) ───────────────────────────────────
+  async function login() {
     const name = document.getElementById('staffSelect').value
     const pw = document.getElementById('passwordInput').value
     if (!name) return showToast('이름을 선택하세요', 'error')
-    if (!STAFF_PW[name] || pw !== STAFF_PW[name]) return showToast('비밀번호가 틀렸습니다', 'error')
-    staffName = name
-    localStorage.setItem('hp_staff_v2', name)
-    showMain()
+    if (!STAFF_EMAIL[name]) return showToast('등록되지 않은 이름', 'error')
+
+    try {
+      const res = await fetch(`${SB_URL}/auth/v1/token?grant_type=password`, {
+        method: 'POST',
+        headers: { 'apikey': SB_KEY, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: STAFF_EMAIL[name], password: pw })
+      })
+      const data = await res.json()
+      if (!res.ok || !data.access_token) {
+        return showToast('비밀번호가 틀렸습니다', 'error')
+      }
+      authToken = data.access_token
+      staffName = name
+      localStorage.setItem('hp_auth_token', authToken)
+      localStorage.setItem('hp_auth_name', name)
+      showMain()
+    } catch(e) {
+      showToast('로그인 실패: ' + e.message, 'error')
+    }
   }
 
   function showMain() {
@@ -284,14 +309,42 @@
     loadApartments()
   }
 
-  function logout() {
-    localStorage.removeItem('hp_staff_v2')
+  async function logout() {
+    try {
+      await fetch(`${SB_URL}/auth/v1/logout`, {
+        method: 'POST',
+        headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${authToken}` }
+      }).catch(() => {})
+    } catch {}
+    localStorage.removeItem('hp_auth_token')
+    localStorage.removeItem('hp_auth_name')
+    authToken = ''
+    staffName = ''
     location.reload()
   }
 
   document.getElementById('passwordInput').addEventListener('keydown', e => { if (e.key === 'Enter') login() })
-  const saved = localStorage.getItem('hp_staff_v2')
-  if (saved && validNames.includes(saved)) { staffName = saved; showMain() }
+
+  // 자동 로그인 (저장된 토큰 검증)
+  async function tryAutoLogin() {
+    const token = localStorage.getItem('hp_auth_token')
+    const name = localStorage.getItem('hp_auth_name')
+    if (!token || !name) return
+    try {
+      const res = await fetch(`${SB_URL}/auth/v1/user`, {
+        headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${token}` }
+      })
+      if (res.ok) {
+        authToken = token
+        staffName = name
+        showMain()
+      } else {
+        localStorage.removeItem('hp_auth_token')
+        localStorage.removeItem('hp_auth_name')
+      }
+    } catch { }
+  }
+  tryAutoLogin()
 
   // ─── 아파트 ───────────────────────────────────────────────────
   async function loadApartments() {
@@ -703,7 +756,7 @@
       setProgress(5, '현장 정보 저장 중...')
       const caseRes = await fetch(`${SB_URL}/rest/v1/job_cases`, {
         method: 'POST',
-        headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=representation' },
+        headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${authToken}`, 'Content-Type': 'application/json', 'Prefer': 'return=representation' },
         body: JSON.stringify({
           apartment_slug: selectedApt.slug,
           apartment_name: selectedApt.name,
@@ -736,7 +789,7 @@
         const blob = await resizeForUpload(p.file)
         const upRes = await fetch(`${SB_URL}/storage/v1/object/portfolio/${origPath}`, {
           method: 'POST',
-          headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}`, 'Content-Type': 'image/webp' },
+          headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${authToken}`, 'Content-Type': 'image/webp' },
           body: blob
         })
         if (!upRes.ok) throw new Error(`사진 ${i+1} 업로드 실패`)
@@ -757,7 +810,7 @@
         // DB 저장
         await fetch(`${SB_URL}/rest/v1/job_case_images`, {
           method: 'POST',
-          headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+          headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${authToken}`, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
           body: JSON.stringify({
             case_id: caseId,
             storage_path_original: origPath,
@@ -781,7 +834,7 @@
       setProgress(95, '등록 완료 처리 중...')
       await fetch(`${SB_URL}/rest/v1/job_cases?id=eq.${caseId}`, {
         method: 'PATCH',
-        headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+        headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${authToken}`, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
         body: JSON.stringify({ status: 'review_ready' })
       })
 

@@ -23,14 +23,19 @@ function getCaseCardsHtml(aptSlug, regionSlug, districtSlug) {
   const cards = caseCardsData[aptSlug]
   if (!cards || cards.length === 0) return ''
 
-  const cardItems = cards.slice(0, 6).map(card => `
-          <a href="${card.url}" style="display:block;background:white;border-radius:12px;overflow:hidden;text-decoration:none;color:#1c1917;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+  const cardItems = cards.slice(0, 6).map(card => {
+    const tag = card.url ? 'a' : 'div'
+    const href = card.url ? ` href="${card.url}"` : ''
+    const linkStyle = card.url ? 'text-decoration:none;' : ''
+    return `
+          <${tag}${href} style="display:block;background:white;border-radius:12px;overflow:hidden;${linkStyle}color:#1c1917;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
             ${card.afterImage ? `<img src="${card.afterImage}" alt="${card.spaceText} 시공 후" style="width:100%;aspect-ratio:4/3;object-fit:cover;" loading="lazy">` : ''}
             <div style="padding:0.8rem;">
               <div style="font-weight:600;font-size:0.85rem;">${card.spaceText} ${card.issueText} 시공</div>
               <div style="font-size:0.75rem;color:#a8a29e;">${card.materialText} · ${card.workDate}</div>
             </div>
-          </a>`).join('\n')
+          </${tag}>`
+  }).join('\n')
 
   return `      <section style="padding:2rem 1rem;max-width:800px;margin:0 auto;">
         <h2 style="font-size:1.2rem;font-weight:700;margin-bottom:1rem;">실제 시공 사례 (${cards.length}건)</h2>
@@ -258,16 +263,27 @@ function getComplexNote(apt) {
 // [DEPRECATED] 기존 메시지 시스템은 generateAnalysis()와 getComplexNote()로 대체됨
 
 // title 패턴 (aptType별 차별화)
-function getTitle(apt) {
+function getTitle(apt, hasCases) {
   const type = getAptType(apt.year)
+  // 허브 페이지: [아파트명] 줄눈 시공 | 시공 사례 + 견적
+  // 사례 페이지와 title 역할 분리 (허브=메인키워드, 사례=롱테일)
+  if (hasCases) {
+    if (type === 'new') return `${apt.name} 줄눈시공 | 입주 시공 사례 · 정찰제 견적`
+    if (type === 'mid') return `${apt.name} 줄눈시공 | 시공 사례 · 정찰제 견적`
+    return `${apt.name} 줄눈시공 | 재시공 사례 · 정찰제 견적`
+  }
   if (type === 'new') return `${apt.name} 입주청소 줄눈시공 | 하우스픽`
   if (type === 'mid') return `${apt.name} 줄눈시공 전문업체 | 하우스픽`
   return `${apt.name} 줄눈 곰팡이 제거 재시공 | 하우스픽`
 }
 
 // Meta description 생성
-function getMetaDescription(apt, districtName) {
-  return `${districtName} ${apt.name} 케라폭시 줄눈시공 전문 하우스픽. ${apt.households}세대 아파트. 현장 출장 무료견적, 당일 시공 가능. 5년 무상 A/S 보장.`
+function getMetaDescription(apt, districtName, caseCount) {
+  const base = `${districtName} ${apt.name} 케라폭시 줄눈시공 전문 하우스픽. ${apt.households}세대 아파트.`
+  if (caseCount > 0) {
+    return `${base} 실제 시공 사례 ${caseCount}건, Before/After 사진 포함. 정찰제 가격, 5년 무상 A/S.`
+  }
+  return `${base} 현장 출장 무료견적, 당일 시공 가능. 5년 무상 A/S 보장.`
 }
 
 // JSON-LD 3종 세트 생성
@@ -400,8 +416,10 @@ for (const [regionSlug, districts] of Object.entries(apartmentsData)) {
 
     for (const apt of districtData.apartments) {
       const aptType = getAptType(apt.year)
-      const title = getTitle(apt)
-      const description = getMetaDescription(apt, districtName)
+      const aptCases = caseCardsData[apt.slug] || []
+      const caseCount = aptCases.length
+      const title = getTitle(apt, caseCount > 0)
+      const description = getMetaDescription(apt, districtName, caseCount)
       const canonicalUrl = `${BASE_URL}/${regionSlug}/${districtSlug}/${apt.slug}`
 
       // 입주예정 카운트

@@ -125,6 +125,30 @@ function generateCaseJsonLd(caseItem, apt, caseUrl, hubUrl) {
   ], null, 2)
 }
 
+// ─── 품질 게이트 ──────────────────────────────────────────────────
+
+const MIN_PHOTOS = 3        // 전후 합산 최소 3장
+const MIN_TEXT_LENGTH = 500  // SEO 본문 최소 500자
+
+function passesQualityGate(caseItem) {
+  const beforeImages = parseImages(caseItem.before_image)
+  const afterImages = parseImages(caseItem.after_image)
+  const totalPhotos = beforeImages.length + afterImages.length
+  const textLength = (caseItem.seo_content || caseItem.detail_content || '').length
+  const hasSpace = !!caseItem.space_type
+  const hasIssue = !!caseItem.issue_type
+  const hasMaterial = !!caseItem.material_type
+
+  const reasons = []
+  if (totalPhotos < MIN_PHOTOS) reasons.push(`사진 ${totalPhotos}장 (최소 ${MIN_PHOTOS}장)`)
+  if (textLength < MIN_TEXT_LENGTH) reasons.push(`본문 ${textLength}자 (최소 ${MIN_TEXT_LENGTH}자)`)
+  if (!hasSpace) reasons.push('시공 부위 없음')
+  if (!hasIssue) reasons.push('문제 유형 없음')
+  if (!hasMaterial) reasons.push('자재 정보 없음')
+
+  return { pass: reasons.length === 0, reasons }
+}
+
 // ─── 유틸리티 ─────────────────────────────────────────────────────
 
 function parseImages(imgField) {
@@ -136,6 +160,12 @@ function formatDate(dateStr) {
   if (!dateStr) return ''
   const d = new Date(dateStr)
   return `${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일`
+}
+
+function generateImageAlt(aptName, spaceText, issueText, type, index, workDate, materialText) {
+  if (type === 'before') return `${aptName} ${spaceText} 줄눈시공 전 사진${index > 1 ? ` ${index}` : ''}`
+  if (type === 'after') return `${aptName} ${spaceText} ${issueText} 개선 후 사진${index > 1 ? ` ${index}` : ''}`
+  return `${aptName} ${workDate} ${materialText} 시공 완료 이미지`
 }
 
 // ─── 메인 ─────────────────────────────────────────────────────────
@@ -173,6 +203,7 @@ async function main() {
   }
 
   let generatedCount = 0
+  let skippedCount = 0
   const sitemapUrls = []
   const caseCardsByApt = {} // apt_slug → [ card HTML ]
 
@@ -180,6 +211,27 @@ async function main() {
     const apt = aptMap.get(caseItem.apartment_slug)
     if (!apt) {
       console.log(`  ⚠️ 아파트 매칭 실패: ${caseItem.apartment_slug}`)
+      continue
+    }
+
+    // 품질 게이트 체크
+    const quality = passesQualityGate(caseItem)
+    if (!quality.pass) {
+      console.log(`  ⏭️ 품질 미달 (${caseItem.apartment_name}): ${quality.reasons.join(', ')}`)
+      skippedCount++
+      // 허브 카드에는 간단히 노출 (상세 페이지 미생성)
+      if (!caseCardsByApt[caseItem.apartment_slug]) caseCardsByApt[caseItem.apartment_slug] = []
+      const afterImgs = parseImages(caseItem.after_image)
+      const spText = (caseItem.space_type || '').split(',').map(s => SPACE_NAMES[s] || s).join('+')
+      caseCardsByApt[caseItem.apartment_slug].push({
+        url: null, // 상세 페이지 없음
+        spaceText: spText,
+        issueText: ISSUE_NAMES[caseItem.issue_type] || '줄눈 오염',
+        materialText: MATERIAL_NAMES[caseItem.material_type] || '케라폭시',
+        workDate: caseItem.work_date ? formatDate(caseItem.work_date) : '',
+        afterImage: afterImgs[0] || '',
+        beforeImage: parseImages(caseItem.before_image)[0] || ''
+      })
       continue
     }
 
@@ -201,20 +253,22 @@ async function main() {
     if (beforeImages.length > 0 && afterImages.length > 0) {
       photoCompareHtml = `        <div class="photo-compare">
           <div class="photo-compare-single">
-            <img src="${beforeImages[0]}" alt="${caseItem.apartment_name} ${spaceText} 줄눈시공 전 사진" loading="lazy">
+            <img src="${beforeImages[0]}" alt="${generateImageAlt(caseItem.apartment_name, spaceText, issueText, 'before', 1, workDateText, materialText)}" loading="lazy">
             <div class="photo-compare-label label-before">시공 전</div>
           </div>
           <div class="photo-compare-single">
-            <img src="${afterImages[0]}" alt="${caseItem.apartment_name} ${spaceText} ${issueText} 개선 후 사진" loading="lazy">
+            <img src="${afterImages[0]}" alt="${generateImageAlt(caseItem.apartment_name, spaceText, issueText, 'after', 1, workDateText, materialText)}" loading="lazy">
             <div class="photo-compare-label label-after">시공 후</div>
           </div>
         </div>`
     }
 
-    // 추가 사진
-    const extraImages = [...beforeImages.slice(1), ...afterImages.slice(1)]
-    const photoExtraHtml = extraImages.length > 0
-      ? `        <div class="photo-extra">${extraImages.map((url, i) => `<img src="${url}" alt="${caseItem.apartment_name} 줄눈시공 사진 ${i + 2}" loading="lazy">`).join('\n')}</div>`
+    // 추가 사진 (before/after 구분 alt)
+    const extraBefore = beforeImages.slice(1).map((url, i) => ({url, alt: generateImageAlt(caseItem.apartment_name, spaceText, issueText, 'before', i + 2, workDateText, materialText)}))
+    const extraAfter = afterImages.slice(1).map((url, i) => ({url, alt: generateImageAlt(caseItem.apartment_name, spaceText, issueText, 'after', i + 2, workDateText, materialText)}))
+    const extraAll = [...extraBefore, ...extraAfter]
+    const photoExtraHtml = extraAll.length > 0
+      ? `        <div class="photo-extra">${extraAll.map(img => `<img src="${img.url}" alt="${img.alt}" loading="lazy">`).join('\n')}</div>`
       : ''
 
     // 본문 HTML
@@ -332,6 +386,9 @@ ${cards}
   }
 
   console.log(`\n✅ 시공 사례 페이지 생성 완료: ${generatedCount}개`)
+  if (skippedCount > 0) {
+    console.log(`  ⏭️ 품질 미달로 상세 페이지 미생성: ${skippedCount}건 (허브 카드에만 노출)`)
+  }
 }
 
 main().catch(console.error)

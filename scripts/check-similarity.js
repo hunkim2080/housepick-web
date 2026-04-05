@@ -118,7 +118,12 @@ function isSameComplexVariant(name1, name2) {
   const base1 = normalize(name1)
   const base2 = normalize(name2)
   // 기본 이름이 같으면 동일 단지 변형
-  return base1 === base2 && base1.length > 3
+  if (base1 === base2 && base1.length > 2) return true
+  // 한쪽이 다른 쪽에 포함되면 변형 (예: xxx-5cha vs xxx-5cha-2)
+  if (base1.length > 5 && base2.length > 5) {
+    if (base1.startsWith(base2) || base2.startsWith(base1)) return true
+  }
+  return false
 }
 
 // 동일 브랜드 연속 단지 체크 (고잔6차푸르지오 vs 고잔7차푸르지오 등)
@@ -160,6 +165,11 @@ function isSameBrandSeries(name1, name2) {
       .replace(/jugongapateu[-]?[\d]+dong$/, 'jugong')  // 주공아파트-901dong 정규화
       .replace(/jugongapateu-[\d]+$/, 'jugong')       // 주공아파트-10 정규화
       .replace(/jugongapateu$/, 'jugong')          // 주공아파트 동일 취급
+      .replace(/yeongguimdaeapateu$/, 'yeongguimdae') // 영구임대아파트 동일 취급
+      .replace(/[\d]+danjiyeongguimdaeapateu$/, 'yeongguimdae') // N단지영구임대아파트 동일 취급
+      .replace(/[\d]+danjiimdaeapateu$/, 'imdae')  // N단지임대아파트 동일 취급
+      .replace(/geumgangterium[-]?[\d]+cha/, 'geumgangterium')  // 금강테리움 N차 동일 취급
+      .replace(/[-][\d]+cha[-]/, '-')             // N차 중간 위치 제거
       // 안산 푸르지오 시리즈 (ansan-8cha-pureujio, ansan-gojan5cha-pureujio)
       .replace(/ansan[-]?[\d]*cha[-]?pureujio$/, 'ansanpureujio')
       .replace(/ansan[-]?gojan[\d]*cha[-]?pureujio$/, 'ansanpureujio')

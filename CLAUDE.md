@@ -484,9 +484,14 @@ Supabase DB
 
 ### 구현 진행 상황
 - [x] Phase 1: DB 스키마 + Storage 설계 (`supabase/001_job_cases_schema.sql`)
-- [ ] Phase 2: 업로드 UI 재작성 (벌크 + 장소/단계 매칭)
-- [ ] Phase 3: 관리자 검수 UI + 품질 게이트 + 발행
-- [ ] Phase 4: 빌드 연동 + SEO 반영
+- [x] Phase 2: 업로드 UI 재작성 (`admin-upload-v2.html`)
+- [x] Phase 3: 관리자 검수 UI + 품질 게이트 + 발행 (`admin-review-v2.html`)
+- [x] Phase 4: 빌드 연동 (`generate-case-pages.js` → job_cases 테이블)
+- [x] Phase 5: Supabase Auth 도입 (JWT 인증, profiles 테이블, RLS)
+
+### 다음 작업
+- [ ] 장소별 개별 원고: 발행 시 사진을 장소별로 그룹핑 → 장소별 SEO 원고 개별 생성 → 사례 페이지에서 장소별 섹션 렌더링
+- [ ] RLS 정책 강화 (현재 기본 적용, 세분화 필요)
 
 ### 관련 파일
 | 파일 | 역할 |

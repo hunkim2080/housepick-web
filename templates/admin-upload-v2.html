@@ -168,18 +168,9 @@
         <span class="clear" onclick="clearApt()">취소</span>
         <div id="selectedName"></div>
       </div>
-      <div class="inline-row">
-        <div>
-          <label>시공일</label>
-          <input type="date" id="workDate">
-        </div>
-        <div>
-          <label>자재</label>
-          <select id="materialType">
-            <option value="kerapoxy">케라폭시</option>
-            <option value="polyurea">폴리우레아</option>
-          </select>
-        </div>
+      <div style="margin-top:0.4rem;">
+        <label style="font-size:0.8rem;font-weight:600;color:#44403c;">시공일</label>
+        <input type="date" id="workDate" style="width:100%;padding:0.55rem;border:2px solid #e7e5e4;border-radius:8px;font-size:0.85rem;">
       </div>
     </div>
 
@@ -222,9 +213,9 @@
           <button class="match-btn" data-step="during">🟡 작업 중</button>
           <button class="match-btn" data-step="after">🟢 시공 후</button>
         </div>
-        <div class="match-divider"></div>
-        <div class="label">자재</div>
-        <div class="btn-row">
+        <div class="match-divider" id="matDivider" style="display:none"></div>
+        <div class="label" id="matLabel" style="display:none">자재</div>
+        <div class="btn-row" id="matRow" style="display:none">
           <button class="match-btn" data-mat="kerapoxy">💎 케라폭시</button>
           <button class="match-btn" data-mat="polyurea">🛡 폴리우레아</button>
         </div>
@@ -537,6 +528,12 @@
     b.addEventListener('click', () => {
       document.querySelectorAll('.match-btn[data-step]').forEach(x => x.classList.remove('active'))
       b.classList.add('active')
+      // "시공 후" 선택 시 자재 섹션 표시
+      const showMat = b.dataset.step === 'after'
+      document.getElementById('matDivider').style.display = showMat ? 'block' : 'none'
+      document.getElementById('matLabel').style.display = showMat ? 'block' : 'none'
+      document.getElementById('matRow').style.display = showMat ? 'flex' : 'none'
+      if (!showMat) document.querySelectorAll('.match-btn[data-mat]').forEach(x => x.classList.remove('active'))
     })
   })
   document.querySelectorAll('.match-btn[data-mat]').forEach(b => {
@@ -597,10 +594,11 @@
 
     try {
       const workDate = document.getElementById('workDate').value || null
-      const material = document.getElementById('materialType').value
       const memo = document.getElementById('memoInput').value.trim() || null
       const spaces = [...new Set(active.map(p => p.confirmedLocation).filter(Boolean))]
-      const issues = [] // 추후 UI 추가
+      const materials = [...new Set(active.map(p => p.confirmedMaterial).filter(Boolean))]
+      const material = materials[0] || 'kerapoxy'
+      const issues = []
       const shortId = Math.random().toString(36).substring(2, 6)
       const dateStr = (workDate || new Date().toISOString().split('T')[0]).replace(/-/g, '')
       const caseSlug = `${dateStr}-${spaces[0] || 'general'}-${material}-${shortId}`

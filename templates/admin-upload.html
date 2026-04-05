@@ -236,11 +236,14 @@
       if (e.key === 'Enter') login()
     })
 
-    // 자동 로그인
+    // 자동 로그인 (유효한 이름만)
+    const validNames = ['제이쓴', '이동환', '임태현']
     const savedStaff = localStorage.getItem('hp_staff')
-    if (savedStaff) {
+    if (savedStaff && validNames.includes(savedStaff)) {
       staffName = savedStaff
       showUploadView()
+    } else {
+      localStorage.removeItem('hp_staff')
     }
 
     // ─── 아파트 데이터 로드 ────────────────────────────────────

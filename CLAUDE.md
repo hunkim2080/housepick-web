@@ -283,7 +283,7 @@ housepick-web/
 
 ---
 
-## Supabase (거래량 데이터 저장소, 2026-04-02)
+## Supabase (2026-04-02)
 
 | 항목 | 값 |
 |------|-----|
@@ -294,7 +294,245 @@ housepick-web/
 | Publishable Key | (Vercel 환경변수 참조) |
 | Secret Key | (Vercel 환경변수 SUPABASE_SECRET_KEY 참조) |
 | Plan | Free (NANO) |
-| 용도 | 국토부 실거래 API → 아파트 거래량 저장 → Phase 우선순위 반영 |
+
+### 테이블
+
+**apartment_trades** — 국토부 실거래 거래량 데이터
+- district_code, district_name, apartment_name, dong_name, trade_count, deal_month, collected_at
+- 용도: 빌드 시 거래량 → sitemap priority 반영
+- 수집: `api/collect-trade.js` (Vercel Cron 매시간 1구) + `scripts/sync-trade-data.js` (로컬 일괄)
+
+**portfolio** — 시공 사례
+- apartment_slug, apartment_name, district_name, region_slug
+- space_type, issue_type, material_type, work_date, case_slug
+- before_image (JSON 배열), after_image (JSON 배열)
+- memo, staff_name, seo_title, seo_content
+- detail_content, maintenance_tips, tile_type, customer_request
+- status (pending/approved/rejected)
+- 용도: 직원 업로드 → 관리자 승인 → 빌드 시 시공 사례 페이지 생성
+
+---
+
+## 거래량 수집 시스템 (2026-04-02)
+
+| 방식 | 파일 | 동작 |
+|------|------|------|
+| 자동 (Vercel Cron) | `api/collect-trade.js` | 매시간 1구씩, 84개 구 약 9일 순환 |
+| 수동 (로컬) | `scripts/sync-trade-data.js` | 84개 구 일괄 수집 (초기 적재용) |
+
+- 조회 대상: 2개월 전 거래 데이터 (국토부 지연 반영)
+- 거래량 → sitemap priority: 20건+ → 0.9 / 10건+ → 0.8 / 5건+ → 0.7
+
+**관련 환경변수 (Vercel):** SUPABASE_URL, SUPABASE_SECRET_KEY, MOLIT_API_KEY
+
+---
+
+## 시공 사례 시스템 (2026-04-05)
+
+### 전체 흐름
+```
+직원 업로드 (/admin/upload, 비번: 2080abc!)
+  아파트 선택 + 부위 + 문제유형 + 자재 + 시공일 + 사진 + 메모
+    ↓ 자동
+  SEO 원고 생성 (아파트 데이터 + 메모 키워드 반영 + 가격)
+    ↓
+  Supabase portfolio 테이블 저장 (status: pending)
+
+관리자 승인 (/admin/review, 비번: 2080admin!)
+    ↓
+
+빌드 시 (generate-case-pages.js)
+  1. Supabase에서 approved 조회
+  2. 점수제 품질 게이트 (7점/11점 이상만 상세 페이지 생성)
+  3. 상세 페이지: /{region}/{district}/{apt}/cases/{case-slug}
+  4. case-cards.json 생성 → 아파트 허브 페이지에 카드 삽입
+  5. sitemap에 품질 통과 사례만 추가
+```
+
+### URL 구조
+```
+허브 (메인 키워드):  /seoul/gangnam/raemian-firstige
+사례 (롱테일):      /seoul/gangnam/raemian-firstige/cases/20260405-bathroom-kerapoxy-a12f
+```
+
+### case-slug 규칙
+`{YYYYMMDD}-{space}-{material}-{4자리랜덤}` (예: `20260405-bathroom-kerapoxy-a12f`)
+
+### 점수제 품질 게이트 (7점/11점 이상 통과)
+
+| 항목 | 점수 |
+|------|------|
+| before+after 모두 존재 | 2점 |
+| 사진 3장 이상 | 2점 |
+| 본문 500자 이상 (300자+ = 1점) | 2점 |
+| 문제 유형 존재 | 1점 |
+| 자재 정보 존재 | 1점 |
+| 시공 부위 존재 | 1점 |
+| 현장 메모 존재 | 1점 |
+| 시공일 존재 | 1점 |
+
+- 미달 시: 상세 URL 미생성, 허브 카드에서만 링크 없이 노출
+- sitemap에도 미포함
+
+### 허브/사례 title 역할 분리
+
+| | 허브 | 사례 |
+|---|---|---|
+| title | `[아파트] 줄눈시공 | 시공 사례 N건` | `[아파트] [공간] 줄눈시공 사례 | [문제] | [날짜]` |
+| H1 | `[아파트] 케라폭시 줄눈시공` | `[아파트] [공간] [자재] – [문제] 개선 사례` |
+| canonical | self | self |
+| schema | Service + FAQ + Breadcrumb | Article + Breadcrumb |
+
+### 관련 사례 선정 기준
+같은 아파트 내에서: 같은 공간(+3) > 같은 문제유형(+2) > 같은 자재(+1) > 최신순
+
+### 이미지 alt
+데이터 기반 자동 생성: `[아파트명] [공간] 줄눈시공 전/후 사진`
+
+### SEO 원고 자동 생성
+- 아파트 데이터(준공연도, 세대수, 브랜드) + 시공 데이터(부위, 문제, 자재) 조합
+- 메모 키워드 감지 (곰팡이/변색/크랙/냄새/습기) → 본문에 자연스럽게 반영
+- 부위별 정찰제 가격 안내 포함
+- 5단락: 배경 → 시공 과정 → 결과 → 가격 → CTA
+
+### 직원 목록
+| 이름 | 역할 |
+|------|------|
+| 제이쓴 | 시공 |
+| 이동환 | 시공 |
+| 임태현 | 시공 |
+
+### 관련 파일
+| 파일 | 역할 |
+|------|------|
+| `templates/admin-upload.html` | 직원 업로드 페이지 |
+| `templates/admin-review.html` | 관리자 승인 페이지 |
+| `templates/case-detail.html` | 사례 상세 템플릿 |
+| `scripts/generate-case-pages.js` | 사례 페이지 빌드 + case-cards.json 생성 |
+
+---
+
+## 현장 등록 시스템 v2 (2026-04-05, 설계 완료 / 구현 진행 중)
+
+### 아키텍처
+
+```
+직원 벌크 업로드 (20장)
+  ↓ 브라우저: EXIF 파싱 + 썸네일 생성 + 원본 업로드
+Supabase Storage
+  ├── originals/ (비공개, 20MB 제한) ← 원본
+  └── public-assets/ (공개, 5MB 제한) ← 승인 후 최적화본 (EXIF 제거)
+Supabase DB
+  ├── job_cases (현장 단위)
+  ├── job_case_images (이미지 단위, 자동값/확정값 분리)
+  └── job_case_events (작업 흐름 기록)
+
+직원 UI → 장소/단계 매칭 → status: review_ready
+    ↓
+관리자 UI → 검수 + 대표 사진 → status: approved → published
+    ↓ 공개용 이미지 생성 (EXIF 제거, WebP, 1200px)
+    ↓
+빌드 시 → published만 조회 → 사례 페이지 생성
+```
+
+### DB 테이블
+
+**job_cases** — 현장 단위
+- status: draft → review_ready → approved → published → archived / rejected
+- case_slug: `{date}-{space}-{material}-{shortId}`
+- representative_image_id: 대표 이미지 1장
+
+**job_case_images** — 이미지 단위
+- auto_step: EXIF 시간 기반 제안 (before/during/after, 확정 아님)
+- confirmed_step: 직원 확정값 (사이트/SEO에 이것만 사용)
+- confirmed_location: 직원 확정 장소
+- is_excluded: 발행 대상 제외
+- is_representative: 대표 이미지 플래그
+- storage_path_original (비공개) / storage_path_public (승인 후 생성)
+
+**job_case_events** — 작업 흐름
+- event_type: before, during, after, inspection, cleanup, finish
+
+### EXIF 처리 정책
+- 촬영 시각: 추출하여 auto_step 제안 (07~11시: before, 11~13:30: during, 13:30+: after)
+- GPS/기기명: 내부 저장하지 않음, 공개 이미지에 절대 포함 금지
+- EXIF 없거나 비정상: null 처리, unclassified 상태
+
+### 이미지 자산 처리
+- 원본: originals/ 버킷 (비공개, 그대로 보관)
+- 공개본: public-assets/ 버킷 (WebP, 1200px, EXIF 제거, approved 이후 생성)
+- 썸네일: 브라우저에서 400px 생성, originals/thumbnails/에 저장
+- 파일명: `{apt-slug}-{location}-{step}-{date}-{shortId}.webp`
+
+### 품질 게이트 (v2)
+- before 또는 현장 상태컷 1장 이상
+- after 컷 1장 이상
+- 발행 후보 이미지 3장 이상 (is_excluded=false)
+- 발행 후보 이미지 모두 장소+단계 확정
+- 대표 이미지 1장 선택
+- 관리자 승인 완료
+
+### 상태값 & 공개 정책
+| 상태 | 공개 | sitemap | 사례 페이지 |
+|------|------|---------|------------|
+| draft | X | X | X |
+| review_ready | X | X | X |
+| approved | X | X | X |
+| **published** | **O** | **O** | **O** |
+| archived | X | X | X |
+| rejected | X | X | X |
+
+### 구현 진행 상황
+- [x] Phase 1: DB 스키마 + Storage 설계 (`supabase/001_job_cases_schema.sql`)
+- [ ] Phase 2: 업로드 UI 재작성 (벌크 + 장소/단계 매칭)
+- [ ] Phase 3: 관리자 검수 UI + 품질 게이트 + 발행
+- [ ] Phase 4: 빌드 연동 + SEO 반영
+
+### 관련 파일
+| 파일 | 역할 |
+|------|------|
+| `supabase/001_job_cases_schema.sql` | DB 스키마 (테이블 + 인덱스 + 버킷 + RLS + 트리거) |
+| `templates/admin-upload.html` | 직원 업로드 (v1, Phase 2에서 재작성) |
+| `templates/admin-review.html` | 관리자 검수 (v1, Phase 3에서 재작성) |
+
+---
+
+## 남은 작업 (우선순위순)
+
+### 단기
+- [ ] 현장 등록 시스템 v2 Phase 2~4 구현
+- [ ] 시공 사례 실제 데이터 10건+ 축적
+- [ ] Phase 2 배포 전환
+- [ ] Google Search Console 색인 모니터링
+
+### 중기
+- [ ] Supabase Auth 도입 (직원별 로그인)
+- [ ] RLS 강화 (created_by = auth.uid())
+- [ ] sitemap 검증 스크립트
+- [ ] 증분 빌드
+
+### 장기
+- [ ] AI Vision API 연동 (장소/단계 자동 감지)
+- [ ] AI SEO 원고 품질 강화
+- [ ] 직원별 시공 사례 통계
+- [ ] 거래량 기반 Phase 자동 배분
+
+---
+
+## 빌드 파이프라인 (package.json build)
+
+```
+1. vite build
+2. generate-regional-pages.js     → 지역 67개 + sitemap + robots + rss + admin 페이지
+3. generate-service-pages.js      → 서비스 7개
+4. generate-case-pages.js         → Supabase approved 사례 → 상세 페이지 + case-cards.json
+5. generate-apartment-pages.js    → 아파트 4,418개 (사례 카드 삽입 + 거래량 priority)
+6. generate-district-hub-pages.js → 구 허브 78개
+7. analyze-stats.js               → stats-summary.json
+8. generate-stats-page.js         → 통계 리포트
+9. generate-kerapoxy-guide.js     → 케라폭시 가이드
+10. check-similarity.js           → 유사도 검사 (0.96 차단)
+```
 
 ---
 

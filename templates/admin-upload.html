@@ -450,7 +450,21 @@
         `5년 무상 A/S가 보장되며, 정찰제 가격으로 추가 비용 없이 시공되었습니다.`
       )
 
-      // 4단락: CTA
+      // 4단락: 가격 안내
+      const priceBySpace = {
+        bathroom: '화장실 바닥 30만원, 화장실 전체(바닥+벽) 90만원',
+        entrance: '현관 줄눈시공 20만원~',
+        veranda: '베란다 줄눈시공 25만원~',
+        laundry: '세탁실 줄눈시공 20만원~',
+        other: '부위별 맞춤 견적'
+      }
+      const priceText = spaces.map(s => priceBySpace[s] || '').filter(Boolean).join(', ')
+      paragraphs.push(
+        `하우스픽 ${spaceText} 줄눈시공 정찰제 가격은 ${priceText}이며, ` +
+        `출장비·자재비·인건비가 모두 포함된 가격입니다. 현장에서 추가 비용은 일체 없습니다.`
+      )
+
+      // 5단락: CTA
       paragraphs.push(
         `${apt.districtName} ${apt.name} 입주민분들의 줄눈시공 문의는 010-6461-0131로 연락주시면 ` +
         `무료 현장 방문 견적을 안내드립니다.`

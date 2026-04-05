@@ -260,7 +260,7 @@
         imgsHtml += `<div class="img-section">
           <div class="img-section-title">${stepLabel} (${list.length}장)</div>
           <div class="img-grid">${list.map(img => {
-            const origUrl = `${SB_URL}/storage/v1/object/originals/${img.storage_path_original}`
+            const origUrl = `${SB_URL}/storage/v1/object/public/portfolio/${img.storage_path_original}`
             const loc = img.confirmed_location ? LOC[img.confirmed_location] || img.confirmed_location : ''
             return `<div class="img-thumb ${img.is_representative ? 'representative' : ''}" onclick="event.stopPropagation();openLightbox('${origUrl}','${img.alt_text||''}',${img.id},${c.id})">
               ${img.is_representative ? '<span class="star">대표</span>' : ''}
@@ -342,10 +342,10 @@
       for (const img of imgs) {
         // originals에서 읽어서 public-assets에 복사 (서버리스에서는 직접 복사 불가하므로, 경로만 기록)
         const publicPath = `${c.apartment_slug}/${c.case_slug}/${img.file_name_slugged || img.id + '.webp'}`
-        const origUrl = `${SB_URL}/storage/v1/object/originals/${img.storage_path_original}`
+        const origUrl = `${SB_URL}/storage/v1/object/public/portfolio/${img.storage_path_original}`
 
         // 원본 다운로드
-        const origRes = await fetch(origUrl, { headers: h() })
+        const origRes = await fetch(origUrl)
         if (!origRes.ok) continue
         const blob = await origRes.blob()
 

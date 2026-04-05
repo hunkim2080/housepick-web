@@ -618,9 +618,9 @@
         setProgress(pct, `사진 업로드 ${i + 1}/${active.length}...`)
 
         // 원본 → originals/ 버킷
-        const origPath = `${selectedApt.slug}/${caseSlug}/${p.id}.webp`
+        const origPath = `cases/${selectedApt.slug}/${caseSlug}/${p.id}.webp`
         const blob = await resizeForUpload(p.file)
-        const upRes = await fetch(`${SB_URL}/storage/v1/object/originals/${origPath}`, {
+        const upRes = await fetch(`${SB_URL}/storage/v1/object/portfolio/${origPath}`, {
           method: 'POST',
           headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}`, 'Content-Type': 'image/webp' },
           body: blob

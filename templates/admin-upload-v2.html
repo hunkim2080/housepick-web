@@ -206,7 +206,8 @@
         <div class="label">선택한 <span id="selectedCount">0</span>장에 적용:</div>
         <div class="label" style="margin-top:0.3rem;">장소</div>
         <div class="btn-row">
-          <button class="match-btn" data-loc="bathroom">🚿화장실</button>
+          <button class="match-btn" data-loc="bathroom-main">🚿거실화장실</button>
+          <button class="match-btn" data-loc="bathroom-master">🚿안방화장실</button>
           <button class="match-btn" data-loc="entrance">🚪현관</button>
           <button class="match-btn" data-loc="veranda">🌿베란다</button>
           <button class="match-btn" data-loc="kitchen">🍳주방</button>
@@ -450,7 +451,7 @@
         ? `<span class="badge badge-step badge-${p.confirmedStep}">${{before:'시공전',during:'작업중',after:'시공후'}[p.confirmedStep]}</span>`
         : (p.autoStep ? `<span class="badge badge-auto">${{before:'전?',during:'중?',after:'후?'}[p.autoStep]}</span>` : '')
       const locBadge = p.confirmedLocation
-        ? `<span class="badge badge-location">${{bathroom:'화장실',entrance:'현관',veranda:'베란다',kitchen:'주방',laundry:'다용도',living:'거실',other:'기타'}[p.confirmedLocation]||p.confirmedLocation}</span>`
+        ? `<span class="badge badge-location">${{'bathroom-main':'거실화장실','bathroom-master':'안방화장실',entrance:'현관',veranda:'베란다',kitchen:'주방',laundry:'다용도',living:'거실',other:'기타'}[p.confirmedLocation]||p.confirmedLocation}</span>`
         : ''
       return `<div class="photo-item ${p.isSelected?'selected':''} ${p.isExcluded?'excluded':''}" onclick="toggleSelect('${p.id}')" data-id="${p.id}">
         <img src="${p.thumbnail}" alt="">
@@ -633,7 +634,7 @@
         const sluggedName = `${selectedApt.slug}-${locStr}-${stepStr}-${dateStr}-${p.id.slice(-4)}.webp`
 
         // alt 텍스트 생성
-        const LOC_KR = { bathroom:'화장실', entrance:'현관', veranda:'베란다', kitchen:'주방', laundry:'다용도실', living:'거실', other:'' }
+        const LOC_KR = { 'bathroom-main':'거실화장실', 'bathroom-master':'안방화장실', bathroom:'화장실', entrance:'현관', veranda:'베란다', kitchen:'주방', laundry:'다용도실', living:'거실', other:'' }
         const STEP_KR = { before:'시공 전 오염 상태', during:'줄눈 제거 및 청소 작업 중', after:'줄눈 시공 완료 후 마감 상태' }
         const altText = `${selectedApt.name} ${LOC_KR[locStr]||''} ${STEP_KR[stepStr]||'줄눈시공'} 사진`.trim()
 

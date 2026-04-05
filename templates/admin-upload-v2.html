@@ -222,6 +222,12 @@
           <button class="match-btn" data-step="during">🟡 작업 중</button>
           <button class="match-btn" data-step="after">🟢 시공 후</button>
         </div>
+        <div class="match-divider"></div>
+        <div class="label">자재</div>
+        <div class="btn-row">
+          <button class="match-btn" data-mat="kerapoxy">💎 케라폭시</button>
+          <button class="match-btn" data-mat="polyurea">🛡 폴리우레아</button>
+        </div>
         <div class="match-actions">
           <button class="match-action apply" onclick="applyMatch()">적용</button>
           <button class="match-action clear" onclick="clearSelection()">선택 해제</button>
@@ -351,7 +357,7 @@
       const exifTime = await extractExifTime(file)
       const autoStep = suggestStep(exifTime)
 
-      photos.push({ id, file, thumbnail, exifTime, autoStep, confirmedStep: null, confirmedLocation: null, isExcluded: false, isSelected: false })
+      photos.push({ id, file, thumbnail, exifTime, autoStep, confirmedStep: null, confirmedLocation: null, confirmedMaterial: null, isExcluded: false, isSelected: false })
       added++
       // 중간 렌더링 (사용자에게 진행 표시)
       if (added % 5 === 0) renderGrid()
@@ -453,10 +459,13 @@
       const locBadge = p.confirmedLocation
         ? `<span class="badge badge-location">${{'bathroom-main':'거실화장실','bathroom-master':'안방화장실',entrance:'현관',veranda:'베란다',kitchen:'주방',laundry:'다용도',living:'거실',other:'기타'}[p.confirmedLocation]||p.confirmedLocation}</span>`
         : ''
+      const matBadge = p.confirmedMaterial
+        ? `<span class="badge" style="background:#8b5cf6;color:white;">${{kerapoxy:'케라',polyurea:'폴리'}[p.confirmedMaterial]||''}</span>`
+        : ''
       return `<div class="photo-item ${p.isSelected?'selected':''} ${p.isExcluded?'excluded':''}" onclick="toggleSelect('${p.id}')" data-id="${p.id}">
         <img src="${p.thumbnail}" alt="">
         <button class="exclude-btn" onclick="event.stopPropagation();toggleSingleExclude('${p.id}')">${p.isExcluded?'↩':'×'}</button>
-        <div class="badges">${stepBadge}${locBadge}</div>
+        <div class="badges">${stepBadge}${locBadge}${matBadge}</div>
       </div>`
     }).join('')
 
@@ -490,10 +499,12 @@
   function applyMatch() {
     const selectedLoc = document.querySelector('.match-btn[data-loc].active')
     const selectedStep = document.querySelector('.match-btn[data-step].active')
+    const selectedMat = document.querySelector('.match-btn[data-mat].active')
 
     photos.filter(p => p.isSelected).forEach(p => {
       if (selectedLoc) p.confirmedLocation = selectedLoc.dataset.loc
       if (selectedStep) p.confirmedStep = selectedStep.dataset.step
+      if (selectedMat) p.confirmedMaterial = selectedMat.dataset.mat
       p.isSelected = false
     })
 
@@ -525,6 +536,12 @@
   document.querySelectorAll('.match-btn[data-step]').forEach(b => {
     b.addEventListener('click', () => {
       document.querySelectorAll('.match-btn[data-step]').forEach(x => x.classList.remove('active'))
+      b.classList.add('active')
+    })
+  })
+  document.querySelectorAll('.match-btn[data-mat]').forEach(b => {
+    b.addEventListener('click', () => {
+      document.querySelectorAll('.match-btn[data-mat]').forEach(x => x.classList.remove('active'))
       b.classList.add('active')
     })
   })
@@ -636,7 +653,10 @@
         // alt 텍스트 생성
         const LOC_KR = { 'bathroom-main':'거실화장실', 'bathroom-master':'안방화장실', bathroom:'화장실', entrance:'현관', veranda:'베란다', kitchen:'주방', laundry:'다용도실', living:'거실', other:'' }
         const STEP_KR = { before:'시공 전 오염 상태', during:'줄눈 제거 및 청소 작업 중', after:'줄눈 시공 완료 후 마감 상태' }
-        const altText = `${selectedApt.name} ${LOC_KR[locStr]||''} ${STEP_KR[stepStr]||'줄눈시공'} 사진`.trim()
+        const MAT_KR = { kerapoxy:'케라폭시', polyurea:'폴리우레아' }
+        const matStr = p.confirmedMaterial || material
+        const matLabel = stepStr === 'after' ? ` ${MAT_KR[matStr]||''}` : ''
+        const altText = `${selectedApt.name} ${LOC_KR[locStr]||''}${matLabel} ${STEP_KR[stepStr]||'줄눈시공'} 사진`.trim()
 
         // DB 저장
         await fetch(`${SB_URL}/rest/v1/job_case_images`, {

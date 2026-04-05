@@ -158,11 +158,25 @@
   document.getElementById('adminPw').addEventListener('keydown', e => { if (e.key === 'Enter') adminLogin() })
   if (localStorage.getItem('hp_admin_v2') === 'true') showMain()
 
+  let aptDistrictMap = {} // apt_slug → { regionSlug, districtSlug }
+
   function showMain() {
     document.getElementById('loginView').style.display = 'none'
     document.getElementById('mainView').style.display = 'block'
     document.getElementById('tabs').style.display = 'flex'
+    loadAptMap()
     loadData()
+  }
+
+  async function loadAptMap() {
+    try {
+      const res = await fetch('/data/apartments.json')
+      const data = await res.json()
+      for (const [r, districts] of Object.entries(data))
+        for (const [d, dd] of Object.entries(districts))
+          for (const a of dd.apartments)
+            aptDistrictMap[a.slug] = { regionSlug: r, districtSlug: d }
+    } catch(e) {}
   }
 
   // 데이터 로드
@@ -304,6 +318,9 @@
         }
         actionsHtml += `<button class="action action-revert" onclick="updateStatus(${c.id},'review_ready')">검수로 되돌리기</button>`
       } else if (c.status === 'published') {
+        const aptInfo = aptDistrictMap[c.apartment_slug] || {}
+        const casePageUrl = `/${aptInfo.regionSlug || c.region_slug}/${aptInfo.districtSlug || ''}/${c.apartment_slug}/cases/${c.case_slug}`
+        actionsHtml += `<a href="${casePageUrl}" target="_blank" class="action" style="background:#22c55e;color:white;text-decoration:none;text-align:center;">사이트에서 보기 →</a>`
         actionsHtml += `<button class="action action-archive" onclick="updateStatus(${c.id},'archived')">보관</button>`
       } else if (c.status === 'rejected' || c.status === 'archived') {
         actionsHtml += `<button class="action action-revert" onclick="updateStatus(${c.id},'review_ready')">검수로 되돌리기</button>`

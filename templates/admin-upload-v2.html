@@ -333,22 +333,32 @@
   dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover') })
   dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'))
   dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('dragover'); addFiles(e.dataTransfer.files) })
-  fileInput.addEventListener('change', () => { addFiles(fileInput.files); fileInput.value = '' })
+  fileInput.addEventListener('change', () => {
+    // FileList를 먼저 배열로 복사 (input 초기화 전에)
+    const files = Array.from(fileInput.files)
+    fileInput.value = ''
+    if (files.length > 0) addFiles(files)
+  })
 
   async function addFiles(fileList) {
+    let added = 0
     for (const file of fileList) {
       if (photos.length >= MAX_PHOTOS) { showToast(`최대 ${MAX_PHOTOS}장`, 'error'); break }
       if (!file.type.startsWith('image/')) continue
 
-      const id = `p${Date.now()}-${Math.random().toString(36).substr(2,4)}`
+      const id = `p${Date.now()}-${Math.random().toString(36).substr(2,6)}`
       const thumbnail = await createThumbnail(file, 300)
       const exifTime = await extractExifTime(file)
       const autoStep = suggestStep(exifTime)
 
       photos.push({ id, file, thumbnail, exifTime, autoStep, confirmedStep: null, confirmedLocation: null, isExcluded: false, isSelected: false })
+      added++
+      // 중간 렌더링 (사용자에게 진행 표시)
+      if (added % 5 === 0) renderGrid()
     }
     renderGrid()
     updateSummary()
+    if (added > 0) showToast(`${added}장 추가됨`, 'success')
   }
 
   // ─── 썸네일 생성 ───────────────────────────────────────────────

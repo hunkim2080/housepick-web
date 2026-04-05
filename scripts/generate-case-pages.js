@@ -159,6 +159,29 @@ function passesQualityGate(caseItem) {
   }
 }
 
+// 새 테이블용 품질 게이트
+function passesQualityGateV2(caseItem, activeImgs) {
+  const hasBefore = activeImgs.some(i => i.confirmed_step === 'before')
+  const hasAfter = activeImgs.some(i => i.confirmed_step === 'after')
+  const hasBothBA = hasBefore && hasAfter
+  const textLength = (caseItem.seo_content || caseItem.memo || '').length
+  const hasRepr = activeImgs.some(i => i.is_representative)
+
+  const scoring = {
+    'before+after 존재': hasBothBA ? 2 : 0,
+    '사진 3장 이상': activeImgs.length >= 3 ? 2 : 0,
+    '본문/메모 500자+': textLength >= 500 ? 2 : (textLength >= 300 ? 1 : 0),
+    '문제 유형': caseItem.issue_types ? 1 : 0,
+    '자재 정보': caseItem.material_type ? 1 : 0,
+    '시공 부위': caseItem.space_types ? 1 : 0,
+    '현장 메모': caseItem.memo ? 1 : 0,
+    '시공일': caseItem.work_date ? 1 : 0,
+  }
+  const totalScore = Object.values(scoring).reduce((a, b) => a + b, 0)
+  const reasons = Object.entries(scoring).filter(([, v]) => v === 0).map(([k]) => k)
+  return { pass: totalScore >= QUALITY_THRESHOLD, score: totalScore, maxScore: 11, reasons }
+}
+
 // ─── 유틸리티 ─────────────────────────────────────────────────────
 
 function parseImages(imgField) {
@@ -192,14 +215,61 @@ async function main() {
   }
 
   let cases = []
+  let caseImages = {} // case_id → [images]
+  const headers = { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+
   try {
-    const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/portfolio?status=eq.approved&select=*&order=created_at.desc`,
-      { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` } }
-    )
-    if (!res.ok) throw new Error(`HTTP ${res.status}`)
-    cases = await res.json()
-    console.log(`  ✅ Supabase에서 ${cases.length}건의 승인된 사례 조회`)
+    // job_cases (published만) + job_case_images 동시 조회
+    const [casesRes, imgsRes] = await Promise.all([
+      fetch(`${SUPABASE_URL}/rest/v1/job_cases?status=eq.published&select=*&order=created_at.desc`, { headers }),
+      fetch(`${SUPABASE_URL}/rest/v1/job_case_images?is_excluded=eq.false&select=*&order=sort_order.asc`, { headers })
+    ])
+    if (!casesRes.ok) throw new Error(`job_cases HTTP ${casesRes.status}`)
+    cases = await casesRes.json()
+    const allImgs = await imgsRes.json()
+    for (const img of allImgs) {
+      if (!caseImages[img.case_id]) caseImages[img.case_id] = []
+      caseImages[img.case_id].push(img)
+    }
+    console.log(`  ✅ Supabase: published ${cases.length}건, 이미지 ${allImgs.length}장 조회`)
+
+    // 폴백: 기존 portfolio 테이블도 확인 (이전 데이터 호환)
+    if (cases.length === 0) {
+      const fallbackRes = await fetch(
+        `${SUPABASE_URL}/rest/v1/portfolio?status=eq.approved&select=*&order=created_at.desc`, { headers }
+      )
+      if (fallbackRes.ok) {
+        const fallbackCases = await fallbackRes.json()
+        if (fallbackCases.length > 0) {
+          console.log(`  ℹ️ 기존 portfolio에서 ${fallbackCases.length}건 폴백 로드`)
+          // portfolio → job_cases 형식으로 변환
+          cases = fallbackCases.map(p => ({
+            ...p,
+            space_types: p.space_type,
+            issue_types: p.issue_type,
+          }))
+          // 이미지는 portfolio의 JSON 배열에서 변환
+          for (const p of cases) {
+            const beforeUrls = parseImages(p.before_image)
+            const afterUrls = parseImages(p.after_image)
+            const imgs = []
+            beforeUrls.forEach((url, i) => imgs.push({
+              storage_path_public: url.replace(`${BASE_URL}/storage/v1/object/public/`, ''),
+              confirmed_step: 'before', confirmed_location: (p.space_type || '').split(',')[0],
+              alt_text: '', is_representative: i === 0 && afterUrls.length === 0,
+              _fullUrl: url
+            }))
+            afterUrls.forEach((url, i) => imgs.push({
+              storage_path_public: url.replace(`${BASE_URL}/storage/v1/object/public/`, ''),
+              confirmed_step: 'after', confirmed_location: (p.space_type || '').split(',')[0],
+              alt_text: '', is_representative: i === 0,
+              _fullUrl: url
+            }))
+            caseImages[p.id] = imgs
+          }
+        }
+      }
+    }
   } catch (e) {
     console.log(`  ⚠️ Supabase 조회 실패: ${e.message}`)
     fs.writeFileSync(path.join(dataPath, 'case-cards.json'), '{}')
@@ -225,23 +295,40 @@ async function main() {
       continue
     }
 
-    // 품질 게이트 체크
-    const quality = passesQualityGate(caseItem)
+    // 이미지 로드 (새 테이블 또는 폴백)
+    const imgs = caseImages[caseItem.id] || []
+    const activeImgs = imgs.filter(i => !i.is_excluded)
+
+    // 이미지 URL 헬퍼
+    const getImgUrl = (img) => {
+      if (img._fullUrl) return img._fullUrl  // portfolio 폴백
+      if (img.storage_path_public) return `${BASE_URL.replace('housepick-web.vercel.app', '')}/storage/v1/object/public/public-assets/${img.storage_path_public}`
+      if (img.storage_path_original) return `${SUPABASE_URL}/storage/v1/object/originals/${img.storage_path_original}`
+      return ''
+    }
+
+    const beforeImgs = activeImgs.filter(i => i.confirmed_step === 'before')
+    const duringImgs = activeImgs.filter(i => i.confirmed_step === 'during')
+    const afterImgs = activeImgs.filter(i => i.confirmed_step === 'after')
+
+    // 품질 게이트 체크 (새 테이블 기반)
+    const quality = passesQualityGateV2(caseItem, activeImgs)
     if (!quality.pass) {
       console.log(`  ⏭️ 품질 미달 ${quality.score}/${quality.maxScore}점 (${caseItem.apartment_name}): ${quality.reasons.join(', ')}`)
       skippedCount++
       // 허브 카드에는 간단히 노출 (상세 페이지 미생성)
       if (!caseCardsByApt[caseItem.apartment_slug]) caseCardsByApt[caseItem.apartment_slug] = []
-      const afterImgs = parseImages(caseItem.after_image)
-      const spText = (caseItem.space_type || '').split(',').map(s => SPACE_NAMES[s] || s).join('+')
+      const spText = (caseItem.space_types || '').split(',').map(s => SPACE_NAMES[s] || s).join('+')
+      const firstAfter = afterImgs[0] ? getImgUrl(afterImgs[0]) : ''
+      const firstBefore = beforeImgs[0] ? getImgUrl(beforeImgs[0]) : ''
       caseCardsByApt[caseItem.apartment_slug].push({
-        url: null, // 상세 페이지 없음
+        url: null,
         spaceText: spText,
-        issueText: ISSUE_NAMES[caseItem.issue_type] || '줄눈 오염',
+        issueText: ISSUE_NAMES[caseItem.issue_types?.split(',')[0]] || '줄눈 오염',
         materialText: MATERIAL_NAMES[caseItem.material_type] || '케라폭시',
         workDate: caseItem.work_date ? formatDate(caseItem.work_date) : '',
-        afterImage: afterImgs[0] || '',
-        beforeImage: parseImages(caseItem.before_image)[0] || ''
+        afterImage: firstAfter,
+        beforeImage: firstBefore
       })
       continue
     }
@@ -257,32 +344,36 @@ async function main() {
     const caseUrl = `${hubUrl}/cases/${caseSlug}`
     const fullCaseUrl = `${BASE_URL}${caseUrl}`
 
-    const spaceText = (caseItem.space_type || '').split(',').map(s => SPACE_NAMES[s] || s).join(' + ')
-    const issueText = ISSUE_NAMES[caseItem.issue_type] || '줄눈 오염'
+    const spaceText = (caseItem.space_types || caseItem.space_type || '').split(',').map(s => SPACE_NAMES[s] || s).join(' + ')
+    const issueText = ISSUE_NAMES[caseItem.issue_types?.split(',')[0] || caseItem.issue_type] || '줄눈 오염'
     const materialText = MATERIAL_NAMES[caseItem.material_type] || '케라폭시'
     const workDateText = caseItem.work_date ? formatDate(caseItem.work_date) : formatDate(caseItem.created_at)
-    const beforeImages = parseImages(caseItem.before_image)
-    const afterImages = parseImages(caseItem.after_image)
+
+    // 이미지 URL 배열 생성 (새 테이블 기반)
+    const beforeImageUrls = beforeImgs.map(getImgUrl)
+    const duringImageUrls = duringImgs.map(getImgUrl)
+    const afterImageUrls = afterImgs.map(getImgUrl)
 
     // 사진 비교 HTML
     let photoCompareHtml = ''
-    if (beforeImages.length > 0 && afterImages.length > 0) {
+    if (beforeImageUrls.length > 0 && afterImageUrls.length > 0) {
       photoCompareHtml = `        <div class="photo-compare">
           <div class="photo-compare-single">
-            <img src="${beforeImages[0]}" alt="${generateImageAlt(caseItem.apartment_name, spaceText, issueText, 'before', 1, workDateText, materialText)}" loading="lazy">
+            <img src="${beforeImageUrls[0]}" alt="${generateImageAlt(caseItem.apartment_name, spaceText, issueText, 'before', 1, workDateText, materialText)}" loading="lazy">
             <div class="photo-compare-label label-before">시공 전</div>
           </div>
           <div class="photo-compare-single">
-            <img src="${afterImages[0]}" alt="${generateImageAlt(caseItem.apartment_name, spaceText, issueText, 'after', 1, workDateText, materialText)}" loading="lazy">
+            <img src="${afterImageUrls[0]}" alt="${generateImageAlt(caseItem.apartment_name, spaceText, issueText, 'after', 1, workDateText, materialText)}" loading="lazy">
             <div class="photo-compare-label label-after">시공 후</div>
           </div>
         </div>`
     }
 
-    // 추가 사진 (before/after 구분 alt)
-    const extraBefore = beforeImages.slice(1).map((url, i) => ({url, alt: generateImageAlt(caseItem.apartment_name, spaceText, issueText, 'before', i + 2, workDateText, materialText)}))
-    const extraAfter = afterImages.slice(1).map((url, i) => ({url, alt: generateImageAlt(caseItem.apartment_name, spaceText, issueText, 'after', i + 2, workDateText, materialText)}))
-    const extraAll = [...extraBefore, ...extraAfter]
+    // 추가 사진 (before + during + after 나머지)
+    const extraBefore = beforeImageUrls.slice(1).map((url, i) => ({url, alt: generateImageAlt(caseItem.apartment_name, spaceText, issueText, 'before', i + 2, workDateText, materialText)}))
+    const extraDuring = duringImageUrls.map((url, i) => ({url, alt: `${caseItem.apartment_name} ${spaceText} 줄눈 제거 및 청소 작업 중 ${i + 1}`}))
+    const extraAfter = afterImageUrls.slice(1).map((url, i) => ({url, alt: generateImageAlt(caseItem.apartment_name, spaceText, issueText, 'after', i + 2, workDateText, materialText)}))
+    const extraAll = [...extraBefore, ...extraDuring, ...extraAfter]
     const photoExtraHtml = extraAll.length > 0
       ? `        <div class="photo-extra">${extraAll.map(img => `<img src="${img.url}" alt="${img.alt}" loading="lazy">`).join('\n')}</div>`
       : ''
@@ -384,8 +475,8 @@ ${cards}
       issueText,
       materialText,
       workDate: workDateText,
-      afterImage: afterImages[0] || '',
-      beforeImage: beforeImages[0] || ''
+      afterImage: afterImageUrls[0] || '',
+      beforeImage: beforeImageUrls[0] || ''
     })
   }
 

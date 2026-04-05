@@ -156,6 +156,7 @@ function isSameBrandSeries(name1, name2) {
       .replace(/garojutaekjeongbisaeop$/, '')      // 가로주택정비사업 동일 취급
       // 추가 패턴: 동일 브랜드/지역명 시리즈
       .replace(/hansinapateu$/, 'hansina')         // 한신아파트 동일 취급
+      .replace(/[\d]+chasindongaapateu$/, 'sindonga')  // N차신동아아파트 동일 취급
       .replace(/sindongaapateu$/, 'sindonga')      // 신동아아파트 동일 취급
       .replace(/hyumeonsia$/, 'hyumeonsia')        // 휴먼시아 정규화
       .replace(/mulpuremaeul$/, 'mulpure')         // 물푸레마을 정규화
@@ -165,7 +166,8 @@ function isSameBrandSeries(name1, name2) {
       .replace(/jugongapateu[-]?[\d]+dong$/, 'jugong')  // 주공아파트-901dong 정규화
       .replace(/jugongapateu-[\d]+$/, 'jugong')       // 주공아파트-10 정규화
       .replace(/jugongapateu$/, 'jugong')          // 주공아파트 동일 취급
-      .replace(/[\d]+danjiyeongguimdaeapateu$/, 'yeongguimdae') // N단지영구임대아파트 (구체적 패턴 먼저)
+      .replace(/[\d]+danjijugongyeongguimdaeapateu$/, 'yeongguimdae') // N단지주공영구임대아파트
+      .replace(/[\d]+danjiyeongguimdaeapateu$/, 'yeongguimdae') // N단지영구임대아파트
       .replace(/[\d]+danjiimdaeapateu$/, 'imdae')  // N단지임대아파트
       .replace(/yeongguimdaeapateu$/, 'yeongguimdae') // 영구임대아파트
       .replace(/geumgangterium[-]?[\d]+cha/, 'geumgangterium')  // 금강테리움 N차 동일 취급
@@ -221,6 +223,9 @@ function isSameBrandSeries(name1, name2) {
       .replace(/bichmaeul[-]?[\d]*$/, 'bichmaeul')
       // 한진아파트 시리즈
       .replace(/hanjinapateu$/, 'hanjin')
+      .replace(/e-pyeonhansesang[-]?[\d]*cha$/, 'epyeonhansesang')  // e편한세상 N차
+      .replace(/[\d]+cha[-]?e-pyeonhansesang$/, 'epyeonhansesang')  // N차 e편한세상
+      .replace(/e-pyeonhansesang$/, 'epyeonhansesang')
   }
   const base1 = extractBase(name1)
   const base2 = extractBase(name2)

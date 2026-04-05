@@ -210,9 +210,9 @@
     document.getElementById('cntApproved').textContent = approved
     document.getElementById('cntPublished').textContent = published
     document.getElementById('statsBar').innerHTML = `
-      <div class="stat stat-review"><div class="num">${review}</div><div class="label">검수대기</div></div>
-      <div class="stat stat-approved"><div class="num">${approved}</div><div class="label">승인</div></div>
-      <div class="stat stat-published"><div class="num">${published}</div><div class="label">발행</div></div>
+      <div class="stat stat-review" onclick="setTabDirect('review_ready')" style="cursor:pointer"><div class="num">${review}</div><div class="label">검수대기</div></div>
+      <div class="stat stat-approved" onclick="setTabDirect('approved')" style="cursor:pointer"><div class="num">${approved}</div><div class="label">승인</div></div>
+      <div class="stat stat-published" onclick="setTabDirect('published')" style="cursor:pointer"><div class="num">${published}</div><div class="label">발행</div></div>
     `
   }
 
@@ -221,6 +221,15 @@
     currentTab = tab
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'))
     event.target.closest('.tab').classList.add('active')
+    renderCards()
+  }
+
+  function setTabDirect(tab) {
+    currentTab = tab
+    document.querySelectorAll('.tab').forEach(t => {
+      t.classList.remove('active')
+      if (t.textContent.includes(tab === 'review_ready' ? '검수' : tab === 'approved' ? '승인' : tab === 'published' ? '발행' : '전체')) t.classList.add('active')
+    })
     renderCards()
   }
 

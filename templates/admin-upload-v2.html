@@ -342,11 +342,32 @@
     if (files.length > 0) addFiles(files)
   })
 
+  // 파일 검증
+  const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/heif']
+  const MAX_FILE_SIZE = 15 * 1024 * 1024 // 15MB
+  const MAX_TOTAL_SIZE = 100 * 1024 * 1024 // 총 100MB
+
+  function validateFile(file) {
+    if (!ALLOWED_TYPES.includes(file.type) && !file.name.match(/\.(jpg|jpeg|png|webp|heic|heif)$/i)) {
+      return `${file.name}: 허용되지 않는 파일 형식`
+    }
+    if (file.size > MAX_FILE_SIZE) {
+      return `${file.name}: ${Math.round(file.size/1024/1024)}MB (최대 15MB)`
+    }
+    return null
+  }
+
   async function addFiles(fileList) {
     let added = 0
+    let totalSize = photos.reduce((s, p) => s + (p.file?.size || 0), 0)
     for (const file of fileList) {
       if (photos.length >= MAX_PHOTOS) { showToast(`최대 ${MAX_PHOTOS}장`, 'error'); break }
-      if (!file.type.startsWith('image/')) continue
+
+      // 파일 검증
+      const err = validateFile(file)
+      if (err) { showToast(err, 'error'); continue }
+      totalSize += file.size
+      if (totalSize > MAX_TOTAL_SIZE) { showToast('총 업로드 용량 100MB 초과', 'error'); break }
 
       const id = `p${Date.now()}-${Math.random().toString(36).substr(2,6)}`
       const thumbnail = await createThumbnail(file, 300)

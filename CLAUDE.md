@@ -505,17 +505,35 @@ Supabase DB
 - [ ] Phase 2 배포 전환
 - [ ] Google Search Console 색인 모니터링
 
-### 중기
-- [ ] Supabase Auth 도입 (직원별 로그인)
-- [ ] RLS 강화 (created_by = auth.uid())
+### 중기 — 보안 강화 (Supabase Auth 도입 후)
+- [ ] Supabase Auth 도입 (직원별 이메일/비밀번호 로그인)
+- [ ] RLS 활성화:
+  - SELECT: published만 공개, 직원은 본인 건만, 관리자는 전체
+  - INSERT: auth.uid() = created_by 강제 (WITH CHECK)
+  - UPDATE: 직원은 본인 draft/review_ready만, 관리자는 전체
+  - DELETE: 금지 (soft delete only)
+- [ ] Storage RLS: 비공개 버킷 직원 본인 폴더만 접근
+- [ ] 역할 분리: user_metadata.role = 'staff' | 'admin'
+- [ ] Edge Function으로 발행/삭제 등 고권한 작업 이동
+- [ ] 감사 로그 테이블 (who/what/when)
 - [ ] sitemap 검증 스크립트
 - [ ] 증분 빌드
+
+### 현재 적용된 보안 조치
+- [x] 파일 검증: MIME 타입 (jpeg/png/webp/heic만), 단일 15MB, 총 100MB 제한
+- [x] Soft delete: 하드 삭제 대신 archived 처리 (복구 가능)
+- [x] 공개 데이터 분리: 빌드 시 published만 조회 (generate-case-pages.js)
+- [x] 직원별 개별 비밀번호 (클라이언트 레벨)
+- [x] admin 페이지 noindex/nofollow
+- [ ] RLS 미적용 (Auth 도입 전까지 불가)
+- [ ] Storage RLS 미적용
 
 ### 장기
 - [ ] AI Vision API 연동 (장소/단계 자동 감지)
 - [ ] AI SEO 원고 품질 강화
 - [ ] 직원별 시공 사례 통계
 - [ ] 거래량 기반 Phase 자동 배분
+- [ ] Rate limiting (Redis 기반)
 
 ---
 

@@ -411,12 +411,15 @@
     } catch(e) { showToast('발행 실패: ' + e.message, 'error') }
   }
 
-  // 삭제
+  // 삭제 (soft delete → archived + 삭제 사유 기록)
   async function deleteCase(id) {
-    if (!confirm('정말 삭제하시겠습니까? 이미지도 함께 삭제됩니다.')) return
+    if (!confirm('보관 처리하시겠습니까? (복구 가능)')) return
     try {
-      await fetch(`${SB_URL}/rest/v1/job_cases?id=eq.${id}`, { method: 'DELETE', headers: h() })
-      showToast('삭제 완료', 'success')
+      await fetch(`${SB_URL}/rest/v1/job_cases?id=eq.${id}`, {
+        method: 'PATCH', headers: hJson(),
+        body: JSON.stringify({ status: 'archived', memo: (allCases.find(c=>c.id===id)?.memo||'') + ' [삭제요청 ' + new Date().toLocaleDateString('ko-KR') + ']' })
+      })
+      showToast('보관 처리 완료', 'success')
       loadData()
     } catch(e) { showToast('실패', 'error') }
   }

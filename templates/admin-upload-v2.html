@@ -247,7 +247,11 @@
   // ─── 설정 ─────────────────────────────────────────────────────
   const SB_URL = 'https://bnzgtqktvevqxtnceiwv.supabase.co'
   const SB_KEY = 'sb_publishable_DzloEuUCdoUpGgHOp--ctA__o3F7hvo'
-  const STAFF_PW = '2080abc!'
+  const STAFF_PW = {
+    '제이쓴': '2080abc!',
+    '이동환': 'a01047262496!',
+    '임태현': 'b01037432611!'
+  }
   const MAX_PHOTOS = 20
 
   // ─── 상태 ─────────────────────────────────────────────────────
@@ -263,7 +267,7 @@
     const name = document.getElementById('staffSelect').value
     const pw = document.getElementById('passwordInput').value
     if (!name) return showToast('이름을 선택하세요', 'error')
-    if (pw !== STAFF_PW) return showToast('비밀번호가 틀렸습니다', 'error')
+    if (!STAFF_PW[name] || pw !== STAFF_PW[name]) return showToast('비밀번호가 틀렸습니다', 'error')
     staffName = name
     localStorage.setItem('hp_staff_v2', name)
     showMain()

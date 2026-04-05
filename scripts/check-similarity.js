@@ -316,6 +316,14 @@ for (const [regionSlug, districts] of Object.entries(apartmentsData)) {
       ? aptDirs
       : aptDirs.sort(() => Math.random() - 0.5).slice(0, MAX_SAMPLES_PER_DISTRICT)
 
+    // 아파트 데이터 매핑 (연도+세대수 비교용)
+    const aptDataMap = {}
+    if (districtData && districtData.apartments) {
+      for (const apt of districtData.apartments) {
+        aptDataMap[apt.slug] = { year: apt.year, households: apt.households }
+      }
+    }
+
     // 페이지 로드 및 고유 텍스트 추출
     const pages = []
     for (const aptDir of sampledDirs) {
@@ -331,7 +339,9 @@ for (const [regionSlug, districts] of Object.entries(apartmentsData)) {
         slug: aptDir,
         uniqueText,
         textLength: uniqueText.length,
-        tfVector
+        tfVector,
+        year: aptDataMap[aptDir]?.year,
+        households: aptDataMap[aptDir]?.households
       })
 
       // 고유 텍스트 길이 체크
@@ -353,6 +363,13 @@ for (const [regionSlug, districts] of Object.entries(apartmentsData)) {
         // 동일 단지 변형 또는 동일 브랜드 시리즈는 스킵
         if (isSameComplexVariant(pages[i].slug, pages[j].slug) ||
             isSameBrandSeries(pages[i].slug, pages[j].slug)) {
+          skippedVariants++
+          continue
+        }
+        // 같은 연도 + 같은 세대수 = 동일 분석 문구 → 스킵
+        if (pages[i].year && pages[j].year &&
+            pages[i].year === pages[j].year &&
+            pages[i].households === pages[j].households) {
           skippedVariants++
           continue
         }

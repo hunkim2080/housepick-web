@@ -601,6 +601,55 @@
     })
   }
 
+  // ─── SEO 원고 자동 생성 ──────────────────────────────────────────
+  function generateSEO(apt, spaces, material, memo, beforeCount, afterCount) {
+    const LOC_KR = {'bathroom-main':'거실화장실','bathroom-master':'안방화장실',entrance:'현관',veranda:'베란다',kitchen:'주방',laundry:'다용도실',living:'거실',other:''}
+    const MAT_KR = {kerapoxy:'케라폭시',polyurea:'폴리우레아'}
+    const spaceText = spaces.map(s => LOC_KR[s]||s).filter(Boolean).join(', ')
+    const matText = MAT_KR[material] || '케라폭시'
+    const year = apt.year || 2020
+    const age = new Date().getFullYear() - year
+    const households = apt.households || 0
+    const heating = year < 2000 ? '중앙난방' : year < 2010 ? '개별난방(구형)' : '개별난방(신형)'
+    const premiumBrands = ['삼성물산','GS건설','현대건설','HDC현대산업개발']
+    const tileType = premiumBrands.some(b => (apt.brand||'').includes(b)) ? '포세린 타일' : '세라믹 타일'
+
+    // 메모 키워드 분석
+    const ml = (memo||'').toLowerCase()
+    const hasMold = ml.includes('곰팡이') || ml.includes('곰팜')
+    const hasDiscolor = ml.includes('변색') || ml.includes('누렇')
+    const hasCrack = ml.includes('깨') || ml.includes('갈라') || ml.includes('크랙')
+    const hasSmell = ml.includes('냄새') || ml.includes('악취')
+    const hasWet = ml.includes('습') || ml.includes('결로')
+
+    let issue = age >= 15 ? '심한 변색과 곰팡이' : age >= 7 ? '부분 변색 및 오염' : '경미한 오염'
+    if (hasMold) issue = '줄눈 사이 깊숙이 곰팡이가 번식한 상태'
+    else if (hasDiscolor) issue = '오랜 사용으로 줄눈 전체가 누렇게 변색된 상태'
+    else if (hasCrack) issue = '기존 줄눈이 갈라지고 탈락이 진행된 상태'
+
+    const title = `${apt.district} ${apt.name} ${matText} 줄눈시공 | ${spaceText} 시공 사례`
+
+    const p = []
+    p.push(`${apt.district} ${apt.name}은(는) ${year}년 준공, ${households.toLocaleString()}세대 규모의 ${apt.brand||''} 아파트입니다. 준공 후 약 ${age}년이 경과하여 ${spaceText}이(가) ${issue}였습니다. ${heating} 방식의 ${tileType} 바닥으로, 기존 시멘트 줄눈이 수분 침투로 인해 재시공이 필요한 시점이었습니다.`)
+
+    let extra = ''
+    if (hasMold) extra = ' 곰팡이 뿌리까지 완전히 제거한 후 항균 효과가 있는 케라폭시로 충진하여 재발을 방지했습니다.'
+    else if (hasCrack) extra = ' 탈락된 부위를 보수하고 전체적으로 균일한 마감을 구현했습니다.'
+    else if (hasWet) extra = ' 흡수율 0.1% 이하의 케라폭시 특성으로 습기 차단 효과를 극대화했습니다.'
+    p.push(`하우스픽 전문 시공팀이 3단계 공정(기존 줄눈 완전 제거 → 정밀 마스킹 → ${matText} 충진)으로 ${spaceText} 전체를 시공하였습니다. 이탈리아 마페이 정품 ${matText}를 사용하여 수축률 0%, 흡수율 0.1% 이하의 완벽한 마감을 구현했습니다.${extra}`)
+
+    let result = hasMold ? '곰팡이가 완전히 제거되고 깨끗하게' : hasDiscolor ? '변색이 말끔히 해소되고' : '깔끔하게'
+    p.push(`시공 완료 후 ${result} 마감되었습니다. ${hasMold||hasSmell?'항균 인증 케라폭시 소재 특성상 곰팡이와 냄새 재발 걱정 없이 사용 가능합니다. ':''}5년 무상 A/S가 보장되며, 정찰제 가격으로 추가 비용 없이 시공되었습니다.`)
+
+    const prices = {'bathroom-main':'거실화장실 바닥 30만원, 전체 90만원','bathroom-master':'안방화장실 바닥 30만원, 전체 90만원',entrance:'현관 20만원~',veranda:'베란다 25만원~',laundry:'다용도실 20만원~',kitchen:'주방 25만원~',living:'거실 150만원~'}
+    const priceText = spaces.map(s => prices[s]||'').filter(Boolean).join(', ')
+    if (priceText) p.push(`하우스픽 ${spaceText} 줄눈시공 정찰제 가격은 ${priceText}이며, 출장비·자재비·인건비가 모두 포함된 가격입니다.`)
+
+    p.push(`${apt.district} ${apt.name} 입주민분들의 줄눈시공 문의는 010-6461-0131로 연락주시면 무료 현장 방문 견적을 안내드립니다.`)
+
+    return { title, content: p.join('\n\n') }
+  }
+
   // ─── 제출 ──────────────────────────────────────────────────────
   async function submitCase() {
     // 유효성
@@ -624,6 +673,11 @@
       const dateStr = (workDate || new Date().toISOString().split('T')[0]).replace(/-/g, '')
       const caseSlug = `${dateStr}-${spaces[0] || 'general'}-${material}-${shortId}`
 
+      // SEO 원고 자동 생성
+      const beforeCount = active.filter(p => p.confirmedStep === 'before').length
+      const afterCount = active.filter(p => p.confirmedStep === 'after').length
+      const seo = generateSEO(selectedApt, spaces, material, memo, beforeCount, afterCount)
+
       // 1. job_cases 생성
       setProgress(5, '현장 정보 저장 중...')
       const caseRes = await fetch(`${SB_URL}/rest/v1/job_cases`, {
@@ -641,6 +695,8 @@
           memo,
           created_by: staffName,
           case_slug: caseSlug,
+          seo_title: seo.title,
+          seo_content: seo.content,
           status: 'draft'
         })
       })

@@ -275,6 +275,14 @@
       // 메모
       const memoHtml = c.memo ? `<div class="card-memo">메모: ${c.memo}</div>` : ''
 
+      // SEO 원고
+      const seoHtml = c.seo_title ? `
+        <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:1rem;margin-bottom:0.8rem;">
+          <div style="font-size:0.7rem;font-weight:600;color:#166534;margin-bottom:0.4rem;">자동 생성 SEO 원고</div>
+          <div style="font-weight:700;font-size:0.9rem;margin-bottom:0.4rem;">${c.seo_title}</div>
+          <div style="font-size:0.8rem;color:#44403c;white-space:pre-line;line-height:1.7;">${c.seo_content || ''}</div>
+        </div>` : ''
+
       // 품질 게이트
       const quality = checkQuality(c, imgs)
       const qClass = quality.pass ? 'pass' : 'fail'
@@ -313,6 +321,7 @@
         </div>
         ${imgsHtml}
         ${memoHtml}
+        ${seoHtml}
         ${qualityHtml}
         ${actionsHtml}
       </div>`

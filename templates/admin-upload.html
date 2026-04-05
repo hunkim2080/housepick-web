@@ -9,9 +9,13 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: -apple-system, 'Noto Sans KR', sans-serif; background: #f5f5f4; color: #1c1917; line-height: 1.6; }
 
-    .header { background: #1c1917; color: white; padding: 1rem; text-align: center; position: sticky; top: 0; z-index: 10; }
-    .header h1 { font-size: 1.1rem; font-weight: 600; }
-    .header .staff-name { font-size: 0.8rem; color: #a8a29e; }
+    .header { background: #1c1917; color: white; padding: 0.8rem 1rem; position: sticky; top: 0; z-index: 10; }
+    .header-top { display: flex; align-items: center; justify-content: space-between; }
+    .header h1 { font-size: 1.1rem; font-weight: 600; margin: 0; }
+    .header-info { display: flex; align-items: center; gap: 0.8rem; font-size: 0.8rem; color: #a8a29e; margin-top: 0.3rem; }
+    .header-info .name { color: #f59e0b; font-weight: 600; }
+    .logout-btn { background: none; border: 1px solid #78716c; color: #a8a29e; padding: 0.2rem 0.6rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer; }
+    .logout-btn:hover { border-color: #ef4444; color: #ef4444; }
 
     .container { max-width: 500px; margin: 0 auto; padding: 1rem; }
 
@@ -97,8 +101,14 @@
 </head>
 <body>
   <div class="header">
-    <h1>하우스픽 시공 사례 등록</h1>
-    <div class="staff-name" id="headerStaff"></div>
+    <div class="header-top">
+      <h1>하우스픽 시공 사례 등록</h1>
+      <button class="logout-btn" id="logoutBtn" style="display:none" onclick="logout()">로그아웃</button>
+    </div>
+    <div class="header-info" id="headerInfo" style="display:none">
+      <span class="name" id="headerName"></span>
+      <span id="headerTime"></span>
+    </div>
   </div>
 
   <!-- 로그인 -->
@@ -227,9 +237,25 @@
     function showUploadView() {
       document.getElementById('loginView').style.display = 'none'
       document.getElementById('uploadView').style.display = 'block'
-      document.getElementById('headerStaff').textContent = staffName + ' 님'
+      document.getElementById('logoutBtn').style.display = 'block'
+      document.getElementById('headerInfo').style.display = 'flex'
+      document.getElementById('headerName').textContent = staffName + ' 님'
+      const now = new Date()
+      const timeStr = now.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' })
+      document.getElementById('headerTime').textContent = `${now.getMonth() + 1}/${now.getDate()} ${timeStr} 로그인`
       loadApartments()
       loadRecent()
+    }
+
+    function logout() {
+      localStorage.removeItem('hp_staff')
+      staffName = ''
+      document.getElementById('loginView').style.display = 'block'
+      document.getElementById('uploadView').style.display = 'none'
+      document.getElementById('logoutBtn').style.display = 'none'
+      document.getElementById('headerInfo').style.display = 'none'
+      document.getElementById('staffSelect').value = ''
+      document.getElementById('passwordInput').value = ''
     }
 
     document.getElementById('passwordInput').addEventListener('keydown', e => {

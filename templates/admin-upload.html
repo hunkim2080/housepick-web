@@ -593,7 +593,10 @@
         const issueTypes = getSelectedIssues()
         const materialType = document.getElementById('materialSelect').value
         const workDate = document.getElementById('workDateInput').value || null
-        const caseSlug = `${slug}-${Date.now()}`
+        // case-slug: date-space-material-shortId (유니크성 확보)
+        const shortId = Math.random().toString(36).substring(2, 6)
+        const dateStr = (workDate || new Date().toISOString().split('T')[0]).replace(/-/g, '')
+        const caseSlug = `${dateStr}-${spaces[0] || 'other'}-${materialType}-${shortId}`
 
         // SEO 원고 자동 생성
         const seo = generateSEOArticle(selectedApartment, spaces, memo)

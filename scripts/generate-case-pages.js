@@ -125,28 +125,38 @@ function generateCaseJsonLd(caseItem, apt, caseUrl, hubUrl) {
   ], null, 2)
 }
 
-// ─── 품질 게이트 ──────────────────────────────────────────────────
+// ─── 점수제 품질 게이트 ────────────────────────────────────────────
 
-const MIN_PHOTOS = 3        // 전후 합산 최소 3장
-const MIN_TEXT_LENGTH = 500  // SEO 본문 최소 500자
+const QUALITY_THRESHOLD = 7  // 7점 이상이면 상세 페이지 생성
 
 function passesQualityGate(caseItem) {
   const beforeImages = parseImages(caseItem.before_image)
   const afterImages = parseImages(caseItem.after_image)
   const totalPhotos = beforeImages.length + afterImages.length
+  const hasBothBA = beforeImages.length > 0 && afterImages.length > 0
   const textLength = (caseItem.seo_content || caseItem.detail_content || '').length
-  const hasSpace = !!caseItem.space_type
-  const hasIssue = !!caseItem.issue_type
-  const hasMaterial = !!caseItem.material_type
 
-  const reasons = []
-  if (totalPhotos < MIN_PHOTOS) reasons.push(`사진 ${totalPhotos}장 (최소 ${MIN_PHOTOS}장)`)
-  if (textLength < MIN_TEXT_LENGTH) reasons.push(`본문 ${textLength}자 (최소 ${MIN_TEXT_LENGTH}자)`)
-  if (!hasSpace) reasons.push('시공 부위 없음')
-  if (!hasIssue) reasons.push('문제 유형 없음')
-  if (!hasMaterial) reasons.push('자재 정보 없음')
+  const scoring = {
+    'before+after 존재': hasBothBA ? 2 : 0,
+    '사진 3장 이상': totalPhotos >= 3 ? 2 : 0,
+    '본문 500자 이상': textLength >= 500 ? 2 : (textLength >= 300 ? 1 : 0),
+    '문제 유형': caseItem.issue_type ? 1 : 0,
+    '자재 정보': caseItem.material_type ? 1 : 0,
+    '시공 부위': caseItem.space_type ? 1 : 0,
+    '현장 메모': caseItem.memo ? 1 : 0,
+    '시공일': caseItem.work_date ? 1 : 0,
+  }
 
-  return { pass: reasons.length === 0, reasons }
+  const totalScore = Object.values(scoring).reduce((a, b) => a + b, 0)
+  const maxScore = 11
+  const reasons = Object.entries(scoring).filter(([, v]) => v === 0).map(([k]) => k)
+
+  return {
+    pass: totalScore >= QUALITY_THRESHOLD,
+    score: totalScore,
+    maxScore,
+    reasons
+  }
 }
 
 // ─── 유틸리티 ─────────────────────────────────────────────────────
@@ -206,6 +216,7 @@ async function main() {
   let skippedCount = 0
   const sitemapUrls = []
   const caseCardsByApt = {} // apt_slug → [ card HTML ]
+  const usedSlugs = new Set() // duplicate slug 감지
 
   for (const caseItem of cases) {
     const apt = aptMap.get(caseItem.apartment_slug)
@@ -217,7 +228,7 @@ async function main() {
     // 품질 게이트 체크
     const quality = passesQualityGate(caseItem)
     if (!quality.pass) {
-      console.log(`  ⏭️ 품질 미달 (${caseItem.apartment_name}): ${quality.reasons.join(', ')}`)
+      console.log(`  ⏭️ 품질 미달 ${quality.score}/${quality.maxScore}점 (${caseItem.apartment_name}): ${quality.reasons.join(', ')}`)
       skippedCount++
       // 허브 카드에는 간단히 노출 (상세 페이지 미생성)
       if (!caseCardsByApt[caseItem.apartment_slug]) caseCardsByApt[caseItem.apartment_slug] = []
@@ -235,8 +246,13 @@ async function main() {
       continue
     }
 
-    // case_slug 생성 (없으면 ID 기반)
-    const caseSlug = caseItem.case_slug || `case-${caseItem.id}`
+    // case_slug 생성 (없으면 ID 기반) + 중복 방지
+    let caseSlug = caseItem.case_slug || `case-${caseItem.id}`
+    if (usedSlugs.has(caseSlug)) {
+      caseSlug = `${caseSlug}-${caseItem.id}`
+      console.log(`  ⚠️ duplicate slug 보정: ${caseSlug}`)
+    }
+    usedSlugs.add(caseSlug)
     const hubUrl = `/${apt.regionSlug}/${apt.districtSlug}/${apt.slug}`
     const caseUrl = `${hubUrl}/cases/${caseSlug}`
     const fullCaseUrl = `${BASE_URL}${caseUrl}`
@@ -282,8 +298,18 @@ async function main() {
         <p>${tips}</p>
       </div>` : ''
 
-    // 관련 사례 (같은 아파트)
-    const relatedCases = cases.filter(c => c.apartment_slug === caseItem.apartment_slug && c.id !== caseItem.id).slice(0, 4)
+    // 관련 사례 선정 (같은 아파트 > 같은 공간 > 같은 문제 > 같은 자재 > 최신순)
+    const relatedCandidates = cases
+      .filter(c => c.apartment_slug === caseItem.apartment_slug && c.id !== caseItem.id)
+      .map(c => {
+        let relevance = 0
+        if ((c.space_type || '').split(',').some(s => (caseItem.space_type || '').includes(s))) relevance += 3
+        if (c.issue_type === caseItem.issue_type) relevance += 2
+        if (c.material_type === caseItem.material_type) relevance += 1
+        return { ...c, relevance }
+      })
+      .sort((a, b) => b.relevance - a.relevance || new Date(b.created_at) - new Date(a.created_at))
+    const relatedCases = relatedCandidates.slice(0, 4)
     let relatedHtml = ''
     if (relatedCases.length > 0) {
       const cards = relatedCases.map(rc => {

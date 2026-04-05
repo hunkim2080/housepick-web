@@ -263,16 +263,16 @@ function getComplexNote(apt) {
 // [DEPRECATED] 기존 메시지 시스템은 generateAnalysis()와 getComplexNote()로 대체됨
 
 // title 패턴 (aptType별 차별화)
-function getTitle(apt, hasCases) {
+function getTitle(apt, caseCount) {
   const type = getAptType(apt.year)
-  // 허브 페이지: [아파트명] 줄눈 시공 | 시공 사례 + 견적
-  // 사례 페이지와 title 역할 분리 (허브=메인키워드, 사례=롱테일)
-  if (hasCases) {
-    if (type === 'new') return `${apt.name} 줄눈시공 | 입주 시공 사례 · 정찰제 견적`
-    if (type === 'mid') return `${apt.name} 줄눈시공 | 시공 사례 · 정찰제 견적`
-    return `${apt.name} 줄눈시공 | 재시공 사례 · 정찰제 견적`
+  // 허브: [아파트명] 줄눈시공 | 시공 포인트와 최신 사례 (메인 키워드)
+  // 사례: [아파트명] [공간] [자재] 줄눈시공 | [문제유형] 개선 사례 (롱테일, case-detail에서 처리)
+  if (caseCount > 0) {
+    if (type === 'new') return `${apt.name} 줄눈시공 | 입주 시공 포인트와 최신 사례`
+    if (type === 'mid') return `${apt.name} 줄눈시공 | 욕실·현관 시공 사례 ${caseCount}건`
+    return `${apt.name} 줄눈시공 | 재시공 사례와 시공 포인트`
   }
-  if (type === 'new') return `${apt.name} 입주청소 줄눈시공 | 하우스픽`
+  if (type === 'new') return `${apt.name} 입주 줄눈시공 | 정찰제 견적 · 하우스픽`
   if (type === 'mid') return `${apt.name} 줄눈시공 전문업체 | 하우스픽`
   return `${apt.name} 줄눈 곰팡이 제거 재시공 | 하우스픽`
 }
@@ -418,7 +418,7 @@ for (const [regionSlug, districts] of Object.entries(apartmentsData)) {
       const aptType = getAptType(apt.year)
       const aptCases = caseCardsData[apt.slug] || []
       const caseCount = aptCases.length
-      const title = getTitle(apt, caseCount > 0)
+      const title = getTitle(apt, caseCount)
       const description = getMetaDescription(apt, districtName, caseCount)
       const canonicalUrl = `${BASE_URL}/${regionSlug}/${districtSlug}/${apt.slug}`
 

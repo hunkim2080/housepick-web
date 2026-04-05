@@ -385,6 +385,63 @@
       count.textContent = arr.length > 0 ? `${arr.length}장 선택됨` : ''
     }
 
+    // ─── SEO 원고 자동 생성 ──────────────────────────────────────
+    function generateSEOArticle(apt, spaces, memo) {
+      const spaceNames = { bathroom: '화장실', entrance: '현관', veranda: '베란다', laundry: '세탁실', other: '기타' }
+      const spaceText = spaces.map(s => spaceNames[s] || s).join(', ')
+      const year = apt.year || 2020
+      const currentYear = new Date().getFullYear()
+      const age = currentYear - year
+      const households = apt.households || 0
+
+      // 난방 타입
+      const heating = year < 2000 ? '중앙난방' : year < 2010 ? '개별난방(구형)' : '개별난방(신형)'
+      // 타일 타입
+      const premiumBrands = ['삼성물산', 'GS건설', '현대건설', 'HDC현대산업개발']
+      const tileType = premiumBrands.some(b => (apt.brand || '').includes(b)) ? '포세린 타일' : '세라믹 타일'
+      // 줄눈 상태 추정
+      const condition = age >= 15 ? '심한 변색과 곰팡이' : age >= 7 ? '부분 변색 및 오염' : '경미한 오염'
+
+      // 제목
+      const title = `${apt.districtName} ${apt.name} 케라폭시 줄눈시공 | ${spaceText} 시공 사례`
+
+      // 본문 생성 (아파트 데이터 기반 변주)
+      const paragraphs = []
+
+      // 1단락: 아파트 소개 + 시공 배경
+      paragraphs.push(
+        `${apt.districtName} ${apt.name}은(는) ${year}년 준공, ${households.toLocaleString()}세대 규모의 ${apt.brand || ''} 아파트입니다. ` +
+        `준공 후 약 ${age}년이 경과하여 ${spaceText} 줄눈에 ${condition}이 발생한 상태였습니다. ` +
+        `${heating} 방식의 ${tileType} 바닥으로, 기존 시멘트 줄눈이 수분 침투로 인해 재시공이 필요한 시점이었습니다.`
+      )
+
+      // 2단락: 시공 과정
+      paragraphs.push(
+        `하우스픽 전문 시공팀이 3단계 공정(기존 줄눈 완전 제거 → 정밀 마스킹 → 케라폭시 충진)으로 ` +
+        `${spaceText} 전체를 시공하였습니다. 이탈리아 마페이 정품 케라폭시를 사용하여 수축률 0%, ` +
+        `흡수율 0.1% 이하의 완벽한 마감을 구현했습니다.`
+      )
+
+      // 3단락: 결과 + 메모 반영
+      let resultText = `시공 완료 후 ${condition === '심한 변색과 곰팡이' ? '곰팡이가 완전히 제거되고 ' : ''}` +
+        `깔끔하게 마감되었습니다. 5년 무상 A/S가 보장되며, 정찰제 가격으로 추가 비용 없이 시공되었습니다.`
+      if (memo) {
+        resultText += ` 현장 특이사항: ${memo}`
+      }
+      paragraphs.push(resultText)
+
+      // 4단락: CTA
+      paragraphs.push(
+        `${apt.districtName} ${apt.name} 입주민분들의 줄눈시공 문의는 010-6461-0131로 연락주시면 ` +
+        `무료 현장 방문 견적을 안내드립니다.`
+      )
+
+      return {
+        title,
+        content: paragraphs.join('\n\n')
+      }
+    }
+
     // ─── 이미지 리사이즈 ───────────────────────────────────────
     function resizeImage(file, maxWidth = 1200) {
       return new Promise((resolve) => {
@@ -449,7 +506,11 @@
           afterUrls.push(url)
         }
 
-        setLoading(true, '저장 중...')
+        setLoading(true, 'SEO 원고 생성 중...')
+
+        // SEO 원고 자동 생성
+        const memo = document.getElementById('memoInput').value.trim() || null
+        const seo = generateSEOArticle(selectedApartment, spaces, memo)
 
         // DB 저장
         const row = {
@@ -460,8 +521,10 @@
           space_type: spaces.join(','),
           before_image: beforeUrls.length > 0 ? JSON.stringify(beforeUrls) : null,
           after_image: afterUrls.length > 0 ? JSON.stringify(afterUrls) : null,
-          memo: document.getElementById('memoInput').value.trim() || null,
+          memo,
           staff_name: staffName,
+          seo_title: seo.title,
+          seo_content: seo.content,
           status: 'pending'
         }
 

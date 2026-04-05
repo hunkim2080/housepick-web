@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>시공 사례 관리 | 하우스픽</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, 'Noto Sans KR', sans-serif; background: #f5f5f4; color: #1c1917; line-height: 1.6; }
+
+    .header { background: #1c1917; color: white; padding: 0.8rem 1rem; position: sticky; top: 0; z-index: 10; }
+    .header-top { display: flex; align-items: center; justify-content: space-between; }
+    .header h1 { font-size: 1.1rem; font-weight: 600; }
+    .header-tabs { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
+    .tab-btn { padding: 0.4rem 0.8rem; border-radius: 8px; border: none; font-size: 0.85rem; cursor: pointer; font-weight: 600; }
+    .tab-btn.active { background: #f59e0b; color: white; }
+    .tab-btn:not(.active) { background: #44403c; color: #a8a29e; }
+
+    .container { max-width: 800px; margin: 0 auto; padding: 1rem; }
+
+    /* 로그인 */
+    .login-box { background: white; border-radius: 16px; padding: 2rem; margin-top: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); max-width: 400px; margin-left: auto; margin-right: auto; }
+    .login-box h2 { font-size: 1.2rem; margin-bottom: 1rem; text-align: center; }
+    .login-box input { width: 100%; padding: 0.8rem 1rem; border: 2px solid #e7e5e4; border-radius: 10px; font-size: 1rem; margin-bottom: 1rem; }
+    .login-box input:focus { border-color: #f59e0b; outline: none; }
+    .btn { width: 100%; padding: 0.8rem; border: none; border-radius: 10px; font-size: 1rem; font-weight: 700; cursor: pointer; }
+    .btn-login { background: #1c1917; color: white; }
+
+    /* 통계 */
+    .stats-bar { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+    .stat-card { flex: 1; background: white; border-radius: 12px; padding: 0.8rem; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+    .stat-card .num { font-size: 1.5rem; font-weight: 800; }
+    .stat-card .label { font-size: 0.75rem; color: #78716c; }
+    .stat-pending .num { color: #f59e0b; }
+    .stat-approved .num { color: #22c55e; }
+    .stat-total .num { color: #1c1917; }
+
+    /* 카드 */
+    .card { background: white; border-radius: 16px; padding: 1.2rem; margin-bottom: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+    .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.8rem; }
+    .card-title { font-weight: 700; font-size: 1rem; }
+    .card-meta { font-size: 0.8rem; color: #78716c; margin-top: 0.2rem; }
+    .card-badge { font-size: 0.75rem; padding: 3px 10px; border-radius: 8px; font-weight: 600; }
+    .badge-pending { background: #fef3c7; color: #92400e; }
+    .badge-approved { background: #dcfce7; color: #166534; }
+    .badge-rejected { background: #fee2e2; color: #991b1b; }
+
+    /* 사진 그리드 */
+    .photo-section { margin-bottom: 0.8rem; }
+    .photo-label { font-size: 0.8rem; font-weight: 600; color: #78716c; margin-bottom: 0.3rem; }
+    .photo-grid { display: flex; gap: 0.5rem; overflow-x: auto; padding-bottom: 0.3rem; }
+    .photo-grid img { width: 120px; height: 90px; object-fit: cover; border-radius: 8px; cursor: pointer; flex-shrink: 0; }
+    .photo-grid img:hover { opacity: 0.8; }
+
+    .card-memo { background: #f5f5f4; border-radius: 8px; padding: 0.6rem 0.8rem; font-size: 0.85rem; color: #44403c; margin-bottom: 0.8rem; }
+
+    /* 액션 버튼 */
+    .card-actions { display: flex; gap: 0.5rem; }
+    .action-btn { flex: 1; padding: 0.6rem; border: none; border-radius: 10px; font-size: 0.9rem; font-weight: 600; cursor: pointer; }
+    .btn-approve { background: #22c55e; color: white; }
+    .btn-approve:hover { background: #16a34a; }
+    .btn-reject { background: #fee2e2; color: #991b1b; }
+    .btn-reject:hover { background: #fca5a5; }
+    .btn-delete { background: #f5f5f4; color: #ef4444; }
+    .btn-delete:hover { background: #fee2e2; }
+
+    /* 라이트박스 */
+    .lightbox { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); z-index: 100; align-items: center; justify-content: center; }
+    .lightbox.active { display: flex; }
+    .lightbox img { max-width: 95%; max-height: 90vh; object-fit: contain; border-radius: 8px; }
+    .lightbox-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: white; font-size: 2rem; cursor: pointer; }
+
+    .empty { text-align: center; color: #a8a29e; padding: 3rem 1rem; }
+
+    .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); padding: 0.8rem 1.5rem; border-radius: 10px; color: white; font-weight: 600; font-size: 0.9rem; z-index: 100; display: none; }
+    .toast.success { background: #22c55e; }
+    .toast.error { background: #ef4444; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="header-top">
+      <h1>시공 사례 관리</h1>
+      <a href="/admin/upload" style="color:#a8a29e;font-size:0.8rem;text-decoration:none;">← 등록 페이지</a>
+    </div>
+    <div class="header-tabs" id="headerTabs" style="display:none">
+      <button class="tab-btn active" onclick="setTab('pending')">대기</button>
+      <button class="tab-btn" onclick="setTab('approved')">승인</button>
+      <button class="tab-btn" onclick="setTab('rejected')">반려</button>
+      <button class="tab-btn" onclick="setTab('all')">전체</button>
+    </div>
+  </div>
+
+  <!-- 로그인 -->
+  <div id="loginView" class="container">
+    <div class="login-box">
+      <h2>관리자 로그인</h2>
+      <input type="password" id="adminPw" placeholder="관리자 비밀번호" autofocus>
+      <button class="btn btn-login" onclick="adminLogin()">로그인</button>
+    </div>
+  </div>
+
+  <!-- 관리 화면 -->
+  <div id="mainView" class="container" style="display:none">
+    <div class="stats-bar" id="statsBar"></div>
+    <div id="cardList"></div>
+  </div>
+
+  <!-- 라이트박스 -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+    <img id="lightboxImg" src="" alt="">
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const SUPABASE_URL = 'https://bnzgtqktvevqxtnceiwv.supabase.co'
+    const SUPABASE_KEY = 'sb_publishable_DzloEuUCdoUpGgHOp--ctA__o3F7hvo'
+    const ADMIN_PASSWORD = '2080admin!'
+
+    let currentTab = 'pending'
+    let allItems = []
+
+    const SPACE_NAMES = { bathroom: '화장실', entrance: '현관', veranda: '베란다', laundry: '세탁실', other: '기타' }
+
+    // ─── 로그인 ────────────────────────────────────────────────
+    function adminLogin() {
+      if (document.getElementById('adminPw').value === ADMIN_PASSWORD) {
+        localStorage.setItem('hp_admin', 'true')
+        showMain()
+      } else {
+        showToast('비밀번호가 틀렸습니다', 'error')
+      }
+    }
+    document.getElementById('adminPw').addEventListener('keydown', e => { if (e.key === 'Enter') adminLogin() })
+
+    if (localStorage.getItem('hp_admin') === 'true') showMain()
+
+    function showMain() {
+      document.getElementById('loginView').style.display = 'none'
+      document.getElementById('mainView').style.display = 'block'
+      document.getElementById('headerTabs').style.display = 'flex'
+      loadAll()
+    }
+
+    // ─── 데이터 로드 ───────────────────────────────────────────
+    async function loadAll() {
+      try {
+        const res = await fetch(
+          `${SUPABASE_URL}/rest/v1/portfolio?select=*&order=created_at.desc&limit=100`,
+          { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` } }
+        )
+        allItems = await res.json()
+        renderStats()
+        renderCards()
+      } catch (e) {
+        showToast('데이터 로드 실패', 'error')
+      }
+    }
+
+    // ─── 통계 ──────────────────────────────────────────────────
+    function renderStats() {
+      const pending = allItems.filter(i => i.status === 'pending').length
+      const approved = allItems.filter(i => i.status === 'approved').length
+      document.getElementById('statsBar').innerHTML = `
+        <div class="stat-card stat-pending"><div class="num">${pending}</div><div class="label">대기</div></div>
+        <div class="stat-card stat-approved"><div class="num">${approved}</div><div class="label">승인</div></div>
+        <div class="stat-card stat-total"><div class="num">${allItems.length}</div><div class="label">전체</div></div>
+      `
+    }
+
+    // ─── 탭 ────────────────────────────────────────────────────
+    function setTab(tab) {
+      currentTab = tab
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'))
+      event.target.classList.add('active')
+      renderCards()
+    }
+
+    // ─── 카드 렌더링 ───────────────────────────────────────────
+    function renderCards() {
+      const filtered = currentTab === 'all' ? allItems : allItems.filter(i => i.status === currentTab)
+      const list = document.getElementById('cardList')
+
+      if (filtered.length === 0) {
+        list.innerHTML = `<div class="empty">${currentTab === 'pending' ? '대기 중인 사례가 없습니다' : '항목이 없습니다'}</div>`
+        return
+      }
+
+      list.innerHTML = filtered.map(item => {
+        const date = new Date(item.created_at)
+        const dateStr = `${date.getMonth()+1}/${date.getDate()} ${date.toLocaleTimeString('ko-KR', {hour:'2-digit', minute:'2-digit'})}`
+        const spaces = (item.space_type || '').split(',').map(s => SPACE_NAMES[s] || s).join(' + ')
+        const badgeClass = item.status === 'approved' ? 'badge-approved' : item.status === 'rejected' ? 'badge-rejected' : 'badge-pending'
+        const badgeText = item.status === 'approved' ? '승인' : item.status === 'rejected' ? '반려' : '대기'
+
+        let beforeHtml = '', afterHtml = ''
+        try {
+          const beforeUrls = JSON.parse(item.before_image || '[]')
+          if (beforeUrls.length > 0) {
+            beforeHtml = `<div class="photo-section"><div class="photo-label">시공 전 (${beforeUrls.length}장)</div><div class="photo-grid">${beforeUrls.map(u => `<img src="${u}" onclick="openLightbox('${u}')">`).join('')}</div></div>`
+          }
+        } catch { if (item.before_image) beforeHtml = `<div class="photo-section"><div class="photo-label">시공 전</div><div class="photo-grid"><img src="${item.before_image}" onclick="openLightbox('${item.before_image}')"></div></div>` }
+
+        try {
+          const afterUrls = JSON.parse(item.after_image || '[]')
+          if (afterUrls.length > 0) {
+            afterHtml = `<div class="photo-section"><div class="photo-label">시공 후 (${afterUrls.length}장)</div><div class="photo-grid">${afterUrls.map(u => `<img src="${u}" onclick="openLightbox('${u}')">`).join('')}</div></div>`
+          }
+        } catch { if (item.after_image) afterHtml = `<div class="photo-section"><div class="photo-label">시공 후</div><div class="photo-grid"><img src="${item.after_image}" onclick="openLightbox('${item.after_image}')"></div></div>` }
+
+        const memoHtml = item.memo ? `<div class="card-memo">${item.memo}</div>` : ''
+
+        let actionsHtml = ''
+        if (item.status === 'pending') {
+          actionsHtml = `
+            <div class="card-actions">
+              <button class="action-btn btn-approve" onclick="updateStatus(${item.id}, 'approved')">승인</button>
+              <button class="action-btn btn-reject" onclick="updateStatus(${item.id}, 'rejected')">반려</button>
+            </div>`
+        } else {
+          actionsHtml = `
+            <div class="card-actions">
+              ${item.status === 'rejected' ? `<button class="action-btn btn-approve" onclick="updateStatus(${item.id}, 'approved')">승인으로 변경</button>` : ''}
+              ${item.status === 'approved' ? `<button class="action-btn btn-reject" onclick="updateStatus(${item.id}, 'pending')">대기로 되돌리기</button>` : ''}
+              <button class="action-btn btn-delete" onclick="deleteItem(${item.id})">삭제</button>
+            </div>`
+        }
+
+        return `
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">${item.apartment_name}</div>
+                <div class="card-meta">${item.district_name} · ${spaces} · ${item.staff_name || '미지정'} · ${dateStr}</div>
+              </div>
+              <span class="card-badge ${badgeClass}">${badgeText}</span>
+            </div>
+            ${beforeHtml}
+            ${afterHtml}
+            ${memoHtml}
+            ${actionsHtml}
+          </div>
+        `
+      }).join('')
+    }
+
+    // ─── 상태 변경 ─────────────────────────────────────────────
+    async function updateStatus(id, status) {
+      try {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/portfolio?id=eq.${id}`, {
+          method: 'PATCH',
+          headers: {
+            'apikey': SUPABASE_KEY,
+            'Authorization': `Bearer ${SUPABASE_KEY}`,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify({ status })
+        })
+        if (!res.ok) throw new Error(await res.text())
+        showToast(status === 'approved' ? '승인 완료' : status === 'rejected' ? '반려됨' : '대기로 변경', 'success')
+        loadAll()
+      } catch (e) {
+        showToast('변경 실패: ' + e.message, 'error')
+      }
+    }
+
+    // ─── 삭제 ──────────────────────────────────────────────────
+    async function deleteItem(id) {
+      if (!confirm('정말 삭제하시겠습니까?')) return
+      try {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/portfolio?id=eq.${id}`, {
+          method: 'DELETE',
+          headers: {
+            'apikey': SUPABASE_KEY,
+            'Authorization': `Bearer ${SUPABASE_KEY}`,
+          }
+        })
+        if (!res.ok) throw new Error(await res.text())
+        showToast('삭제 완료', 'success')
+        loadAll()
+      } catch (e) {
+        showToast('삭제 실패: ' + e.message, 'error')
+      }
+    }
+
+    // ─── 라이트박스 ────────────────────────────────────────────
+    function openLightbox(url) {
+      event.stopPropagation()
+      document.getElementById('lightboxImg').src = url
+      document.getElementById('lightbox').classList.add('active')
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active')
+    }
+
+    // ─── 토스트 ────────────────────────────────────────────────
+    function showToast(msg, type) {
+      const t = document.getElementById('toast')
+      t.textContent = msg
+      t.className = `toast ${type}`
+      t.style.display = 'block'
+      setTimeout(() => t.style.display = 'none', 3000)
+    }
+  </script>
+</body>
+</html>

@@ -657,13 +657,19 @@ if (fs.existsSync(templatePrivacyPath)) {
   console.log(`  ✓ /privacy/index.html 생성`)
 }
 
-// admin 업로드 페이지 생성
-const adminUploadPath = path.join(__dirname, '..', 'templates', 'admin-upload.html')
-if (fs.existsSync(adminUploadPath)) {
-  const adminDir = path.join(distPath, 'admin', 'upload')
-  fs.mkdirSync(adminDir, { recursive: true })
-  fs.copyFileSync(adminUploadPath, path.join(adminDir, 'index.html'))
-  console.log(`  ✓ /admin/upload/index.html 생성`)
+// admin 페이지 생성
+const adminPages = [
+  { src: 'admin-upload.html', dest: 'admin/upload' },
+  { src: 'admin-review.html', dest: 'admin/review' },
+]
+for (const page of adminPages) {
+  const srcPath = path.join(__dirname, '..', 'templates', page.src)
+  if (fs.existsSync(srcPath)) {
+    const destDir = path.join(distPath, page.dest)
+    fs.mkdirSync(destDir, { recursive: true })
+    fs.copyFileSync(srcPath, path.join(destDir, 'index.html'))
+    console.log(`  ✓ /${page.dest}/index.html 생성`)
+  }
 }
 
 // apartments.json을 dist/data/에 복사 (업로드 페이지에서 참조)

@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>현장 등록 | 하우스픽</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, 'Noto Sans KR', sans-serif; background: #f5f5f4; color: #1c1917; line-height: 1.6; -webkit-tap-highlight-color: transparent; }
+
+    /* 헤더 */
+    .header { background: #1c1917; color: white; padding: 0.7rem 1rem; position: sticky; top: 0; z-index: 20; }
+    .header-top { display: flex; align-items: center; justify-content: space-between; }
+    .header h1 { font-size: 1rem; font-weight: 700; }
+    .header-info { font-size: 0.75rem; color: #a8a29e; margin-top: 0.2rem; }
+    .header-info .name { color: #f59e0b; font-weight: 600; }
+    .logout-btn { background: none; border: 1px solid #78716c; color: #a8a29e; padding: 0.2rem 0.5rem; border-radius: 6px; font-size: 0.7rem; cursor: pointer; }
+
+    .container { max-width: 600px; margin: 0 auto; padding: 0.8rem; }
+
+    /* 로그인 */
+    .login-box { background: white; border-radius: 16px; padding: 2rem; margin-top: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .login-box h2 { font-size: 1.2rem; margin-bottom: 1rem; text-align: center; }
+    .login-box select, .login-box input { width: 100%; padding: 0.7rem; border: 2px solid #e7e5e4; border-radius: 10px; font-size: 1rem; margin-bottom: 0.8rem; background: white; }
+    .login-box label { font-weight: 600; font-size: 0.85rem; color: #78716c; margin-bottom: 0.3rem; display: block; }
+
+    /* 섹션 */
+    .section { background: white; border-radius: 14px; padding: 1.2rem; margin-bottom: 0.8rem; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+    .section-title { font-size: 0.85rem; font-weight: 700; color: #78716c; margin-bottom: 0.6rem; display: flex; align-items: center; gap: 0.4rem; }
+    .section-title .num { background: #1c1917; color: white; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; }
+
+    /* 아파트 검색 */
+    .search-wrap { position: relative; }
+    .search-wrap input { width: 100%; padding: 0.7rem; border: 2px solid #e7e5e4; border-radius: 10px; font-size: 0.95rem; }
+    .search-wrap input:focus { border-color: #f59e0b; outline: none; }
+    .search-results { position: absolute; top: 100%; left: 0; right: 0; background: white; border: 2px solid #e7e5e4; border-top: none; border-radius: 0 0 10px 10px; max-height: 200px; overflow-y: auto; z-index: 5; display: none; }
+    .search-results .item { padding: 0.6rem 0.8rem; cursor: pointer; font-size: 0.85rem; border-bottom: 1px solid #f5f5f4; }
+    .search-results .item:hover { background: #fef3c7; }
+    .search-results .item .sub { font-size: 0.7rem; color: #a8a29e; }
+    .selected-apt { background: #fef3c7; border: 2px solid #f59e0b; border-radius: 10px; padding: 0.7rem; margin-top: 0.4rem; display: none; font-size: 0.9rem; }
+    .selected-apt .clear { float: right; color: #ef4444; cursor: pointer; font-size: 0.8rem; }
+
+    /* 인라인 폼 */
+    .inline-row { display: flex; gap: 0.6rem; margin-top: 0.4rem; }
+    .inline-row > div { flex: 1; }
+    .inline-row label { font-size: 0.8rem; font-weight: 600; color: #44403c; margin-bottom: 0.2rem; display: block; }
+    .inline-row select, .inline-row input { width: 100%; padding: 0.55rem; border: 2px solid #e7e5e4; border-radius: 8px; font-size: 0.85rem; background: white; }
+
+    /* 드래그 영역 */
+    .drop-zone { border: 2px dashed #d6d3d1; border-radius: 14px; padding: 2rem 1rem; text-align: center; cursor: pointer; transition: all 0.2s; position: relative; }
+    .drop-zone.dragover { border-color: #f59e0b; background: #fef3c7; }
+    .drop-zone .icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+    .drop-zone .text { font-size: 0.9rem; color: #78716c; }
+    .drop-zone .subtext { font-size: 0.75rem; color: #a8a29e; margin-top: 0.3rem; }
+    .drop-zone input { display: none; }
+
+    /* 사진 그리드 */
+    .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin-top: 0.8rem; }
+    .photo-item { position: relative; aspect-ratio: 1; border-radius: 10px; overflow: hidden; border: 2px solid transparent; cursor: pointer; transition: all 0.15s; }
+    .photo-item.selected { border-color: #f59e0b; box-shadow: 0 0 0 2px #f59e0b; }
+    .photo-item.excluded { opacity: 0.3; }
+    .photo-item img { width: 100%; height: 100%; object-fit: cover; }
+    .photo-item .badges { position: absolute; bottom: 0; left: 0; right: 0; padding: 3px; display: flex; gap: 2px; flex-wrap: wrap; }
+    .badge { font-size: 0.6rem; padding: 1px 5px; border-radius: 4px; font-weight: 600; white-space: nowrap; }
+    .badge-step { color: white; }
+    .badge-before { background: #ef4444; }
+    .badge-during { background: #f59e0b; }
+    .badge-after { background: #22c55e; }
+    .badge-location { background: rgba(0,0,0,0.6); color: white; }
+    .badge-auto { background: rgba(0,0,0,0.4); color: #fef3c7; font-style: italic; }
+    .photo-item .exclude-btn { position: absolute; top: 4px; right: 4px; background: rgba(0,0,0,0.5); color: white; border: none; border-radius: 50%; width: 22px; height: 22px; font-size: 11px; cursor: pointer; display: none; }
+    .photo-item:hover .exclude-btn, .photo-item.selected .exclude-btn { display: block; }
+    .photo-count { text-align: right; font-size: 0.75rem; color: #78716c; margin-top: 0.3rem; }
+
+    /* 매칭 툴바 */
+    .match-toolbar { background: #1c1917; border-radius: 12px; padding: 0.8rem; margin-top: 0.8rem; display: none; }
+    .match-toolbar.active { display: block; }
+    .match-toolbar .label { font-size: 0.75rem; color: #a8a29e; margin-bottom: 0.4rem; }
+    .match-toolbar .btn-row { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+    .match-btn { padding: 0.35rem 0.6rem; border: 1.5px solid #44403c; border-radius: 8px; background: transparent; color: #d6d3d1; font-size: 0.75rem; cursor: pointer; font-weight: 600; transition: all 0.15s; }
+    .match-btn:hover { border-color: #f59e0b; color: #f59e0b; }
+    .match-btn.active { background: #f59e0b; border-color: #f59e0b; color: #1c1917; }
+    .match-divider { border-top: 1px solid #44403c; margin: 0.5rem 0; }
+    .match-actions { display: flex; gap: 0.3rem; margin-top: 0.5rem; }
+    .match-action { padding: 0.3rem 0.5rem; border: none; border-radius: 6px; font-size: 0.7rem; cursor: pointer; font-weight: 600; }
+    .match-action.apply { background: #f59e0b; color: #1c1917; }
+    .match-action.clear { background: #44403c; color: #a8a29e; }
+    .match-action.exclude { background: #ef4444; color: white; }
+
+    /* 메모 */
+    textarea { width: 100%; padding: 0.7rem; border: 2px solid #e7e5e4; border-radius: 10px; font-size: 0.85rem; resize: vertical; min-height: 50px; font-family: inherit; }
+    textarea:focus { border-color: #f59e0b; outline: none; }
+
+    /* 버튼 */
+    .btn { width: 100%; padding: 0.9rem; border: none; border-radius: 12px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+    .btn-primary { background: #f59e0b; color: white; }
+    .btn-primary:hover { background: #d97706; }
+    .btn-primary:disabled { background: #d6d3d1; cursor: not-allowed; }
+    .btn-dark { background: #1c1917; color: white; }
+
+    /* 진행률 */
+    .progress-bar { height: 4px; background: #e7e5e4; border-radius: 2px; margin-top: 0.5rem; overflow: hidden; display: none; }
+    .progress-bar.active { display: block; }
+    .progress-fill { height: 100%; background: #f59e0b; border-radius: 2px; transition: width 0.3s; }
+    .progress-text { font-size: 0.75rem; color: #78716c; text-align: right; margin-top: 0.2rem; }
+
+    /* 토스트 */
+    .toast { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%); padding: 0.7rem 1.2rem; border-radius: 10px; color: white; font-weight: 600; font-size: 0.85rem; z-index: 100; display: none; }
+    .toast.success { background: #22c55e; }
+    .toast.error { background: #ef4444; }
+
+    /* 상태 요약 */
+    .summary { background: #fef3c7; border: 1px solid #fde68a; border-radius: 10px; padding: 0.7rem; margin-top: 0.5rem; font-size: 0.8rem; }
+    .summary .row { display: flex; justify-content: space-between; padding: 0.15rem 0; }
+    .summary .label { color: #78716c; }
+    .summary .value { font-weight: 600; }
+    .summary .warn { color: #ef4444; }
+    .summary .ok { color: #22c55e; }
+
+    @media (max-width: 400px) { .photo-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="header-top">
+      <div>
+        <h1>하우스픽 현장 등록</h1>
+        <div class="header-info" id="headerInfo" style="display:none">
+          <span class="name" id="headerName"></span> · <span id="headerTime"></span>
+        </div>
+      </div>
+      <div>
+        <a href="/admin/review" style="color:#a8a29e;font-size:0.7rem;text-decoration:none;margin-right:0.5rem;">관리</a>
+        <button class="logout-btn" id="logoutBtn" style="display:none" onclick="logout()">로그아웃</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 로그인 -->
+  <div id="loginView" class="container">
+    <div class="login-box">
+      <h2>직원 로그인</h2>
+      <label>이름</label>
+      <select id="staffSelect">
+        <option value="">선택</option>
+        <option value="제이쓴">제이쓴</option>
+        <option value="이동환">이동환</option>
+        <option value="임태현">임태현</option>
+      </select>
+      <label>비밀번호</label>
+      <input type="password" id="passwordInput" placeholder="비밀번호">
+      <button class="btn btn-dark" onclick="login()">로그인</button>
+    </div>
+  </div>
+
+  <!-- 업로드 폼 -->
+  <div id="mainView" class="container" style="display:none">
+
+    <!-- 1. 현장 정보 -->
+    <div class="section">
+      <div class="section-title"><span class="num">1</span> 현장 정보</div>
+      <div class="search-wrap">
+        <input type="text" id="aptSearch" placeholder="아파트명 검색" oninput="searchApt(this.value)">
+        <div class="search-results" id="searchResults"></div>
+      </div>
+      <div class="selected-apt" id="selectedApt">
+        <span class="clear" onclick="clearApt()">취소</span>
+        <div id="selectedName"></div>
+      </div>
+      <div class="inline-row">
+        <div>
+          <label>시공일</label>
+          <input type="date" id="workDate">
+        </div>
+        <div>
+          <label>자재</label>
+          <select id="materialType">
+            <option value="kerapoxy">케라폭시</option>
+            <option value="polyurea">폴리우레아</option>
+            <option value="cement">시멘트</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. 사진 업로드 -->
+    <div class="section">
+      <div class="section-title"><span class="num">2</span> 사진 업로드</div>
+      <div class="drop-zone" id="dropZone">
+        <div class="icon">📸</div>
+        <div class="text">사진을 드래그하거나 탭하세요</div>
+        <div class="subtext">여러 장 선택 가능 · 최대 20장</div>
+        <input type="file" id="fileInput" accept="image/*" multiple>
+      </div>
+      <div class="progress-bar" id="uploadProgress">
+        <div class="progress-fill" id="progressFill" style="width:0%"></div>
+      </div>
+      <div class="progress-text" id="progressText"></div>
+      <div class="photo-count" id="photoCount"></div>
+
+      <!-- 사진 그리드 -->
+      <div class="photo-grid" id="photoGrid"></div>
+
+      <!-- 매칭 툴바 (사진 선택 시 표시) -->
+      <div class="match-toolbar" id="matchToolbar">
+        <div class="label">선택한 <span id="selectedCount">0</span>장에 적용:</div>
+        <div class="label" style="margin-top:0.3rem;">장소</div>
+        <div class="btn-row">
+          <button class="match-btn" data-loc="bathroom">🚿화장실</button>
+          <button class="match-btn" data-loc="entrance">🚪현관</button>
+          <button class="match-btn" data-loc="veranda">🌿베란다</button>
+          <button class="match-btn" data-loc="kitchen">🍳주방</button>
+          <button class="match-btn" data-loc="laundry">🧺다용도</button>
+          <button class="match-btn" data-loc="living">🛋거실</button>
+          <button class="match-btn" data-loc="other">📦기타</button>
+        </div>
+        <div class="match-divider"></div>
+        <div class="label">단계</div>
+        <div class="btn-row">
+          <button class="match-btn" data-step="before">🔴 시공 전</button>
+          <button class="match-btn" data-step="during">🟡 작업 중</button>
+          <button class="match-btn" data-step="after">🟢 시공 후</button>
+        </div>
+        <div class="match-actions">
+          <button class="match-action apply" onclick="applyMatch()">적용</button>
+          <button class="match-action clear" onclick="clearSelection()">선택 해제</button>
+          <button class="match-action exclude" onclick="toggleExclude()">제외/복원</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. 메모 -->
+    <div class="section">
+      <div class="section-title"><span class="num">3</span> 현장 메모</div>
+      <textarea id="memoInput" placeholder="특이사항 (곰팡이, 변색, 고객 요청 등)"></textarea>
+    </div>
+
+    <!-- 상태 요약 -->
+    <div class="summary" id="summary" style="display:none"></div>
+
+    <!-- 등록 버튼 -->
+    <button class="btn btn-primary" id="submitBtn" onclick="submitCase()" style="margin-top:0.8rem;">현장 등록 요청</button>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  // ─── 설정 ─────────────────────────────────────────────────────
+  const SB_URL = 'https://bnzgtqktvevqxtnceiwv.supabase.co'
+  const SB_KEY = 'sb_publishable_DzloEuUCdoUpGgHOp--ctA__o3F7hvo'
+  const STAFF_PW = '2080abc!'
+  const MAX_PHOTOS = 20
+
+  // ─── 상태 ─────────────────────────────────────────────────────
+  let apartments = []
+  let selectedApt = null
+  let staffName = ''
+  let photos = [] // { id, file, thumbnail, exifTime, autoStep, confirmedStep, confirmedLocation, isExcluded, isSelected }
+
+  // ─── 로그인 ───────────────────────────────────────────────────
+  const validNames = ['제이쓴', '이동환', '임태현']
+
+  function login() {
+    const name = document.getElementById('staffSelect').value
+    const pw = document.getElementById('passwordInput').value
+    if (!name) return showToast('이름을 선택하세요', 'error')
+    if (pw !== STAFF_PW) return showToast('비밀번호가 틀렸습니다', 'error')
+    staffName = name
+    localStorage.setItem('hp_staff_v2', name)
+    showMain()
+  }
+
+  function showMain() {
+    document.getElementById('loginView').style.display = 'none'
+    document.getElementById('mainView').style.display = 'block'
+    document.getElementById('logoutBtn').style.display = 'block'
+    document.getElementById('headerInfo').style.display = 'block'
+    document.getElementById('headerName').textContent = staffName
+    document.getElementById('headerTime').textContent = new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' })
+    document.getElementById('workDate').value = new Date().toISOString().split('T')[0]
+    loadApartments()
+  }
+
+  function logout() {
+    localStorage.removeItem('hp_staff_v2')
+    location.reload()
+  }
+
+  document.getElementById('passwordInput').addEventListener('keydown', e => { if (e.key === 'Enter') login() })
+  const saved = localStorage.getItem('hp_staff_v2')
+  if (saved && validNames.includes(saved)) { staffName = saved; showMain() }
+
+  // ─── 아파트 ───────────────────────────────────────────────────
+  async function loadApartments() {
+    try {
+      const res = await fetch('/data/apartments.json')
+      const data = await res.json()
+      apartments = []
+      for (const [r, districts] of Object.entries(data))
+        for (const [d, dd] of Object.entries(districts))
+          for (const a of dd.apartments)
+            apartments.push({ slug: a.slug, name: a.name, district: dd.name, region: r, districtSlug: d, households: a.households, year: a.year, brand: a.brand || '' })
+    } catch(e) { console.error(e) }
+  }
+
+  function searchApt(q) {
+    const el = document.getElementById('searchResults')
+    if (q.length < 2) { el.style.display = 'none'; return }
+    const list = apartments.filter(a => a.name.includes(q) || a.district.includes(q)).slice(0, 15)
+    el.innerHTML = list.length === 0 ? '<div class="item"><span class="sub">없음</span></div>'
+      : list.map(a => `<div class="item" onclick="selectApt('${a.slug}')">${a.name}<div class="sub">${a.district} · ${a.households||'?'}세대 · ${a.year||'?'}년</div></div>`).join('')
+    el.style.display = 'block'
+  }
+
+  function selectApt(slug) {
+    selectedApt = apartments.find(a => a.slug === slug)
+    document.getElementById('searchResults').style.display = 'none'
+    document.getElementById('aptSearch').value = ''
+    document.getElementById('selectedApt').style.display = 'block'
+    document.getElementById('selectedName').textContent = `${selectedApt.name} · ${selectedApt.district} · ${selectedApt.households||'?'}세대`
+    updateSummary()
+  }
+
+  function clearApt() { selectedApt = null; document.getElementById('selectedApt').style.display = 'none'; updateSummary() }
+  document.addEventListener('click', e => { if (!e.target.closest('.search-wrap')) document.getElementById('searchResults').style.display = 'none' })
+
+  // ─── 드래그앤드롭 + 파일 선택 ──────────────────────────────────
+  const dropZone = document.getElementById('dropZone')
+  const fileInput = document.getElementById('fileInput')
+
+  dropZone.addEventListener('click', () => fileInput.click())
+  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover') })
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'))
+  dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('dragover'); addFiles(e.dataTransfer.files) })
+  fileInput.addEventListener('change', () => { addFiles(fileInput.files); fileInput.value = '' })
+
+  async function addFiles(fileList) {
+    for (const file of fileList) {
+      if (photos.length >= MAX_PHOTOS) { showToast(`최대 ${MAX_PHOTOS}장`, 'error'); break }
+      if (!file.type.startsWith('image/')) continue
+
+      const id = `p${Date.now()}-${Math.random().toString(36).substr(2,4)}`
+      const thumbnail = await createThumbnail(file, 300)
+      const exifTime = await extractExifTime(file)
+      const autoStep = suggestStep(exifTime)
+
+      photos.push({ id, file, thumbnail, exifTime, autoStep, confirmedStep: null, confirmedLocation: null, isExcluded: false, isSelected: false })
+    }
+    renderGrid()
+    updateSummary()
+  }
+
+  // ─── 썸네일 생성 ───────────────────────────────────────────────
+  function createThumbnail(file, maxW) {
+    return new Promise(resolve => {
+      const img = new Image()
+      img.onload = () => {
+        const c = document.createElement('canvas')
+        let w = img.width, h = img.height
+        if (w > maxW) { h = h * maxW / w; w = maxW }
+        c.width = w; c.height = h
+        c.getContext('2d').drawImage(img, 0, 0, w, h)
+        resolve(c.toDataURL('image/jpeg', 0.7))
+      }
+      img.src = URL.createObjectURL(file)
+    })
+  }
+
+  // ─── EXIF 시간 추출 (간이 파서) ─────────────────────────────────
+  function extractExifTime(file) {
+    return new Promise(resolve => {
+      if (!file.type.includes('jpeg') && !file.type.includes('jpg')) return resolve(null)
+      const reader = new FileReader()
+      reader.onload = e => {
+        try {
+          const view = new DataView(e.target.result)
+          if (view.getUint16(0) !== 0xFFD8) return resolve(null)
+          let offset = 2
+          while (offset < view.byteLength - 2) {
+            const marker = view.getUint16(offset)
+            if (marker === 0xFFE1) {
+              const exifData = parseExifDateTime(view, offset + 4)
+              return resolve(exifData)
+            }
+            if ((marker & 0xFF00) !== 0xFF00) break
+            offset += 2 + view.getUint16(offset + 2)
+          }
+          resolve(null)
+        } catch { resolve(null) }
+      }
+      reader.readAsArrayBuffer(file.slice(0, 65536))
+    })
+  }
+
+  function parseExifDateTime(view, start) {
+    try {
+      // "Exif\0\0" 확인
+      const exifStr = String.fromCharCode(view.getUint8(start), view.getUint8(start+1), view.getUint8(start+2), view.getUint8(start+3))
+      if (exifStr !== 'Exif') return null
+      const tiffStart = start + 6
+      const bigEndian = view.getUint16(tiffStart) === 0x4D4D
+      const getU16 = (o) => bigEndian ? view.getUint16(o) : view.getUint16(o, true)
+      const getU32 = (o) => bigEndian ? view.getUint32(o) : view.getUint32(o, true)
+
+      let ifdOffset = tiffStart + getU32(tiffStart + 4)
+      const entries = getU16(ifdOffset)
+
+      for (let i = 0; i < entries; i++) {
+        const entryOffset = ifdOffset + 2 + i * 12
+        const tag = getU16(entryOffset)
+        // 0x0132 = DateTime, 0x9003 = DateTimeOriginal
+        if (tag === 0x0132 || tag === 0x9003) {
+          const valueOffset = tiffStart + getU32(entryOffset + 8)
+          let str = ''
+          for (let j = 0; j < 19; j++) str += String.fromCharCode(view.getUint8(valueOffset + j))
+          // "2026:04:05 09:30:00" → Date
+          const [date, time] = str.split(' ')
+          if (date && time) return new Date(date.replace(/:/g, '-') + 'T' + time)
+        }
+      }
+      return null
+    } catch { return null }
+  }
+
+  // ─── 단계 자동 제안 ───────────────────────────────────────────
+  function suggestStep(exifTime) {
+    if (!exifTime) return null
+    const h = exifTime.getHours() + exifTime.getMinutes() / 60
+    if (h >= 7 && h <= 11) return 'before'
+    if (h > 11 && h <= 13.5) return 'during'
+    if (h > 13.5) return 'after'
+    return null
+  }
+
+  // ─── 사진 그리드 렌더링 ────────────────────────────────────────
+  function renderGrid() {
+    const grid = document.getElementById('photoGrid')
+    grid.innerHTML = photos.map((p, i) => {
+      const stepBadge = p.confirmedStep
+        ? `<span class="badge badge-step badge-${p.confirmedStep}">${{before:'시공전',during:'작업중',after:'시공후'}[p.confirmedStep]}</span>`
+        : (p.autoStep ? `<span class="badge badge-auto">${{before:'전?',during:'중?',after:'후?'}[p.autoStep]}</span>` : '')
+      const locBadge = p.confirmedLocation
+        ? `<span class="badge badge-location">${{bathroom:'화장실',entrance:'현관',veranda:'베란다',kitchen:'주방',laundry:'다용도',living:'거실',other:'기타'}[p.confirmedLocation]||p.confirmedLocation}</span>`
+        : ''
+      return `<div class="photo-item ${p.isSelected?'selected':''} ${p.isExcluded?'excluded':''}" onclick="toggleSelect('${p.id}')" data-id="${p.id}">
+        <img src="${p.thumbnail}" alt="">
+        <button class="exclude-btn" onclick="event.stopPropagation();toggleSingleExclude('${p.id}')">${p.isExcluded?'↩':'×'}</button>
+        <div class="badges">${stepBadge}${locBadge}</div>
+      </div>`
+    }).join('')
+
+    document.getElementById('photoCount').textContent = photos.length > 0 ? `${photos.length}장 · 탭하여 선택 후 장소/단계 지정` : ''
+
+    // 매칭 툴바
+    const selected = photos.filter(p => p.isSelected)
+    const toolbar = document.getElementById('matchToolbar')
+    if (selected.length > 0) {
+      toolbar.classList.add('active')
+      document.getElementById('selectedCount').textContent = selected.length
+    } else {
+      toolbar.classList.remove('active')
+    }
+  }
+
+  // ─── 사진 선택 / 매칭 ──────────────────────────────────────────
+  function toggleSelect(id) {
+    const p = photos.find(x => x.id === id)
+    if (p) p.isSelected = !p.isSelected
+    renderGrid()
+  }
+
+  function toggleSingleExclude(id) {
+    const p = photos.find(x => x.id === id)
+    if (p) { p.isExcluded = !p.isExcluded; p.isSelected = false }
+    renderGrid()
+    updateSummary()
+  }
+
+  function applyMatch() {
+    const selectedLoc = document.querySelector('.match-btn[data-loc].active')
+    const selectedStep = document.querySelector('.match-btn[data-step].active')
+
+    photos.filter(p => p.isSelected).forEach(p => {
+      if (selectedLoc) p.confirmedLocation = selectedLoc.dataset.loc
+      if (selectedStep) p.confirmedStep = selectedStep.dataset.step
+      p.isSelected = false
+    })
+
+    // 매칭 버튼 초기화
+    document.querySelectorAll('.match-btn').forEach(b => b.classList.remove('active'))
+    renderGrid()
+    updateSummary()
+  }
+
+  function clearSelection() {
+    photos.forEach(p => p.isSelected = false)
+    document.querySelectorAll('.match-btn').forEach(b => b.classList.remove('active'))
+    renderGrid()
+  }
+
+  function toggleExclude() {
+    photos.filter(p => p.isSelected).forEach(p => { p.isExcluded = !p.isExcluded; p.isSelected = false })
+    renderGrid()
+    updateSummary()
+  }
+
+  // 매칭 버튼 토글
+  document.querySelectorAll('.match-btn[data-loc]').forEach(b => {
+    b.addEventListener('click', () => {
+      document.querySelectorAll('.match-btn[data-loc]').forEach(x => x.classList.remove('active'))
+      b.classList.add('active')
+    })
+  })
+  document.querySelectorAll('.match-btn[data-step]').forEach(b => {
+    b.addEventListener('click', () => {
+      document.querySelectorAll('.match-btn[data-step]').forEach(x => x.classList.remove('active'))
+      b.classList.add('active')
+    })
+  })
+
+  // ─── 상태 요약 ─────────────────────────────────────────────────
+  function updateSummary() {
+    const el = document.getElementById('summary')
+    const active = photos.filter(p => !p.isExcluded)
+    const hasLoc = active.filter(p => p.confirmedLocation).length
+    const hasStep = active.filter(p => p.confirmedStep).length
+    const hasBefore = active.some(p => p.confirmedStep === 'before')
+    const hasAfter = active.some(p => p.confirmedStep === 'after')
+
+    if (photos.length === 0 && !selectedApt) { el.style.display = 'none'; return }
+    el.style.display = 'block'
+    el.innerHTML = `
+      <div class="row"><span class="label">아파트</span><span class="value ${selectedApt?'ok':'warn'}">${selectedApt?selectedApt.name:'미선택'}</span></div>
+      <div class="row"><span class="label">사진</span><span class="value">${active.length}장 (제외 ${photos.length - active.length}장)</span></div>
+      <div class="row"><span class="label">장소 지정</span><span class="value ${hasLoc===active.length?'ok':'warn'}">${hasLoc}/${active.length}</span></div>
+      <div class="row"><span class="label">단계 지정</span><span class="value ${hasStep===active.length?'ok':'warn'}">${hasStep}/${active.length}</span></div>
+      <div class="row"><span class="label">시공 전</span><span class="value ${hasBefore?'ok':'warn'}">${hasBefore?'있음':'없음'}</span></div>
+      <div class="row"><span class="label">시공 후</span><span class="value ${hasAfter?'ok':'warn'}">${hasAfter?'있음':'없음'}</span></div>
+    `
+  }
+
+  // ─── 이미지 리사이즈 (공개용 1200px WebP) ──────────────────────
+  function resizeForUpload(file, maxW = 1200) {
+    return new Promise(resolve => {
+      const img = new Image()
+      img.onload = () => {
+        const c = document.createElement('canvas')
+        let w = img.width, h = img.height
+        if (w > maxW) { h = h * maxW / w; w = maxW }
+        c.width = w; c.height = h
+        c.getContext('2d').drawImage(img, 0, 0, w, h)
+        c.toBlob(resolve, 'image/webp', 0.85)
+      }
+      img.src = URL.createObjectURL(file)
+    })
+  }
+
+  // ─── 제출 ──────────────────────────────────────────────────────
+  async function submitCase() {
+    // 유효성
+    if (!selectedApt) return showToast('아파트를 선택하세요', 'error')
+    const active = photos.filter(p => !p.isExcluded)
+    if (active.length === 0) return showToast('사진이 없습니다', 'error')
+
+    const btn = document.getElementById('submitBtn')
+    btn.disabled = true
+    const prog = document.getElementById('uploadProgress')
+    prog.classList.add('active')
+
+    try {
+      const workDate = document.getElementById('workDate').value || null
+      const material = document.getElementById('materialType').value
+      const memo = document.getElementById('memoInput').value.trim() || null
+      const spaces = [...new Set(active.map(p => p.confirmedLocation).filter(Boolean))]
+      const issues = [] // 추후 UI 추가
+      const shortId = Math.random().toString(36).substring(2, 6)
+      const dateStr = (workDate || new Date().toISOString().split('T')[0]).replace(/-/g, '')
+      const caseSlug = `${dateStr}-${spaces[0] || 'general'}-${material}-${shortId}`
+
+      // 1. job_cases 생성
+      setProgress(5, '현장 정보 저장 중...')
+      const caseRes = await fetch(`${SB_URL}/rest/v1/job_cases`, {
+        method: 'POST',
+        headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=representation' },
+        body: JSON.stringify({
+          apartment_slug: selectedApt.slug,
+          apartment_name: selectedApt.name,
+          district_name: selectedApt.district,
+          region_slug: selectedApt.region,
+          work_date: workDate,
+          space_types: spaces.join(',') || null,
+          issue_types: issues.join(',') || null,
+          material_type: material,
+          memo,
+          created_by: staffName,
+          case_slug: caseSlug,
+          status: 'draft'
+        })
+      })
+      if (!caseRes.ok) throw new Error(`현장 저장 실패: ${await caseRes.text()}`)
+      const [caseData] = await caseRes.json()
+      const caseId = caseData.id
+
+      // 2. 이미지 업로드
+      for (let i = 0; i < active.length; i++) {
+        const p = active[i]
+        const pct = 10 + Math.round((i / active.length) * 80)
+        setProgress(pct, `사진 업로드 ${i + 1}/${active.length}...`)
+
+        // 원본 → originals/ 버킷
+        const origPath = `${selectedApt.slug}/${caseSlug}/${p.id}.webp`
+        const blob = await resizeForUpload(p.file)
+        const upRes = await fetch(`${SB_URL}/storage/v1/object/originals/${origPath}`, {
+          method: 'POST',
+          headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}`, 'Content-Type': 'image/webp' },
+          body: blob
+        })
+        if (!upRes.ok) throw new Error(`사진 ${i+1} 업로드 실패`)
+
+        // 파일명 slug 생성
+        const stepStr = p.confirmedStep || p.autoStep || 'unclassified'
+        const locStr = p.confirmedLocation || 'unknown'
+        const sluggedName = `${selectedApt.slug}-${locStr}-${stepStr}-${dateStr}-${p.id.slice(-4)}.webp`
+
+        // alt 텍스트 생성
+        const LOC_KR = { bathroom:'화장실', entrance:'현관', veranda:'베란다', kitchen:'주방', laundry:'다용도실', living:'거실', other:'' }
+        const STEP_KR = { before:'시공 전 오염 상태', during:'줄눈 제거 및 청소 작업 중', after:'줄눈 시공 완료 후 마감 상태' }
+        const altText = `${selectedApt.name} ${LOC_KR[locStr]||''} ${STEP_KR[stepStr]||'줄눈시공'} 사진`.trim()
+
+        // DB 저장
+        await fetch(`${SB_URL}/rest/v1/job_case_images`, {
+          method: 'POST',
+          headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+          body: JSON.stringify({
+            case_id: caseId,
+            storage_path_original: origPath,
+            file_name_original: p.file.name,
+            file_name_slugged: sluggedName,
+            mime_type: 'image/webp',
+            file_size: blob.size,
+            timestamp_taken: p.exifTime ? p.exifTime.toISOString() : null,
+            auto_step: p.autoStep,
+            confirmed_step: p.confirmedStep,
+            confirmed_location: p.confirmedLocation,
+            is_excluded: false,
+            alt_text: altText,
+            sort_order: i
+          })
+        })
+      }
+
+      // 3. 상태 → review_ready
+      setProgress(95, '등록 완료 처리 중...')
+      await fetch(`${SB_URL}/rest/v1/job_cases?id=eq.${caseId}`, {
+        method: 'PATCH',
+        headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+        body: JSON.stringify({ status: 'review_ready' })
+      })
+
+      setProgress(100, '완료!')
+      showToast(`${active.length}장 등록 완료!`, 'success')
+      resetForm()
+
+    } catch (e) {
+      showToast(e.message, 'error')
+    } finally {
+      btn.disabled = false
+      setTimeout(() => { prog.classList.remove('active'); document.getElementById('progressText').textContent = '' }, 2000)
+    }
+  }
+
+  function setProgress(pct, text) {
+    document.getElementById('progressFill').style.width = pct + '%'
+    document.getElementById('progressText').textContent = text
+  }
+
+  function resetForm() {
+    clearApt()
+    photos = []
+    renderGrid()
+    updateSummary()
+    document.getElementById('memoInput').value = ''
+    document.getElementById('workDate').value = new Date().toISOString().split('T')[0]
+  }
+
+  // ─── 토스트 ────────────────────────────────────────────────────
+  function showToast(msg, type) {
+    const t = document.getElementById('toast')
+    t.textContent = msg; t.className = `toast ${type}`; t.style.display = 'block'
+    setTimeout(() => t.style.display = 'none', 3000)
+  }
+  </script>
+</body>
+</html>

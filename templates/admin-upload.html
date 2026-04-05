@@ -408,27 +408,47 @@
       // 본문 생성 (아파트 데이터 기반 변주)
       const paragraphs = []
 
-      // 1단락: 아파트 소개 + 시공 배경
+      // 메모 키워드 분석 → 원고에 자연스럽게 반영
+      const memoLower = (memo || '').toLowerCase()
+      const hasMold = memoLower.includes('곰팡이') || memoLower.includes('곰팜')
+      const hasDiscolor = memoLower.includes('변색') || memoLower.includes('누렇') || memoLower.includes('누래')
+      const hasCrack = memoLower.includes('깨') || memoLower.includes('갈라') || memoLower.includes('크랙') || memoLower.includes('탈락')
+      const hasSmell = memoLower.includes('냄새') || memoLower.includes('악취')
+      const hasWet = memoLower.includes('습') || memoLower.includes('물기') || memoLower.includes('결로')
+
+      // 1단락: 아파트 소개 + 시공 배경 (메모 반영)
+      let issueDetail = condition
+      if (hasMold) issueDetail = '줄눈 사이 깊숙이 곰팡이가 번식한 상태'
+      else if (hasDiscolor) issueDetail = '오랜 사용으로 줄눈 전체가 누렇게 변색된 상태'
+      else if (hasCrack) issueDetail = '기존 줄눈이 갈라지고 탈락이 진행된 상태'
+      if (hasSmell) issueDetail += '였으며, 줄눈 사이에서 불쾌한 냄새가 발생하고 있었습니다'
+      if (hasWet) issueDetail += '. 특히 습기가 많은 환경으로 방수 성능이 중요한 현장이었습니다'
+
       paragraphs.push(
         `${apt.districtName} ${apt.name}은(는) ${year}년 준공, ${households.toLocaleString()}세대 규모의 ${apt.brand || ''} 아파트입니다. ` +
-        `준공 후 약 ${age}년이 경과하여 ${spaceText} 줄눈에 ${condition}이 발생한 상태였습니다. ` +
+        `준공 후 약 ${age}년이 경과하여 ${spaceText}이(가) ${issueDetail}였습니다. ` +
         `${heating} 방식의 ${tileType} 바닥으로, 기존 시멘트 줄눈이 수분 침투로 인해 재시공이 필요한 시점이었습니다.`
       )
 
-      // 2단락: 시공 과정
+      // 2단락: 시공 과정 (메모 반영)
+      let processExtra = ''
+      if (hasMold) processExtra = ' 곰팡이 뿌리까지 완전히 제거한 후 항균 효과가 있는 케라폭시로 충진하여 재발을 방지했습니다.'
+      else if (hasCrack) processExtra = ' 탈락된 부위를 보수하고 전체적으로 균일한 마감을 구현했습니다.'
+      else if (hasWet) processExtra = ' 흡수율 0.1% 이하의 케라폭시 특성으로 습기 차단 효과를 극대화했습니다.'
+
       paragraphs.push(
         `하우스픽 전문 시공팀이 3단계 공정(기존 줄눈 완전 제거 → 정밀 마스킹 → 케라폭시 충진)으로 ` +
         `${spaceText} 전체를 시공하였습니다. 이탈리아 마페이 정품 케라폭시를 사용하여 수축률 0%, ` +
-        `흡수율 0.1% 이하의 완벽한 마감을 구현했습니다.`
+        `흡수율 0.1% 이하의 완벽한 마감을 구현했습니다.${processExtra}`
       )
 
-      // 3단락: 결과 + 메모 반영
-      let resultText = `시공 완료 후 ${condition === '심한 변색과 곰팡이' ? '곰팡이가 완전히 제거되고 ' : ''}` +
-        `깔끔하게 마감되었습니다. 5년 무상 A/S가 보장되며, 정찰제 가격으로 추가 비용 없이 시공되었습니다.`
-      if (memo) {
-        resultText += ` 현장 특이사항: ${memo}`
-      }
-      paragraphs.push(resultText)
+      // 3단락: 결과
+      let resultIntro = hasMold ? '곰팡이가 완전히 제거되고 깨끗하게' : hasDiscolor ? '변색이 말끔히 해소되고' : '깔끔하게'
+      paragraphs.push(
+        `시공 완료 후 ${resultIntro} 마감되었습니다. ` +
+        `${hasMold || hasSmell ? '항균 인증 케라폭시 소재 특성상 곰팡이와 냄새 재발 걱정 없이 사용 가능합니다. ' : ''}` +
+        `5년 무상 A/S가 보장되며, 정찰제 가격으로 추가 비용 없이 시공되었습니다.`
+      )
 
       // 4단락: CTA
       paragraphs.push(

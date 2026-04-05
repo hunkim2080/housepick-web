@@ -221,6 +221,7 @@
         </div>
         <div class="match-actions">
           <button class="match-action apply" onclick="applyMatch()">적용</button>
+          <button class="match-action" style="background:#22c55e;color:white;" onclick="setRepresentative()">⭐ 대표 지정</button>
           <button class="match-action clear" onclick="clearSelection()">선택 해제</button>
           <button class="match-action exclude" onclick="toggleExclude()">제외/복원</button>
         </div>
@@ -348,7 +349,7 @@
       const exifTime = await extractExifTime(file)
       const autoStep = suggestStep(exifTime)
 
-      photos.push({ id, file, thumbnail, exifTime, autoStep, confirmedStep: null, confirmedLocation: null, confirmedMaterial: null, isExcluded: false, isSelected: false })
+      photos.push({ id, file, thumbnail, exifTime, autoStep, confirmedStep: null, confirmedLocation: null, confirmedMaterial: null, isExcluded: false, isSelected: false, isRepresentative: false })
       added++
       // 중간 렌더링 (사용자에게 진행 표시)
       if (added % 5 === 0) renderGrid()
@@ -453,8 +454,10 @@
       const matBadge = p.confirmedMaterial
         ? `<span class="badge" style="background:#8b5cf6;color:white;">${{kerapoxy:'케라',polyurea:'폴리'}[p.confirmedMaterial]||''}</span>`
         : ''
-      return `<div class="photo-item ${p.isSelected?'selected':''} ${p.isExcluded?'excluded':''}" onclick="toggleSelect('${p.id}')" data-id="${p.id}">
+      const reprBadge = p.isRepresentative ? `<span style="position:absolute;top:3px;left:3px;background:#22c55e;color:white;font-size:0.6rem;padding:1px 4px;border-radius:4px;font-weight:700;">⭐대표</span>` : ''
+      return `<div class="photo-item ${p.isSelected?'selected':''} ${p.isExcluded?'excluded':''}" onclick="toggleSelect('${p.id}')" data-id="${p.id}" style="${p.isRepresentative?'border-color:#22c55e;border-width:3px;':''}">
         <img src="${p.thumbnail}" alt="">
+        ${reprBadge}
         <button class="exclude-btn" onclick="event.stopPropagation();toggleSingleExclude('${p.id}')">${p.isExcluded?'↩':'×'}</button>
         <div class="badges">${stepBadge}${locBadge}${matBadge}</div>
       </div>`
@@ -511,6 +514,18 @@
     renderGrid()
   }
 
+  function setRepresentative() {
+    const selected = photos.filter(p => p.isSelected)
+    if (selected.length !== 1) { showToast('대표 사진은 1장만 선택하세요', 'error'); return }
+    photos.forEach(p => p.isRepresentative = false)
+    selected[0].isRepresentative = true
+    selected[0].isSelected = false
+    document.querySelectorAll('.match-btn').forEach(b => b.classList.remove('active'))
+    renderGrid()
+    updateSummary()
+    showToast('대표 사진 지정 완료', 'success')
+  }
+
   function toggleExclude() {
     photos.filter(p => p.isSelected).forEach(p => { p.isExcluded = !p.isExcluded; p.isSelected = false })
     renderGrid()
@@ -551,6 +566,7 @@
     const hasStep = active.filter(p => p.confirmedStep).length
     const hasBefore = active.some(p => p.confirmedStep === 'before')
     const hasAfter = active.some(p => p.confirmedStep === 'after')
+    const hasRepr = active.some(p => p.isRepresentative)
 
     if (photos.length === 0 && !selectedApt) { el.style.display = 'none'; return }
     el.style.display = 'block'
@@ -561,6 +577,7 @@
       <div class="row"><span class="label">단계 지정</span><span class="value ${hasStep===active.length?'ok':'warn'}">${hasStep}/${active.length}</span></div>
       <div class="row"><span class="label">시공 전</span><span class="value ${hasBefore?'ok':'warn'}">${hasBefore?'있음':'없음'}</span></div>
       <div class="row"><span class="label">시공 후</span><span class="value ${hasAfter?'ok':'warn'}">${hasAfter?'있음':'없음'}</span></div>
+      <div class="row"><span class="label">대표 사진</span><span class="value ${hasRepr?'ok':'warn'}">${hasRepr?'지정됨':'미지정'}</span></div>
     `
   }
 
@@ -672,6 +689,7 @@
             confirmed_step: p.confirmedStep,
             confirmed_location: p.confirmedLocation,
             is_excluded: false,
+            is_representative: p.isRepresentative || false,
             alt_text: altText,
             sort_order: i
           })

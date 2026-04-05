@@ -368,7 +368,10 @@
         body: JSON.stringify({ status: 'published', published_at: new Date().toISOString() })
       })
 
-      showToast('발행 완료! 다음 빌드에 반영됩니다.', 'success')
+      // Vercel 자동 재빌드 트리거
+      await fetch('/api/trigger-deploy', { method: 'POST' }).catch(() => {})
+
+      showToast('발행 완료! 약 2분 후 사이트에 반영됩니다.', 'success')
       loadData()
     } catch(e) { showToast('발행 실패: ' + e.message, 'error') }
   }

@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>현장 검수 | 하우스픽</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, 'Noto Sans KR', sans-serif; background: #f5f5f4; color: #1c1917; line-height: 1.6; }
+
+    .header { background: #1c1917; color: white; padding: 0.7rem 1rem; position: sticky; top: 0; z-index: 20; }
+    .header-top { display: flex; align-items: center; justify-content: space-between; }
+    .header h1 { font-size: 1rem; font-weight: 700; }
+    .header-tabs { display: flex; gap: 0.4rem; margin-top: 0.4rem; }
+    .tab { padding: 0.3rem 0.7rem; border-radius: 8px; border: none; font-size: 0.8rem; cursor: pointer; font-weight: 600; }
+    .tab.active { background: #f59e0b; color: #1c1917; }
+    .tab:not(.active) { background: #44403c; color: #a8a29e; }
+    .tab .count { background: rgba(255,255,255,0.2); padding: 0 5px; border-radius: 4px; margin-left: 3px; font-size: 0.7rem; }
+
+    .container { max-width: 900px; margin: 0 auto; padding: 0.8rem; }
+
+    /* 로그인 */
+    .login-box { background: white; border-radius: 16px; padding: 2rem; margin-top: 2rem; max-width: 400px; margin-left: auto; margin-right: auto; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .login-box h2 { text-align: center; margin-bottom: 1rem; }
+    .login-box input { width: 100%; padding: 0.7rem; border: 2px solid #e7e5e4; border-radius: 10px; font-size: 1rem; margin-bottom: 0.8rem; }
+    .btn { width: 100%; padding: 0.8rem; border: none; border-radius: 10px; font-size: 1rem; font-weight: 700; cursor: pointer; }
+    .btn-dark { background: #1c1917; color: white; }
+
+    /* 통계 바 */
+    .stats { display: flex; gap: 0.5rem; margin-bottom: 0.8rem; }
+    .stat { flex: 1; background: white; border-radius: 12px; padding: 0.7rem; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+    .stat .num { font-size: 1.4rem; font-weight: 800; }
+    .stat .label { font-size: 0.7rem; color: #78716c; }
+    .stat-review .num { color: #f59e0b; }
+    .stat-approved .num { color: #3b82f6; }
+    .stat-published .num { color: #22c55e; }
+
+    /* 카드 */
+    .card { background: white; border-radius: 14px; padding: 1.2rem; margin-bottom: 0.8rem; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
+    .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.8rem; }
+    .card-title { font-weight: 700; font-size: 1rem; }
+    .card-meta { font-size: 0.8rem; color: #78716c; margin-top: 0.2rem; }
+    .status-badge { font-size: 0.7rem; padding: 3px 10px; border-radius: 8px; font-weight: 600; }
+    .status-review_ready { background: #fef3c7; color: #92400e; }
+    .status-approved { background: #dbeafe; color: #1e40af; }
+    .status-published { background: #dcfce7; color: #166534; }
+    .status-rejected { background: #fee2e2; color: #991b1b; }
+    .status-archived { background: #f5f5f4; color: #78716c; }
+
+    /* 이미지 그리드 */
+    .img-section { margin-bottom: 0.8rem; }
+    .img-section-title { font-size: 0.8rem; font-weight: 600; color: #78716c; margin-bottom: 0.4rem; }
+    .img-grid { display: flex; gap: 0.4rem; overflow-x: auto; padding-bottom: 0.3rem; }
+    .img-thumb { position: relative; flex-shrink: 0; width: 100px; height: 75px; border-radius: 8px; overflow: hidden; cursor: pointer; border: 2px solid transparent; }
+    .img-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .img-thumb:hover { border-color: #f59e0b; }
+    .img-thumb.representative { border-color: #22c55e; border-width: 3px; }
+    .img-thumb .star { position: absolute; top: 2px; left: 2px; font-size: 0.7rem; background: #22c55e; color: white; padding: 1px 4px; border-radius: 4px; }
+    .img-thumb .badges { position: absolute; bottom: 0; left: 0; right: 0; display: flex; gap: 1px; }
+    .img-badge { font-size: 0.55rem; padding: 1px 3px; color: white; font-weight: 600; }
+    .img-badge-before { background: #ef4444; }
+    .img-badge-during { background: #f59e0b; }
+    .img-badge-after { background: #22c55e; }
+    .img-badge-loc { background: rgba(0,0,0,0.5); }
+
+    /* 메모 */
+    .card-memo { background: #f5f5f4; border-radius: 8px; padding: 0.6rem; font-size: 0.85rem; margin-bottom: 0.8rem; }
+
+    /* 품질 체크 */
+    .quality { background: #fef3c7; border: 1px solid #fde68a; border-radius: 10px; padding: 0.7rem; margin-bottom: 0.8rem; font-size: 0.8rem; }
+    .quality.pass { background: #dcfce7; border-color: #bbf7d0; }
+    .quality.fail { background: #fee2e2; border-color: #fca5a5; }
+    .quality .row { display: flex; justify-content: space-between; padding: 0.1rem 0; }
+
+    /* 액션 */
+    .actions { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+    .action { padding: 0.5rem 0.8rem; border: none; border-radius: 8px; font-size: 0.85rem; font-weight: 600; cursor: pointer; }
+    .action-approve { background: #3b82f6; color: white; }
+    .action-publish { background: #22c55e; color: white; }
+    .action-reject { background: #fee2e2; color: #991b1b; }
+    .action-archive { background: #f5f5f4; color: #78716c; }
+    .action-delete { background: white; color: #ef4444; border: 1px solid #fca5a5; }
+    .action-revert { background: #fef3c7; color: #92400e; }
+    .action-repr { background: white; color: #22c55e; border: 1px solid #bbf7d0; font-size: 0.75rem; }
+
+    /* 라이트박스 */
+    .lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 100; align-items: center; justify-content: center; flex-direction: column; }
+    .lightbox.active { display: flex; }
+    .lightbox img { max-width: 95%; max-height: 80vh; object-fit: contain; border-radius: 8px; }
+    .lightbox-info { color: white; margin-top: 0.8rem; text-align: center; font-size: 0.85rem; }
+    .lightbox-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: white; font-size: 2rem; cursor: pointer; }
+    .lightbox-repr { margin-top: 0.5rem; padding: 0.4rem 1rem; background: #22c55e; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.85rem; }
+
+    .empty { text-align: center; color: #a8a29e; padding: 3rem; }
+    .toast { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%); padding: 0.7rem 1.2rem; border-radius: 10px; color: white; font-weight: 600; font-size: 0.85rem; z-index: 200; display: none; }
+    .toast.success { background: #22c55e; }
+    .toast.error { background: #ef4444; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="header-top">
+      <h1>현장 검수 관리</h1>
+      <a href="/admin/upload" style="color:#a8a29e;font-size:0.75rem;text-decoration:none;">← 등록</a>
+    </div>
+    <div class="header-tabs" id="tabs" style="display:none">
+      <button class="tab active" onclick="setTab('review_ready')">검수대기 <span class="count" id="cntReview">0</span></button>
+      <button class="tab" onclick="setTab('approved')">승인 <span class="count" id="cntApproved">0</span></button>
+      <button class="tab" onclick="setTab('published')">발행 <span class="count" id="cntPublished">0</span></button>
+      <button class="tab" onclick="setTab('all')">전체</button>
+    </div>
+  </div>
+
+  <div id="loginView" class="container">
+    <div class="login-box">
+      <h2>관리자 로그인</h2>
+      <input type="password" id="adminPw" placeholder="관리자 비밀번호" autofocus>
+      <button class="btn btn-dark" onclick="adminLogin()">로그인</button>
+    </div>
+  </div>
+
+  <div id="mainView" class="container" style="display:none">
+    <div class="stats" id="statsBar"></div>
+    <div id="cardList"></div>
+  </div>
+
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+    <img id="lbImg" src="">
+    <div class="lightbox-info" id="lbInfo"></div>
+    <button class="lightbox-repr" id="lbReprBtn" onclick="event.stopPropagation()">대표 이미지로 설정</button>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  const SB_URL = 'https://bnzgtqktvevqxtnceiwv.supabase.co'
+  const SB_KEY = 'sb_publishable_DzloEuUCdoUpGgHOp--ctA__o3F7hvo'
+  const ADMIN_PW = '2080admin!'
+
+  const LOC = { bathroom:'화장실', entrance:'현관', veranda:'베란다', kitchen:'주방', laundry:'다용도실', living:'거실', other:'기타' }
+  const STEP = { before:'시공 전', during:'작업 중', after:'시공 후' }
+  const MAT = { kerapoxy:'케라폭시', polyurea:'폴리우레아', cement:'시멘트' }
+  const STATUS_LABEL = { draft:'임시', review_ready:'검수대기', approved:'승인', published:'발행', archived:'보관', rejected:'반려' }
+
+  let currentTab = 'review_ready'
+  let allCases = []
+  let allImages = {}  // case_id → [images]
+
+  // 로그인
+  function adminLogin() {
+    if (document.getElementById('adminPw').value === ADMIN_PW) {
+      localStorage.setItem('hp_admin_v2', 'true')
+      showMain()
+    } else showToast('비밀번호 틀림', 'error')
+  }
+  document.getElementById('adminPw').addEventListener('keydown', e => { if (e.key === 'Enter') adminLogin() })
+  if (localStorage.getItem('hp_admin_v2') === 'true') showMain()
+
+  function showMain() {
+    document.getElementById('loginView').style.display = 'none'
+    document.getElementById('mainView').style.display = 'block'
+    document.getElementById('tabs').style.display = 'flex'
+    loadData()
+  }
+
+  // 데이터 로드
+  async function loadData() {
+    try {
+      const [casesRes, imgsRes] = await Promise.all([
+        fetch(`${SB_URL}/rest/v1/job_cases?select=*&order=created_at.desc&limit=100`, { headers: h() }),
+        fetch(`${SB_URL}/rest/v1/job_case_images?select=*&order=sort_order.asc&limit=2000`, { headers: h() })
+      ])
+      allCases = await casesRes.json()
+      const imgs = await imgsRes.json()
+      allImages = {}
+      for (const img of imgs) {
+        if (!allImages[img.case_id]) allImages[img.case_id] = []
+        allImages[img.case_id].push(img)
+      }
+      renderStats()
+      renderCards()
+    } catch(e) { showToast('로드 실패', 'error') }
+  }
+
+  function h() { return { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}` } }
+  function hJson() { return { ...h(), 'Content-Type': 'application/json', 'Prefer': 'return=minimal' } }
+
+  // 통계
+  function renderStats() {
+    const review = allCases.filter(c => c.status === 'review_ready').length
+    const approved = allCases.filter(c => c.status === 'approved').length
+    const published = allCases.filter(c => c.status === 'published').length
+    document.getElementById('cntReview').textContent = review
+    document.getElementById('cntApproved').textContent = approved
+    document.getElementById('cntPublished').textContent = published
+    document.getElementById('statsBar').innerHTML = `
+      <div class="stat stat-review"><div class="num">${review}</div><div class="label">검수대기</div></div>
+      <div class="stat stat-approved"><div class="num">${approved}</div><div class="label">승인</div></div>
+      <div class="stat stat-published"><div class="num">${published}</div><div class="label">발행</div></div>
+    `
+  }
+
+  // 탭
+  function setTab(tab) {
+    currentTab = tab
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'))
+    event.target.closest('.tab').classList.add('active')
+    renderCards()
+  }
+
+  // 품질 게이트
+  function checkQuality(caseItem, images) {
+    const active = images.filter(i => !i.is_excluded)
+    const hasBefore = active.some(i => i.confirmed_step === 'before')
+    const hasAfter = active.some(i => i.confirmed_step === 'after')
+    const allLocated = active.every(i => i.confirmed_location)
+    const allStepped = active.every(i => i.confirmed_step)
+    const hasRepr = active.some(i => i.is_representative)
+
+    const checks = {
+      '발행 후보 3장+': active.length >= 3,
+      '시공 전 사진': hasBefore,
+      '시공 후 사진': hasAfter,
+      '장소 전체 확정': allLocated,
+      '단계 전체 확정': allStepped,
+      '대표 이미지': hasRepr,
+    }
+    const passCount = Object.values(checks).filter(Boolean).length
+    const pass = passCount === Object.keys(checks).length
+    return { pass, checks, passCount, total: Object.keys(checks).length }
+  }
+
+  // 카드 렌더링
+  function renderCards() {
+    const filtered = currentTab === 'all' ? allCases : allCases.filter(c => c.status === currentTab)
+    const el = document.getElementById('cardList')
+
+    if (filtered.length === 0) { el.innerHTML = '<div class="empty">항목 없음</div>'; return }
+
+    el.innerHTML = filtered.map(c => {
+      const imgs = allImages[c.id] || []
+      const active = imgs.filter(i => !i.is_excluded)
+      const date = c.work_date || c.created_at?.split('T')[0] || ''
+      const spaces = (c.space_types || '').split(',').filter(Boolean).map(s => LOC[s] || s).join('+')
+
+      // 이미지 섹션: before / during / after 그룹
+      const groups = { before: [], during: [], after: [], unclassified: [] }
+      for (const img of active) {
+        const step = img.confirmed_step || 'unclassified'
+        if (groups[step]) groups[step].push(img)
+        else groups.unclassified.push(img)
+      }
+
+      let imgsHtml = ''
+      for (const [step, list] of Object.entries(groups)) {
+        if (list.length === 0) continue
+        const stepLabel = STEP[step] || '미분류'
+        imgsHtml += `<div class="img-section">
+          <div class="img-section-title">${stepLabel} (${list.length}장)</div>
+          <div class="img-grid">${list.map(img => {
+            const origUrl = `${SB_URL}/storage/v1/object/originals/${img.storage_path_original}`
+            const loc = img.confirmed_location ? LOC[img.confirmed_location] || img.confirmed_location : ''
+            return `<div class="img-thumb ${img.is_representative ? 'representative' : ''}" onclick="event.stopPropagation();openLightbox('${origUrl}','${img.alt_text||''}',${img.id},${c.id})">
+              ${img.is_representative ? '<span class="star">대표</span>' : ''}
+              <img src="${origUrl}" loading="lazy">
+              <div class="badges">
+                ${loc ? `<span class="img-badge img-badge-loc">${loc}</span>` : ''}
+              </div>
+            </div>`
+          }).join('')}</div>
+        </div>`
+      }
+
+      // 메모
+      const memoHtml = c.memo ? `<div class="card-memo">메모: ${c.memo}</div>` : ''
+
+      // 품질 게이트
+      const quality = checkQuality(c, imgs)
+      const qClass = quality.pass ? 'pass' : 'fail'
+      const qualityHtml = `<div class="quality ${qClass}">
+        <div style="font-weight:600;margin-bottom:0.3rem;">품질 체크 ${quality.passCount}/${quality.total}</div>
+        ${Object.entries(quality.checks).map(([k, v]) => `<div class="row"><span>${k}</span><span>${v ? '✅' : '❌'}</span></div>`).join('')}
+      </div>`
+
+      // 액션 버튼
+      let actionsHtml = '<div class="actions">'
+      if (c.status === 'review_ready') {
+        actionsHtml += `<button class="action action-approve" onclick="updateStatus(${c.id},'approved')">승인</button>`
+        actionsHtml += `<button class="action action-reject" onclick="updateStatus(${c.id},'rejected')">반려</button>`
+      } else if (c.status === 'approved') {
+        if (quality.pass) {
+          actionsHtml += `<button class="action action-publish" onclick="publishCase(${c.id})">발행</button>`
+        } else {
+          actionsHtml += `<button class="action action-publish" disabled style="opacity:0.4" title="품질 미달">발행 (품질 미달)</button>`
+        }
+        actionsHtml += `<button class="action action-revert" onclick="updateStatus(${c.id},'review_ready')">검수로 되돌리기</button>`
+      } else if (c.status === 'published') {
+        actionsHtml += `<button class="action action-archive" onclick="updateStatus(${c.id},'archived')">보관</button>`
+      } else if (c.status === 'rejected' || c.status === 'archived') {
+        actionsHtml += `<button class="action action-revert" onclick="updateStatus(${c.id},'review_ready')">검수로 되돌리기</button>`
+      }
+      actionsHtml += `<button class="action action-delete" onclick="deleteCase(${c.id})">삭제</button>`
+      actionsHtml += '</div>'
+
+      return `<div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">${c.apartment_name}</div>
+            <div class="card-meta">${c.district_name} · ${spaces || '부위 미지정'} · ${MAT[c.material_type]||''} · ${c.created_by} · ${date}</div>
+          </div>
+          <span class="status-badge status-${c.status}">${STATUS_LABEL[c.status]}</span>
+        </div>
+        ${imgsHtml}
+        ${memoHtml}
+        ${qualityHtml}
+        ${actionsHtml}
+      </div>`
+    }).join('')
+  }
+
+  // 상태 변경
+  async function updateStatus(id, status) {
+    try {
+      const body = { status }
+      if (status === 'published') body.published_at = new Date().toISOString()
+      await fetch(`${SB_URL}/rest/v1/job_cases?id=eq.${id}`, { method: 'PATCH', headers: hJson(), body: JSON.stringify(body) })
+      showToast(STATUS_LABEL[status] + ' 처리 완료', 'success')
+      loadData()
+    } catch(e) { showToast('실패: ' + e.message, 'error') }
+  }
+
+  // 발행 (공개용 이미지 생성 + status 변경)
+  async function publishCase(id) {
+    const c = allCases.find(x => x.id === id)
+    const imgs = (allImages[id] || []).filter(i => !i.is_excluded)
+
+    try {
+      showToast('공개 이미지 생성 중...', 'success')
+
+      for (const img of imgs) {
+        // originals에서 읽어서 public-assets에 복사 (서버리스에서는 직접 복사 불가하므로, 경로만 기록)
+        const publicPath = `${c.apartment_slug}/${c.case_slug}/${img.file_name_slugged || img.id + '.webp'}`
+        const origUrl = `${SB_URL}/storage/v1/object/originals/${img.storage_path_original}`
+
+        // 원본 다운로드
+        const origRes = await fetch(origUrl, { headers: h() })
+        if (!origRes.ok) continue
+        const blob = await origRes.blob()
+
+        // public-assets에 업로드
+        await fetch(`${SB_URL}/storage/v1/object/public-assets/${publicPath}`, {
+          method: 'POST',
+          headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}`, 'Content-Type': 'image/webp' },
+          body: blob
+        })
+
+        // DB에 공개 경로 기록
+        await fetch(`${SB_URL}/rest/v1/job_case_images?id=eq.${img.id}`, {
+          method: 'PATCH', headers: hJson(),
+          body: JSON.stringify({ storage_path_public: publicPath, review_status: 'reviewed' })
+        })
+      }
+
+      // 상태 → published
+      await fetch(`${SB_URL}/rest/v1/job_cases?id=eq.${id}`, {
+        method: 'PATCH', headers: hJson(),
+        body: JSON.stringify({ status: 'published', published_at: new Date().toISOString() })
+      })
+
+      showToast('발행 완료! 다음 빌드에 반영됩니다.', 'success')
+      loadData()
+    } catch(e) { showToast('발행 실패: ' + e.message, 'error') }
+  }
+
+  // 삭제
+  async function deleteCase(id) {
+    if (!confirm('정말 삭제하시겠습니까? 이미지도 함께 삭제됩니다.')) return
+    try {
+      await fetch(`${SB_URL}/rest/v1/job_cases?id=eq.${id}`, { method: 'DELETE', headers: h() })
+      showToast('삭제 완료', 'success')
+      loadData()
+    } catch(e) { showToast('실패', 'error') }
+  }
+
+  // 라이트박스
+  let currentLbImgId = null, currentLbCaseId = null
+  function openLightbox(url, alt, imgId, caseId) {
+    document.getElementById('lbImg').src = url
+    document.getElementById('lbInfo').textContent = alt || ''
+    currentLbImgId = imgId
+    currentLbCaseId = caseId
+    document.getElementById('lbReprBtn').onclick = (e) => { e.stopPropagation(); setRepresentative(imgId, caseId) }
+    document.getElementById('lightbox').classList.add('active')
+  }
+  function closeLightbox() { document.getElementById('lightbox').classList.remove('active') }
+
+  // 대표 이미지 설정
+  async function setRepresentative(imgId, caseId) {
+    try {
+      // 기존 대표 해제
+      const imgs = allImages[caseId] || []
+      for (const img of imgs) {
+        if (img.is_representative) {
+          await fetch(`${SB_URL}/rest/v1/job_case_images?id=eq.${img.id}`, {
+            method: 'PATCH', headers: hJson(), body: JSON.stringify({ is_representative: false })
+          })
+        }
+      }
+      // 새 대표 설정
+      await fetch(`${SB_URL}/rest/v1/job_case_images?id=eq.${imgId}`, {
+        method: 'PATCH', headers: hJson(), body: JSON.stringify({ is_representative: true })
+      })
+      await fetch(`${SB_URL}/rest/v1/job_cases?id=eq.${caseId}`, {
+        method: 'PATCH', headers: hJson(), body: JSON.stringify({ representative_image_id: imgId })
+      })
+      showToast('대표 이미지 설정 완료', 'success')
+      closeLightbox()
+      loadData()
+    } catch(e) { showToast('실패', 'error') }
+  }
+
+  function showToast(msg, type) {
+    const t = document.getElementById('toast')
+    t.textContent = msg; t.className = `toast ${type}`; t.style.display = 'block'
+    setTimeout(() => t.style.display = 'none', 3000)
+  }
+  </script>
+</body>
+</html>

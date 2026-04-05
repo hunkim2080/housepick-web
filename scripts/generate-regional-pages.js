@@ -660,7 +660,7 @@ if (fs.existsSync(templatePrivacyPath)) {
 // admin 페이지 생성
 const adminPages = [
   { src: 'admin-upload-v2.html', dest: 'admin/upload' },
-  { src: 'admin-review.html', dest: 'admin/review' },
+  { src: 'admin-review-v2.html', dest: 'admin/review' },
 ]
 for (const page of adminPages) {
   const srcPath = path.join(__dirname, '..', 'templates', page.src)

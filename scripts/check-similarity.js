@@ -165,9 +165,9 @@ function isSameBrandSeries(name1, name2) {
       .replace(/jugongapateu[-]?[\d]+dong$/, 'jugong')  // 주공아파트-901dong 정규화
       .replace(/jugongapateu-[\d]+$/, 'jugong')       // 주공아파트-10 정규화
       .replace(/jugongapateu$/, 'jugong')          // 주공아파트 동일 취급
-      .replace(/yeongguimdaeapateu$/, 'yeongguimdae') // 영구임대아파트 동일 취급
-      .replace(/[\d]+danjiyeongguimdaeapateu$/, 'yeongguimdae') // N단지영구임대아파트 동일 취급
-      .replace(/[\d]+danjiimdaeapateu$/, 'imdae')  // N단지임대아파트 동일 취급
+      .replace(/[\d]+danjiyeongguimdaeapateu$/, 'yeongguimdae') // N단지영구임대아파트 (구체적 패턴 먼저)
+      .replace(/[\d]+danjiimdaeapateu$/, 'imdae')  // N단지임대아파트
+      .replace(/yeongguimdaeapateu$/, 'yeongguimdae') // 영구임대아파트
       .replace(/geumgangterium[-]?[\d]+cha/, 'geumgangterium')  // 금강테리움 N차 동일 취급
       .replace(/[-][\d]+cha[-]/, '-')             // N차 중간 위치 제거
       // 안산 푸르지오 시리즈 (ansan-8cha-pureujio, ansan-gojan5cha-pureujio)

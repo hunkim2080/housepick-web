@@ -439,7 +439,7 @@ ${cards}
       .replace(/\{\{CASE_KEYWORDS\}\}/g, caseKeywords)
       .replace(/\{\{CASE_CANONICAL\}\}/g, fullCaseUrl)
       .replace(/\{\{CASE_H1\}\}/g, caseH1)
-      .replace(/\{\{OG_IMAGE\}\}/g, afterImages[0] || `${BASE_URL}/images/og/og-${apt.regionSlug}.png`)
+      .replace(/\{\{OG_IMAGE\}\}/g, afterImageUrls[0] || beforeImageUrls[0] || `${BASE_URL}/images/og/og-${apt.regionSlug}.png`)
       .replace(/\{\{VITE_CSS\}\}/g, viteCss)
       .replace(/\{\{REGION_SLUG\}\}/g, apt.regionSlug)
       .replace(/\{\{REGION_NAME\}\}/g, apt.regionName)

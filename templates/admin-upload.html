@@ -153,9 +153,9 @@
     <div class="form-section">
       <h3>3. 시공 전 사진</h3>
       <div class="photo-section">
-        <div class="photo-upload-btn" onclick="document.getElementById('beforeInput').click()">
+        <label class="photo-upload-btn" for="beforeInput">
           📸 사진 추가 (앨범에서 여러 장 선택)
-        </div>
+        </label>
         <input type="file" id="beforeInput" accept="image/*" multiple onchange="addPhotos(this.files, 'before')" style="display:none">
         <div class="photo-preview-grid" id="beforeGrid"></div>
         <div class="photo-count" id="beforeCount"></div>
@@ -166,9 +166,9 @@
     <div class="form-section">
       <h3>4. 시공 후 사진</h3>
       <div class="photo-section">
-        <div class="photo-upload-btn" onclick="document.getElementById('afterInput').click()">
+        <label class="photo-upload-btn" for="afterInput">
           ✨ 사진 추가 (앨범에서 여러 장 선택)
-        </div>
+        </label>
         <input type="file" id="afterInput" accept="image/*" multiple onchange="addPhotos(this.files, 'after')" style="display:none">
         <div class="photo-preview-grid" id="afterGrid"></div>
         <div class="photo-count" id="afterCount"></div>

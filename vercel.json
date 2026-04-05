@@ -86,6 +86,7 @@
     { "source": "/stats/metropolitan-grout-index", "destination": "/stats/metropolitan-grout-index/index.html" },
     { "source": "/stats/:page", "destination": "/stats/:page/index.html" },
     { "source": "/:region/:district/julnoon", "destination": "/:region/:district/julnoon/index.html" },
+    { "source": "/:region/:district/:apartment/cases/:caseId", "destination": "/:region/:district/:apartment/cases/:caseId/index.html" },
     { "source": "/:region/:district/:apartment", "destination": "/:region/:district/:apartment/index.html" }
   ]
 }

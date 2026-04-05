@@ -12,6 +12,34 @@ const dataPath = path.join(__dirname, '..', 'data')
 const apartmentsData = JSON.parse(fs.readFileSync(path.join(dataPath, 'apartments.json'), 'utf-8'))
 const settings = JSON.parse(fs.readFileSync(path.join(dataPath, 'settings.json'), 'utf-8'))
 
+// 시공 사례 카드 데이터 로드 (case-cards.json)
+const caseCardsPath = path.join(dataPath, 'case-cards.json')
+let caseCardsData = {}
+if (fs.existsSync(caseCardsPath)) {
+  caseCardsData = JSON.parse(fs.readFileSync(caseCardsPath, 'utf-8'))
+}
+
+function getCaseCardsHtml(aptSlug, regionSlug, districtSlug) {
+  const cards = caseCardsData[aptSlug]
+  if (!cards || cards.length === 0) return ''
+
+  const cardItems = cards.slice(0, 6).map(card => `
+          <a href="${card.url}" style="display:block;background:white;border-radius:12px;overflow:hidden;text-decoration:none;color:#1c1917;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+            ${card.afterImage ? `<img src="${card.afterImage}" alt="${card.spaceText} 시공 후" style="width:100%;aspect-ratio:4/3;object-fit:cover;" loading="lazy">` : ''}
+            <div style="padding:0.8rem;">
+              <div style="font-weight:600;font-size:0.85rem;">${card.spaceText} ${card.issueText} 시공</div>
+              <div style="font-size:0.75rem;color:#a8a29e;">${card.materialText} · ${card.workDate}</div>
+            </div>
+          </a>`).join('\n')
+
+  return `      <section style="padding:2rem 1rem;max-width:800px;margin:0 auto;">
+        <h2 style="font-size:1.2rem;font-weight:700;margin-bottom:1rem;">실제 시공 사례 (${cards.length}건)</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:0.8rem;">
+${cardItems}
+        </div>
+      </section>`
+}
+
 // Supabase 거래량 데이터 로드 (빌드 시 priority 반영)
 const SUPABASE_URL = process.env.SUPABASE_URL || ''
 const SUPABASE_KEY = process.env.SUPABASE_SECRET_KEY || ''
@@ -418,6 +446,7 @@ for (const [regionSlug, districts] of Object.entries(apartmentsData)) {
         .replace(/\{\{JSON_LD\}\}/g, getJsonLd(apt, districtName, regionSlug, districtSlug))
         .replace(/\{\{UPCOMING_BADGE\}\}/g, upcomingBadgeHtml)
         .replace(/\{\{CTA_TEXT\}\}/g, ctaText)
+        .replace('{{CASE_CARDS_HTML}}', getCaseCardsHtml(apt.slug, regionSlug, districtSlug))
 
       // dist 폴더에 저장: dist/{region}/{district}/{apt-slug}/index.html
       const outputDir = path.join(distPath, regionSlug, districtSlug, apt.slug)

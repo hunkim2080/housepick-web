@@ -159,9 +159,41 @@
       <div class="space-hint">화장실+현관 동시 시공 시 둘 다 선택</div>
     </div>
 
+    <!-- 문제 유형 -->
+    <div class="form-section">
+      <h3>3. 문제 유형</h3>
+      <div class="space-grid">
+        <div class="space-btn active" data-issue="mold" onclick="toggleIssue(this)">🦠 곰팡이</div>
+        <div class="space-btn" data-issue="discoloration" onclick="toggleIssue(this)">🟡 변색</div>
+        <div class="space-btn" data-issue="crack" onclick="toggleIssue(this)">💥 크랙/탈락</div>
+        <div class="space-btn" data-issue="smell" onclick="toggleIssue(this)">👃 냄새</div>
+        <div class="space-btn" data-issue="moisture" onclick="toggleIssue(this)">💧 습기/결로</div>
+        <div class="space-btn" data-issue="aging" onclick="toggleIssue(this)">⏳ 노후</div>
+      </div>
+    </div>
+
+    <!-- 사용 자재 + 시공일 -->
+    <div class="form-section">
+      <h3>4. 시공 정보</h3>
+      <div style="display:flex;gap:0.8rem;">
+        <div style="flex:1;">
+          <label>사용 자재</label>
+          <select id="materialSelect" style="width:100%;padding:0.7rem;border:2px solid #e7e5e4;border-radius:10px;font-size:0.9rem;background:white;">
+            <option value="kerapoxy">케라폭시</option>
+            <option value="polyurea">폴리우레아</option>
+            <option value="cement">시멘트 줄눈</option>
+          </select>
+        </div>
+        <div style="flex:1;">
+          <label>시공일</label>
+          <input type="date" id="workDateInput" style="width:100%;padding:0.65rem;border:2px solid #e7e5e4;border-radius:10px;font-size:0.9rem;">
+        </div>
+      </div>
+    </div>
+
     <!-- 시공 전 사진 -->
     <div class="form-section">
-      <h3>3. 시공 전 사진</h3>
+      <h3>5. 시공 전 사진</h3>
       <div class="photo-section">
         <label class="photo-upload-btn" for="beforeInput">
           📸 사진 추가 (앨범에서 여러 장 선택)
@@ -174,7 +206,7 @@
 
     <!-- 시공 후 사진 -->
     <div class="form-section">
-      <h3>4. 시공 후 사진</h3>
+      <h3>6. 시공 후 사진</h3>
       <div class="photo-section">
         <label class="photo-upload-btn" for="afterInput">
           ✨ 사진 추가 (앨범에서 여러 장 선택)
@@ -187,7 +219,7 @@
 
     <!-- 메모 -->
     <div class="form-section">
-      <h3>5. 메모 (선택)</h3>
+      <h3>7. 메모 (선택)</h3>
       <textarea id="memoInput" placeholder="특이사항 입력 (예: 곰팡이 심함, 2시간 소요)"></textarea>
     </div>
 
@@ -261,6 +293,9 @@
     document.getElementById('passwordInput').addEventListener('keydown', e => {
       if (e.key === 'Enter') login()
     })
+
+    // 시공일 기본값 = 오늘
+    document.getElementById('workDateInput').value = new Date().toISOString().split('T')[0]
 
     // 자동 로그인 (유효한 이름만)
     const validNames = ['제이쓴', '이동환', '임태현']
@@ -348,7 +383,18 @@
     }
 
     function getSelectedSpaces() {
-      return Array.from(document.querySelectorAll('.space-btn.active')).map(b => b.dataset.type)
+      return Array.from(document.querySelectorAll('.space-btn.active[data-type]')).map(b => b.dataset.type)
+    }
+
+    // ─── 문제 유형 (복수 선택) ─────────────────────────────────
+    function toggleIssue(el) {
+      el.classList.toggle('active')
+      const anyActive = document.querySelectorAll('.space-btn.active[data-issue]').length > 0
+      if (!anyActive) el.classList.add('active')
+    }
+
+    function getSelectedIssues() {
+      return Array.from(document.querySelectorAll('.space-btn.active[data-issue]')).map(b => b.dataset.issue)
     }
 
     // ─── 다중 사진 관리 ────────────────────────────────────────
@@ -542,8 +588,14 @@
 
         setLoading(true, 'SEO 원고 생성 중...')
 
-        // SEO 원고 자동 생성
+        // 새 필드 수집
         const memo = document.getElementById('memoInput').value.trim() || null
+        const issueTypes = getSelectedIssues()
+        const materialType = document.getElementById('materialSelect').value
+        const workDate = document.getElementById('workDateInput').value || null
+        const caseSlug = `${slug}-${Date.now()}`
+
+        // SEO 원고 자동 생성
         const seo = generateSEOArticle(selectedApartment, spaces, memo)
 
         // DB 저장
@@ -553,6 +605,10 @@
           district_name: selectedApartment.districtName,
           region_slug: selectedApartment.regionSlug,
           space_type: spaces.join(','),
+          issue_type: issueTypes[0] || 'general',
+          material_type: materialType,
+          work_date: workDate,
+          case_slug: caseSlug,
           before_image: beforeUrls.length > 0 ? JSON.stringify(beforeUrls) : null,
           after_image: afterUrls.length > 0 ? JSON.stringify(afterUrls) : null,
           memo,
